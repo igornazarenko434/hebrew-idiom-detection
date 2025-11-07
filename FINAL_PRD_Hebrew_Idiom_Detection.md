@@ -152,17 +152,17 @@ Challenge: Models must use context to distinguish meaning.
 
 ### 2.3 Dataset Statistics
 
-| Metric | Value |
-|--------|-------|
-| Total sentences | 4,800 |
-| Literal samples | 2,400 (50%) |
-| Figurative samples | 2,400 (50%) |
-| Unique idioms | ~70 expressions |
-| Avg sentence length | 12.5 tokens |
-| Avg idiom length | 3.2 tokens |
-| Train split | 3,360 (70%) |
-| Validation split | 720 (15%) |
-| Test split | 720 (15%) |
+| Metric | Value          |
+|--------|----------------|
+| Total sentences | 4,800          |
+| Literal samples | 2,400 (50%)    |
+| Figurative samples | 2,400 (50%)    |
+| Unique idioms | 60 expressions |
+| Avg sentence length | 12.5 tokens    |
+| Avg idiom length | 3.2 tokens     |
+| Train split | 3,360 (70%)    |
+| Validation split | 720 (15%)      |
+| Test split | 720 (15%)      |
 
 ### 2.4 Split Strategy
 
