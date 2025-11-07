@@ -1,2 +1,38 @@
 # Python Dependencies for Hebrew Idiom Detection Project
-# Will be populated in Mission 1.2
+# Mission 1.2: Dependencies Installation
+
+# Deep Learning Framework
+torch>=2.0.0
+torchvision
+torchaudio
+
+# HuggingFace Libraries
+transformers>=4.30.0
+datasets
+accelerate
+
+# Hyperparameter Optimization
+optuna
+
+# Machine Learning & Data Science
+scikit-learn
+pandas
+numpy
+
+# Visualization
+matplotlib
+seaborn
+
+# Jupyter Notebooks
+jupyter
+ipykernel
+
+# Testing
+pytest
+pytest-cov
+
+# Google Drive Integration
+gdown
+
+# Environment Variables
+python-dotenv
