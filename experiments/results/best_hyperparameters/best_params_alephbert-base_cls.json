@@ -1,0 +1,40 @@
+{
+  "model": "onlplab/alephbert-base",
+  "task": "cls",
+  "best_trial_number": 2,
+  "best_validation_f1": 0.8767676767676768,
+  "best_hyperparameters": {
+    "learning_rate": "5e-5",
+    "batch_size": 16,
+    "num_epochs": 1,
+    "warmup_ratio": 0.0,
+    "weight_decay": 0.01,
+    "gradient_accumulation_steps": 1
+  },
+  "study_name": "alephbert-base_cls_hpo",
+  "n_trials": 3,
+  "fixed_parameters": {
+    "training_mode": "full_finetune",
+    "max_length": 128,
+    "fp16": false,
+    "seed": 42,
+    "train_file": "data/splits/train.csv",
+    "dev_file": "data/splits/validation.csv",
+    "test_file": "data/splits/test.csv",
+    "output_dir": "experiments/hpo_results_local_test/",
+    "save_steps": 1000,
+    "eval_steps": 100,
+    "logging_steps": 50,
+    "save_total_limit": 1,
+    "early_stopping_patience": 2,
+    "early_stopping_threshold": 0.001,
+    "device": "cpu",
+    "evaluation_strategy": "epoch",
+    "save_strategy": "epoch",
+    "metric_for_best_model": "f1",
+    "greater_is_better": true,
+    "load_best_model_at_end": true,
+    "report_to": "none",
+    "logging_dir": "experiments/hpo_logs_local_test/"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "mode": "zero_shot",
+  "mission": "3.2",
+  "model_id": "onlplab/alephbert-base",
+  "split": "test",
+  "n_samples": 100,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [
+      "IOB2 tags column 'iob2_tags' has 10 missing/NaN values (10.0%)"
+    ],
+    "stats": {
+      "total_samples": 100,
+      "missing_iob2": 10,
+      "valid_iob2": 90,
+      "tokenization_misaligned": 0,
+      "tokenization_aligned": 95
+    }
+  },
+  "tasks": {
+    "classification": {
+      "metrics": {
+        "accuracy": 0.5,
+        "precision_binary": 0.5609756097560976,
+        "recall_binary": 0.7666666666666667,
+        "f1_binary": 0.647887323943662,
+        "precision_macro": 0.3915989159891599,
+        "recall_macro": 0.43333333333333335,
+        "f1_macro": 0.39290917921321034,
+        "confusion_matrix": [
+          [
+            4,
+            36
+          ],
+          [
+            14,
+            46
+          ]
+        ],
+        "roc_auc": 0.42625
+      }
+    },
+    "span": {
+      "notes": "String-match IOB baseline (zero-shot)",
+      "n_evaluated": 95,
+      "token_metrics_avg": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "span_metrics_avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    }
+  }
+}

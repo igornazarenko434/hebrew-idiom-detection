@@ -1,0 +1,37 @@
+{
+  "mode": "zero_shot",
+  "mission": "3.2",
+  "model_id": "onlplab/alephbert-base",
+  "split": null,
+  "n_samples": 10,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "stats": {}
+  },
+  "tasks": {
+    "classification": {
+      "metrics": {
+        "accuracy": 0.9,
+        "precision_binary": 1.0,
+        "recall_binary": 0.9,
+        "f1_binary": 0.9473684210526315,
+        "precision_macro": 0.5,
+        "recall_macro": 0.45,
+        "f1_macro": 0.47368421052631576,
+        "confusion_matrix": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            9
+          ]
+        ],
+        "roc_auc": NaN
+      }
+    }
+  }
+}

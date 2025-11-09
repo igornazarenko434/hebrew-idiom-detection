@@ -6,11 +6,18 @@ models/
 *.pt
 *.pth
 *.bin
-checkpoint-*/
 
-# HPO and experiment results with large checkpoints
-experiments/hpo_test_results/
+# Exclude checkpoint directories but allow result files
 experiments/results/*/checkpoint-*/
+experiments/results/*/*/checkpoint-*/
+experiments/results/*/*/*/checkpoint-*/
+
+# HPO test results (temporary test files)
+experiments/hpo_test_results/
+experiments/hpo_results_local_test/
+
+# Optuna study databases are large but we'll keep them for now
+# experiments/results/optuna_studies/*.db
 
 # Python cache
 __pycache__/
@@ -22,9 +29,6 @@ __pycache__/
 .env
 .env.local
 .env.*.local
-
-# Experiment results (synced to Google Drive)
-experiments/results/
 
 # Virtual environment folders
 venv/

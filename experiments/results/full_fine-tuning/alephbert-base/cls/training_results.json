@@ -1,0 +1,25 @@
+{
+  "model": "onlplab/alephbert-base",
+  "task": "cls",
+  "mode": "FULL FINE-TUNING",
+  "freeze_backbone": false,
+  "config": {
+    "learning_rate": 2e-05,
+    "batch_size": 16,
+    "num_epochs": 1,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "train_samples": 100,
+  "dev_samples": 20,
+  "test_samples": 480,
+  "train_metrics": {
+    "runtime": 16.6921,
+    "loss": 0.6249100821358817
+  },
+  "test_metrics": {
+    "f1": 0.6779661016949152,
+    "precision": 0.0,
+    "recall": 0.0
+  }
+}
