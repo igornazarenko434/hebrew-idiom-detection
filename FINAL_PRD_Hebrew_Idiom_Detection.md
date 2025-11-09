@@ -237,6 +237,42 @@ labels = ["O", "B-IDIOM", "I-IDIOM", "I-IDIOM", "O", "O"]
 - Random: 33% (3 classes)
 - Expected fine-tuned: 80-90%
 
+#### 3.2.1 Subword Tokenization Alignment (CRITICAL Implementation Detail)
+
+**Challenge:** Transformer tokenizers (especially multilingual models like mBERT and XLM-RoBERTa) split Hebrew words into subword units, but our IOB2 tags are aligned with word-level tokens (whitespace-separated).
+
+**Example of the problem:**
+```python
+# Original word-level tokens and IOB2 tags
+Word tokens: ["הוא", "שבר", "את", "הראש", "על", "הבעיה"]
+IOB2 tags:   ["O", "B-IDIOM", "I-IDIOM", "I-IDIOM", "O", "O"]
+
+# After mBERT/XLM-R tokenization (subwords)
+Subword tokens: ["הוא", "##ש", "##בר", "את", "##ה", "##ראש", "על", "##ה", "##בעיה"]
+# How to align IOB2 tags to these 9 subword tokens?
+```
+
+**Solution Strategy:**
+1. Use HuggingFace tokenizer's `word_ids()` method to track which subword belongs to which original word
+2. Align IOB2 labels to subwords:
+   - First subword of each word gets the word's original IOB2 tag
+   - Subsequent subwords of the same word get label `-100` (ignored in loss computation)
+   - Special tokens ([CLS], [SEP], [PAD]) get label `-100`
+3. During training: Model learns from first subword of each word
+4. During evaluation: Aggregate subword predictions back to word-level before computing metrics
+
+**Implementation:**
+- Location: `src/utils/tokenization.py`
+- Key function: `align_labels_with_tokens(tokenized_inputs, word_labels)`
+- Used in: Data collation for Task 2 (Token Classification)
+
+**Validation:**
+- Must verify alignment preserves span boundaries
+- Test on all model tokenizers (especially mBERT, XLM-R which aggressively split Hebrew)
+- Print alignment examples during first training epoch
+
+**Note:** This alignment is mandatory for Task 2. Without it, the model will learn incorrect label-token associations and produce meaningless results.
+
 ---
 
 ## 4. Model Specifications
@@ -668,16 +704,19 @@ hebrew-idiom-detection/
 ├── src/
 │   ├── __init__.py
 │   ├── data_preparation.py          # Dataset loading and splitting
-│   ├── idiom_experiment.py          # Main training script (CLI support)
+│   ├── idiom_experiment.py          # Main training script (CLI support - all modes: zero_shot, full_finetune, frozen_backbone, hpo)
 │   ├── llm_evaluation.py            # LLM prompting experiments
 │   ├── visualization.py             # Results visualization
 │   └── utils/
 │       ├── __init__.py
 │       ├── metrics.py               # Evaluation metrics
+│       ├── tokenization.py          # IOB2 alignment for subword tokenization (CRITICAL for Task 2)
 │       ├── storage.py               # Google Drive sync utilities
 │       └── vast_utils.py            # VAST.ai helper functions
 ├── experiments/
 │   ├── configs/                     # YAML/JSON experiment configs
+│   │   ├── training_config.yaml     # Base training configuration template
+│   │   └── hpo_config.yaml          # Optuna hyperparameter search space
 │   ├── results/                     # Synced to Google Drive
 │   └── logs/                        # Training logs
 ├── models/                          # Model checkpoints (local cache)
@@ -689,8 +728,10 @@ hebrew-idiom-detection/
 │   └── 04_error_analysis.ipynb
 ├── scripts/
 │   ├── setup_vast_instance.sh       # Automate VAST.ai setup
-│   ├── sync_to_gdrive.sh            # Google Drive upload script
-│   └── download_from_gdrive.sh      # Google Drive download script
+│   ├── sync_to_gdrive.sh            # Google Drive upload script (rclone or manual - see Mission 4.4)
+│   ├── download_from_gdrive.sh      # Google Drive download script (gdown)
+│   ├── run_all_hpo.sh               # Batch runner for all 10 HPO studies (Mission 4.5, optional)
+│   └── run_all_experiments.sh       # Batch runner for all 30 final training runs (Mission 4.6)
 ├── tests/                           # Unit tests (pytest)
 │   ├── test_data_preparation.py
 │   └── test_metrics.py

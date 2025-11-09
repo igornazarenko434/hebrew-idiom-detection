@@ -80,7 +80,98 @@ pip install -r requirements.txt
 
 ## Usage
 
-(To be added as development progresses)
+### Zero-Shot Evaluation (Mission 3.2)
+
+Evaluate pre-trained models without fine-tuning:
+
+```bash
+# Task 1: Sequence Classification
+python src/idiom_experiment.py \
+  --mode zero_shot \
+  --model_id onlplab/alephbert-base \
+  --data data/splits/test.csv \
+  --task cls \
+  --device cpu
+
+# Task 2: Token Classification (IOB2 Tagging)
+python src/idiom_experiment.py \
+  --mode zero_shot \
+  --model_id onlplab/alephbert-base \
+  --data data/splits/test.csv \
+  --task span \
+  --device cpu
+
+# Both tasks
+python src/idiom_experiment.py \
+  --mode zero_shot \
+  --model_id onlplab/alephbert-base \
+  --data data/splits/test.csv \
+  --task both \
+  --device cpu
+```
+
+### Fine-Tuning (Mission 4.2)
+
+Train models with full fine-tuning:
+
+```bash
+# Task 1: Sequence Classification
+python src/idiom_experiment.py \
+  --mode full_finetune \
+  --config experiments/configs/training_config.yaml \
+  --task cls \
+  --device cuda
+
+# Task 2: Token Classification with IOB2 alignment
+python src/idiom_experiment.py \
+  --mode full_finetune \
+  --config experiments/configs/training_config.yaml \
+  --task span \
+  --device cuda
+
+# Override config parameters via CLI
+python src/idiom_experiment.py \
+  --mode full_finetune \
+  --config experiments/configs/training_config.yaml \
+  --task cls \
+  --learning_rate 3e-5 \
+  --batch_size 32 \
+  --num_epochs 10 \
+  --device cuda
+```
+
+### Frozen Backbone Training
+
+Train only the classification head while freezing the backbone:
+
+```bash
+python src/idiom_experiment.py \
+  --mode frozen_backbone \
+  --config experiments/configs/training_config.yaml \
+  --task cls \
+  --device cuda
+```
+
+### Hyperparameter Optimization (Mission 4.3)
+
+Run Optuna HPO to find best hyperparameters:
+
+```bash
+python src/idiom_experiment.py \
+  --mode hpo \
+  --config experiments/configs/hpo_config.yaml \
+  --device cuda
+```
+
+### Testing IOB2 Alignment
+
+Verify subword tokenization alignment (Mission 4.2 Task 3.5):
+
+```bash
+python src/test_tokenization_alignment.py
+```
+
+Results saved to `experiments/results/tokenization_alignment_test.txt`
 
 ## Research Methodology
 

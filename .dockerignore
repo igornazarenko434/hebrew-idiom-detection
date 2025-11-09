@@ -1,0 +1,69 @@
+# Docker ignore file for Hebrew Idiom Detection project
+# Excludes unnecessary files from Docker build context
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Python cache
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+.conda/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Models (large files - download separately or mount)
+models/*
+*.pth
+*.bin
+*.pt
+*.safetensors
+
+# Experiment results (mount as volume)
+experiments/results/*
+experiments/logs/*
+
+# Documentation
+*.md
+!docker/README.md
+!requirements.txt
+
+# MacOS
+.DS_Store
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+
+# Data files (mount as volume instead)
+data/*
+
+# Paper materials
+paper/figures/*
+paper/tables/*
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore

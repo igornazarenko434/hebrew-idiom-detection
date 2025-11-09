@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  hebrew-idiom-detection:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: hebrew-idiom-detection:latest
+    container_name: hebrew-idiom-detection
+
+    # GPU support (uncomment if using NVIDIA GPU)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+    # Mount local directories to container
+    volumes:
+      - ./data:/workspace/data
+      - ./src:/workspace/src
+      - ./experiments:/workspace/experiments
+      - ./models:/workspace/models
+      - ./notebooks:/workspace/notebooks
+      - ./scripts:/workspace/scripts
+      - ./tests:/workspace/tests
+      - ./paper:/workspace/paper
+
+    # Port mappings
+    ports:
+      - "8888:8888"  # Jupyter notebook
+      - "6006:6006"  # TensorBoard
+
+    # Environment variables
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CUDA_VISIBLE_DEVICES=0
+
+    # Keep container running
+    stdin_open: true
+    tty: true
+
+    # Command to run (can be overridden)
+    command: /bin/bash
+
+    # Alternative: Start Jupyter automatically
+    # command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root

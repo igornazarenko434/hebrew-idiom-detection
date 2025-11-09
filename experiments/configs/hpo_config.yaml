@@ -1,0 +1,93 @@
+# ============================================================================
+# Hyperparameter Optimization Configuration for Hebrew Idiom Detection
+# File: experiments/configs/hpo_config.yaml
+# Mission 4.1: Training Configuration Setup
+# Mission 4.3-4.5: Optuna HPO Implementation
+# ============================================================================
+
+# Optuna settings
+optuna:
+  n_trials: 15                              # Number of trials per model-task combination
+  direction: "maximize"                     # Maximize validation F1
+  pruning: true                             # Enable pruning of unpromising trials
+  study_name: "idiom_hpo"                   # Name for Optuna study
+  storage: null                             # SQLite storage path (null = in-memory)
+  sampler: "TPESampler"                     # Options: "TPESampler", "RandomSampler", "GridSampler"
+  pruner: "MedianPruner"                    # Options: "MedianPruner", "PercentilePruner", "HyperbandPruner"
+
+# Hyperparameter search space (from PRD Section 5.1)
+# Optuna will sample from these values
+search_space:
+  learning_rate:                            # Learning rate candidates
+    type: "categorical"
+    values: [1e-5, 2e-5, 3e-5, 5e-5]
+
+  batch_size:                               # Batch size candidates
+    type: "categorical"
+    values: [8, 16, 32]
+
+  num_epochs:                               # Number of training epochs
+    type: "categorical"
+    values: [3, 5, 8]
+
+  warmup_ratio:                             # Warmup ratio for learning rate scheduler
+    type: "categorical"
+    values: [0.0, 0.1, 0.2]
+
+  weight_decay:                             # L2 regularization strength
+    type: "categorical"
+    values: [0.0, 0.01, 0.05]
+
+  gradient_accumulation_steps:              # Gradient accumulation steps
+    type: "categorical"
+    values: [1, 2, 4]
+
+# Fixed settings during HPO (not optimized)
+fixed:
+  training_mode: "full_finetune"            # Always full finetune during HPO
+  max_length: 128                           # Maximum sequence length
+  fp16: false                               # Mixed precision (set to true on GPU)
+  seed: 42                                  # Fixed seed for reproducibility across trials
+
+  # Data paths
+  train_file: "data/splits/train.csv"
+  dev_file: "data/splits/validation.csv"
+  test_file: "data/splits/test.csv"
+
+  # Output settings
+  output_dir: "experiments/hpo_results/"    # Base output directory for HPO
+  save_steps: 1000                          # Save less frequently during HPO
+  eval_steps: 500                           # Evaluate every N steps
+  logging_steps: 100                        # Log every N steps
+  save_total_limit: 1                       # Keep only best checkpoint during HPO
+
+  # Early stopping (more aggressive during HPO to save time)
+  early_stopping_patience: 2                # Stop earlier during HPO
+  early_stopping_threshold: 0.001           # Require larger improvement
+
+  # Device
+  device: "cuda"                            # HPO should run on GPU
+
+  # Evaluation
+  evaluation_strategy: "steps"
+  save_strategy: "steps"
+  metric_for_best_model: "f1"
+  greater_is_better: true
+  load_best_model_at_end: true
+
+  # Logging
+  report_to: "none"                         # Disable wandb/tensorboard during HPO
+  logging_dir: "experiments/hpo_logs/"
+
+# Optuna visualization settings (for post-HPO analysis)
+visualization:
+  plot_optimization_history: true           # Plot F1 over trials
+  plot_param_importances: true              # Plot hyperparameter importance
+  plot_parallel_coordinate: true            # Plot parallel coordinates
+  plot_slice: true                          # Plot slice plots
+
+# HPO execution settings
+execution:
+  timeout: null                             # Max time per trial in seconds (null = no limit)
+  n_jobs: 1                                 # Number of parallel trials (1 = sequential)
+  show_progress_bar: true                   # Show progress bar during HPO

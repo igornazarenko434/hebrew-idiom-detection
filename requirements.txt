@@ -1,38 +1,79 @@
 # Python Dependencies for Hebrew Idiom Detection Project
 # Mission 1.2: Dependencies Installation
+# Updated: Mission 4.1-4.2 (Training Pipeline Dependencies)
 
+# ============================================================================
 # Deep Learning Framework
+# ============================================================================
 torch>=2.0.0
-torchvision
-torchaudio
+torchvision>=0.15.0
+torchaudio>=2.0.0
 
+# ============================================================================
 # HuggingFace Libraries
-transformers>=4.30.0
-datasets
-accelerate
+# ============================================================================
+transformers>=4.30.0,<5.0.0
+datasets>=4.0.0
+evaluate>=0.4.0                    # NEW: Mission 4.2 - Metrics evaluation (F1, accuracy)
+seqeval>=1.2.0                     # NEW: Mission 4.2 - Token classification metrics (IOB2)
+accelerate>=0.20.0
+huggingface-hub>=0.16.0,<1.0.0
 
+# ============================================================================
+# Data Processing
+# ============================================================================
+pyarrow>=20.0.0                    # NEW: Mission 4.2 - Required by datasets library
+pandas>=2.0.0
+numpy>=1.24.0
+
+# ============================================================================
+# Configuration Management
+# ============================================================================
+PyYAML>=6.0                        # NEW: Mission 4.1 - YAML config file loading
+
+# ============================================================================
 # Hyperparameter Optimization
-optuna
+# ============================================================================
+optuna>=3.0.0
+optuna-dashboard                   # Optional: For HPO visualization
 
-# Machine Learning & Data Science
-scikit-learn
-pandas
-numpy
+# ============================================================================
+# Machine Learning & Evaluation
+# ============================================================================
+scikit-learn>=1.2.0
 
+# ============================================================================
 # Visualization
-matplotlib
-seaborn
+# ============================================================================
+matplotlib>=3.7.0
+seaborn>=0.12.0
 
-# Jupyter Notebooks
-jupyter
-ipykernel
+# ============================================================================
+# Jupyter Notebooks & Development
+# ============================================================================
+jupyter>=1.0.0
+ipykernel>=6.20.0
+notebook>=6.5.0
 
+# ============================================================================
 # Testing
-pytest
-pytest-cov
+# ============================================================================
+pytest>=7.2.0
+pytest-cov>=4.0.0
 
+# ============================================================================
 # Google Drive Integration
-gdown
+# ============================================================================
+gdown>=4.7.0
 
-# Environment Variables
-python-dotenv
+# ============================================================================
+# Environment & Utilities
+# ============================================================================
+python-dotenv>=1.0.0
+tqdm>=4.65.0                       # Progress bars (used by transformers)
+
+# ============================================================================
+# Optional Dependencies (for specific features)
+# ============================================================================
+# tensorboard>=2.12.0              # For TensorBoard logging (if needed)
+# wandb>=0.15.0                    # For Weights & Biases logging (if needed)

@@ -1,6 +1,17 @@
 # Models folder (large files)
 models/
 
+# Model checkpoint files (large files)
+*.safetensors
+*.pt
+*.pth
+*.bin
+checkpoint-*/
+
+# HPO and experiment results with large checkpoints
+experiments/hpo_test_results/
+experiments/results/*/checkpoint-*/
+
 # Python cache
 __pycache__/
 *.py[cod]

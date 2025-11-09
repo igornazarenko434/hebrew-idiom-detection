@@ -1,0 +1,86 @@
+# ============================================================================
+# LOCAL TEST - Hyperparameter Optimization Configuration
+# File: experiments/configs/hpo_config_local_test.yaml
+# Mission 4.3 Task 5: Local HPO Testing (3 trials on small subset)
+# ============================================================================
+
+# Optuna settings - REDUCED FOR LOCAL TESTING
+optuna:
+  n_trials: 3                               # Only 3 trials for local testing
+  direction: "maximize"                     # Maximize validation F1
+  pruning: false                            # Disable pruning for simplicity in testing
+  study_name: "idiom_hpo_local_test"        # Name for test study
+  storage: null                             # SQLite storage (auto-generated)
+  sampler: "TPESampler"                     # TPE sampler
+  pruner: "MedianPruner"                    # Median pruner (disabled above)
+  show_progress_bar: true                   # Show progress
+
+# Hyperparameter search space (from PRD Section 5.1)
+# REDUCED search space for faster local testing
+search_space:
+  learning_rate:                            # Learning rate candidates
+    type: "categorical"
+    values: [2e-5, 5e-5]                    # Only 2 values for testing
+
+  batch_size:                               # Batch size candidates
+    type: "categorical"
+    values: [8, 16]                         # Only 2 values for testing
+
+  num_epochs:                               # Number of training epochs
+    type: "categorical"
+    values: [1, 2]                          # Only 1-2 epochs for fast testing
+
+  warmup_ratio:                             # Warmup ratio for learning rate scheduler
+    type: "categorical"
+    values: [0.0, 0.1]                      # Only 2 values
+
+  weight_decay:                             # L2 regularization strength
+    type: "categorical"
+    values: [0.0, 0.01]                     # Only 2 values
+
+  gradient_accumulation_steps:              # Gradient accumulation steps
+    type: "categorical"
+    values: [1, 2]                          # Only 2 values
+
+# Fixed settings during HPO (not optimized)
+fixed:
+  training_mode: "full_finetune"            # Always full finetune during HPO
+  max_length: 128                           # Maximum sequence length
+  fp16: false                               # No mixed precision on CPU
+  seed: 42                                  # Fixed seed for reproducibility across trials
+
+  # Data paths
+  train_file: "data/splits/train.csv"
+  dev_file: "data/splits/validation.csv"
+  test_file: "data/splits/test.csv"
+
+  # Output settings
+  output_dir: "experiments/hpo_results_local_test/"    # Separate directory for test
+  save_steps: 1000                          # Save less frequently during HPO
+  eval_steps: 100                           # Evaluate more frequently for small dataset
+  logging_steps: 50                         # Log more frequently for visibility
+  save_total_limit: 1                       # Keep only best checkpoint during HPO
+
+  # Early stopping (more aggressive during HPO to save time)
+  early_stopping_patience: 2                # Stop earlier during HPO
+  early_stopping_threshold: 0.001           # Require larger improvement
+
+  # Device - CHANGED FOR LOCAL TESTING
+  device: "cpu"                             # Use CPU for local testing
+
+  # Evaluation
+  evaluation_strategy: "epoch"              # Evaluate every epoch (faster for small dataset)
+  save_strategy: "epoch"                    # Save every epoch
+  metric_for_best_model: "f1"
+  greater_is_better: true
+  load_best_model_at_end: true
+
+  # Logging
+  report_to: "none"                         # Disable wandb/tensorboard during HPO
+  logging_dir: "experiments/hpo_logs_local_test/"
+
+# HPO execution settings
+execution:
+  timeout: null                             # Max time per trial in seconds (null = no limit)
+  n_jobs: 1                                 # Number of parallel trials (1 = sequential)
+  show_progress_bar: true                   # Show progress bar during HPO

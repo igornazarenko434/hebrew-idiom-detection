@@ -1,0 +1,64 @@
+# ============================================================================
+# Training Configuration for Hebrew Idiom Detection
+# File: experiments/configs/training_config.yaml
+# Mission 4.1: Training Configuration Setup
+# ============================================================================
+
+# Model settings
+model_name: "alephbert-base"                # Short name for logging
+model_checkpoint: "onlplab/alephbert-base"  # HuggingFace model ID
+max_length: 128                             # Maximum sequence length
+
+# Task settings
+task: "sequence_classification"             # Options: "sequence_classification", "token_classification"
+num_labels: 2                               # 2 for sequence classification (literal/figurative)
+                                            # 3 for token classification (O, B-IDIOM, I-IDIOM)
+
+# Training mode
+training_mode: "full_finetune"              # Options: "zero_shot", "full_finetune", "frozen_backbone"
+
+# Hyperparameters (from PRD Section 5.1)
+# These can be overridden by Optuna in Mission 4.3-4.5 or via CLI
+learning_rate: 2e-5                         # Initial learning rate
+batch_size: 16                              # Training batch size
+num_epochs: 5                               # Number of training epochs
+warmup_ratio: 0.1                           # Warmup ratio for learning rate scheduler
+weight_decay: 0.01                          # L2 regularization
+gradient_accumulation_steps: 1              # Gradient accumulation steps (increase for larger effective batch size)
+fp16: false                                 # Mixed precision training (set to true for GPU speedup)
+seed: 42                                    # Random seed for reproducibility
+
+# Data paths
+train_file: "data/splits/train.csv"         # Training data
+dev_file: "data/splits/validation.csv"      # Validation data (for early stopping)
+test_file: "data/splits/test.csv"           # Test data (final evaluation)
+
+# Output settings
+output_dir: "experiments/results/"          # Base output directory
+save_steps: 500                             # Save checkpoint every N steps
+eval_steps: 500                             # Evaluate on validation set every N steps
+logging_steps: 100                          # Log metrics every N steps
+save_total_limit: 2                         # Keep only last N checkpoints
+load_best_model_at_end: true                # Load best checkpoint at end of training
+metric_for_best_model: "f1"                 # Metric to use for selecting best model
+greater_is_better: true                     # Higher F1 is better
+
+# Early stopping
+early_stopping_patience: 3                  # Stop if no improvement for N evaluations
+early_stopping_threshold: 0.0001            # Minimum change to qualify as improvement
+
+# Device
+device: "cuda"                              # Options: "cuda", "cpu", "mps"
+
+# Evaluation settings
+evaluation_strategy: "steps"                # Options: "steps", "epoch", "no"
+save_strategy: "steps"                      # Options: "steps", "epoch", "no"
+
+# Logging
+report_to: "none"                           # Options: "tensorboard", "wandb", "none"
+logging_dir: "experiments/logs/"            # Directory for training logs
+
+# Additional settings
+dataloader_num_workers: 0                   # Number of workers for data loading (0 for single-threaded)
+remove_unused_columns: false                # Keep all columns in dataset
+label_names: ["labels"]                     # Column names for labels

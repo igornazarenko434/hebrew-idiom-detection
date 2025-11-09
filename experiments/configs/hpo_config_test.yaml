@@ -1,0 +1,82 @@
+# ============================================================================
+# Test HPO Configuration for Local Testing (Mission 4.3)
+# This is a simplified version with only 3 trials for quick local testing
+# ============================================================================
+
+# Optuna settings
+optuna:
+  n_trials: 3                               # Just 3 trials for testing
+  direction: "maximize"                     # Maximize validation F1
+  pruning: false                            # Disable pruning for testing
+  study_name: "idiom_hpo_test"
+  storage: null                             # In-memory (no database)
+  sampler: "TPESampler"
+
+# Simplified search space (fewer values for faster testing)
+search_space:
+  learning_rate:
+    type: "categorical"
+    values: [2e-5, 3e-5]                    # Only 2 values
+
+  batch_size:
+    type: "categorical"
+    values: [8, 16]                         # Only 2 values
+
+  num_epochs:
+    type: "categorical"
+    values: [2, 3]                          # Fewer epochs for speed
+
+  warmup_ratio:
+    type: "categorical"
+    values: [0.0, 0.1]
+
+  weight_decay:
+    type: "categorical"
+    values: [0.0, 0.01]
+
+  gradient_accumulation_steps:
+    type: "categorical"
+    values: [1]                             # Fixed to 1 for testing
+
+# Fixed settings
+fixed:
+  training_mode: "full_finetune"
+  max_length: 128
+  fp16: false                               # CPU doesn't support fp16
+  seed: 42
+
+  # Data paths
+  train_file: "data/splits/train.csv"
+  dev_file: "data/splits/validation.csv"
+  test_file: "data/splits/test.csv"
+
+  # Output settings
+  output_dir: "experiments/hpo_test_results/"
+  save_steps: 1000
+  eval_steps: 500
+  logging_steps: 100
+  save_total_limit: 1
+
+  # Early stopping (more aggressive for faster testing)
+  early_stopping_patience: 2
+  early_stopping_threshold: 0.001
+
+  # Device
+  device: "cpu"                             # CPU for local testing
+
+  # Evaluation
+  evaluation_strategy: "steps"
+  save_strategy: "steps"
+  metric_for_best_model: "f1"
+  greater_is_better: true
+  load_best_model_at_end: true
+
+  # Logging
+  report_to: "none"
+  logging_dir: "experiments/hpo_test_logs/"
+
+# Execution settings
+execution:
+  timeout: null
+  n_jobs: 1
+  show_progress_bar: true

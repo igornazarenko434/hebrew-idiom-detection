@@ -407,6 +407,72 @@
 
 ---
 
+### Mission 2.5.1 (OPTIONAL - HIGH PRIORITY): Create Seen-Idiom Test Set
+
+**Objective:** Create an additional test set with idioms that appear in the training set to distinguish in-domain generalization from zero-shot generalization
+
+**Why this is important (Senior Researcher Recommendation):**
+The current test set (Mission 2.5) contains 6 idioms that are completely unseen during training. This evaluates **zero-shot idiom generalization**, which is valuable but different from standard evaluation. Adding a "seen-idiom test set" allows you to:
+1. Measure performance on idioms the model has been trained on (in-domain generalization)
+2. Compare in-domain vs zero-shot performance to understand the difficulty gap
+3. Make results more comparable to other idiom detection papers (most use seen idioms)
+4. Provide a clearer picture of model capabilities
+
+**Tasks:**
+1. Select 6 additional idioms from the training set (48 expressions):
+   - Use stratified sampling to ensure representativeness
+   - Choose idioms with medium frequency (not too rare, not too common)
+   - Maintain balance of literal/figurative usage
+   - Diversity in idiom length and complexity
+2. Extract 10% of samples for these 6 idioms from train/dev sets:
+   - Move these samples to new "seen_test" split
+   - Maintain 50/50 label balance
+   - Remove from train/dev splits
+3. Create new split files:
+   - `data/splits/seen_test.csv` (samples with seen idioms)
+   - Update `data/splits/train.csv` and `data/splits/validation.csv` (remove moved samples)
+   - Keep original `data/splits/test.csv` as "unseen_test.csv" (zero-shot evaluation)
+   - Update `data/splits/split_expressions.json` with new split information
+4. Document the distinction:
+   - `experiments/docs/test_sets_explanation.md`:
+     - **Seen Test Set:** 6 idioms present in training data (in-domain generalization)
+     - **Unseen Test Set:** 6 idioms absent from training data (zero-shot generalization)
+     - Clarify which test set is used for each evaluation
+5. Update all evaluation scripts to report both test sets:
+   - Results on seen test set (expected higher performance)
+   - Results on unseen test set (expected lower performance)
+   - Gap analysis: How much does the model rely on seeing idioms during training?
+
+**Alternative (if you prefer simpler approach):**
+Instead of creating a second test set, clearly document in `experiments/docs/evaluation_strategy.md`:
+- Current test set evaluates **zero-shot idiom generalization** (unseen idioms)
+- This is intentional and valuable for real-world applications
+- Performance may be lower than papers using seen-idiom test sets
+- This should be highlighted in the paper's evaluation section
+
+**Validation:**
+- If creating seen test set:
+  - Seen test set contains 6 idioms present in training data
+  - Unseen test set contains 6 different idioms absent from training data
+  - No expression overlap between train/dev and unseen test
+  - Both test sets have balanced labels
+  - Documentation clearly explains the distinction
+- If documenting current approach:
+  - Clear explanation of zero-shot evaluation strategy
+  - Rationale for this design choice documented
+  - Expected performance differences noted
+
+**Success Criteria:**
+✅ Either created seen-idiom test set OR documented zero-shot evaluation strategy
+✅ Test set distinction clearly explained
+✅ Evaluation plan accounts for both scenarios
+✅ Paper will clearly communicate evaluation approach
+✅ Results will be interpretable and comparable
+
+**Recommendation:** This is HIGH PRIORITY for publication quality. Choose whichever approach fits your research goals better.
+
+---
+
 ### Mission 2.6: Data Preparation Testing
 
 **Objective:** Create unit tests for data preparation functions
@@ -487,6 +553,24 @@
 
 **Tasks:**
 1. Create `src/idiom_experiment.py` file with command-line interface
+
+   **Important:** Create the script with a **skeleton structure** that supports all modes (zero_shot, full_finetune, frozen_backbone, hpo), but **only implement zero_shot** in this mission. The skeleton will look like:
+   ```python
+   def main():
+       args = parse_args()
+
+       if args.mode == "zero_shot":
+           run_zero_shot(args)  # ← Implement NOW in Mission 3.2
+       elif args.mode == "full_finetune":
+           run_training(args)  # ← Implement later in Mission 4.2
+       elif args.mode == "frozen_backbone":
+           run_training(args, freeze_backbone=True)  # ← Implement in Mission 4.2
+       elif args.mode == "hpo":
+           run_hpo(args)  # ← Implement later in Mission 4.3
+       else:
+           raise ValueError(f"Unknown mode: {args.mode}")
+   ```
+   This way, you won't need to restructure the file later - just add implementations
 2. Implement functions for:
    - Loading model and tokenizer
    - Preprocessing data (tokenization, padding)
@@ -561,6 +645,156 @@
 
 ---
 
+### Mission 3.3.5 (OPTIONAL - HIGH PRIORITY): Trivial Baseline Evaluation
+
+**Objective:** Implement and evaluate trivial baselines to establish performance floor and validate that more complex models are actually learning
+
+**Why this is important (Senior Researcher Recommendation):**
+Every ML research paper should include trivial baselines to:
+1. Establish a performance floor (sanity check)
+2. Verify that sophisticated models actually learn beyond simple heuristics
+3. Demonstrate that the task is non-trivial
+4. Make results more credible to reviewers and readers
+5. Sometimes trivial baselines perform surprisingly well and are more interpretable!
+
+**Tasks:**
+
+**1. Task 1 (Sentence Classification) - Trivial Baselines:**
+
+a) **Majority Class Baseline:**
+```python
+# Always predict "figurative" (class 1)
+predictions = np.ones(len(test_set))
+# Calculate accuracy, precision, recall, F1
+```
+
+b) **Random Baseline:**
+```python
+# Random prediction with 50/50 distribution
+predictions = np.random.randint(0, 2, size=len(test_set))
+# Run 5 times with different seeds and report mean ± std
+```
+
+c) **Sentence Length Heuristic:**
+```python
+# Hypothesis: Longer sentences might be more figurative
+# Use median sentence length as threshold
+if len(sentence.split()) > median_length:
+    predict "figurative"
+else:
+    predict "literal"
+```
+
+d) **Question Mark Heuristic:**
+```python
+# Based on Mission 2.4 analysis: 7.12% questions
+# Test if questions are more literal or figurative
+if sentence.endswith("?"):
+    predict class_A
+else:
+    predict class_B
+# Try both combinations and report better one
+```
+
+**2. Task 2 (Token Classification / Span Detection) - Trivial Baselines:**
+
+a) **Always-O Baseline:**
+```python
+# Predict no idiom in any sentence
+predictions = ["O"] * len(tokens) for all sentences
+# This establishes floor for precision/recall
+```
+
+b) **Exact String Match Baseline:**
+```python
+# Already implemented in Mission 3.2 (iob_from_string_match)
+# Use the provided 'expression' field
+# Search for exact match in sentence
+# Tag matched tokens as B-IDIOM/I-IDIOM
+```
+
+c) **First-N-Tokens Heuristic:**
+```python
+# Based on Mission 2.4 analysis: Average idiom length = 2.39 tokens
+# Always tag first 2 tokens as B-IDIOM, I-IDIOM
+# Or tag middle 2 tokens
+# This tests if position matters
+```
+
+**3. Implementation:**
+1. Create `src/trivial_baselines.py` script:
+   ```python
+   def majority_class_baseline(test_df):
+       """Always predict figurative"""
+       pass
+
+   def random_baseline(test_df, n_runs=5):
+       """Random predictions with multiple runs"""
+       pass
+
+   def sentence_length_baseline(test_df):
+       """Use sentence length as heuristic"""
+       pass
+
+   def always_o_baseline(test_df):
+       """Predict no idioms (all O tags)"""
+       pass
+
+   def exact_match_baseline(test_df):
+       """Use expression field for exact matching"""
+       pass
+   ```
+
+2. Run all baselines on test set
+3. Save results to `experiments/results/trivial_baselines/`
+4. Compare with zero-shot model results from Mission 3.3
+
+**4. Analysis:**
+1. Create comparison table:
+   ```
+   | Method              | Task 1 F1 | Task 2 F1 (span) |
+   |---------------------|-----------|------------------|
+   | Majority Class      | X.XX      | N/A              |
+   | Random              | X.XX±X.XX | N/A              |
+   | Sentence Length     | X.XX      | N/A              |
+   | Always-O            | N/A       | X.XX             |
+   | Exact Match         | N/A       | X.XX             |
+   | Best Zero-Shot      | X.XX      | X.XX             |
+   | Improvement         | +X.XX     | +X.XX            |
+   ```
+
+2. Verify that zero-shot models beat all trivial baselines
+3. If any trivial baseline performs surprisingly well, analyze why
+4. Document findings in `experiments/results/trivial_baselines_analysis.md`
+
+**Validation:**
+- All 5+ trivial baselines implemented
+- Results calculated for test set
+- Comparison with zero-shot models complete
+- Zero-shot models significantly outperform trivial baselines
+- Analysis documented
+
+**Success Criteria:**
+✅ All trivial baselines implemented and evaluated
+✅ Performance floor established
+✅ Zero-shot models beat trivial baselines (sanity check passed)
+✅ Comparison table ready for paper
+✅ Demonstrates task is non-trivial
+✅ Increases paper credibility
+
+**Expected Results:**
+- Majority class should get ~50% accuracy (balanced dataset)
+- Random should get ~50% accuracy
+- Heuristics may get 50-65% depending on patterns
+- Zero-shot models should get >65% to demonstrate learning
+- Exact string match for Task 2 should be decent baseline (reported in Mission 3.2)
+
+**Time Estimate:** 2-3 hours (very quick to implement)
+
+**Recommendation:** This is HIGH PRIORITY and very quick to implement. Adds significant credibility to paper.
+
+---
+
 ### Mission 3.4: Zero-Shot Results Analysis
 
 **Objective:** Analyze baseline results and document findings
@@ -604,35 +838,125 @@
 **Objective:** Create training configuration system for hyperparameter management
 
 **Tasks:**
-1. Create configuration file structure in `experiments/configs/`
-2. Define hyperparameter ranges from PRD Section 5.1:
-   - Learning rate: [1e-5, 2e-5, 3e-5, 5e-5]
-   - Batch size: [8, 16, 32]
-   - Epochs: [3, 5, 8]
-   - Warmup ratio: [0.0, 0.1, 0.2]
-   - Weight decay: [0.0, 0.01, 0.05]
-   - Gradient accumulation steps: [1, 2, 4]
-3. Create default configuration file (YAML or JSON format):
-   - Default values for all hyperparameters
-   - Model selection
-   - Task selection
-   - Paths to data
-   - Output directory
-   - Random seed
-4. Implement configuration loading in training script
-5. Test loading and validating configuration
+1. Create two configuration files in `experiments/configs/`:
+
+   **a) `training_config.yaml` - Base training configuration template:**
+   ```yaml
+   # Model settings
+   model_name: "alephbert-base"          # CLI can override
+   model_checkpoint: "onlplab/alephbert-base"
+   max_length: 128
+
+   # Task settings
+   task: "sequence_classification"       # Options: "sequence_classification", "token_classification"
+   num_labels: 2                         # Will be 3 for token_classification
+
+   # Training mode
+   training_mode: "full_finetune"        # Options: "zero_shot", "full_finetune", "frozen_backbone"
+
+   # Hyperparameters (can be overridden by Optuna in Mission 4.3-4.5)
+   learning_rate: 2e-5
+   batch_size: 16
+   num_epochs: 5
+   warmup_ratio: 0.1
+   weight_decay: 0.01
+   gradient_accumulation_steps: 1
+   fp16: false                           # Mixed precision training
+   seed: 42
+
+   # Data paths
+   train_file: "data/train.csv"
+   dev_file: "data/dev.csv"
+   test_file: "data/test.csv"
+
+   # Output settings
+   output_dir: "experiments/results/"
+   save_steps: 500
+   eval_steps: 500
+   logging_steps: 100
+   save_total_limit: 2
+
+   # Device
+   device: "cuda"                        # Options: "cuda", "cpu", "mps"
+   ```
+
+   **b) `hpo_config.yaml` - Optuna hyperparameter search space:**
+   ```yaml
+   # Optuna settings
+   optuna:
+     n_trials: 15
+     direction: "maximize"               # Maximize validation F1
+     pruning: true
+     study_name: "idiom_hpo"
+
+   # Search space (from PRD Section 5.1)
+   search_space:
+     learning_rate: [1e-5, 2e-5, 3e-5, 5e-5]
+     batch_size: [8, 16, 32]
+     num_epochs: [3, 5, 8]
+     warmup_ratio: [0.0, 0.1, 0.2]
+     weight_decay: [0.0, 0.01, 0.05]
+     gradient_accumulation_steps: [1, 2, 4]
+
+   # Fixed settings during HPO
+   fixed:
+     training_mode: "full_finetune"      # Always full finetune during HPO
+     max_length: 128
+     fp16: false
+   ```
+
+2. Implement configuration loading in `src/idiom_experiment.py`:
+   - Add function to load YAML config files:
+     ```python
+     import yaml
+
+     def load_config(config_path):
+         """Load configuration from YAML file"""
+         with open(config_path, 'r') as f:
+             config = yaml.safe_load(f)
+         return config
+     ```
+   - Add CLI argument `--config` to argparse
+   - Test: Load both config files and print their contents to verify structure
+   - Support command-line override of config values (e.g., --learning_rate overrides config value)
+   - Validate required fields are present
+   - Handle different training modes (zero_shot, full_finetune, frozen_backbone)
+
+   **Note:** At this stage, just verify you can LOAD and PRINT config values. Full integration with training happens in Mission 4.2
+
+3. Add command-line interface to support different modes:
+   ```bash
+   # Zero-shot evaluation
+   python src/idiom_experiment.py --mode zero_shot --model alephbert-base --task sequence_classification
+
+   # Full fine-tuning
+   python src/idiom_experiment.py --mode full_finetune --config experiments/configs/training_config.yaml
+
+   # Frozen backbone training
+   python src/idiom_experiment.py --mode frozen_backbone --config experiments/configs/training_config.yaml
+
+   # Hyperparameter optimization
+   python src/idiom_experiment.py --mode hpo --config experiments/configs/hpo_config.yaml
+   ```
+
+4. Test configuration system:
+   - Load both YAML files without errors
+   - Override config values via CLI
+   - Validate all hyperparameters accessible
 
 **Validation:**
-- Config files created and valid
+- Config files created and valid YAML
 - Can load configuration from file
 - All hyperparameters accessible
-- Ranges documented clearly
+- CLI can override config values
+- Different modes (zero_shot, full_finetune, frozen_backbone, hpo) supported
 - Easy to modify for experiments
 
 **Success Criteria:**
-✅ Configuration system implemented
-✅ All hyperparameters defined
-✅ Ranges from PRD included
+✅ Two configuration files created (training_config.yaml, hpo_config.yaml)
+✅ Configuration loading implemented in idiom_experiment.py
+✅ CLI supports all training modes
+✅ All hyperparameters from PRD Section 5.1 included
 ✅ Easy to use and modify
 ✅ Ready for training experiments
 
@@ -655,9 +979,104 @@
    - Set num_labels=2
    - Train on training set
    - Validate on validation set
+
+3.5. **CRITICAL: For Task 2 (Token Classification) - Implement Subword Tokenization Alignment:**
+
+   **Problem:** Transformer tokenizers split Hebrew words into subwords, but IOB2 tags are aligned with word-level tokens.
+
+   **Example:**
+   ```python
+   # Word-level (what we have in dataset)
+   Words:     ["הוא", "שבר", "את", "הראש"]
+   IOB2 tags: ["O", "B-IDIOM", "I-IDIOM", "I-IDIOM"]
+
+   # After mBERT/XLM-R tokenization (subwords)
+   Subwords:  ["הוא", "##ש", "##בר", "את", "##ה", "##ראש"]
+   # Need to align IOB2 to these 6 subword tokens!
+   ```
+
+   **Solution - Implement alignment utility:**
+
+   a) **Create `src/utils/tokenization.py`** with alignment function:
+      ```python
+      def align_labels_with_tokens(tokenized_inputs, word_labels, label2id):
+          """
+          Align word-level IOB2 labels with subword tokens.
+
+          Strategy:
+          - Use tokenizer's word_ids() to track which subword belongs to which word
+          - First subword of each word gets the word's IOB2 label
+          - Subsequent subwords of same word get -100 (ignored in loss)
+          - Special tokens ([CLS], [SEP], [PAD]) get -100
+
+          Args:
+              tokenized_inputs: Output from tokenizer with return_offsets_mapping=True
+              word_labels: List of IOB2 labels aligned with word-level tokens
+              label2id: Dictionary mapping label strings to IDs
+
+          Returns:
+              aligned_labels: List of label IDs for each subword token
+          """
+          aligned_labels = []
+          word_ids = tokenized_inputs.word_ids()  # Maps each token to its word index
+
+          previous_word_idx = None
+          for word_idx in word_ids:
+              # Special tokens have word_idx = None
+              if word_idx is None:
+                  aligned_labels.append(-100)
+              # First subword of a new word
+              elif word_idx != previous_word_idx:
+                  aligned_labels.append(label2id[word_labels[word_idx]])
+              # Subsequent subwords of the same word
+              else:
+                  aligned_labels.append(-100)  # Ignore in loss
+
+              previous_word_idx = word_idx
+
+          return aligned_labels
+      ```
+
+   b) **Test alignment thoroughly:**
+      - Load a multilingual model tokenizer (mBERT or XLM-R)
+      - Test on 10 example sentences from training data
+      - For each example:
+        * Print original words and IOB2 tags
+        * Print subword tokens
+        * Print aligned labels
+        * Verify span boundaries are preserved
+        * Verify [CLS], [SEP] have label -100
+      - Save test results to `experiments/results/tokenization_alignment_test.txt`
+
+   c) **Integrate into data collation:**
+      - When loading data for Task 2 training:
+        * Tokenize text with `return_offsets_mapping=True`
+        * Parse word-level IOB2 tags from dataset
+        * Call `align_labels_with_tokens()` to get aligned labels
+        * Create batch with input_ids, attention_mask, labels
+      - Ensure data collator handles variable-length sequences correctly
+
+   d) **Evaluation alignment:**
+      - During evaluation, model outputs predictions for each subword
+      - Need to convert back to word-level:
+        * Use word_ids() to group subword predictions
+        * Take first subword's prediction as the word's prediction
+        * Ignore subwords with label -100
+      - Compute metrics on word-level predictions vs word-level ground truth
+
+   **Validation steps for this subtask:**
+   - Print 10 alignment examples and manually verify correctness
+   - Verify no span boundary errors (idiom spans preserved)
+   - Verify special tokens have -100
+   - Test on all 5 model tokenizers (AlephBERT, DictaBERT, mBERT, XLM-R)
+   - Integration test: Load data, process batch, run forward pass - no errors
+
+   **WITHOUT THIS ALIGNMENT, TASK 2 WILL NOT WORK!** The model will learn wrong label-token associations.
+
 4. For Task 2 (Token Classification):
    - Use `AutoModelForTokenClassification`
    - Set num_labels=3 (O, B-IDIOM, I-IDIOM)
+   - **Use alignment function from Task 3.5 in data collation**
    - Handle IOB2 label mapping
    - Train on training set
    - Validate on validation set
@@ -665,7 +1084,28 @@
    - Save best model based on validation F1
    - Save training logs
    - Save final metrics
-6. Test training on small subset (500 samples, 2 epochs)
+
+6. **Test training LOCALLY on PyCharm first (important!):**
+   - Run on CPU or MPS (Mac GPU)
+   - Very small subset: 100 samples from training data
+   - 1 epoch only
+   - Purpose: Verify code runs without errors, loss decreases, metrics computed correctly
+   - **DO NOT skip this step** - finding bugs locally saves VAST.ai costs!
+   - Command example:
+     ```bash
+     python src/idiom_experiment.py \
+       --mode full_finetune \
+       --config experiments/configs/training_config.yaml \
+       --max_samples 100 \
+       --num_epochs 1 \
+       --device cpu
+     ```
+
+7. (Optional) Test on VAST.ai with larger subset:
+   - After local test passes, optionally test on VAST.ai GPU
+   - Larger subset: 500 samples, 2 epochs
+   - Verify GPU acceleration works
+   - This is optional - can skip to Mission 4.4 for full VAST.ai setup
 
 **Validation:**
 - Training runs without errors
@@ -674,12 +1114,16 @@
 - Best model saved correctly
 - Checkpointing works
 - Can resume training from checkpoint
+- **FOR TASK 2: IOB2 alignment verified (print 10 examples during first epoch)**
+- **FOR TASK 2: Evaluation uses word-level metrics (not subword-level)**
 
 **Success Criteria:**
 ✅ Training pipeline complete
 ✅ Both tasks supported
 ✅ Checkpointing implemented
 ✅ Early stopping functional
+✅ **IOB2 alignment utility created and tested (Task 3.5)**
+✅ **Alignment examples printed and verified correct**
 ✅ Tested successfully
 
 ---
@@ -689,36 +1133,142 @@
 **Objective:** Implement Optuna for automated hyperparameter tuning
 
 **Tasks:**
-1. Install and import Optuna library
-2. Define Optuna objective function:
-   - Suggest hyperparameters from ranges
-   - Train model with suggested parameters
-   - Return validation F1 score
+1. Install and import Optuna library:
+   ```bash
+   pip install optuna optuna-dashboard
+   ```
+
+2. Implement `--mode hpo` in `src/idiom_experiment.py`:
+
+   **Add HPO mode to main function:**
+   ```python
+   def run_hpo(args):
+       """
+       Run Optuna hyperparameter optimization
+
+       This function:
+       1. Loads HPO config (hpo_config.yaml)
+       2. Creates Optuna study
+       3. For each trial (15 times):
+          - Optuna suggests hyperparameters
+          - Calls run_training() with those params
+          - Returns validation F1 score
+       4. Optuna picks next hyperparameters based on results
+       5. Saves best hyperparameters after all trials
+       """
+       import optuna
+       import yaml
+
+       # Load HPO configuration
+       with open(args.config, 'r') as f:
+           hpo_config = yaml.safe_load(f)
+
+       def objective(trial):
+           """Optuna objective function - called once per trial"""
+
+           # Optuna suggests hyperparameters from search space
+           suggested_params = {
+               'learning_rate': trial.suggest_categorical('learning_rate',
+                   hpo_config['search_space']['learning_rate']),
+               'batch_size': trial.suggest_categorical('batch_size',
+                   hpo_config['search_space']['batch_size']),
+               'num_epochs': trial.suggest_categorical('num_epochs',
+                   hpo_config['search_space']['num_epochs']),
+               'warmup_ratio': trial.suggest_categorical('warmup_ratio',
+                   hpo_config['search_space']['warmup_ratio']),
+               'weight_decay': trial.suggest_categorical('weight_decay',
+                   hpo_config['search_space']['weight_decay']),
+               'gradient_accumulation_steps': trial.suggest_categorical('gradient_accumulation_steps',
+                   hpo_config['search_space']['gradient_accumulation_steps'])
+           }
+
+           # Train model with suggested hyperparameters
+           # This calls the same training code from Mission 4.2!
+           val_f1 = train_and_evaluate(
+               model_name=args.model,
+               task=args.task,
+               hyperparameters=suggested_params,
+               device=args.device
+           )
+
+           # Return validation F1 - Optuna will maximize this
+           return val_f1
+
+       # Create Optuna study
+       study = optuna.create_study(
+           study_name=f"{args.model}_{args.task}_hpo",
+           direction='maximize',  # Maximize validation F1
+           storage=f'sqlite:///experiments/results/optuna_{args.model}_{args.task}.db',
+           load_if_exists=True  # Can resume if interrupted
+       )
+
+       # Run optimization
+       n_trials = hpo_config['optuna']['n_trials']
+       study.optimize(objective, n_trials=n_trials)
+
+       # Save best hyperparameters
+       best_params = study.best_params
+       output_path = f"experiments/results/best_params_{args.model}_{args.task}.json"
+       with open(output_path, 'w') as f:
+           json.dump(best_params, f, indent=2)
+
+       print(f"\n✅ HPO Complete!")
+       print(f"Best F1: {study.best_value:.4f}")
+       print(f"Best params saved to: {output_path}")
+       print(f"Best params: {best_params}")
+   ```
+
+   **Key Points:**
+   - The objective function CALLS your training code from Mission 4.2
+   - Each trial = one complete training run
+   - Optuna automatically picks next hyperparameters based on previous results
+   - Can resume if interrupted (uses SQLite database)
+
 3. Configure Optuna study:
    - Objective: Maximize validation F1
    - Number of trials: 10-15 per model
    - Pruning: Enable Successive Halving
    - Storage: SQLite database for persistence
-4. Implement pruning callback:
+4. Implement pruning callback (optional - for faster optimization):
    - Report validation metric after each epoch
-   - Prune unpromising trials early
-5. Test HPO on one model (e.g., AlephBERT) with 3 trials
-6. Verify best hyperparameters are saved
+   - Prune unpromising trials early using `optuna.integration.PyTorchLightningPruningCallback`
+
+5. **Test HPO LOCALLY first (important!):**
+   - Test on one model (e.g., AlephBERT-base) with just 3 trials
+   - Use small subset (500 samples) to verify it works
+   - Purpose: Verify Optuna integration works before running on VAST.ai
+   - Command:
+     ```bash
+     # Local test (CPU is fine, just slower)
+     python src/idiom_experiment.py \
+       --mode hpo \
+       --model onlplab/alephbert-base \
+       --task sequence_classification \
+       --config experiments/configs/hpo_config.yaml \
+       --max_samples 500 \
+       --device cpu
+     ```
+   - Should complete 3 trials and save best params
+
+6. Verify best hyperparameters are saved:
+   - Check file exists: `experiments/results/best_params_alephbert-base_sequence_classification.json`
+   - Contains: learning_rate, batch_size, num_epochs, etc.
 
 **Validation:**
 - Optuna study runs successfully
 - Trials complete without errors
-- Pruning works (some trials stopped early)
 - Best hyperparameters identified
-- Results saved to database
+- Results saved to database and JSON file
 - Can visualize optimization history
+- **Local test with 3 trials passes before moving to VAST.ai**
 
 **Success Criteria:**
-✅ Optuna integrated
-✅ HPO runs successfully
-✅ Pruning functional
-✅ Best parameters identified
-✅ Ready for full HPO experiments
+✅ Optuna integrated into idiom_experiment.py
+✅ HPO mode implemented with full objective function
+✅ Tested locally with 3 trials
+✅ Pruning functional (optional)
+✅ Best parameters identified and saved
+✅ Ready for full HPO experiments on VAST.ai (Mission 4.5)
 
 ---
 
@@ -746,7 +1296,50 @@
    - Use `gdown` with file ID
    - Verify dataset integrity (row count)
 7. Test training on small subset to verify GPU works
-8. Setup automatic result sync to Google Drive
+
+8. Setup results upload to Google Drive:
+
+   **Option A (Simple - Recommended for beginners):**
+   - After training completes, manually download results from VAST.ai:
+     ```bash
+     # On your local machine
+     scp -P <vast-port> root@<vast-ip>:~/hebrew-idiom-detection/experiments/results/* ./local_results/
+     ```
+   - Then upload to Google Drive via browser interface
+   - Simple but manual
+
+   **Option B (Advanced - Automated with rclone):**
+   - Install rclone on VAST.ai instance:
+     ```bash
+     curl https://rclone.org/install.sh | sudo bash
+     ```
+   - Configure Google Drive (one-time, interactive):
+     ```bash
+     rclone config
+     # Choose: n (new remote)
+     # Name: gdrive
+     # Storage: drive (Google Drive)
+     # Follow prompts for OAuth authentication
+     ```
+   - Create sync script `scripts/sync_to_gdrive.sh`:
+     ```bash
+     #!/bin/bash
+     # Sync results to Google Drive
+     echo "Syncing results to Google Drive..."
+     rclone copy experiments/results/ gdrive:Hebrew_Idiom_Detection/results/ -v
+     rclone copy experiments/logs/ gdrive:Hebrew_Idiom_Detection/logs/ -v
+     echo "Sync complete!"
+     ```
+   - Make executable: `chmod +x scripts/sync_to_gdrive.sh`
+   - Test: Upload one small file to verify it works
+   - After each training run: `bash scripts/sync_to_gdrive.sh`
+
+   **Option C (Simplest - gdown for download only):**
+   - Use gdown to download from Google Drive to VAST.ai (already working from Mission 1.3)
+   - After training, use VAST.ai's file browser to download results
+   - Manually upload to Google Drive
+
+   **Choose Option A or B** - Option A is simpler, Option B is more automated for multiple runs
 
 **Validation:**
 - Instance rented successfully
@@ -763,51 +1356,128 @@
 ✅ GPU functional
 ✅ Dataset accessible
 ✅ Training tested
+✅ Google Drive sync method chosen and tested (Option A, B, or C)
 ✅ Ready for full experiments
 
 ---
 
 ### Mission 4.5: Hyperparameter Optimization for All Models
 
-**Objective:** Run HPO for all 5 models on both tasks
+**Objective:** Run HPO for all 5 models on both tasks **ON VAST.AI**
+
+**IMPORTANT:** This mission MUST run on VAST.ai GPU instance (Mission 4.4 setup required first)
 
 **Tasks:**
-1. For each model (AlephBERT-base, AlephBERT-Gimmel, DictaBERT, mBERT, XLM-R):
-   - Task 1: Sentence Classification
-     - Run Optuna study (10-15 trials)
-     - Search hyperparameters: LR, batch size, epochs, warmup, weight decay
-     - Track validation F1 score
-     - Save best hyperparameters
-   - Task 2: Token Classification
-     - Run Optuna study (10-15 trials)
-     - Same hyperparameter search
-     - Track validation F1 score
-     - Save best hyperparameters
-2. Total: 10 HPO studies (5 models × 2 tasks)
-3. Save all results:
-   - Best hyperparameters for each model-task combination
-   - Optimization history
-   - Visualization of hyperparameter importance
-4. Document findings:
+
+1. **Run HPO studies on VAST.ai:**
+
+   For each model-task combination, run:
+   ```bash
+   # On VAST.ai instance (already setup from Mission 4.4)
+   python src/idiom_experiment.py \
+     --mode hpo \
+     --model <model-name> \
+     --task <task-name> \
+     --config experiments/configs/hpo_config.yaml \
+     --device cuda
+   ```
+
+   **Example for one model-task:**
+   ```bash
+   python src/idiom_experiment.py \
+     --mode hpo \
+     --model onlplab/alephbert-base \
+     --task sequence_classification \
+     --config experiments/configs/hpo_config.yaml \
+     --device cuda
+   ```
+
+2. **Option A: Run manually** (10 commands total)
+
+   5 models: AlephBERT-base, AlephBERT-Gimmel, DictaBERT, mBERT, XLM-R
+   2 tasks: sequence_classification, token_classification
+   = 10 HPO studies total
+
+   Each study runs 15 trials automatically (defined in hpo_config.yaml)
+
+3. **Option B: Create batch script** (Recommended for convenience)
+
+   Create `scripts/run_all_hpo.sh`:
+   ```bash
+   #!/bin/bash
+   # Batch runner for all 10 HPO studies
+
+   MODELS=("onlplab/alephbert-base" "bert-base-multilingual-cased" "xlm-roberta-base" "dicta-il/dictabert" "alephbert-gimmel")
+   TASKS=("sequence_classification" "token_classification")
+
+   for model in "${MODELS[@]}"; do
+     for task in "${TASKS[@]}"; do
+       echo "======================================"
+       echo "Running HPO: Model=$model | Task=$task"
+       echo "======================================"
+
+       python src/idiom_experiment.py \
+         --mode hpo \
+         --model $model \
+         --task $task \
+         --config experiments/configs/hpo_config.yaml \
+         --device cuda
+
+       echo "✅ HPO complete for $model | $task"
+       echo ""
+     done
+   done
+
+   echo "All 10 HPO studies complete!"
+   ```
+
+   Then run:
+   ```bash
+   chmod +x scripts/run_all_hpo.sh
+
+   # Use screen/tmux so it keeps running if SSH disconnects
+   screen -S hpo
+   bash scripts/run_all_hpo.sh
+   # Detach: Ctrl+A then D
+   # Reattach later: screen -r hpo
+   ```
+
+4. **Total workload:**
+   - 10 studies × 15 trials = **150 training runs**
+   - Each trial: ~20-30 minutes
+   - Total time: **50-75 hours of GPU time**
+   - Can run sequentially (one at a time) or parallel (multiple VAST.ai instances)
+
+5. **Save all results:**
+   - Best hyperparameters for each model-task: `experiments/results/best_params_<model>_<task>.json`
+   - Optuna database: `experiments/results/optuna_<model>_<task>.db`
+   - Sync to Google Drive after completion (use sync script from Mission 4.4)
+
+6. **Analyze results:**
+   - Visualization of hyperparameter importance (use Optuna dashboard)
    - Which hyperparameters matter most?
    - Different optimal values for different models?
    - Different optimal values for different tasks?
 
-**Note:** This will take significant time - use VAST.ai and can run multiple studies in parallel if budget allows
+**Time & Cost Estimates:**
+- Sequential (one study at a time): 50-75 hours, $20-30 on VAST.ai (~$0.40/hour)
+- Parallel (2-3 instances): 20-30 hours, $24-36 total
+- **Recommended:** Run sequentially with screen/tmux to save cost
 
 **Validation:**
 - All 10 HPO studies complete
-- Best hyperparameters identified for each
+- Best hyperparameters identified for each (10 JSON files)
 - Results saved and documented
 - Hyperparameter importance analyzed
-- Ready for final training with best configs
+- Results synced to Google Drive
 
 **Success Criteria:**
-✅ 10 HPO studies completed
-✅ Best hyperparameters for all model-task combinations
-✅ Results documented
-✅ Insights extracted
-✅ Ready for final training
+✅ All 10 HPO studies completed on VAST.ai
+✅ Best hyperparameters for all model-task combinations saved
+✅ Optuna databases created and accessible
+✅ Results documented and analyzed
+✅ Insights extracted (which hyperparameters matter)
+✅ Ready for Mission 4.6 (final training with best params)
 
 ---
 
@@ -823,6 +1493,89 @@
    - Save final model checkpoint to Google Drive
    - Evaluate on test set
    - Save all metrics and predictions
+
+   **IMPORTANT: Create Batch Execution Script (Makes Running 30 Experiments Easy!)**
+
+   Instead of manually running 30 commands, create `scripts/run_all_experiments.sh`:
+
+   ```bash
+   #!/bin/bash
+   # Batch runner for all 30 training experiments
+   # Usage: bash scripts/run_all_experiments.sh
+
+   # Define arrays
+   MODELS=("alephbert-base" "mbert" "xlm-roberta-base" "dicta-il/dictabert" "alephbert-gimmel")
+   TASKS=("sequence_classification" "token_classification")
+   SEEDS=(42 123 456)
+
+   # Loop through all combinations
+   for model in "${MODELS[@]}"; do
+     for task in "${TASKS[@]}"; do
+       for seed in "${SEEDS[@]}"; do
+         echo "======================================"
+         echo "Running: Model=$model | Task=$task | Seed=$seed"
+         echo "======================================"
+
+         # Create unique output directory
+         OUTPUT_DIR="experiments/results/${model}_${task}_seed${seed}"
+
+         # Run training
+         python src/idiom_experiment.py \
+           --mode full_finetune \
+           --model $model \
+           --task $task \
+           --seed $seed \
+           --config experiments/configs/training_config.yaml \
+           --output_dir $OUTPUT_DIR \
+           --device cuda
+
+         # Check if training succeeded
+         if [ $? -eq 0 ]; then
+           echo "✅ Success: $model | $task | seed=$seed"
+
+           # Sync results to Google Drive (if using rclone - Option B from Mission 4.4)
+           # Uncomment if using automated sync:
+           # bash scripts/sync_to_gdrive.sh
+         else
+           echo "❌ FAILED: $model | $task | seed=$seed"
+           # Optional: continue anyway or exit
+           # exit 1
+         fi
+
+         echo ""
+       done
+     done
+   done
+
+   echo "=========================================="
+   echo "All 30 experiments complete!"
+   echo "=========================================="
+   ```
+
+   **Setup:**
+   - Create the file: `touch scripts/run_all_experiments.sh`
+   - Make executable: `chmod +x scripts/run_all_experiments.sh`
+   - Edit model IDs to match your actual model names
+
+   **Run all experiments:**
+   ```bash
+   # On VAST.ai (or local with GPU)
+   bash scripts/run_all_experiments.sh
+
+   # Runs unattended - can use screen/tmux to keep running if SSH disconnects:
+   screen -S training
+   bash scripts/run_all_experiments.sh
+   # Detach: Ctrl+A then D
+   # Reattach: screen -r training
+   ```
+
+   **Benefits:**
+   - ✅ Run once, walks away
+   - ✅ Consistent naming (results organized by model/task/seed)
+   - ✅ Automatic error detection
+   - ✅ Can sync to Google Drive after each run
+   - ✅ Much easier than 30 manual commands!
+
 2. Implement cross-seed validation (PRD Section 5.3):
    - Seeds: 42, 123, 456
    - Train each model 3 times with different seeds
@@ -843,6 +1596,7 @@
 - Results table created
 
 **Success Criteria:**
+✅ Batch execution script created (scripts/run_all_experiments.sh)
 ✅ 30 models trained successfully
 ✅ All checkpoints saved to Google Drive
 ✅ Test metrics: F1 > 80% (Task 1), F1 > 75% (Task 2)
@@ -979,6 +1733,262 @@
 
 ---
 
+### Mission 5.2.1 (OPTIONAL - HIGH PRIORITY): Enhanced Few-Shot Design and Documentation
+
+**Objective:** Rigorously design, document, and test few-shot prompting strategy to ensure reproducibility and avoid data leakage
+
+**Why this is important (Senior Researcher Recommendation):**
+Few-shot prompting is a critical component of LLM evaluation, but it's often poorly documented in research papers. Reviewers will ask:
+1. Which exact examples did you use for few-shot prompting?
+2. How were these examples selected?
+3. Are the few-shot examples from the test set? (data leakage!)
+4. Did you try different examples and report the best? (cherry-picking!)
+5. Can others reproduce your results?
+
+**Tasks:**
+
+**1. Few-Shot Example Selection Strategy:**
+
+Design and document a principled selection strategy:
+
+a) **Selection Pool:**
+```python
+# CRITICAL: Never use test set examples!
+# Use training or validation set only
+selection_pool = train_set  # or validation_set
+
+# Document this decision clearly:
+# "Few-shot examples are selected from the training set to avoid data leakage.
+#  The test set is never used for prompt design or example selection."
+```
+
+b) **Selection Criteria (choose ONE and document):**
+
+**Option A: Stratified Random Sampling (Recommended)**
+```python
+# Select N examples (e.g., 3-5) using stratified sampling
+# Ensures balanced representation of:
+# - Both labels (literal and figurative)
+# - Different idioms
+# - Different sentence lengths
+# - Different sentence types (question, declarative)
+
+def select_few_shot_examples(train_df, n_examples=5, seed=42):
+    """
+    Select few-shot examples using stratified sampling.
+
+    Strategy:
+    - n_examples/2 literal, n_examples/2 figurative
+    - Different idioms (no duplicates)
+    - Medium sentence length (10-20 tokens)
+    - Mix of sentence types
+    """
+    np.random.seed(seed)
+
+    # Select literal examples
+    literal_pool = train_df[
+        (train_df['label_2'] == 0) &
+        (train_df['sentence_length'].between(10, 20))
+    ]
+    literal_examples = literal_pool.sample(n=n_examples//2)
+
+    # Select figurative examples
+    figurative_pool = train_df[
+        (train_df['label_2'] == 1) &
+        (train_df['sentence_length'].between(10, 20)) &
+        (~train_df['expression'].isin(literal_examples['expression']))
+    ]
+    figurative_examples = figurative_pool.sample(n=n_examples//2)
+
+    return pd.concat([literal_examples, figurative_examples])
+```
+
+**Option B: Representative Examples (Manual Selection)**
+```python
+# Manually select N examples that represent:
+# - Clear literal usage (easy example)
+# - Clear figurative usage (easy example)
+# - Ambiguous literal (hard example)
+# - Ambiguous figurative (hard example)
+# - One question sentence
+
+# Document exact IDs:
+few_shot_ids = [123, 456, 789, 1011, 1213]
+few_shot_examples = train_df[train_df['id'].isin(few_shot_ids)]
+```
+
+**Option C: Centroids (Embedding-Based)**
+```python
+# Use sentence embeddings to find representative examples
+# Select examples closest to cluster centroids
+# More sophisticated but harder to explain
+
+from sklearn.cluster import KMeans
+# Embed all training sentences
+# Cluster into K clusters
+# Select example closest to each centroid
+```
+
+**2. Prompt Variation Testing:**
+
+Test multiple prompt variations systematically:
+
+```python
+# Define prompt variations
+prompt_templates = {
+    "version_1_english": """
+Task: Classify if the idiom is used literally or figuratively.
+
+Examples:
+{few_shot_examples}
+
+Sentence: {test_sentence}
+Idiom: {idiom}
+Classification: """,
+
+    "version_2_hebrew": """
+משימה: סיווג שימוש בביטוי - מילולי או פיגורטיבי
+
+דוגמאות:
+{few_shot_examples}
+
+משפט: {test_sentence}
+ביטוי: {idiom}
+סיווג: """,
+
+    "version_3_cot": """
+Task: Classify if the idiom is used literally or figuratively.
+
+Examples:
+{few_shot_examples}
+
+Now classify this:
+Sentence: {test_sentence}
+Idiom: {idiom}
+
+Let's think step by step:
+1. What is the literal meaning of the idiom?
+2. What is the figurative meaning?
+3. Which meaning fits the context?
+
+Classification: """
+}
+
+# Test each on validation set (50 samples)
+for name, template in prompt_templates.items():
+    val_f1 = evaluate_prompt(template, validation_set.head(50))
+    print(f"{name}: F1 = {val_f1}")
+
+# Select best performing prompt
+best_prompt = select_best(results)
+```
+
+**3. Documentation:**
+
+Create `experiments/configs/llm_few_shot_documentation.md`:
+
+```markdown
+# Few-Shot Prompting Documentation
+
+## Example Selection Strategy
+- **Pool:** Training set only (NO test set leakage)
+- **Method:** Stratified random sampling with seed=42
+- **N examples:** 5 (3 figurative, 2 literal)
+- **Selection criteria:**
+  - Different idioms (no duplicates)
+  - Medium sentence length (10-20 tokens)
+  - Mix of sentence types
+
+## Selected Examples (IDs from train.csv)
+1. ID=123: [sentence] - Label: Literal
+2. ID=456: [sentence] - Label: Figurative
+3. ID=789: [sentence] - Label: Figurative
+4. ID=1011: [sentence] - Label: Literal
+5. ID=1213: [sentence] - Label: Figurative
+
+## Prompt Template
+[Include exact prompt template used]
+
+## Prompt Selection Process
+- Tested 3 prompt variations on validation set (50 samples)
+- Selected version_2_hebrew based on highest F1: 0.78
+- Did NOT iterate on test set (avoided overfitting)
+
+## Reproducibility
+- Seed: 42
+- Selection pool: data/splits/train.csv
+- Example IDs documented above
+- Prompt template in experiments/configs/llm_prompts.json
+```
+
+**4. Save Artifacts:**
+1. Save selected few-shot examples to `experiments/configs/few_shot_examples.json`:
+   ```json
+   {
+     "selection_strategy": "stratified_random",
+     "seed": 42,
+     "n_examples": 5,
+     "examples": [
+       {
+         "id": 123,
+         "text": "...",
+         "expression": "...",
+         "label": 0,
+         "label_name": "literal"
+       },
+       ...
+     ]
+   }
+   ```
+
+2. Save prompt templates to `experiments/configs/llm_prompts.json`
+3. Save prompt selection results to `experiments/results/llm_prompt_selection.json`
+
+**5. Validation Testing:**
+
+Before full evaluation, test on small validation subset:
+```python
+# Test on 20 validation samples
+# Verify:
+# 1. Few-shot examples are from training set (not test!)
+# 2. Prompt works consistently
+# 3. Output format parseable
+# 4. Performance reasonable (>60% accuracy)
+
+# Check for data leakage
+assert set(few_shot_ids).isdisjoint(set(test_ids)), "Data leakage detected!"
+```
+
+**Validation:**
+- Few-shot example selection strategy documented
+- Examples selected from training set only (NO test set leakage verified)
+- Multiple prompt variations tested
+- Best prompt selected based on validation performance
+- All artifacts saved and versioned
+- Selection process reproducible (seed fixed)
+- Documentation complete and paper-ready
+
+**Success Criteria:**
+✅ Few-shot examples selected using principled strategy
+✅ NO data leakage (test set not used)
+✅ Example IDs and exact sentences documented
+✅ Prompt variations tested systematically
+✅ Best prompt selected transparently
+✅ Full documentation for paper's methodology section
+✅ Reproducible by other researchers
+✅ Reviewers can verify no cherry-picking
+
+**What to include in paper:**
+- "Few-shot examples were selected from the training set using stratified random sampling (seed=42) to ensure balanced representation while avoiding test set leakage."
+- "We tested 3 prompt variations on a validation subset (50 samples) and selected the Hebrew-language prompt based on highest F1 score."
+- "The exact few-shot examples and prompt templates are available in our code repository for reproducibility."
+
+**Time Estimate:** 3-4 hours
+
+**Recommendation:** This is HIGH PRIORITY for publication quality and reproducibility. Many papers get rejected due to poor LLM evaluation methodology.
+
+---
+
 ### Mission 5.3: LLM Evaluation Script
 
 **Objective:** Create script for automated LLM evaluation
@@ -1027,6 +2037,11 @@
 ### Mission 5.4: LLM Evaluation Execution
 
 **Objective:** Run LLM evaluation on full test set
+
+**IMPORTANT:** Run this mission **LOCALLY on PyCharm** (not VAST.ai)
+- LLM evaluation only makes API calls - no GPU needed!
+- Can run on your local machine (CPU is fine)
+- Saves VAST.ai costs
 
 **Tasks:**
 1. Task 1: Sentence Classification
@@ -1180,12 +2195,14 @@
 
 **Objective:** Compare full fine-tuning vs frozen backbone (optional)
 
+**Note:** This requires training - can run on VAST.ai or locally (faster on GPU)
+
 **Tasks:**
 1. Select best-performing model from fine-tuning phase
 2. Train with frozen backbone:
    - Freeze all transformer layers
    - Train only classification head
-   - Use same hyperparameters
+   - Use best hyperparameters from Mission 4.5 (not running HPO again)
    - Train on both tasks
 3. Compare with full fine-tuning:
    - Performance difference
@@ -1252,6 +2269,8 @@
 
 **Objective:** Analyze performance vs training data size
 
+**Note:** This requires training multiple models - **recommend running on VAST.ai** for speed
+
 **Tasks:**
 1. Create reduced training sets:
    - 10% of training data (by expressions)
@@ -1262,7 +2281,7 @@
    - Maintain stratification
 2. Select best model from fine-tuning
 3. Train on each data size:
-   - Use best hyperparameters
+   - Use best hyperparameters from Mission 4.5 (not running HPO again)
    - Train on both tasks
    - Evaluate on same test set
 4. Create learning curve:
@@ -1328,7 +2347,148 @@
    - Include token importance visualizations for key error examples
 7. Create error analysis report with examples and visualizations
 
-**Validation:**
+**OPTIONAL (HIGH PRIORITY): Deeper Error Analysis**
+
+If you want to make your error analysis more comprehensive and publication-ready, add these optional deeper analyses:
+
+**7a. Idiom Difficulty Ranking:**
+```python
+# Rank idioms by error rate across all models
+# For each idiom:
+#   - Error rate (% misclassified)
+#   - Average model confidence on errors
+#   - Frequency in training data
+#   - Average sentence length for this idiom
+#   - Ambiguity score (if both literal/figurative common)
+
+# Create difficulty taxonomy:
+difficult_idioms = {
+    "very_hard": [],      # >50% error rate
+    "hard": [],           # 30-50% error rate
+    "medium": [],         # 15-30% error rate
+    "easy": []            # <15% error rate
+}
+
+# Analyze what makes idioms hard:
+# - Rare idioms (low training frequency)?
+# - Ambiguous idioms (both usages common)?
+# - Multi-word idioms (longer spans)?
+# - Context-dependent idioms?
+
+# Visualize: Heatmap of idiom difficulty across models
+```
+
+**7b. Sentence Length and Complexity Impact:**
+```python
+# Analyze error rate vs sentence characteristics:
+
+# 1. Sentence length impact
+sentence_length_bins = [0, 5, 10, 15, 20, 30, 100]
+for bin in bins:
+    error_rate = calculate_error_rate(sentences_in_bin)
+    plot(bin_midpoint, error_rate)
+
+# 2. Sentence type impact (from Mission 2.4 analysis)
+# - Declarative: 92.23% → error rate?
+# - Question: 7.12% → error rate?
+# - Exclamatory: 0.65% → error rate?
+# Are questions harder?
+
+# 3. Context complexity
+# - Number of clauses
+# - Presence of negation
+# - Passive vs active voice
+# - Multiple idioms in same sentence?
+
+# Create scatter plot: sentence_length vs error_confidence
+# Color by sentence type
+```
+
+**7c. Cross-Lingual Error Pattern Analysis:**
+```python
+# Compare Hebrew-specific vs multilingual models:
+
+# For each error type:
+#   - AlephBERT errors vs mBERT errors
+#   - Which idioms confuse multilingual models more?
+#   - Do Hebrew-specific models fail on different patterns?
+
+# Hypothesis testing:
+# - Do multilingual models struggle with Hebrew morphology?
+# - Do Hebrew models overfit to training idioms?
+# - Are there systematic differences in error types?
+
+# Create Venn diagram:
+# - Errors only AlephBERT makes
+# - Errors only mBERT makes
+# - Errors both make (systematic difficulty)
+
+# Insight: Where does Hebrew pretraining help most?
+```
+
+**7d. Error Progression Analysis:**
+```python
+# Track how errors change across training:
+
+# If you saved checkpoints during training:
+# - Which errors are corrected first? (easy patterns)
+# - Which errors persist? (hard patterns)
+# - Which new errors appear? (overfitting?)
+
+# Compare zero-shot → fine-tuned errors:
+# - Which zero-shot errors are fixed by fine-tuning?
+# - Which errors are introduced by fine-tuning?
+# - Are models learning generalizable patterns or memorizing?
+
+# Visualization: Error type distribution evolution
+```
+
+**7e. Contextual Ambiguity Analysis:**
+```python
+# Deep dive into ambiguous cases:
+
+# Select 20 examples where:
+# - Model confidence is low (0.4-0.6)
+# - Multiple models disagree
+# - Annotator confidence might be low (if available)
+
+# For each case:
+# - Manual linguistic analysis
+# - Could it be both literal AND figurative?
+# - Is the gold label debatable?
+# - What contextual clues determine the label?
+
+# Create "ambiguity spectrum":
+# - Clear literal → Ambiguous → Clear figurative
+# - Where do errors concentrate?
+
+# Insight: Is the task inherently ambiguous?
+#          Should we use soft labels instead?
+```
+
+**Implementation:**
+- Create `src/deep_error_analysis.py` for advanced analysis
+- Save results to `experiments/results/deep_error_analysis/`
+- Create visualizations for paper
+- Document findings in `experiments/results/deep_error_analysis.md`
+
+**Expected Insights:**
+- Which factors predict errors (length, type, idiom difficulty)
+- Where Hebrew pretraining helps most
+- Task ambiguity and annotation quality
+- Model-specific failure modes
+- Recommendations for future dataset/model improvements
+
+**Time Estimate:** 6-8 hours (but provides rich paper content)
+
+**Recommendation:** Choose 2-3 of these deeper analyses based on:
+- What story you want to tell in the paper
+- What gaps you found in preliminary error analysis
+- What would be most novel/interesting to readers
+
+---
+
+**Standard Validation:**
 - 100 errors analyzed
 - Categories clearly defined
 - Patterns identified
@@ -1336,13 +2496,22 @@
 - Examples documented with visualizations
 - Report comprehensive
 
-**Success Criteria:**
+**Success Criteria (Standard):**
 ✅ Error analysis complete
 ✅ Error categories identified
 ✅ Patterns documented
 ✅ Interpretability analysis integrated
 ✅ Examples with visualizations included
 ✅ Insights actionable
+
+**Success Criteria (If Optional Deeper Analysis Done):**
+✅ All standard criteria met
+✅ 2-3 deeper analyses completed
+✅ Idiom difficulty ranking created
+✅ Sentence complexity impact analyzed
+✅ Cross-lingual patterns identified
+✅ Rich insights for paper discussion section
+✅ Publication-ready visualizations created
 
 ---
 
@@ -2097,9 +3266,13 @@ Before considering the project complete, verify:
 
 ### Code
 - [ ] All code documented
+- [ ] IOB2 subword alignment utility implemented and tested (src/utils/tokenization.py)
+- [ ] Training config files created (training_config.yaml, hpo_config.yaml)
+- [ ] Batch execution scripts created (scripts/run_all_hpo.sh, scripts/run_all_experiments.sh)
+- [ ] Optuna HPO mode implemented in idiom_experiment.py
 - [ ] Tests passing
 - [ ] GitHub repository public
-- [ ] Reproduction guide complete
+- [ ] Reproduction guide complete (see WORKFLOW_SUMMARY.md)
 - [ ] License added
 
 ### Paper

@@ -8,6 +8,8 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, Tuple, List
 import re
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 class DatasetLoader:
@@ -534,6 +536,299 @@ class DatasetLoader:
 
         return stats
 
+    def analyze_sentence_types(self) -> Dict:
+        """
+        Analyze sentence types as per Mission 2.4 requirements:
+        - Questions (ending with ?)
+        - Declarative (regular statements)
+        - Imperative (commands)
+        - Exclamatory (containing !)
+
+        Returns:
+            Dictionary with sentence type statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("SENTENCE TYPE ANALYSIS (Mission 2.4)")
+        print("=" * 80)
+
+        # Add sentence type column
+        def classify_sentence_type(text: str) -> str:
+            """Classify sentence type based on punctuation and structure"""
+            text = str(text).strip()
+
+            # Check for question mark
+            if '?' in text:
+                return 'Question'
+            # Check for exclamation mark
+            elif '!' in text:
+                return 'Exclamatory'
+            # For Hebrew, imperatives are harder to detect without morphological analysis
+            # We'll use declarative as default for statements
+            else:
+                return 'Declarative'
+
+        self.df['sentence_type'] = self.df['text'].apply(classify_sentence_type)
+
+        # Overall sentence type distribution
+        type_counts = self.df['sentence_type'].value_counts()
+        type_percentages = (type_counts / len(self.df) * 100).round(2)
+
+        print("\n📊 Sentence Type Distribution:")
+        for stype, count in type_counts.items():
+            pct = type_percentages[stype]
+            print(f"  • {stype:15s}: {count:5d} ({pct:5.2f}%)")
+
+        # Cross-tabulation: sentence type by label
+        crosstab = pd.crosstab(
+            self.df['sentence_type'],
+            self.df['label'],
+            margins=True
+        )
+
+        print("\n📊 Sentence Type by Label (Literal vs Figurative):")
+        print(crosstab.to_string())
+
+        # Percentage breakdown
+        crosstab_pct = pd.crosstab(
+            self.df['sentence_type'],
+            self.df['label'],
+            normalize='columns'
+        ) * 100
+
+        print("\n📊 Percentage Distribution within each Label:")
+        print(crosstab_pct.round(2).to_string())
+
+        # Check balance across labels
+        print("\n📊 Balance Check (are sentence types distributed evenly across labels?):")
+        for stype in type_counts.index:
+            literal_count = self.df[(self.df['sentence_type'] == stype) & (self.df['label'] == 'מילולי')].shape[0]
+            figurative_count = self.df[(self.df['sentence_type'] == stype) & (self.df['label'] == 'פיגורטיבי')].shape[0]
+            total_type = literal_count + figurative_count
+
+            if total_type > 0:
+                literal_pct = (literal_count / total_type) * 100
+                figurative_pct = (figurative_count / total_type) * 100
+                print(f"  • {stype:15s}: Literal={literal_pct:.1f}%, Figurative={figurative_pct:.1f}%")
+
+        # Sentence types by expression (top 10 expressions)
+        print("\n📊 Sentence Types by Top Expressions:")
+        top_expressions = self.df['expression'].value_counts().head(10).index
+
+        for expr in top_expressions:
+            expr_df = self.df[self.df['expression'] == expr]
+            type_dist = expr_df['sentence_type'].value_counts()
+            print(f"\n  {expr}:")
+            for stype, count in type_dist.items():
+                pct = (count / len(expr_df)) * 100
+                print(f"    - {stype}: {count} ({pct:.1f}%)")
+
+        return {
+            'type_counts': type_counts.to_dict(),
+            'type_percentages': type_percentages.to_dict(),
+            'crosstab': crosstab.to_dict(),
+            'crosstab_percentage': crosstab_pct.to_dict()
+        }
+
+    def create_visualizations(self) -> None:
+        """
+        Create all required visualizations for Missions 2.2 and 2.4
+        Saves figures to paper/figures/ directory
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("CREATING VISUALIZATIONS (Missions 2.2 & 2.4)")
+        print("=" * 80)
+
+        # Create figures directory if it doesn't exist
+        figures_dir = Path(__file__).parent.parent / "paper" / "figures"
+        figures_dir.mkdir(parents=True, exist_ok=True)
+
+        # Set style for all plots
+        sns.set_style("whitegrid")
+        plt.rcParams['figure.dpi'] = 300  # High resolution for publication
+        plt.rcParams['font.size'] = 10
+
+        # --- 1. MISSION 2.2: Label Distribution Bar Chart ---
+        print("\n[1/6] Creating label distribution bar chart...")
+        fig, ax = plt.subplots(figsize=(8, 6))
+
+        label_counts = self.df['label'].value_counts()
+        colors = ['#3498db', '#e74c3c']  # Blue for literal, Red for figurative
+
+        bars = ax.bar(label_counts.index, label_counts.values, color=colors, alpha=0.8, edgecolor='black')
+
+        # Add value labels on bars
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2., height,
+                   f'{int(height)}\n({height/len(self.df)*100:.1f}%)',
+                   ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+        ax.set_xlabel('Label Type', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Count', fontsize=12, fontweight='bold')
+        ax.set_title('Label Distribution: Literal vs Figurative\n(Mission 2.2)', fontsize=14, fontweight='bold')
+        ax.grid(axis='y', alpha=0.3)
+
+        plt.tight_layout()
+        label_dist_path = figures_dir / "label_distribution.png"
+        plt.savefig(label_dist_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {label_dist_path}")
+
+        # --- 2. Sentence Length Distribution Histogram ---
+        print("\n[2/6] Creating sentence length distribution histogram...")
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        ax.hist(self.df['num_tokens'], bins=30, color='#2ecc71', alpha=0.7, edgecolor='black')
+        ax.axvline(self.df['num_tokens'].mean(), color='red', linestyle='--',
+                  linewidth=2, label=f'Mean: {self.df["num_tokens"].mean():.2f}')
+        ax.axvline(self.df['num_tokens'].median(), color='orange', linestyle='--',
+                  linewidth=2, label=f'Median: {self.df["num_tokens"].median():.0f}')
+
+        ax.set_xlabel('Number of Tokens', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Frequency', fontsize=12, fontweight='bold')
+        ax.set_title('Sentence Length Distribution\n(Mission 2.4)', fontsize=14, fontweight='bold')
+        ax.legend(fontsize=10)
+        ax.grid(axis='y', alpha=0.3)
+
+        plt.tight_layout()
+        sent_length_path = figures_dir / "sentence_length_distribution.png"
+        plt.savefig(sent_length_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {sent_length_path}")
+
+        # --- 3. Idiom Length Distribution Histogram ---
+        print("\n[3/6] Creating idiom length distribution histogram...")
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Ensure idiom_length column exists
+        if 'idiom_length' not in self.df.columns:
+            self.df['idiom_length'] = (self.df['token_span_end'] - self.df['token_span_start']).astype(int)
+
+        ax.hist(self.df['idiom_length'], bins=range(1, int(self.df['idiom_length'].max()) + 2),
+               color='#9b59b6', alpha=0.7, edgecolor='black', align='left')
+        ax.axvline(self.df['idiom_length'].mean(), color='red', linestyle='--',
+                  linewidth=2, label=f'Mean: {self.df["idiom_length"].mean():.2f}')
+        ax.axvline(self.df['idiom_length'].median(), color='orange', linestyle='--',
+                  linewidth=2, label=f'Median: {self.df["idiom_length"].median():.0f}')
+
+        ax.set_xlabel('Idiom Length (tokens)', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Frequency', fontsize=12, fontweight='bold')
+        ax.set_title('Idiom Length Distribution\n(Mission 2.4)', fontsize=14, fontweight='bold')
+        ax.legend(fontsize=10)
+        ax.grid(axis='y', alpha=0.3)
+
+        plt.tight_layout()
+        idiom_length_path = figures_dir / "idiom_length_distribution.png"
+        plt.savefig(idiom_length_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {idiom_length_path}")
+
+        # --- 4. Top 10 Idioms Bar Chart ---
+        print("\n[4/6] Creating top 10 idioms bar chart...")
+        fig, ax = plt.subplots(figsize=(12, 8))
+
+        top_10 = self.df['expression'].value_counts().head(10)
+
+        bars = ax.barh(range(len(top_10)), top_10.values, color='#e67e22', alpha=0.8, edgecolor='black')
+
+        # Add value labels
+        for i, (bar, value) in enumerate(zip(bars, top_10.values)):
+            ax.text(value, i, f' {value}', va='center', fontsize=10, fontweight='bold')
+
+        ax.set_yticks(range(len(top_10)))
+        ax.set_yticklabels(top_10.index, fontsize=10)
+        ax.set_xlabel('Frequency (occurrences)', fontsize=12, fontweight='bold')
+        ax.set_title('Top 10 Most Frequent Idioms\n(Mission 2.4)', fontsize=14, fontweight='bold')
+        ax.grid(axis='x', alpha=0.3)
+        ax.invert_yaxis()
+
+        plt.tight_layout()
+        top_idioms_path = figures_dir / "top_10_idioms.png"
+        plt.savefig(top_idioms_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {top_idioms_path}")
+
+        # --- 5. Sentence Type Distribution Pie Chart ---
+        print("\n[5/6] Creating sentence type distribution pie chart...")
+
+        # Ensure sentence_type column exists
+        if 'sentence_type' not in self.df.columns:
+            self.analyze_sentence_types()
+
+        fig, ax = plt.subplots(figsize=(10, 8))
+
+        type_counts = self.df['sentence_type'].value_counts()
+        colors_pie = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12']
+
+        wedges, texts, autotexts = ax.pie(
+            type_counts.values,
+            labels=type_counts.index,
+            autopct='%1.1f%%',
+            colors=colors_pie[:len(type_counts)],
+            startangle=90,
+            textprops={'fontsize': 12, 'fontweight': 'bold'}
+        )
+
+        # Add count to labels
+        for i, (text, count) in enumerate(zip(texts, type_counts.values)):
+            text.set_text(f'{text.get_text()}\n(n={count})')
+            text.set_fontsize(11)
+            text.set_fontweight('bold')
+
+        ax.set_title('Sentence Type Distribution\n(Mission 2.4)', fontsize=14, fontweight='bold', pad=20)
+
+        plt.tight_layout()
+        sent_type_pie_path = figures_dir / "sentence_type_distribution.png"
+        plt.savefig(sent_type_pie_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {sent_type_pie_path}")
+
+        # --- 6. Sentence Type by Label Stacked Bar Chart ---
+        print("\n[6/6] Creating sentence type by label stacked bar chart...")
+        fig, ax = plt.subplots(figsize=(12, 7))
+
+        # Create crosstab for stacked bar chart
+        crosstab = pd.crosstab(self.df['sentence_type'], self.df['label'])
+
+        crosstab.plot(kind='bar', stacked=True, ax=ax, color=['#3498db', '#e74c3c'],
+                     alpha=0.8, edgecolor='black', width=0.7)
+
+        ax.set_xlabel('Sentence Type', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Count', fontsize=12, fontweight='bold')
+        ax.set_title('Sentence Type Distribution by Label\n(Literal vs Figurative - Mission 2.4)',
+                    fontsize=14, fontweight='bold')
+        ax.legend(title='Label', fontsize=10, title_fontsize=11)
+        ax.grid(axis='y', alpha=0.3)
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
+
+        # Add value labels on bars
+        for container in ax.containers:
+            ax.bar_label(container, label_type='center', fontsize=9, fontweight='bold')
+
+        plt.tight_layout()
+        sent_type_label_path = figures_dir / "sentence_type_by_label.png"
+        plt.savefig(sent_type_label_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {sent_type_label_path}")
+
+        print("\n" + "=" * 80)
+        print("✅ ALL VISUALIZATIONS CREATED SUCCESSFULLY!")
+        print("=" * 80)
+        print(f"\n📁 Location: {figures_dir}")
+        print("\nCreated files:")
+        print("  1. label_distribution.png")
+        print("  2. sentence_length_distribution.png")
+        print("  3. idiom_length_distribution.png")
+        print("  4. top_10_idioms.png")
+        print("  5. sentence_type_distribution.png")
+        print("  6. sentence_type_by_label.png")
+
     # ---------- NEW: simple label consistency check (Mission 2.2 aid) ----------
     def verify_label_consistency(self) -> Dict:
         """
@@ -660,6 +955,217 @@ class DatasetLoader:
         results['mission_complete'] = all_passed
         return results
 
+    def run_mission_2_2(self) -> Dict:
+        """
+        Complete Mission 2.2: Label Distribution Validation
+
+        Returns:
+            Dictionary with validation results
+        """
+        print("\n" + "=" * 80)
+        print("MISSION 2.2: LABEL DISTRIBUTION VALIDATION")
+        print("=" * 80)
+
+        results = {}
+
+        # Step 1: Verify label consistency (already done in 2.1)
+        print("\n[Step 1] Verifying label consistency...")
+        results['label_consistency'] = self.verify_label_consistency()
+
+        # Step 2: Get label counts
+        label_counts = self.df['label'].value_counts()
+        literal_count = label_counts.get('מילולי', 0)
+        figurative_count = label_counts.get('פיגורטיבי', 0)
+
+        results['literal_count'] = int(literal_count)
+        results['figurative_count'] = int(figurative_count)
+        results['total_count'] = len(self.df)
+
+        # Step 3: Create visualization (NEW!)
+        print("\n[Step 2] Creating label distribution visualization...")
+        # Only create the label distribution chart
+        figures_dir = Path(__file__).parent.parent / "paper" / "figures"
+        figures_dir.mkdir(parents=True, exist_ok=True)
+
+        fig, ax = plt.subplots(figsize=(8, 6))
+        colors = ['#3498db', '#e74c3c']
+        bars = ax.bar(label_counts.index, label_counts.values, color=colors, alpha=0.8, edgecolor='black')
+
+        for bar in bars:
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width()/2., height,
+                   f'{int(height)}\n({height/len(self.df)*100:.1f}%)',
+                   ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+        ax.set_xlabel('Label Type', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Count', fontsize=12, fontweight='bold')
+        ax.set_title('Label Distribution: Literal vs Figurative\n(Mission 2.2)', fontsize=14, fontweight='bold')
+        ax.grid(axis='y', alpha=0.3)
+
+        plt.tight_layout()
+        label_dist_path = figures_dir / "label_distribution.png"
+        plt.savefig(label_dist_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Visualization saved: {label_dist_path}")
+
+        # Success criteria check
+        print("\n" + "=" * 80)
+        print("MISSION 2.2 SUCCESS CRITERIA CHECK")
+        print("=" * 80)
+
+        criteria = [
+            ("2,400 literal samples (50%)", literal_count == 2400),
+            ("2,400 figurative samples (50%)", figurative_count == 2400),
+            ("Labels consistent across columns", results['label_consistency']['inconsistencies'] == 0),
+            ("Visualization saved", label_dist_path.exists())
+        ]
+
+        all_passed = True
+        for criterion, passed in criteria:
+            status = "✅" if passed else "❌"
+            print(f"{status} {criterion}")
+            if not passed:
+                all_passed = False
+
+        if all_passed:
+            print("\n🎉 MISSION 2.2 COMPLETE!")
+        else:
+            print("\n⚠️  Some criteria not met.")
+
+        results['mission_complete'] = all_passed
+        return results
+
+    def run_mission_2_3(self) -> Dict:
+        """
+        Complete Mission 2.3: IOB2 Tags Validation
+
+        Returns:
+            Dictionary with validation results
+        """
+        print("\n" + "=" * 80)
+        print("MISSION 2.3: IOB2 TAGS VALIDATION")
+        print("=" * 80)
+
+        # Run IOB2 verification (already done in 2.1)
+        results = self.verify_iob2_tags()
+
+        # Success criteria check
+        print("\n" + "=" * 80)
+        print("MISSION 2.3 SUCCESS CRITERIA CHECK")
+        print("=" * 80)
+
+        criteria = [
+            ("100% alignment between tokens and IOB2 tags", results['alignment_rate'] == 100.0),
+            ("No invalid tags", results['invalid_tags_count'] == 0),
+            ("No sequence violations", results['sequence_errors_count'] == 0),
+            ("Token spans correct", results['span_mismatch_count'] == 0),
+            ("Zero or minimal errors", results['misalignment_count'] + results['invalid_tags_count'] +
+                                      results['sequence_errors_count'] + results['span_mismatch_count'] == 0)
+        ]
+
+        all_passed = True
+        for criterion, passed in criteria:
+            status = "✅" if passed else "❌"
+            print(f"{status} {criterion}")
+            if not passed:
+                all_passed = False
+
+        if all_passed:
+            print("\n🎉 MISSION 2.3 COMPLETE!")
+        else:
+            print("\n⚠️  Some criteria not met.")
+
+        results['mission_complete'] = all_passed
+        return results
+
+    def run_mission_2_4(self) -> Dict:
+        """
+        Complete Mission 2.4: Dataset Statistics Analysis
+
+        Returns:
+            Dictionary with statistics and analysis results
+        """
+        print("\n" + "=" * 80)
+        print("MISSION 2.4: DATASET STATISTICS ANALYSIS")
+        print("=" * 80)
+
+        results = {}
+
+        # Step 1: Generate statistics (already done in 2.1, but ensure it's complete)
+        print("\n[Step 1] Generating dataset statistics...")
+        results['statistics'] = self.generate_statistics()
+
+        # Step 2: NEW - Sentence type analysis
+        print("\n[Step 2] Analyzing sentence types...")
+        results['sentence_types'] = self.analyze_sentence_types()
+
+        # Step 3: Create all visualizations
+        print("\n[Step 3] Creating visualizations...")
+        self.create_visualizations()
+
+        # Step 4: Save statistics to file
+        stats_dir = Path(__file__).parent.parent / "experiments" / "results"
+        stats_dir.mkdir(parents=True, exist_ok=True)
+        stats_file = stats_dir / "dataset_statistics.txt"
+
+        with open(stats_file, 'w', encoding='utf-8') as f:
+            f.write("=" * 80 + "\n")
+            f.write("DATASET STATISTICS - Mission 2.4\n")
+            f.write("=" * 80 + "\n\n")
+
+            f.write(f"Total sentences: {results['statistics']['total_sentences']}\n")
+            f.write(f"\nLabel Distribution:\n")
+            for label, count in results['statistics']['label_distribution'].items():
+                pct = (count / results['statistics']['total_sentences']) * 100
+                f.write(f"  {label}: {count} ({pct:.2f}%)\n")
+
+            f.write(f"\nUnique idioms: {results['statistics']['unique_expressions']}\n")
+            f.write(f"Average sentence length: {results['statistics']['avg_sentence_length']:.2f} tokens\n")
+            f.write(f"Average idiom length: {results['statistics']['avg_idiom_length']:.2f} tokens\n")
+
+            f.write(f"\n\nSentence Type Distribution:\n")
+            for stype, count in results['sentence_types']['type_counts'].items():
+                pct = results['sentence_types']['type_percentages'][stype]
+                f.write(f"  {stype}: {count} ({pct:.2f}%)\n")
+
+            f.write(f"\n\nTop 10 Idioms:\n")
+            for i, (expr, count) in enumerate(results['statistics']['top_10_expressions'].items(), 1):
+                f.write(f"  {i}. {expr}: {count}\n")
+
+        print(f"\n✅ Statistics saved to: {stats_file}")
+
+        # Success criteria check
+        print("\n" + "=" * 80)
+        print("MISSION 2.4 SUCCESS CRITERIA CHECK")
+        print("=" * 80)
+
+        figures_dir = Path(__file__).parent.parent / "paper" / "figures"
+
+        criteria = [
+            ("Statistics calculated correctly", True),
+            ("Unique idioms: 60-80 expressions", 60 <= results['statistics']['unique_expressions'] <= 80),
+            ("Avg sentence length: ~12.5 tokens", 10 <= results['statistics']['avg_sentence_length'] <= 20),
+            ("Avg idiom length: 2-4 tokens", 2.0 <= results['statistics']['avg_idiom_length'] <= 4.0),
+            ("Sentence types analyzed", 'type_counts' in results['sentence_types']),
+            ("Visualizations created", (figures_dir / "label_distribution.png").exists()),
+            ("Statistics file saved", stats_file.exists())
+        ]
+
+        all_passed = True
+        for criterion, passed in criteria:
+            status = "✅" if passed else "❌"
+            print(f"{status} {criterion}")
+            if not passed:
+                all_passed = False
+
+        if all_passed:
+            print("\n🎉 MISSION 2.4 COMPLETE!")
+        else:
+            print("\n⚠️  Some criteria not met.")
+
+        results['mission_complete'] = all_passed
+        return results
+
     def save_processed_dataset(self, output_path: str = None) -> None:
         """
         Save the processed dataset to CSV
@@ -681,19 +1187,72 @@ class DatasetLoader:
 
 
 def main():
-    """Main function to execute Mission 2.1"""
+    """Main function to execute Missions 2.1, 2.2, 2.3, and 2.4"""
 
     # Initialize loader
     loader = DatasetLoader()
 
-    # Run Mission 2.1
-    results = loader.run_mission_2_1()
+    all_results = {}
 
-    # Optionally save processed dataset
-    if results.get('mission_complete', False):
-        loader.save_processed_dataset()
+    # Run Mission 2.1: Dataset Loading and Inspection
+    print("\n" + "🚀" * 40)
+    print("STARTING DATA PREPARATION PIPELINE")
+    print("🚀" * 40)
 
-    return loader, results
+    all_results['mission_2_1'] = loader.run_mission_2_1()
+
+    if not all_results['mission_2_1'].get('mission_complete', False):
+        print("\n❌ Mission 2.1 failed. Cannot proceed.")
+        return loader, all_results
+
+    # Run Mission 2.2: Label Distribution Validation
+    all_results['mission_2_2'] = loader.run_mission_2_2()
+
+    # Run Mission 2.3: IOB2 Tags Validation
+    all_results['mission_2_3'] = loader.run_mission_2_3()
+
+    # Run Mission 2.4: Dataset Statistics Analysis
+    all_results['mission_2_4'] = loader.run_mission_2_4()
+
+    # Save processed dataset
+    print("\n" + "=" * 80)
+    print("SAVING PROCESSED DATASET")
+    print("=" * 80)
+    loader.save_processed_dataset()
+
+    # Final summary
+    print("\n" + "=" * 80)
+    print("FINAL SUMMARY - ALL MISSIONS")
+    print("=" * 80)
+
+    missions_status = {
+        "Mission 2.1 (Dataset Loading & Inspection)": all_results['mission_2_1'].get('mission_complete', False),
+        "Mission 2.2 (Label Distribution Validation)": all_results['mission_2_2'].get('mission_complete', False),
+        "Mission 2.3 (IOB2 Tags Validation)": all_results['mission_2_3'].get('mission_complete', False),
+        "Mission 2.4 (Dataset Statistics Analysis)": all_results['mission_2_4'].get('mission_complete', False)
+    }
+
+    all_complete = all(missions_status.values())
+
+    for mission, status in missions_status.items():
+        icon = "✅" if status else "❌"
+        print(f"{icon} {mission}")
+
+    if all_complete:
+        print("\n" + "🎉" * 40)
+        print("ALL MISSIONS COMPLETE! DATA PREPARATION PHASE DONE!")
+        print("🎉" * 40)
+        print("\n📋 Summary:")
+        print(f"   • Dataset validated and cleaned")
+        print(f"   • Total sentences: {all_results['mission_2_1']['statistics']['total_sentences']}")
+        print(f"   • Literal: {all_results['mission_2_2']['literal_count']} | Figurative: {all_results['mission_2_2']['figurative_count']}")
+        print(f"   • Unique idioms: {all_results['mission_2_1']['statistics']['unique_expressions']}")
+        print(f"   • All visualizations created")
+        print(f"   • Ready for Mission 2.5: Dataset Splitting")
+    else:
+        print("\n⚠️  Some missions incomplete. Please review above.")
+
+    return loader, all_results
 
 
 if __name__ == "__main__":

@@ -1,0 +1,62 @@
+{
+  "alephbert-base": {
+    "model_id": "onlplab/alephbert-base",
+    "num_parameters": 125976576,
+    "num_parameters_millions": 125.98,
+    "vocab_size": 52000,
+    "max_length": 512,
+    "hidden_size": 768,
+    "num_layers": 12,
+    "num_attention_heads": 12,
+    "test_tokenization_length": 11,
+    "status": "verified"
+  },
+  "alephbert-gimmel": {
+    "model_id": "imvladikon/alephbertgimmel-base-512",
+    "num_parameters": 184345344,
+    "num_parameters_millions": 184.35,
+    "vocab_size": 128000,
+    "max_length": 1000000000000000019884624838656,
+    "hidden_size": 768,
+    "num_layers": 12,
+    "num_attention_heads": 12,
+    "test_tokenization_length": 11,
+    "status": "verified"
+  },
+  "dictabert": {
+    "model_id": "dicta-il/dictabert",
+    "num_parameters": 184345344,
+    "num_parameters_millions": 184.35,
+    "vocab_size": 128000,
+    "max_length": 512,
+    "hidden_size": 768,
+    "num_layers": 12,
+    "num_attention_heads": 12,
+    "test_tokenization_length": 11,
+    "status": "verified"
+  },
+  "mbert": {
+    "model_id": "bert-base-multilingual-cased",
+    "num_parameters": 177853440,
+    "num_parameters_millions": 177.85,
+    "vocab_size": 119547,
+    "max_length": 512,
+    "hidden_size": 768,
+    "num_layers": 12,
+    "num_attention_heads": 12,
+    "test_tokenization_length": 17,
+    "status": "verified"
+  },
+  "xlm-roberta-base": {
+    "model_id": "xlm-roberta-base",
+    "num_parameters": 278043648,
+    "num_parameters_millions": 278.04,
+    "vocab_size": 250002,
+    "max_length": 512,
+    "hidden_size": 768,
+    "num_layers": 12,
+    "num_attention_heads": 12,
+    "test_tokenization_length": 14,
+    "status": "verified"
+  }
+}
