@@ -519,6 +519,55 @@ LLM evaluation (prompting approaches) will be implemented separately.
 
 ## VAST.ai GPU Training
 
+### Automation Scripts
+
+We've created 5 automation scripts to simplify VAST.ai workflow:
+
+| Script | Purpose | Mission |
+|--------|---------|---------|
+| **`setup_vast_instance.sh`** | One-command instance setup (installs everything) | 4.4 |
+| **`download_from_gdrive.sh`** | Download dataset from Google Drive | 4.4 |
+| **`sync_to_gdrive.sh`** | Upload results to Google Drive (rclone automation) | 4.4-4.6 |
+| **`run_all_hpo.sh`** | Batch run all 10 HPO studies | 4.5 |
+| **`run_all_experiments.sh`** | Batch run all 30 training runs | 4.6 |
+
+📚 **Complete script documentation:** [scripts/README.md](scripts/README.md)
+
+### Quick Start with Scripts
+
+For a fully automated workflow, use our scripts:
+
+```bash
+# 1. Rent VAST.ai instance and SSH in
+ssh -p <port> root@<host>
+
+# 2. Clone repository
+git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git
+cd hebrew-idiom-detection
+
+# 3. One-command setup (installs deps, downloads data, verifies GPU)
+bash scripts/setup_vast_instance.sh
+
+# 4. Configure rclone for Google Drive sync (one-time, 5 min)
+curl https://rclone.org/install.sh | sudo bash
+rclone config  # Follow prompts to add 'gdrive' remote
+
+# 5. Run HPO for all models (Mission 4.5)
+bash scripts/run_all_hpo.sh  # Runs 10 HPO studies automatically
+
+# 6. Run final training (Mission 4.6)
+bash scripts/run_all_experiments.sh  # Runs 30 training runs automatically
+
+# 7. Sync results to Google Drive
+bash scripts/sync_to_gdrive.sh
+```
+
+✅ **That's it!** All automation handled by scripts.
+
+### Manual Workflow (Alternative)
+
+If you prefer manual control or need to understand each step, follow the detailed instructions below.
+
 ### When to Use VAST.ai
 
 Use VAST.ai for:

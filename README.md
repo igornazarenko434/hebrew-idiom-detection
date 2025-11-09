@@ -1,5 +1,7 @@
 # Hebrew Idiom Detection
 
+**Repository:** https://github.com/igornazarenko434/hebrew-idiom-detection
+
 ## Project Overview
 
 This project focuses on automatic detection and interpretation of Hebrew idioms in natural language text. The goal is to distinguish between literal and figurative uses of expressions and identify idiomatic spans within sentences.
@@ -12,10 +14,11 @@ This project focuses on automatic detection and interpretation of Hebrew idioms 
 ## Dataset
 
 - **Total Samples**: 4,800 sentences
-- **Distribution**: 50% literal, 50% figurative
-- **Unique Idioms**: 60-80 Hebrew expressions
+- **Distribution**: 50% literal (2,400), 50% figurative (2,400)
+- **Unique Idioms**: 60 Hebrew expressions (exactly)
 - **Annotations**: IOB2 tags for idiom spans
-- **Splits**: Expression-based train/validation/test splits to prevent data leakage
+- **Splits**: Expression-based train (3,840) / validation (480) / test (480) to prevent data leakage
+- **Documentation**: See [data/README.md](data/README.md) for complete dataset documentation
 
 ## Models Evaluated
 
@@ -43,13 +46,24 @@ This project focuses on automatic detection and interpretation of Hebrew idioms 
 │   └── logs/              # Training logs
 ├── models/                 # Model checkpoints (local cache)
 ├── notebooks/              # Jupyter notebooks for analysis
-├── scripts/                # Automation scripts
+├── scripts/                # Automation scripts (VAST.ai workflow)
 ├── docker/                 # Docker configurations
 ├── tests/                  # Unit tests
 └── paper/                  # Paper materials
     ├── figures/           # Figures for publication
     └── tables/            # Tables for publication
 ```
+
+## Documentation
+
+Complete guides for this project:
+
+- **[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md)** - Complete execution guide with all commands and workflows
+- **[STEP_BY_STEP_MISSIONS.md](STEP_BY_STEP_MISSIONS.md)** - Detailed mission-by-mission breakdown
+- **[FINAL_PRD.md](FINAL_PRD_Hebrew_Idiom_Detection.md)** - Comprehensive project specification
+- **[data/README.md](data/README.md)** - Dataset documentation and statistics
+- **[scripts/README.md](scripts/README.md)** - Automation scripts for VAST.ai training
+- **[MISSIONS_PROGRESS_TRACKER.md](MISSIONS_PROGRESS_TRACKER.md)** - Current progress tracking
 
 ## Environment Setup
 
@@ -172,6 +186,42 @@ python src/test_tokenization_alignment.py
 ```
 
 Results saved to `experiments/results/tokenization_alignment_test.txt`
+
+## VAST.ai GPU Training
+
+For GPU-accelerated training, we use VAST.ai with automation scripts.
+
+**Quick Workflow:**
+
+```bash
+# 1. Rent VAST.ai instance and SSH in
+ssh -p <port> root@<host>
+
+# 2. Clone repository
+git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git
+cd hebrew-idiom-detection
+
+# 3. One-command setup (installs everything)
+bash scripts/setup_vast_instance.sh
+
+# 4. Configure rclone for Google Drive sync (one-time, 5 min)
+curl https://rclone.org/install.sh | sudo bash
+rclone config  # Follow prompts
+
+# 5. Run hyperparameter optimization (Mission 4.5)
+bash scripts/run_all_hpo.sh
+
+# 6. Run final training with best hyperparameters (Mission 4.6)
+bash scripts/run_all_experiments.sh
+
+# 7. Sync results to Google Drive
+bash scripts/sync_to_gdrive.sh
+```
+
+**Documentation:**
+- Complete VAST.ai workflow: [IMPLEMENTATION_GUIDE.md - Section 8](IMPLEMENTATION_GUIDE.md#vastai-gpu-training)
+- Scripts documentation: [scripts/README.md](scripts/README.md)
+- Detailed missions: [STEP_BY_STEP_MISSIONS.md](STEP_BY_STEP_MISSIONS.md) (Missions 4.4-4.6)
 
 ## Research Methodology
 
