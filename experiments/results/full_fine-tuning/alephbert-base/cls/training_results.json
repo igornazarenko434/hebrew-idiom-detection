@@ -14,12 +14,12 @@
   "dev_samples": 20,
   "test_samples": 480,
   "train_metrics": {
-    "runtime": 16.6921,
-    "loss": 0.6249100821358817
+    "runtime": 13.1276,
+    "loss": 0.6371597562517438
   },
   "test_metrics": {
-    "f1": 0.6779661016949152,
-    "precision": 0.0,
-    "recall": 0.0
+    "f1": 0.6703910614525139,
+    "precision": 0.5042016806722689,
+    "recall": 1.0
   }
 }

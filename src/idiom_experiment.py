@@ -997,14 +997,38 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         # Data collator
         data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
-        # Metrics
-        metric = evaluate.load("f1")
+        # Metrics - Enhanced with accuracy, precision, recall, confusion matrix
+        metric_f1 = evaluate.load("f1")
+        metric_accuracy = evaluate.load("accuracy")
+        metric_precision = evaluate.load("precision")
+        metric_recall = evaluate.load("recall")
 
         def compute_metrics(eval_pred):
             predictions, labels = eval_pred
             predictions = np.argmax(predictions, axis=1)
-            f1 = metric.compute(predictions=predictions, references=labels, average='binary')
-            return {"f1": f1['f1']}
+
+            # Compute all metrics
+            f1 = metric_f1.compute(predictions=predictions, references=labels, average='binary')
+            accuracy = metric_accuracy.compute(predictions=predictions, references=labels)
+            precision = metric_precision.compute(predictions=predictions, references=labels, average='binary')
+            recall = metric_recall.compute(predictions=predictions, references=labels, average='binary')
+
+            # Compute confusion matrix for detailed analysis
+            from sklearn.metrics import confusion_matrix
+            cm = confusion_matrix(labels, predictions)
+
+            # Return all metrics
+            return {
+                "f1": f1['f1'],
+                "accuracy": accuracy['accuracy'],
+                "precision": precision['precision'],
+                "recall": recall['recall'],
+                # Store confusion matrix as flattened array for logging
+                "confusion_matrix_tn": int(cm[0, 0]) if cm.shape == (2, 2) else 0,
+                "confusion_matrix_fp": int(cm[0, 1]) if cm.shape == (2, 2) else 0,
+                "confusion_matrix_fn": int(cm[1, 0]) if cm.shape == (2, 2) else 0,
+                "confusion_matrix_tp": int(cm[1, 1]) if cm.shape == (2, 2) else 0,
+            }
 
     elif task in ['span', 'both']:
         # Task 2: Token Classification
@@ -1017,14 +1041,72 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
 
         print(f"  Labels: {label2id}")
 
+        # Compute class weights from training data to handle IOB2 imbalance
+        # IOB2 is naturally imbalanced: most tokens are "O", few are "B-IDIOM"/"I-IDIOM"
+        print(f"\n  Computing class weights from training data...")
+        label_counts = {0: 0, 1: 0, 2: 0}  # O, B-IDIOM, I-IDIOM
+
+        for idx, row in train_df.iterrows():
+            iob2_tags_str = row['iob2_tags']
+            if pd.isna(iob2_tags_str) or str(iob2_tags_str) == 'nan':
+                continue
+            word_labels = str(iob2_tags_str).split()
+            for label_str in word_labels:
+                if label_str in label2id:
+                    label_counts[label2id[label_str]] += 1
+
+        total_labels = sum(label_counts.values())
+        if total_labels > 0:
+            # Compute inverse frequency weights
+            class_weights = {
+                label_id: total_labels / (num_labels * count) if count > 0 else 1.0
+                for label_id, count in label_counts.items()
+            }
+
+            print(f"  Label distribution in training data:")
+            for label_id, count in label_counts.items():
+                label_name = id2label[label_id]
+                percentage = (count / total_labels * 100) if total_labels > 0 else 0
+                weight = class_weights[label_id]
+                print(f"    {label_name:10s}: {count:6d} ({percentage:5.2f}%) - weight: {weight:.4f}")
+
+            # Convert to tensor for PyTorch
+            import torch
+            class_weights_tensor = torch.tensor([class_weights[i] for i in range(num_labels)], dtype=torch.float32)
+        else:
+            print(f"  ⚠️  No valid labels found, using uniform weights")
+            class_weights_tensor = None
+
         # Load model
-        print(f"  Loading model: {model_checkpoint}")
+        print(f"\n  Loading model: {model_checkpoint}")
         model = AutoModelForTokenClassification.from_pretrained(
             model_checkpoint,
             num_labels=num_labels,
             id2label=id2label,
             label2id=label2id
         )
+
+        # Create custom Trainer with weighted loss
+        class WeightedLossTrainer(Trainer):
+            """Custom Trainer that uses class weights in the loss function"""
+            def __init__(self, *args, class_weights=None, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.class_weights = class_weights
+
+            def compute_loss(self, model, inputs, return_outputs=False):
+                labels = inputs.pop("labels")
+                outputs = model(**inputs)
+                logits = outputs.logits
+
+                # Compute weighted cross-entropy loss
+                import torch.nn.functional as F
+                loss_fct = torch.nn.CrossEntropyLoss(
+                    weight=self.class_weights.to(logits.device) if self.class_weights is not None else None,
+                    ignore_index=-100
+                )
+                loss = loss_fct(logits.view(-1, self.model.config.num_labels), labels.view(-1))
+
+                return (loss, outputs) if return_outputs else loss
 
         # Tokenization with IOB2 alignment (CRITICAL - Mission 4.2 Task 3.5)
         def tokenize_and_align(examples):
@@ -1089,7 +1171,7 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         # Data collator for token classification
         data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer)
 
-        # Metrics for token classification
+        # Metrics for token classification - Enhanced with token-level F1
         seqeval_metric = evaluate.load("seqeval")
 
         def compute_metrics(eval_pred):
@@ -1100,6 +1182,10 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
             true_labels = []
             pred_labels = []
 
+            # For token-level metrics (flattened)
+            true_labels_flat = []
+            pred_labels_flat = []
+
             for prediction, label in zip(predictions, labels):
                 true_label = []
                 pred_label = []
@@ -1107,14 +1193,39 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
                     if l != -100:
                         true_label.append(id2label[l])
                         pred_label.append(id2label[p])
+                        # Also collect flattened for token-level metrics
+                        true_labels_flat.append(l)
+                        pred_labels_flat.append(p)
                 true_labels.append(true_label)
                 pred_labels.append(pred_label)
 
-            results = seqeval_metric.compute(predictions=pred_labels, references=true_labels)
+            # Compute span-level F1 using seqeval (standard for IOB2)
+            span_results = seqeval_metric.compute(predictions=pred_labels, references=true_labels)
+
+            # Compute token-level F1 using sklearn
+            from sklearn.metrics import f1_score, precision_score, recall_score
+            token_f1_macro = f1_score(true_labels_flat, pred_labels_flat, average='macro', zero_division=0)
+            token_f1_micro = f1_score(true_labels_flat, pred_labels_flat, average='micro', zero_division=0)
+            token_precision = precision_score(true_labels_flat, pred_labels_flat, average='macro', zero_division=0)
+            token_recall = recall_score(true_labels_flat, pred_labels_flat, average='macro', zero_division=0)
+
+            # Per-class token-level F1 for detailed analysis
+            token_f1_per_class = f1_score(true_labels_flat, pred_labels_flat, average=None, zero_division=0, labels=[0, 1, 2])
+
             return {
-                "f1": results["overall_f1"],
-                "precision": results["overall_precision"],
-                "recall": results["overall_recall"]
+                # Span-level metrics (primary - standard for IOB2)
+                "f1": span_results["overall_f1"],
+                "precision": span_results["overall_precision"],
+                "recall": span_results["overall_recall"],
+                # Token-level metrics (additional - for detailed analysis)
+                "token_f1_macro": token_f1_macro,
+                "token_f1_micro": token_f1_micro,
+                "token_precision": token_precision,
+                "token_recall": token_recall,
+                # Per-class token F1 (O, B-IDIOM, I-IDIOM)
+                "token_f1_O": float(token_f1_per_class[0]),
+                "token_f1_B-IDIOM": float(token_f1_per_class[1]) if len(token_f1_per_class) > 1 else 0.0,
+                "token_f1_I-IDIOM": float(token_f1_per_class[2]) if len(token_f1_per_class) > 2 else 0.0,
             }
 
     else:
@@ -1159,16 +1270,32 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     # -------------------------
     # 7. Trainer Setup
     # -------------------------
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=train_dataset,
-        eval_dataset=dev_dataset,
-        tokenizer=tokenizer,
-        data_collator=data_collator,
-        compute_metrics=compute_metrics,
-        callbacks=[EarlyStoppingCallback(early_stopping_patience=early_stopping_patience)]
-    )
+    # Use WeightedLossTrainer for Task 2 (token classification) if class weights are available
+    if task in ['span', 'both'] and 'class_weights_tensor' in locals() and class_weights_tensor is not None:
+        print(f"\n  Using WeightedLossTrainer with class weights for IOB2 imbalance")
+        trainer = WeightedLossTrainer(
+            model=model,
+            args=training_args,
+            train_dataset=train_dataset,
+            eval_dataset=dev_dataset,
+            tokenizer=tokenizer,
+            data_collator=data_collator,
+            compute_metrics=compute_metrics,
+            callbacks=[EarlyStoppingCallback(early_stopping_patience=early_stopping_patience)],
+            class_weights=class_weights_tensor
+        )
+    else:
+        # Use standard Trainer for Task 1 (sequence classification)
+        trainer = Trainer(
+            model=model,
+            args=training_args,
+            train_dataset=train_dataset,
+            eval_dataset=dev_dataset,
+            tokenizer=tokenizer,
+            data_collator=data_collator,
+            compute_metrics=compute_metrics,
+            callbacks=[EarlyStoppingCallback(early_stopping_patience=early_stopping_patience)]
+        )
 
     # -------------------------
     # 8. Train
