@@ -493,34 +493,96 @@ class DatasetLoader:
         stats['unique_expressions'] = unique_expressions
         print(f"\n📊 Unique Idioms/Expressions: {unique_expressions}")
 
+        # ---------- NEW: Expression occurrence statistics (min/max/mean/std) ----------
+        expr_counts = self.df['expression'].value_counts()
+        stats['expression_occurrences'] = {
+            'min': int(expr_counts.min()),
+            'max': int(expr_counts.max()),
+            'mean': float(expr_counts.mean()),
+            'median': float(expr_counts.median()),
+            'std': float(expr_counts.std())
+        }
+        print(f"\n📊 Expression Occurrence Statistics:")
+        print(f"  • Min occurrences per idiom: {stats['expression_occurrences']['min']}")
+        print(f"  • Max occurrences per idiom: {stats['expression_occurrences']['max']}")
+        print(f"  • Mean occurrences per idiom: {stats['expression_occurrences']['mean']:.2f}")
+        print(f"  • Median occurrences per idiom: {stats['expression_occurrences']['median']:.2f}")
+        print(f"  • Std occurrences per idiom: {stats['expression_occurrences']['std']:.2f}")
+
         # Token statistics (sentence length)
         avg_tokens = self.df['num_tokens'].mean()
         median_tokens = self.df['num_tokens'].median()
+        std_tokens = self.df['num_tokens'].std()
         min_tokens = self.df['num_tokens'].min()
         max_tokens = self.df['num_tokens'].max()
 
         stats['avg_sentence_length'] = avg_tokens
         stats['median_sentence_length'] = median_tokens
+        stats['std_sentence_length'] = std_tokens
         stats['min_sentence_length'] = min_tokens
         stats['max_sentence_length'] = max_tokens
 
-        print(f"\n📊 Sentence Length Statistics:")
+        print(f"\n📊 Sentence Length Statistics (tokens):")
         print(f"  • Average: {avg_tokens:.2f} tokens")
         print(f"  • Median:  {median_tokens:.0f} tokens")
+        print(f"  • Std:     {std_tokens:.2f} tokens")
         print(f"  • Min:     {min_tokens:.0f} tokens")
         print(f"  • Max:     {max_tokens:.0f} tokens")
+
+        # ---------- NEW: Character-level length statistics ----------
+        self.df['sentence_char_length'] = self.df['text'].str.len()
+        self.df['idiom_char_length'] = self.df['matched_expression'].str.len()
+
+        stats['sentence_char_length'] = {
+            'mean': float(self.df['sentence_char_length'].mean()),
+            'median': float(self.df['sentence_char_length'].median()),
+            'std': float(self.df['sentence_char_length'].std()),
+            'min': int(self.df['sentence_char_length'].min()),
+            'max': int(self.df['sentence_char_length'].max())
+        }
+
+        print(f"\n📊 Sentence Length Statistics (characters):")
+        print(f"  • Average: {stats['sentence_char_length']['mean']:.2f} chars")
+        print(f"  • Median:  {stats['sentence_char_length']['median']:.2f} chars")
+        print(f"  • Std:     {stats['sentence_char_length']['std']:.2f} chars")
+        print(f"  • Min:     {stats['sentence_char_length']['min']} chars")
+        print(f"  • Max:     {stats['sentence_char_length']['max']} chars")
 
         # Idiom length (token-span) – computed using half-open [s:e)
         self.df['idiom_length'] = (self.df['token_span_end'] - self.df['token_span_start']).astype(int)
         avg_idiom_length = self.df['idiom_length'].mean()
         median_idiom_length = self.df['idiom_length'].median()
+        std_idiom_length = self.df['idiom_length'].std()
+        min_idiom_length = self.df['idiom_length'].min()
+        max_idiom_length = self.df['idiom_length'].max()
 
         stats['avg_idiom_length'] = avg_idiom_length
         stats['median_idiom_length'] = median_idiom_length
+        stats['std_idiom_length'] = std_idiom_length
+        stats['min_idiom_length'] = min_idiom_length
+        stats['max_idiom_length'] = max_idiom_length
 
-        print(f"\n📊 Idiom Length Statistics:")
+        print(f"\n📊 Idiom Length Statistics (tokens):")
         print(f"  • Average: {avg_idiom_length:.2f} tokens")
         print(f"  • Median:  {median_idiom_length:.0f} tokens")
+        print(f"  • Std:     {std_idiom_length:.2f} tokens")
+        print(f"  • Min:     {min_idiom_length:.0f} tokens")
+        print(f"  • Max:     {max_idiom_length:.0f} tokens")
+
+        stats['idiom_char_length'] = {
+            'mean': float(self.df['idiom_char_length'].mean()),
+            'median': float(self.df['idiom_char_length'].median()),
+            'std': float(self.df['idiom_char_length'].std()),
+            'min': int(self.df['idiom_char_length'].min()),
+            'max': int(self.df['idiom_char_length'].max())
+        }
+
+        print(f"\n📊 Idiom Length Statistics (characters):")
+        print(f"  • Average: {stats['idiom_char_length']['mean']:.2f} chars")
+        print(f"  • Median:  {stats['idiom_char_length']['median']:.2f} chars")
+        print(f"  • Std:     {stats['idiom_char_length']['std']:.2f} chars")
+        print(f"  • Min:     {stats['idiom_char_length']['min']} chars")
+        print(f"  • Max:     {stats['idiom_char_length']['max']} chars")
 
         # Top 10 most frequent expressions
         top_expressions = self.df['expression'].value_counts().head(10)
@@ -631,6 +693,610 @@ class DatasetLoader:
             'crosstab': crosstab.to_dict(),
             'crosstab_percentage': crosstab_pct.to_dict()
         }
+
+    def analyze_idiom_position(self) -> Dict:
+        """
+        Analyze idiom positions within sentences (dataset_analysis_plan.md requirement)
+        Computes position_ratio = token_span_start / num_tokens
+
+        Returns:
+            Dictionary with position statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("IDIOM POSITION ANALYSIS")
+        print("=" * 80)
+
+        # Compute position ratio
+        self.df['position_ratio'] = self.df['token_span_start'] / self.df['num_tokens']
+
+        # Classify positions
+        def classify_position(ratio):
+            if ratio < 0.33:
+                return 'start'
+            elif ratio < 0.67:
+                return 'middle'
+            else:
+                return 'end'
+
+        self.df['position_category'] = self.df['position_ratio'].apply(classify_position)
+
+        # Overall position statistics
+        position_counts = self.df['position_category'].value_counts()
+        total = len(self.df)
+
+        stats = {
+            'position_ratio': {
+                'mean': float(self.df['position_ratio'].mean()),
+                'median': float(self.df['position_ratio'].median()),
+                'std': float(self.df['position_ratio'].std()),
+                'min': float(self.df['position_ratio'].min()),
+                'max': float(self.df['position_ratio'].max())
+            },
+            'position_distribution': {
+                'start': int(position_counts.get('start', 0)),
+                'middle': int(position_counts.get('middle', 0)),
+                'end': int(position_counts.get('end', 0))
+            },
+            'position_percentages': {
+                'start': float((position_counts.get('start', 0) / total) * 100),
+                'middle': float((position_counts.get('middle', 0) / total) * 100),
+                'end': float((position_counts.get('end', 0) / total) * 100)
+            }
+        }
+
+        print(f"\n📊 Position Ratio Statistics:")
+        print(f"  • Mean: {stats['position_ratio']['mean']:.4f}")
+        print(f"  • Median: {stats['position_ratio']['median']:.4f}")
+        print(f"  • Std: {stats['position_ratio']['std']:.4f}")
+        print(f"  • Range: [{stats['position_ratio']['min']:.4f}, {stats['position_ratio']['max']:.4f}]")
+
+        print(f"\n📊 Position Distribution:")
+        print(f"  • Start (0-33%): {stats['position_distribution']['start']} ({stats['position_percentages']['start']:.2f}%)")
+        print(f"  • Middle (33-67%): {stats['position_distribution']['middle']} ({stats['position_percentages']['middle']:.2f}%)")
+        print(f"  • End (67-100%): {stats['position_distribution']['end']} ({stats['position_percentages']['end']:.2f}%)")
+
+        # Compare positions by label
+        print(f"\n📊 Position Distribution by Label:")
+        for label in self.df['label'].unique():
+            label_df = self.df[self.df['label'] == label]
+            pos_counts = label_df['position_category'].value_counts()
+            label_total = len(label_df)
+
+            print(f"\n  {label}:")
+            print(f"    • Start: {pos_counts.get('start', 0)} ({(pos_counts.get('start', 0)/label_total)*100:.2f}%)")
+            print(f"    • Middle: {pos_counts.get('middle', 0)} ({(pos_counts.get('middle', 0)/label_total)*100:.2f}%)")
+            print(f"    • End: {pos_counts.get('end', 0)} ({(pos_counts.get('end', 0)/label_total)*100:.2f}%)")
+            print(f"    • Mean position ratio: {label_df['position_ratio'].mean():.4f}")
+
+        return stats
+
+    def analyze_polysemy(self) -> Dict:
+        """
+        Analyze polysemy: idioms appearing in both literal and figurative contexts
+        (dataset_analysis_plan.md requirement)
+
+        Returns:
+            Dictionary with polysemy statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("POLYSEMY ANALYSIS")
+        print("=" * 80)
+
+        # Group by expression and label
+        expr_label_counts = self.df.groupby(['expression', 'label']).size().unstack(fill_value=0)
+
+        # Calculate figurative ratio for each expression
+        expr_label_counts['total'] = expr_label_counts.sum(axis=1)
+        expr_label_counts['figurative_ratio'] = (
+            expr_label_counts.get('פיגורטיבי', 0) / expr_label_counts['total']
+        )
+        expr_label_counts['figurative_percentage'] = expr_label_counts['figurative_ratio'] * 100
+
+        # Identify polysemous idioms (appear in both categories)
+        has_literal = expr_label_counts.get('מילולי', 0) > 0
+        has_figurative = expr_label_counts.get('פיגורטיבי', 0) > 0
+        polysemous_idioms = expr_label_counts[has_literal & has_figurative]
+
+        # Identify mono-sense idioms
+        only_literal = expr_label_counts[has_literal & ~has_figurative]
+        only_figurative = expr_label_counts[~has_literal & has_figurative]
+
+        stats = {
+            'total_expressions': len(expr_label_counts),
+            'polysemous_count': len(polysemous_idioms),
+            'only_literal_count': len(only_literal),
+            'only_figurative_count': len(only_figurative),
+            'polysemous_percentage': float((len(polysemous_idioms) / len(expr_label_counts)) * 100),
+            'polysemous_idioms': polysemous_idioms.index.tolist(),
+            'expression_figurative_ratios': expr_label_counts['figurative_ratio'].to_dict()
+        }
+
+        print(f"\n📊 Polysemy Statistics:")
+        print(f"  • Total expressions: {stats['total_expressions']}")
+        print(f"  • Polysemous idioms (both literal & figurative): {stats['polysemous_count']} ({stats['polysemous_percentage']:.2f}%)")
+        print(f"  • Only literal: {stats['only_literal_count']}")
+        print(f"  • Only figurative: {stats['only_figurative_count']}")
+
+        print(f"\n📊 Top 10 Most Polysemous Idioms (by balance):")
+        # Sort by how close to 50/50 (most polysemous)
+        polysemous_sorted = polysemous_idioms.copy()
+        polysemous_sorted['balance_score'] = 1 - abs(polysemous_sorted['figurative_ratio'] - 0.5) * 2
+        polysemous_sorted = polysemous_sorted.sort_values('balance_score', ascending=False)
+
+        for i, (expr, row) in enumerate(polysemous_sorted.head(10).iterrows(), 1):
+            fig_pct = row['figurative_percentage']
+            lit_pct = 100 - fig_pct
+            print(f"  {i}. {expr}")
+            print(f"     Figurative: {row.get('פיגורטיבי', 0):.0f} ({fig_pct:.1f}%) | "
+                  f"Literal: {row.get('מילולי', 0):.0f} ({lit_pct:.1f}%)")
+
+        # Store for heatmap visualization
+        self.polysemy_data = expr_label_counts
+
+        return stats
+
+    def analyze_lexical_statistics(self) -> Dict:
+        """
+        Compute comprehensive lexical statistics (dataset_analysis_plan.md requirement):
+        - Vocabulary size
+        - Type-Token Ratio (TTR)
+        - Word frequencies
+        - Function words
+
+        Returns:
+            Dictionary with lexical statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("LEXICAL STATISTICS")
+        print("=" * 80)
+
+        from collections import Counter
+
+        # Tokenize all sentences
+        all_tokens = []
+        tokens_per_sentence = []
+
+        for text in self.df['text']:
+            tokens = text.split()
+            all_tokens.extend(tokens)
+            tokens_per_sentence.append(set(tokens))
+
+        # Overall vocabulary
+        vocabulary = set(all_tokens)
+        total_tokens = len(all_tokens)
+
+        # Type-Token Ratio
+        ttr_overall = len(vocabulary) / total_tokens
+
+        # Average unique words per sentence
+        avg_unique_per_sentence = np.mean([len(s) for s in tokens_per_sentence])
+
+        # Word frequencies
+        word_freq = Counter(all_tokens)
+        top_20_overall = word_freq.most_common(20)
+
+        # Lexical stats by label
+        label_stats = {}
+        for label in self.df['label'].unique():
+            label_df = self.df[self.df['label'] == label]
+            label_tokens = []
+            for text in label_df['text']:
+                label_tokens.extend(text.split())
+
+            label_vocab = set(label_tokens)
+            label_ttr = len(label_vocab) / len(label_tokens) if len(label_tokens) > 0 else 0
+            label_freq = Counter(label_tokens)
+
+            label_stats[label] = {
+                'vocabulary_size': len(label_vocab),
+                'total_tokens': len(label_tokens),
+                'ttr': label_ttr,
+                'top_20': label_freq.most_common(20)
+            }
+
+        # Function words (Hebrew)
+        function_words = ['של', 'את', 'על', 'עם', 'ב', 'ל', 'מ', 'ה', 'ש', 'כ',
+                         'כי', 'אם', 'או', 'גם', 'רק', 'לא', 'אבל', 'זה', 'היה', 'הוא']
+
+        function_word_counts = {fw: word_freq.get(fw, 0) for fw in function_words}
+        total_function_words = sum(function_word_counts.values())
+        function_word_ratio = total_function_words / total_tokens
+
+        # Top words in idioms
+        idiom_tokens = []
+        for matched_expr in self.df['matched_expression'].dropna():
+            idiom_tokens.extend(str(matched_expr).split())
+
+        idiom_word_freq = Counter(idiom_tokens)
+        top_20_idiom_words = idiom_word_freq.most_common(20)
+
+        stats = {
+            'vocabulary_size': len(vocabulary),
+            'total_tokens': total_tokens,
+            'ttr_overall': float(ttr_overall),
+            'avg_unique_per_sentence': float(avg_unique_per_sentence),
+            'top_20_words': top_20_overall,
+            'top_20_idiom_words': top_20_idiom_words,
+            'function_word_counts': function_word_counts,
+            'function_word_ratio': float(function_word_ratio),
+            'label_statistics': label_stats
+        }
+
+        print(f"\n📊 Overall Lexical Statistics:")
+        print(f"  • Vocabulary size (unique words): {stats['vocabulary_size']:,}")
+        print(f"  • Total tokens: {stats['total_tokens']:,}")
+        print(f"  • Type-Token Ratio (TTR): {stats['ttr_overall']:.4f}")
+        print(f"  • Average unique words per sentence: {stats['avg_unique_per_sentence']:.2f}")
+        print(f"  • Function word ratio: {stats['function_word_ratio']:.4f} ({function_word_ratio*100:.2f}%)")
+
+        print(f"\n📊 Top 20 Most Frequent Words:")
+        for i, (word, count) in enumerate(top_20_overall, 1):
+            pct = (count / total_tokens) * 100
+            print(f"  {i:2d}. '{word}': {count:4d} ({pct:.2f}%)")
+
+        print(f"\n📊 Top 20 Words in Idioms:")
+        for i, (word, count) in enumerate(top_20_idiom_words, 1):
+            print(f"  {i:2d}. '{word}': {count:4d}")
+
+        print(f"\n📊 Lexical Statistics by Label:")
+        for label, lstats in label_stats.items():
+            print(f"\n  {label}:")
+            print(f"    • Vocabulary size: {lstats['vocabulary_size']:,}")
+            print(f"    • Total tokens: {lstats['total_tokens']:,}")
+            print(f"    • TTR: {lstats['ttr']:.4f}")
+            print(f"    • Top 5 words: {[w for w, c in lstats['top_20'][:5]]}")
+
+        print(f"\n📊 Function Word Frequencies:")
+        for fw, count in sorted(function_word_counts.items(), key=lambda x: x[1], reverse=True)[:10]:
+            if count > 0:
+                pct = (count / total_tokens) * 100
+                print(f"  • '{fw}': {count:4d} ({pct:.2f}%)")
+
+        return stats
+
+    # ==================== PART 2: OPTIONAL/RECOMMENDED ANALYSES ====================
+
+    def analyze_structural_complexity(self) -> Dict:
+        """
+        Analyze syntactic and structural complexity (dataset_analysis_plan.md PART 2.1)
+        - Subclause markers (ש, כי, אם, etc.)
+        - Punctuation counts
+        - Sentence complexity metrics
+
+        Returns:
+            Dictionary with structural complexity statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("STRUCTURAL COMPLEXITY ANALYSIS")
+        print("=" * 80)
+
+        from collections import Counter
+
+        # Subclause markers in Hebrew
+        subclause_markers = ['ש', 'כי', 'אם', 'כאשר', 'למרות', 'אף', 'מכיוון', 'בגלל', 'אלא']
+
+        # Punctuation marks
+        punctuation_marks = ['.', ',', '!', '?', ':', ';', '-', '–', '—', '"', "'", '(', ')']
+
+        # Initialize metrics
+        self.df['subclause_count'] = 0
+        self.df['punctuation_count'] = 0
+        self.df['subclause_ratio'] = 0.0
+
+        for idx, row in self.df.iterrows():
+            text = row['text']
+            tokens = text.split()
+
+            # Count subclause markers
+            subclause_count = sum(1 for token in tokens if token in subclause_markers)
+            self.df.at[idx, 'subclause_count'] = subclause_count
+            self.df.at[idx, 'subclause_ratio'] = subclause_count / len(tokens) if len(tokens) > 0 else 0
+
+            # Count punctuation
+            punct_count = sum(1 for char in text if char in punctuation_marks)
+            self.df.at[idx, 'punctuation_count'] = punct_count
+
+        # Overall statistics
+        stats = {
+            'mean_subclause_count': float(self.df['subclause_count'].mean()),
+            'mean_subclause_ratio': float(self.df['subclause_ratio'].mean()),
+            'mean_punctuation_count': float(self.df['punctuation_count'].mean()),
+            'sentences_with_subclauses': int((self.df['subclause_count'] > 0).sum()),
+            'sentences_with_subclauses_pct': float((self.df['subclause_count'] > 0).sum() / len(self.df) * 100)
+        }
+
+        print(f"\n📊 Overall Structural Complexity:")
+        print(f"  • Mean subclause markers per sentence: {stats['mean_subclause_count']:.2f}")
+        print(f"  • Mean subclause ratio: {stats['mean_subclause_ratio']:.4f}")
+        print(f"  • Mean punctuation marks per sentence: {stats['mean_punctuation_count']:.2f}")
+        print(f"  • Sentences with subclauses: {stats['sentences_with_subclauses']} ({stats['sentences_with_subclauses_pct']:.2f}%)")
+
+        # By label comparison
+        stats['by_label'] = {}
+        print(f"\n📊 Structural Complexity by Label:")
+        for label in self.df['label'].unique():
+            label_df = self.df[self.df['label'] == label]
+            label_stats = {
+                'mean_subclause_count': float(label_df['subclause_count'].mean()),
+                'mean_subclause_ratio': float(label_df['subclause_ratio'].mean()),
+                'mean_punctuation_count': float(label_df['punctuation_count'].mean())
+            }
+            stats['by_label'][label] = label_stats
+
+            print(f"\n  {label}:")
+            print(f"    • Mean subclause markers: {label_stats['mean_subclause_count']:.2f}")
+            print(f"    • Mean subclause ratio: {label_stats['mean_subclause_ratio']:.4f}")
+            print(f"    • Mean punctuation: {label_stats['mean_punctuation_count']:.2f}")
+
+        return stats
+
+    def analyze_lexical_richness(self) -> Dict:
+        """
+        Analyze lexical richness and variation (dataset_analysis_plan.md PART 2.2)
+        - Hapax legomena (words appearing once)
+        - Zipf's law validation
+        - Additional richness metrics
+
+        Returns:
+            Dictionary with lexical richness statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("LEXICAL RICHNESS ANALYSIS")
+        print("=" * 80)
+
+        from collections import Counter
+        import math
+
+        # Collect all tokens
+        all_tokens = []
+        for text in self.df['text']:
+            all_tokens.extend(text.split())
+
+        # Word frequencies
+        word_freq = Counter(all_tokens)
+        total_tokens = len(all_tokens)
+        unique_words = len(word_freq)
+
+        # Hapax legomena (words appearing exactly once)
+        hapax_legomena = [word for word, count in word_freq.items() if count == 1]
+        hapax_count = len(hapax_legomena)
+        hapax_ratio = hapax_count / unique_words
+
+        # Dis legomena (words appearing exactly twice)
+        dis_legomena = [word for word, count in word_freq.items() if count == 2]
+        dis_count = len(dis_legomena)
+
+        # Zipf's law: rank vs frequency (for top 1000 words)
+        sorted_freq = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
+        zipf_data = []
+        for rank, (word, freq) in enumerate(sorted_freq[:1000], 1):
+            zipf_data.append({
+                'rank': rank,
+                'word': word,
+                'frequency': freq,
+                'log_rank': math.log(rank),
+                'log_freq': math.log(freq)
+            })
+
+        # Maas index (a^2 / (log(total_tokens) - log(unique_words)))
+        if total_tokens > unique_words > 0:
+            maas_index = (math.log(total_tokens) - math.log(unique_words)) / (math.log(total_tokens) ** 2)
+        else:
+            maas_index = 0
+
+        stats = {
+            'total_tokens': total_tokens,
+            'unique_words': unique_words,
+            'ttr': float(unique_words / total_tokens),
+            'hapax_legomena_count': hapax_count,
+            'hapax_ratio': float(hapax_ratio),
+            'dis_legomena_count': dis_count,
+            'maas_index': float(maas_index),
+            'zipf_data': zipf_data[:100]  # Store top 100 for visualization
+        }
+
+        print(f"\n📊 Lexical Richness Statistics:")
+        print(f"  • Total tokens: {stats['total_tokens']:,}")
+        print(f"  • Unique words: {stats['unique_words']:,}")
+        print(f"  • Type-Token Ratio (TTR): {stats['ttr']:.4f}")
+        print(f"  • Hapax legomena (words appearing once): {stats['hapax_legomena_count']:,} ({hapax_ratio*100:.2f}%)")
+        print(f"  • Dis legomena (words appearing twice): {stats['dis_legomena_count']:,}")
+        print(f"  • Maas Index: {stats['maas_index']:.4f}")
+
+        # By label
+        stats['by_label'] = {}
+        print(f"\n📊 Lexical Richness by Label:")
+        for label in self.df['label'].unique():
+            label_df = self.df[self.df['label'] == label]
+            label_tokens = []
+            for text in label_df['text']:
+                label_tokens.extend(text.split())
+
+            label_word_freq = Counter(label_tokens)
+            label_hapax = len([w for w, c in label_word_freq.items() if c == 1])
+
+            label_stats = {
+                'unique_words': len(label_word_freq),
+                'total_tokens': len(label_tokens),
+                'ttr': len(label_word_freq) / len(label_tokens),
+                'hapax_count': label_hapax,
+                'hapax_ratio': label_hapax / len(label_word_freq)
+            }
+            stats['by_label'][label] = label_stats
+
+            print(f"\n  {label}:")
+            print(f"    • Unique words: {label_stats['unique_words']:,}")
+            print(f"    • TTR: {label_stats['ttr']:.4f}")
+            print(f"    • Hapax legomena: {label_stats['hapax_count']:,} ({label_stats['hapax_ratio']*100:.2f}%)")
+
+        # Store for visualization
+        self.zipf_data = zipf_data
+
+        return stats
+
+    def analyze_collocations(self) -> Dict:
+        """
+        Analyze collocations around idioms (dataset_analysis_plan.md PART 2.4)
+        - Extract ±3 token context around idioms
+        - Most frequent collocations by label
+        - PMI (Pointwise Mutual Information)
+
+        Returns:
+            Dictionary with collocation statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("COLLOCATIONAL ANALYSIS")
+        print("=" * 80)
+
+        from collections import Counter
+        import math
+
+        # Extract context words (±3 tokens around idiom)
+        context_words_all = []
+        context_by_label = {'מילולי': [], 'פיגורטיבי': []}
+
+        for idx, row in self.df.iterrows():
+            tokens = row['text'].split()
+            span_start = int(row['token_span_start'])
+            span_end = int(row['token_span_end'])
+            label = row['label']
+
+            # Get context (3 tokens before and after)
+            context_before = tokens[max(0, span_start-3):span_start]
+            context_after = tokens[span_end:min(len(tokens), span_end+3)]
+
+            context = context_before + context_after
+            context_words_all.extend(context)
+            context_by_label[label].extend(context)
+
+        # Overall collocation frequencies
+        context_freq_all = Counter(context_words_all)
+        top_20_context = context_freq_all.most_common(20)
+
+        # By label
+        context_freq_literal = Counter(context_by_label['מילולי'])
+        context_freq_figurative = Counter(context_by_label['פיגורטיבי'])
+
+        top_20_literal = context_freq_literal.most_common(20)
+        top_20_figurative = context_freq_figurative.most_common(20)
+
+        stats = {
+            'total_context_words': len(context_words_all),
+            'unique_context_words': len(context_freq_all),
+            'top_20_context_overall': top_20_context,
+            'top_20_context_literal': top_20_literal,
+            'top_20_context_figurative': top_20_figurative
+        }
+
+        print(f"\n📊 Collocational Statistics:")
+        print(f"  • Total context words (±3 tokens): {stats['total_context_words']:,}")
+        print(f"  • Unique context words: {stats['unique_context_words']:,}")
+
+        print(f"\n📊 Top 20 Context Words (Overall):")
+        for i, (word, count) in enumerate(top_20_context, 1):
+            pct = (count / len(context_words_all)) * 100
+            print(f"  {i:2d}. '{word}': {count:4d} ({pct:.2f}%)")
+
+        print(f"\n📊 Top 10 Context Words by Label:")
+        print(f"\n  Literal:")
+        for i, (word, count) in enumerate(top_20_literal[:10], 1):
+            print(f"    {i:2d}. '{word}': {count:4d}")
+
+        print(f"\n  Figurative:")
+        for i, (word, count) in enumerate(top_20_figurative[:10], 1):
+            print(f"    {i:2d}. '{word}': {count:4d}")
+
+        # Store for word cloud visualization
+        self.context_freq_all = context_freq_all
+        self.context_freq_literal = context_freq_literal
+        self.context_freq_figurative = context_freq_figurative
+
+        return stats
+
+    def analyze_annotation_consistency(self) -> Dict:
+        """
+        Analyze annotation reliability and consistency (dataset_analysis_plan.md PART 2.6)
+        - Span match percentage
+        - IOB2 consistency
+        - Prefix attachment patterns
+
+        Returns:
+            Dictionary with consistency statistics
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("ANNOTATION CONSISTENCY ANALYSIS")
+        print("=" * 80)
+
+        # Check prefix attachment patterns (ו, ה, ל, etc.)
+        prefixes = ['ו', 'ה', 'ל', 'מ', 'ב', 'כ', 'ש']
+        prefix_patterns = []
+
+        for idx, row in self.df.iterrows():
+            matched_expr = str(row['matched_expression'])
+            if any(matched_expr.startswith(prefix) for prefix in prefixes):
+                prefix_patterns.append({
+                    'expression': row['expression'],
+                    'matched_expression': matched_expr,
+                    'has_prefix': True
+                })
+
+        # Consistency per idiom
+        idiom_consistency = {}
+        for expr in self.df['expression'].unique():
+            expr_df = self.df[self.df['expression'] == expr]
+
+            # Check how consistent the matched expressions are
+            matched_variants = expr_df['matched_expression'].nunique()
+            most_common_match = expr_df['matched_expression'].mode()[0] if len(expr_df) > 0 else None
+            most_common_count = (expr_df['matched_expression'] == most_common_match).sum()
+            consistency_rate = most_common_count / len(expr_df)
+
+            idiom_consistency[expr] = {
+                'total_occurrences': len(expr_df),
+                'unique_variants': matched_variants,
+                'most_common_variant': most_common_match,
+                'consistency_rate': float(consistency_rate)
+            }
+
+        stats = {
+            'prefix_attachment_count': len(prefix_patterns),
+            'prefix_attachment_rate': float(len(prefix_patterns) / len(self.df)),
+            'idiom_consistency': idiom_consistency,
+            'mean_consistency_rate': float(np.mean([v['consistency_rate'] for v in idiom_consistency.values()]))
+        }
+
+        print(f"\n📊 Annotation Consistency:")
+        print(f"  • Prefix attachments found: {stats['prefix_attachment_count']} ({stats['prefix_attachment_rate']*100:.2f}%)")
+        print(f"  • Mean consistency rate per idiom: {stats['mean_consistency_rate']:.4f}")
+
+        # Show idioms with low consistency
+        print(f"\n📊 Idioms with Variant Forms (Top 10):")
+        sorted_idioms = sorted(idiom_consistency.items(), key=lambda x: x[1]['unique_variants'], reverse=True)
+        for i, (expr, data) in enumerate(sorted_idioms[:10], 1):
+            print(f"  {i}. {expr}: {data['unique_variants']} variants (consistency: {data['consistency_rate']:.2f})")
+
+        return stats
 
     def create_visualizations(self) -> None:
         """
@@ -817,6 +1483,146 @@ class DatasetLoader:
         plt.close()
         print(f"   ✅ Saved: {sent_type_label_path}")
 
+        # --- 7. BOXPLOT: Sentence Length by Label (NEW from dataset_analysis_plan.md) ---
+        print("\n[7/11] Creating sentence length boxplot by label...")
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Prepare data for boxplot
+        literal_lengths = self.df[self.df['label'] == 'מילולי']['num_tokens']
+        figurative_lengths = self.df[self.df['label'] == 'פיגורטיבי']['num_tokens']
+
+        bp = ax.boxplot([literal_lengths, figurative_lengths],
+                        labels=['Literal\n(מילולי)', 'Figurative\n(פיגורטיבי)'],
+                        patch_artist=True,
+                        showmeans=True,
+                        meanprops=dict(marker='D', markerfacecolor='red', markersize=8))
+
+        # Color the boxes
+        colors_box = ['#3498db', '#e74c3c']
+        for patch, color in zip(bp['boxes'], colors_box):
+            patch.set_facecolor(color)
+            patch.set_alpha(0.7)
+
+        ax.set_ylabel('Sentence Length (tokens)', fontsize=12, fontweight='bold')
+        ax.set_title('Sentence Length Distribution by Label\n(Box Plot)', fontsize=14, fontweight='bold')
+        ax.grid(axis='y', alpha=0.3)
+
+        # Add statistics text
+        stats_text = f"Literal: μ={literal_lengths.mean():.2f}, σ={literal_lengths.std():.2f}\n"
+        stats_text += f"Figurative: μ={figurative_lengths.mean():.2f}, σ={figurative_lengths.std():.2f}"
+        ax.text(0.02, 0.98, stats_text, transform=ax.transAxes,
+                fontsize=9, verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+
+        plt.tight_layout()
+        boxplot_path = figures_dir / "sentence_length_boxplot_by_label.png"
+        plt.savefig(boxplot_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {boxplot_path}")
+
+        # --- 8. HEATMAP: Polysemy (NEW from dataset_analysis_plan.md) ---
+        print("\n[8/11] Creating polysemy heatmap...")
+
+        if hasattr(self, 'polysemy_data'):
+            fig, ax = plt.subplots(figsize=(12, 16))
+
+            # Prepare data for heatmap
+            heatmap_data = self.polysemy_data[['figurative_percentage']].sort_values('figurative_percentage')
+
+            # Create heatmap
+            sns.heatmap(heatmap_data, annot=True, fmt='.1f', cmap='RdYlGn_r',
+                       cbar_kws={'label': 'Figurative Usage (%)'},
+                       linewidths=0.5, ax=ax)
+
+            ax.set_title('Polysemy Heatmap: Figurative Usage Percentage per Idiom',
+                        fontsize=14, fontweight='bold', pad=20)
+            ax.set_xlabel('Figurative %', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Idiom Expression', fontsize=12, fontweight='bold')
+
+            plt.tight_layout()
+            heatmap_path = figures_dir / "polysemy_heatmap.png"
+            plt.savefig(heatmap_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"   ✅ Saved: {heatmap_path}")
+        else:
+            print("   ⚠️  Polysemy data not available. Run analyze_polysemy() first.")
+
+        # --- 9. HISTOGRAM: Idiom Position (NEW from dataset_analysis_plan.md) ---
+        print("\n[9/11] Creating idiom position histogram...")
+        if 'position_ratio' in self.df.columns:
+            fig, ax = plt.subplots(figsize=(10, 6))
+
+            ax.hist(self.df['position_ratio'], bins=30, color='#9b59b6', alpha=0.7, edgecolor='black')
+            ax.axvline(0.33, color='red', linestyle='--', linewidth=2, label='Start/Middle boundary')
+            ax.axvline(0.67, color='red', linestyle='--', linewidth=2, label='Middle/End boundary')
+            ax.axvline(self.df['position_ratio'].mean(), color='orange', linestyle='-',
+                      linewidth=2, label=f'Mean: {self.df["position_ratio"].mean():.3f}')
+
+            ax.set_xlabel('Position Ratio (token_span_start / num_tokens)', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Frequency', fontsize=12, fontweight='bold')
+            ax.set_title('Idiom Position Distribution within Sentences', fontsize=14, fontweight='bold')
+            ax.legend(fontsize=10)
+            ax.grid(axis='y', alpha=0.3)
+
+            plt.tight_layout()
+            position_hist_path = figures_dir / "idiom_position_histogram.png"
+            plt.savefig(position_hist_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"   ✅ Saved: {position_hist_path}")
+        else:
+            print("   ⚠️  Position data not available. Run analyze_idiom_position() first.")
+
+        # --- 10. BAR CHART: Idiom Position by Label (NEW) ---
+        print("\n[10/11] Creating idiom position by label bar chart...")
+        if 'position_category' in self.df.columns:
+            fig, ax = plt.subplots(figsize=(10, 6))
+
+            # Create crosstab
+            position_label_crosstab = pd.crosstab(self.df['position_category'], self.df['label'])
+
+            position_label_crosstab.plot(kind='bar', ax=ax, color=['#3498db', '#e74c3c'],
+                                         alpha=0.8, edgecolor='black', width=0.7)
+
+            ax.set_xlabel('Idiom Position', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Count', fontsize=12, fontweight='bold')
+            ax.set_title('Idiom Position Distribution by Label', fontsize=14, fontweight='bold')
+            ax.legend(title='Label', fontsize=10)
+            ax.grid(axis='y', alpha=0.3)
+            ax.set_xticklabels(['Start (0-33%)', 'Middle (33-67%)', 'End (67-100%)'], rotation=0)
+
+            # Add value labels
+            for container in ax.containers:
+                ax.bar_label(container, fontsize=9, fontweight='bold')
+
+            plt.tight_layout()
+            position_label_path = figures_dir / "idiom_position_by_label.png"
+            plt.savefig(position_label_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"   ✅ Saved: {position_label_path}")
+        else:
+            print("   ⚠️  Position category not available. Run analyze_idiom_position() first.")
+
+        # --- 11. VIOLIN PLOT: Sentence Length by Label (NEW) ---
+        print("\n[11/11] Creating sentence length violin plot...")
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Prepare data
+        plot_data = self.df[['num_tokens', 'label']].copy()
+
+        sns.violinplot(data=plot_data, x='label', y='num_tokens', ax=ax,
+                      palette=['#3498db', '#e74c3c'], alpha=0.7)
+
+        ax.set_xlabel('Label', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Sentence Length (tokens)', fontsize=12, fontweight='bold')
+        ax.set_title('Sentence Length Distribution by Label\n(Violin Plot)', fontsize=14, fontweight='bold')
+        ax.grid(axis='y', alpha=0.3)
+
+        plt.tight_layout()
+        violin_path = figures_dir / "sentence_length_violin_by_label.png"
+        plt.savefig(violin_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {violin_path}")
+
         print("\n" + "=" * 80)
         print("✅ ALL VISUALIZATIONS CREATED SUCCESSFULLY!")
         print("=" * 80)
@@ -828,6 +1634,286 @@ class DatasetLoader:
         print("  4. top_10_idioms.png")
         print("  5. sentence_type_distribution.png")
         print("  6. sentence_type_by_label.png")
+        print("  7. sentence_length_boxplot_by_label.png (NEW)")
+        print("  8. polysemy_heatmap.png (NEW)")
+        print("  9. idiom_position_histogram.png (NEW)")
+        print("  10. idiom_position_by_label.png (NEW)")
+        print("  11. sentence_length_violin_by_label.png (NEW)")
+
+    def create_advanced_visualizations(self) -> None:
+        """
+        Create advanced visualizations for PART 2 optional analyses
+        Saves figures to paper/figures/ directory
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("CREATING ADVANCED VISUALIZATIONS (PART 2)")
+        print("=" * 80)
+
+        # Create figures directory
+        figures_dir = Path(__file__).parent.parent / "paper" / "figures"
+        figures_dir.mkdir(parents=True, exist_ok=True)
+
+        # Set style
+        sns.set_style("whitegrid")
+        plt.rcParams['figure.dpi'] = 300
+        plt.rcParams['font.size'] = 10
+
+        # --- 1. ZIPF'S LAW PLOT ---
+        print("\n[1/6] Creating Zipf's law plot...")
+        if hasattr(self, 'zipf_data') and self.zipf_data:
+            fig, ax = plt.subplots(figsize=(10, 6))
+
+            # Plot log-log
+            ranks = [d['rank'] for d in self.zipf_data[:100]]
+            freqs = [d['frequency'] for d in self.zipf_data[:100]]
+
+            ax.loglog(ranks, freqs, 'bo', alpha=0.6, markersize=4)
+
+            # Fit a line for reference
+            log_ranks = np.log(ranks)
+            log_freqs = np.log(freqs)
+            coeffs = np.polyfit(log_ranks, log_freqs, 1)
+            fit_line = np.exp(coeffs[1]) * np.array(ranks) ** coeffs[0]
+            ax.loglog(ranks, fit_line, 'r--', linewidth=2, label=f'Fit: slope={coeffs[0]:.2f}')
+
+            ax.set_xlabel('Rank (log scale)', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Frequency (log scale)', fontsize=12, fontweight='bold')
+            ax.set_title("Zipf's Law: Word Frequency vs Rank", fontsize=14, fontweight='bold')
+            ax.legend(fontsize=10)
+            ax.grid(True, alpha=0.3)
+
+            plt.tight_layout()
+            zipf_path = figures_dir / "zipf_law_plot.png"
+            plt.savefig(zipf_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"   ✅ Saved: {zipf_path}")
+        else:
+            print("   ⚠️  Zipf data not available. Run analyze_lexical_richness() first.")
+
+        # --- 2. STRUCTURAL COMPLEXITY BY LABEL ---
+        print("\n[2/6] Creating structural complexity comparison...")
+        if 'subclause_count' in self.df.columns and 'punctuation_count' in self.df.columns:
+            fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+            # Subclause count by label
+            self.df.boxplot(column='subclause_count', by='label', ax=axes[0], patch_artist=True)
+            axes[0].set_xlabel('Label', fontsize=11, fontweight='bold')
+            axes[0].set_ylabel('Subclause Markers Count', fontsize=11, fontweight='bold')
+            axes[0].set_title('Subclause Markers by Label', fontsize=12, fontweight='bold')
+            axes[0].get_figure().suptitle('')  # Remove default title
+
+            # Punctuation count by label
+            self.df.boxplot(column='punctuation_count', by='label', ax=axes[1], patch_artist=True)
+            axes[1].set_xlabel('Label', fontsize=11, fontweight='bold')
+            axes[1].set_ylabel('Punctuation Marks Count', fontsize=11, fontweight='bold')
+            axes[1].set_title('Punctuation by Label', fontsize=12, fontweight='bold')
+            axes[1].get_figure().suptitle('')  # Remove default title
+
+            plt.tight_layout()
+            complexity_path = figures_dir / "structural_complexity_by_label.png"
+            plt.savefig(complexity_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"   ✅ Saved: {complexity_path}")
+        else:
+            print("   ⚠️  Structural complexity data not available. Run analyze_structural_complexity() first.")
+
+        # --- 3. COLLOCATION WORD CLOUDS ---
+        print("\n[3/6] Creating collocation word clouds...")
+        if hasattr(self, 'context_freq_literal') and hasattr(self, 'context_freq_figurative'):
+            try:
+                from wordcloud import WordCloud
+
+                fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+                # Literal context word cloud
+                wc_literal = WordCloud(width=800, height=400, background_color='white',
+                                      max_words=50, colormap='Blues').generate_from_frequencies(self.context_freq_literal)
+                axes[0].imshow(wc_literal, interpolation='bilinear')
+                axes[0].axis('off')
+                axes[0].set_title('Context Words: Literal Usage', fontsize=14, fontweight='bold')
+
+                # Figurative context word cloud
+                wc_figurative = WordCloud(width=800, height=400, background_color='white',
+                                         max_words=50, colormap='Reds').generate_from_frequencies(self.context_freq_figurative)
+                axes[1].imshow(wc_figurative, interpolation='bilinear')
+                axes[1].axis('off')
+                axes[1].set_title('Context Words: Figurative Usage', fontsize=14, fontweight='bold')
+
+                plt.tight_layout()
+                wordcloud_path = figures_dir / "collocation_word_clouds.png"
+                plt.savefig(wordcloud_path, dpi=300, bbox_inches='tight')
+                plt.close()
+                print(f"   ✅ Saved: {wordcloud_path}")
+            except ImportError:
+                print("   ⚠️  wordcloud library not available. Skipping word clouds.")
+                print("      Install with: pip install wordcloud")
+        else:
+            print("   ⚠️  Collocation data not available. Run analyze_collocations() first.")
+
+        # --- 4. VOCABULARY DIVERSITY SCATTER ---
+        print("\n[4/6] Creating vocabulary diversity scatter plot...")
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Calculate types and tokens per idiom
+        idiom_diversity = []
+        for expr in self.df['expression'].unique():
+            expr_df = self.df[self.df['expression'] == expr]
+            all_tokens = []
+            for text in expr_df['text']:
+                all_tokens.extend(text.split())
+
+            types = len(set(all_tokens))
+            tokens = len(all_tokens)
+            ttr = types / tokens if tokens > 0 else 0
+
+            idiom_diversity.append({
+                'expression': expr,
+                'types': types,
+                'tokens': tokens,
+                'ttr': ttr
+            })
+
+        # Plot
+        types_list = [d['types'] for d in idiom_diversity]
+        tokens_list = [d['tokens'] for d in idiom_diversity]
+        ttr_list = [d['ttr'] for d in idiom_diversity]
+
+        scatter = ax.scatter(tokens_list, types_list, c=ttr_list, cmap='viridis',
+                            s=100, alpha=0.6, edgecolors='black', linewidth=0.5)
+
+        # Add colorbar
+        cbar = plt.colorbar(scatter, ax=ax)
+        cbar.set_label('Type-Token Ratio', fontsize=11, fontweight='bold')
+
+        ax.set_xlabel('Total Tokens', fontsize=12, fontweight='bold')
+        ax.set_ylabel('Unique Types (Words)', fontsize=12, fontweight='bold')
+        ax.set_title('Vocabulary Diversity per Idiom', fontsize=14, fontweight='bold')
+        ax.grid(True, alpha=0.3)
+
+        plt.tight_layout()
+        diversity_path = figures_dir / "vocabulary_diversity_scatter.png"
+        plt.savefig(diversity_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"   ✅ Saved: {diversity_path}")
+
+        # --- 5. HAPAX LEGOMENA DISTRIBUTION ---
+        print("\n[5/6] Creating hapax legomena comparison...")
+        if hasattr(self, 'zipf_data'):
+            # Compare hapax ratios by label (from lexical richness analysis)
+            fig, ax = plt.subplots(figsize=(8, 6))
+
+            # We need to run lexical richness by label first
+            # This data should be available from analyze_lexical_richness()
+            labels = ['מילולי', 'פיגורטיבי']
+            hapax_counts = []
+            total_vocab = []
+
+            for label in labels:
+                label_df = self.df[self.df['label'] == label]
+                label_tokens = []
+                for text in label_df['text']:
+                    label_tokens.extend(text.split())
+
+                from collections import Counter
+                word_freq = Counter(label_tokens)
+                hapax = len([w for w, c in word_freq.items() if c == 1])
+                hapax_counts.append(hapax)
+                total_vocab.append(len(word_freq))
+
+            # Create grouped bar chart
+            x = np.arange(len(labels))
+            width = 0.35
+
+            bars1 = ax.bar(x - width/2, total_vocab, width, label='Total Vocabulary', color='#3498db', alpha=0.8)
+            bars2 = ax.bar(x + width/2, hapax_counts, width, label='Hapax Legomena', color='#e74c3c', alpha=0.8)
+
+            ax.set_xlabel('Label', fontsize=12, fontweight='bold')
+            ax.set_ylabel('Word Count', fontsize=12, fontweight='bold')
+            ax.set_title('Vocabulary vs Hapax Legomena by Label', fontsize=14, fontweight='bold')
+            ax.set_xticks(x)
+            ax.set_xticklabels(labels)
+            ax.legend(fontsize=10)
+            ax.grid(axis='y', alpha=0.3)
+
+            # Add value labels on bars
+            for bar in bars1:
+                height = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2., height,
+                       f'{int(height)}', ha='center', va='bottom', fontsize=9)
+            for bar in bars2:
+                height = bar.get_height()
+                ax.text(bar.get_x() + bar.get_width()/2., height,
+                       f'{int(height)}', ha='center', va='bottom', fontsize=9)
+
+            plt.tight_layout()
+            hapax_path = figures_dir / "hapax_legomena_comparison.png"
+            plt.savefig(hapax_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"   ✅ Saved: {hapax_path}")
+        else:
+            print("   ⚠️  Hapax data not available. Run analyze_lexical_richness() first.")
+
+        # --- 6. CONTEXT WORDS BAR CHART (Alternative to word cloud) ---
+        print("\n[6/6] Creating context words bar chart...")
+        if hasattr(self, 'context_freq_literal') and hasattr(self, 'context_freq_figurative'):
+            fig, axes = plt.subplots(2, 1, figsize=(12, 10))
+
+            # Top 15 literal context words
+            top_literal = self.context_freq_literal.most_common(15)
+            words_lit = [w for w, c in top_literal]
+            counts_lit = [c for w, c in top_literal]
+
+            axes[0].barh(range(len(words_lit)), counts_lit, color='#3498db', alpha=0.8, edgecolor='black')
+            axes[0].set_yticks(range(len(words_lit)))
+            axes[0].set_yticklabels(words_lit, fontsize=10)
+            axes[0].set_xlabel('Frequency', fontsize=11, fontweight='bold')
+            axes[0].set_title('Top 15 Context Words: Literal Usage', fontsize=12, fontweight='bold')
+            axes[0].invert_yaxis()
+            axes[0].grid(axis='x', alpha=0.3)
+
+            # Add value labels
+            for i, count in enumerate(counts_lit):
+                axes[0].text(count, i, f' {count}', va='center', fontsize=9)
+
+            # Top 15 figurative context words
+            top_figurative = self.context_freq_figurative.most_common(15)
+            words_fig = [w for w, c in top_figurative]
+            counts_fig = [c for w, c in top_figurative]
+
+            axes[1].barh(range(len(words_fig)), counts_fig, color='#e74c3c', alpha=0.8, edgecolor='black')
+            axes[1].set_yticks(range(len(words_fig)))
+            axes[1].set_yticklabels(words_fig, fontsize=10)
+            axes[1].set_xlabel('Frequency', fontsize=11, fontweight='bold')
+            axes[1].set_title('Top 15 Context Words: Figurative Usage', fontsize=12, fontweight='bold')
+            axes[1].invert_yaxis()
+            axes[1].grid(axis='x', alpha=0.3)
+
+            # Add value labels
+            for i, count in enumerate(counts_fig):
+                axes[1].text(count, i, f' {count}', va='center', fontsize=9)
+
+            plt.tight_layout()
+            context_bar_path = figures_dir / "context_words_bar_chart.png"
+            plt.savefig(context_bar_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            print(f"   ✅ Saved: {context_bar_path}")
+        else:
+            print("   ⚠️  Context data not available. Run analyze_collocations() first.")
+
+        print("\n" + "=" * 80)
+        print("✅ ALL ADVANCED VISUALIZATIONS CREATED!")
+        print("=" * 80)
+        print(f"\n📁 Location: {figures_dir}")
+        print("\nCreated advanced visualization files:")
+        print("  1. zipf_law_plot.png")
+        print("  2. structural_complexity_by_label.png")
+        print("  3. collocation_word_clouds.png (if wordcloud library available)")
+        print("  4. vocabulary_diversity_scatter.png")
+        print("  5. hapax_legomena_comparison.png")
+        print("  6. context_words_bar_chart.png")
 
     # ---------- NEW: simple label consistency check (Mission 2.2 aid) ----------
     def verify_label_consistency(self) -> Dict:
@@ -1081,58 +2167,136 @@ class DatasetLoader:
     def run_mission_2_4(self) -> Dict:
         """
         Complete Mission 2.4: Dataset Statistics Analysis
+        Enhanced with dataset_analysis_plan.md requirements
 
         Returns:
             Dictionary with statistics and analysis results
         """
         print("\n" + "=" * 80)
-        print("MISSION 2.4: DATASET STATISTICS ANALYSIS")
+        print("MISSION 2.4: DATASET STATISTICS ANALYSIS (Enhanced)")
         print("=" * 80)
 
         results = {}
 
         # Step 1: Generate statistics (already done in 2.1, but ensure it's complete)
-        print("\n[Step 1] Generating dataset statistics...")
+        print("\n[Step 1/6] Generating dataset statistics...")
         results['statistics'] = self.generate_statistics()
 
-        # Step 2: NEW - Sentence type analysis
-        print("\n[Step 2] Analyzing sentence types...")
+        # Step 2: Sentence type analysis
+        print("\n[Step 2/6] Analyzing sentence types...")
         results['sentence_types'] = self.analyze_sentence_types()
 
-        # Step 3: Create all visualizations
-        print("\n[Step 3] Creating visualizations...")
+        # Step 3: NEW - Idiom position analysis (dataset_analysis_plan.md)
+        print("\n[Step 3/6] Analyzing idiom positions...")
+        results['idiom_position'] = self.analyze_idiom_position()
+
+        # Step 4: NEW - Polysemy analysis (dataset_analysis_plan.md)
+        print("\n[Step 4/6] Analyzing polysemy (literal vs figurative per idiom)...")
+        results['polysemy'] = self.analyze_polysemy()
+
+        # Step 5: NEW - Lexical statistics (dataset_analysis_plan.md)
+        print("\n[Step 5/6] Computing lexical statistics...")
+        results['lexical'] = self.analyze_lexical_statistics()
+
+        # Step 6: Create all visualizations
+        print("\n[Step 6/6] Creating visualizations...")
         self.create_visualizations()
 
-        # Step 4: Save statistics to file
+        # Step 7: Save comprehensive statistics to file
         stats_dir = Path(__file__).parent.parent / "experiments" / "results"
         stats_dir.mkdir(parents=True, exist_ok=True)
-        stats_file = stats_dir / "dataset_statistics.txt"
+        stats_file = stats_dir / "dataset_statistics_comprehensive.txt"
 
         with open(stats_file, 'w', encoding='utf-8') as f:
             f.write("=" * 80 + "\n")
-            f.write("DATASET STATISTICS - Mission 2.4\n")
+            f.write("COMPREHENSIVE DATASET STATISTICS - Mission 2.4 (Enhanced)\n")
             f.write("=" * 80 + "\n\n")
 
+            # Basic Statistics
+            f.write("BASIC STATISTICS\n")
+            f.write("-" * 80 + "\n")
             f.write(f"Total sentences: {results['statistics']['total_sentences']}\n")
-            f.write(f"\nLabel Distribution:\n")
+            f.write(f"Unique idioms: {results['statistics']['unique_expressions']}\n\n")
+
+            # Expression Occurrences
+            f.write("Expression Occurrence Statistics:\n")
+            f.write(f"  Min: {results['statistics']['expression_occurrences']['min']}\n")
+            f.write(f"  Max: {results['statistics']['expression_occurrences']['max']}\n")
+            f.write(f"  Mean: {results['statistics']['expression_occurrences']['mean']:.2f}\n")
+            f.write(f"  Median: {results['statistics']['expression_occurrences']['median']:.2f}\n")
+            f.write(f"  Std: {results['statistics']['expression_occurrences']['std']:.2f}\n\n")
+
+            # Label Distribution
+            f.write("Label Distribution:\n")
             for label, count in results['statistics']['label_distribution'].items():
                 pct = (count / results['statistics']['total_sentences']) * 100
                 f.write(f"  {label}: {count} ({pct:.2f}%)\n")
+            f.write("\n")
 
-            f.write(f"\nUnique idioms: {results['statistics']['unique_expressions']}\n")
-            f.write(f"Average sentence length: {results['statistics']['avg_sentence_length']:.2f} tokens\n")
-            f.write(f"Average idiom length: {results['statistics']['avg_idiom_length']:.2f} tokens\n")
+            # Sentence Lengths
+            f.write("Sentence Length Statistics:\n")
+            f.write(f"  Tokens - Mean: {results['statistics']['avg_sentence_length']:.2f}, "
+                   f"Median: {results['statistics']['median_sentence_length']:.0f}, "
+                   f"Std: {results['statistics']['std_sentence_length']:.2f}\n")
+            f.write(f"  Characters - Mean: {results['statistics']['sentence_char_length']['mean']:.2f}, "
+                   f"Median: {results['statistics']['sentence_char_length']['median']:.2f}, "
+                   f"Std: {results['statistics']['sentence_char_length']['std']:.2f}\n\n")
 
-            f.write(f"\n\nSentence Type Distribution:\n")
+            # Idiom Lengths
+            f.write("Idiom Length Statistics:\n")
+            f.write(f"  Tokens - Mean: {results['statistics']['avg_idiom_length']:.2f}, "
+                   f"Median: {results['statistics']['median_idiom_length']:.0f}, "
+                   f"Std: {results['statistics']['std_idiom_length']:.2f}\n")
+            f.write(f"  Characters - Mean: {results['statistics']['idiom_char_length']['mean']:.2f}, "
+                   f"Median: {results['statistics']['idiom_char_length']['median']:.2f}, "
+                   f"Std: {results['statistics']['idiom_char_length']['std']:.2f}\n\n")
+
+            # Sentence Types
+            f.write("Sentence Type Distribution:\n")
             for stype, count in results['sentence_types']['type_counts'].items():
                 pct = results['sentence_types']['type_percentages'][stype]
                 f.write(f"  {stype}: {count} ({pct:.2f}%)\n")
+            f.write("\n")
 
-            f.write(f"\n\nTop 10 Idioms:\n")
+            # Idiom Position
+            f.write("Idiom Position Analysis:\n")
+            f.write(f"  Mean position ratio: {results['idiom_position']['position_ratio']['mean']:.4f}\n")
+            f.write(f"  Start (0-33%): {results['idiom_position']['position_distribution']['start']} "
+                   f"({results['idiom_position']['position_percentages']['start']:.2f}%)\n")
+            f.write(f"  Middle (33-67%): {results['idiom_position']['position_distribution']['middle']} "
+                   f"({results['idiom_position']['position_percentages']['middle']:.2f}%)\n")
+            f.write(f"  End (67-100%): {results['idiom_position']['position_distribution']['end']} "
+                   f"({results['idiom_position']['position_percentages']['end']:.2f}%)\n\n")
+
+            # Polysemy
+            f.write("Polysemy Analysis:\n")
+            f.write(f"  Total expressions: {results['polysemy']['total_expressions']}\n")
+            f.write(f"  Polysemous (both literal & figurative): {results['polysemy']['polysemous_count']} "
+                   f"({results['polysemy']['polysemous_percentage']:.2f}%)\n")
+            f.write(f"  Only literal: {results['polysemy']['only_literal_count']}\n")
+            f.write(f"  Only figurative: {results['polysemy']['only_figurative_count']}\n\n")
+
+            # Lexical Statistics
+            f.write("Lexical Statistics:\n")
+            f.write(f"  Vocabulary size: {results['lexical']['vocabulary_size']:,} unique words\n")
+            f.write(f"  Total tokens: {results['lexical']['total_tokens']:,}\n")
+            f.write(f"  Type-Token Ratio (TTR): {results['lexical']['ttr_overall']:.4f}\n")
+            f.write(f"  Avg unique words per sentence: {results['lexical']['avg_unique_per_sentence']:.2f}\n")
+            f.write(f"  Function word ratio: {results['lexical']['function_word_ratio']:.4f}\n\n")
+
+            # Top 10 Idioms
+            f.write("Top 10 Most Frequent Idioms:\n")
             for i, (expr, count) in enumerate(results['statistics']['top_10_expressions'].items(), 1):
                 f.write(f"  {i}. {expr}: {count}\n")
+            f.write("\n")
 
-        print(f"\n✅ Statistics saved to: {stats_file}")
+            # Top 20 Words
+            f.write("Top 20 Most Frequent Words:\n")
+            for i, (word, count) in enumerate(results['lexical']['top_20_words'][:20], 1):
+                pct = (count / results['lexical']['total_tokens']) * 100
+                f.write(f"  {i}. '{word}': {count} ({pct:.2f}%)\n")
+
+        print(f"\n✅ Comprehensive statistics saved to: {stats_file}")
 
         # Success criteria check
         print("\n" + "=" * 80)
@@ -1164,6 +2328,244 @@ class DatasetLoader:
             print("\n⚠️  Some criteria not met.")
 
         results['mission_complete'] = all_passed
+        return results
+
+    def run_comprehensive_analysis(self, include_part2: bool = True, create_visualizations: bool = True) -> Dict:
+        """
+        Run COMPREHENSIVE dataset analysis including both PART 1 (required) and PART 2 (optional)
+        from dataset_analysis_plan.md
+
+        Args:
+            include_part2: Whether to include PART 2 optional analyses
+            create_visualizations: Whether to create visualizations
+
+        Returns:
+            Dictionary with all analysis results
+        """
+        print("\n" + "🔬" * 40)
+        print("COMPREHENSIVE DATASET ANALYSIS - FULL REPORT")
+        if include_part2:
+            print("Including PART 1 (Required) + PART 2 (Optional/Recommended)")
+        else:
+            print("Including PART 1 (Required) Only")
+        print("🔬" * 40)
+
+        results = {}
+
+        # ========== PART 1: REQUIRED ANALYSES ==========
+        print("\n" + "=" * 80)
+        print("PART 1: REQUIRED ANALYSES")
+        print("=" * 80)
+
+        # 1. Basic statistics
+        print("\n[1/11] Generating dataset statistics...")
+        results['statistics'] = self.generate_statistics()
+
+        # 2. Sentence types
+        print("\n[2/11] Analyzing sentence types...")
+        results['sentence_types'] = self.analyze_sentence_types()
+
+        # 3. Idiom position
+        print("\n[3/11] Analyzing idiom positions...")
+        results['idiom_position'] = self.analyze_idiom_position()
+
+        # 4. Polysemy
+        print("\n[4/11] Analyzing polysemy...")
+        results['polysemy'] = self.analyze_polysemy()
+
+        # 5. Lexical statistics
+        print("\n[5/11] Computing lexical statistics...")
+        results['lexical'] = self.analyze_lexical_statistics()
+
+        if include_part2:
+            # ========== PART 2: OPTIONAL/RECOMMENDED ANALYSES ==========
+            print("\n" + "=" * 80)
+            print("PART 2: OPTIONAL/RECOMMENDED ANALYSES")
+            print("=" * 80)
+
+            # 6. Structural complexity
+            print("\n[6/11] Analyzing structural complexity...")
+            results['structural_complexity'] = self.analyze_structural_complexity()
+
+            # 7. Lexical richness
+            print("\n[7/11] Analyzing lexical richness (hapax, Zipf's law)...")
+            results['lexical_richness'] = self.analyze_lexical_richness()
+
+            # 8. Collocations
+            print("\n[8/11] Analyzing collocations...")
+            results['collocations'] = self.analyze_collocations()
+
+            # 9. Annotation consistency
+            print("\n[9/11] Analyzing annotation consistency...")
+            results['annotation_consistency'] = self.analyze_annotation_consistency()
+
+        if create_visualizations:
+            # 10. Standard visualizations
+            print("\n[10/11] Creating standard visualizations...")
+            self.create_visualizations()
+
+            if include_part2:
+                # 11. Advanced visualizations
+                print("\n[11/11] Creating advanced visualizations...")
+                self.create_advanced_visualizations()
+
+        # Save comprehensive report
+        stats_dir = Path(__file__).parent.parent / "experiments" / "results"
+        stats_dir.mkdir(parents=True, exist_ok=True)
+
+        if include_part2:
+            stats_file = stats_dir / "dataset_statistics_full.txt"
+            file_title = "FULL COMPREHENSIVE DATASET STATISTICS (PART 1 + PART 2)"
+        else:
+            stats_file = stats_dir / "dataset_statistics_comprehensive.txt"
+            file_title = "COMPREHENSIVE DATASET STATISTICS (PART 1)"
+
+        with open(stats_file, 'w', encoding='utf-8') as f:
+            f.write("=" * 80 + "\n")
+            f.write(f"{file_title}\n")
+            f.write("Hebrew Idiom Detection Dataset - Master's Thesis Analysis\n")
+            f.write("=" * 80 + "\n\n")
+
+            # PART 1 Statistics
+            f.write("=" * 80 + "\n")
+            f.write("PART 1: REQUIRED ANALYSIS\n")
+            f.write("=" * 80 + "\n\n")
+
+            # Basic Statistics
+            f.write("1. BASIC STATISTICS\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"Total sentences: {results['statistics']['total_sentences']}\n")
+            f.write(f"Unique idioms: {results['statistics']['unique_expressions']}\n\n")
+
+            f.write("Expression Occurrence Statistics:\n")
+            f.write(f"  Min: {results['statistics']['expression_occurrences']['min']}\n")
+            f.write(f"  Max: {results['statistics']['expression_occurrences']['max']}\n")
+            f.write(f"  Mean: {results['statistics']['expression_occurrences']['mean']:.2f}\n")
+            f.write(f"  Median: {results['statistics']['expression_occurrences']['median']:.2f}\n")
+            f.write(f"  Std: {results['statistics']['expression_occurrences']['std']:.2f}\n\n")
+
+            f.write("Label Distribution:\n")
+            for label, count in results['statistics']['label_distribution'].items():
+                pct = (count / results['statistics']['total_sentences']) * 100
+                f.write(f"  {label}: {count} ({pct:.2f}%)\n")
+            f.write("\n")
+
+            # Length Statistics
+            f.write("2. SENTENCE & IDIOM LENGTH STATISTICS\n")
+            f.write("-" * 80 + "\n")
+            f.write("Sentence Length:\n")
+            f.write(f"  Tokens - Mean: {results['statistics']['avg_sentence_length']:.2f}, "
+                   f"Median: {results['statistics']['median_sentence_length']:.0f}, "
+                   f"Std: {results['statistics']['std_sentence_length']:.2f}\n")
+            f.write(f"  Characters - Mean: {results['statistics']['sentence_char_length']['mean']:.2f}, "
+                   f"Median: {results['statistics']['sentence_char_length']['median']:.2f}, "
+                   f"Std: {results['statistics']['sentence_char_length']['std']:.2f}\n\n")
+
+            f.write("Idiom Length:\n")
+            f.write(f"  Tokens - Mean: {results['statistics']['avg_idiom_length']:.2f}, "
+                   f"Median: {results['statistics']['median_idiom_length']:.0f}, "
+                   f"Std: {results['statistics']['std_idiom_length']:.2f}\n")
+            f.write(f"  Characters - Mean: {results['statistics']['idiom_char_length']['mean']:.2f}, "
+                   f"Median: {results['statistics']['idiom_char_length']['median']:.2f}, "
+                   f"Std: {results['statistics']['idiom_char_length']['std']:.2f}\n\n")
+
+            # Idiom Position
+            f.write("3. IDIOM POSITION ANALYSIS\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"Mean position ratio: {results['idiom_position']['position_ratio']['mean']:.4f}\n")
+            f.write(f"Start (0-33%): {results['idiom_position']['position_distribution']['start']} "
+                   f"({results['idiom_position']['position_percentages']['start']:.2f}%)\n")
+            f.write(f"Middle (33-67%): {results['idiom_position']['position_distribution']['middle']} "
+                   f"({results['idiom_position']['position_percentages']['middle']:.2f}%)\n")
+            f.write(f"End (67-100%): {results['idiom_position']['position_distribution']['end']} "
+                   f"({results['idiom_position']['position_percentages']['end']:.2f}%)\n\n")
+
+            # Polysemy
+            f.write("4. POLYSEMY ANALYSIS\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"Total expressions: {results['polysemy']['total_expressions']}\n")
+            f.write(f"Polysemous (both literal & figurative): {results['polysemy']['polysemous_count']} "
+                   f"({results['polysemy']['polysemous_percentage']:.2f}%)\n")
+            f.write(f"Only literal: {results['polysemy']['only_literal_count']}\n")
+            f.write(f"Only figurative: {results['polysemy']['only_figurative_count']}\n\n")
+
+            # Lexical Statistics
+            f.write("5. LEXICAL STATISTICS\n")
+            f.write("-" * 80 + "\n")
+            f.write(f"Vocabulary size: {results['lexical']['vocabulary_size']:,} unique words\n")
+            f.write(f"Total tokens: {results['lexical']['total_tokens']:,}\n")
+            f.write(f"Type-Token Ratio (TTR): {results['lexical']['ttr_overall']:.4f}\n")
+            f.write(f"Avg unique words per sentence: {results['lexical']['avg_unique_per_sentence']:.2f}\n")
+            f.write(f"Function word ratio: {results['lexical']['function_word_ratio']:.4f}\n\n")
+
+            # Top Words
+            f.write("Top 20 Most Frequent Words:\n")
+            for i, (word, count) in enumerate(results['lexical']['top_20_words'][:20], 1):
+                pct = (count / results['lexical']['total_tokens']) * 100
+                f.write(f"  {i:2d}. '{word}': {count:4d} ({pct:.2f}%)\n")
+            f.write("\n")
+
+            if include_part2:
+                f.write("=" * 80 + "\n")
+                f.write("PART 2: OPTIONAL/RECOMMENDED ANALYSIS\n")
+                f.write("=" * 80 + "\n\n")
+
+                # Structural Complexity
+                f.write("6. STRUCTURAL COMPLEXITY\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Mean subclause markers per sentence: {results['structural_complexity']['mean_subclause_count']:.2f}\n")
+                f.write(f"Mean subclause ratio: {results['structural_complexity']['mean_subclause_ratio']:.4f}\n")
+                f.write(f"Mean punctuation marks: {results['structural_complexity']['mean_punctuation_count']:.2f}\n")
+                f.write(f"Sentences with subclauses: {results['structural_complexity']['sentences_with_subclauses']} "
+                       f"({results['structural_complexity']['sentences_with_subclauses_pct']:.2f}%)\n\n")
+
+                # Lexical Richness
+                f.write("7. LEXICAL RICHNESS\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Hapax legomena: {results['lexical_richness']['hapax_legomena_count']:,} "
+                       f"({results['lexical_richness']['hapax_ratio']*100:.2f}%)\n")
+                f.write(f"Dis legomena: {results['lexical_richness']['dis_legomena_count']:,}\n")
+                f.write(f"Maas Index: {results['lexical_richness']['maas_index']:.4f}\n\n")
+
+                # Collocations
+                f.write("8. COLLOCATIONAL ANALYSIS\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Total context words (±3 tokens): {results['collocations']['total_context_words']:,}\n")
+                f.write(f"Unique context words: {results['collocations']['unique_context_words']:,}\n\n")
+
+                f.write("Top 10 Context Words:\n")
+                for i, (word, count) in enumerate(results['collocations']['top_20_context_overall'][:10], 1):
+                    pct = (count / results['collocations']['total_context_words']) * 100
+                    f.write(f"  {i:2d}. '{word}': {count:4d} ({pct:.2f}%)\n")
+                f.write("\n")
+
+                # Annotation Consistency
+                f.write("9. ANNOTATION CONSISTENCY\n")
+                f.write("-" * 80 + "\n")
+                f.write(f"Prefix attachments: {results['annotation_consistency']['prefix_attachment_count']} "
+                       f"({results['annotation_consistency']['prefix_attachment_rate']*100:.2f}%)\n")
+                f.write(f"Mean consistency rate per idiom: {results['annotation_consistency']['mean_consistency_rate']:.4f}\n\n")
+
+        print(f"\n✅ Comprehensive report saved to: {stats_file}")
+
+        # Summary
+        print("\n" + "=" * 80)
+        print("✅ COMPREHENSIVE ANALYSIS COMPLETE!")
+        print("=" * 80)
+        print(f"\n📊 Summary:")
+        print(f"   • Total sentences analyzed: {results['statistics']['total_sentences']}")
+        print(f"   • Unique idioms: {results['statistics']['unique_expressions']}")
+        print(f"   • Vocabulary size: {results['lexical']['vocabulary_size']:,}")
+        if include_part2:
+            print(f"   • Hapax legomena: {results['lexical_richness']['hapax_legomena_count']:,}")
+            print(f"   • PART 1 + PART 2 analyses completed!")
+        else:
+            print(f"   • PART 1 analyses completed!")
+
+        if create_visualizations:
+            print(f"   • All visualizations created in paper/figures/")
+
+        results['analysis_complete'] = True
         return results
 
     def save_processed_dataset(self, output_path: str = None) -> None:

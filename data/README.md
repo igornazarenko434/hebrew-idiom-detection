@@ -124,16 +124,47 @@ Example:
 
 ### Idiom Statistics
 - **Unique Idioms:** 60 expressions
-- **Avg Sentences per Idiom:** 80
-- **Avg Idiom Length:** 2.39 tokens (median: 2)
-- **Idiom Length Range:** 2-4 tokens
+- **Avg Sentences per Idiom:** 80 (perfectly balanced)
+- **Avg Idiom Length:** 2.48 tokens (median: 2) | 11.37 characters (median: 11)
+- **Idiom Length Range:** 2-5 tokens | 5-22 characters
+- **Polysemy:** 100% of idioms appear in BOTH literal & figurative contexts
 
 ### Sentence Statistics
-- **Avg Sentence Length:** 14.93 tokens (median: 10)
-- **Sentence Length Range:** 3-89 tokens
-- **Declarative Sentences:** 4,427 (92.23%)
-- **Questions:** 342 (7.12%)
-- **Exclamatory:** 31 (0.65%)
+- **Avg Sentence Length:** 14.95 tokens (median: 10) | 78.83 characters (median: 54)
+- **Sentence Length Range:** 5-37 tokens | 22-193 characters
+- **Declarative Sentences:** 4,425 (92.19%)
+- **Questions:** 341 (7.10%)
+- **Exclamatory:** 34 (0.71%)
+
+### Idiom Position in Sentences
+- **Start (0-33%):** 4,179 sentences (87.06%) - idioms predominantly appear early
+- **Middle (33-67%):** 553 sentences (11.52%)
+- **End (67-100%):** 68 sentences (1.42%)
+- **Mean Position Ratio:** 0.1670 (highly skewed toward sentence beginning)
+
+### Lexical Diversity & Richness
+- **Vocabulary Size:** 17,787 unique words
+- **Total Tokens:** 71,775
+- **Type-Token Ratio (TTR):** 0.2478
+- **Hapax Legomena:** 11,341 words (63.76% appear only once)
+- **Dis Legomena:** 2,703 words (appear exactly twice)
+- **Maas Index:** 0.0112
+- **Function Word Ratio:** 12.94%
+
+### Structural Complexity
+- **Sentences with Subclauses:** 1,172 (24.42%)
+- **Mean Subclause Markers:** 0.28 per sentence
+- **Mean Punctuation Marks:** 1.67 per sentence
+- **Figurative vs Literal Complexity:**
+  - Figurative sentences: 0.32 subclause markers (more complex)
+  - Literal sentences: 0.24 subclause markers (less complex)
+
+### Annotation Quality & Consistency
+- **Prefix Attachments:** 2,097 instances (43.69%) - Hebrew morphological flexibility
+- **Mean Consistency Rate per Idiom:** 40.08%
+- **Variant Forms:** High morphological variation (e.g., "שם רגליים" has 33 variants)
+- **IOB2 Tag Validation:** 100% aligned with token boundaries
+- **Character Span Validation:** 100% verified
 
 ---
 
@@ -195,12 +226,24 @@ Tags:   ["O", "B-IDIOM", "I-IDIOM", "I-IDIOM", "O", "O"]
 - ✅ All sentences grammatically correct
 - ✅ Context ensures clear literal/figurative distinction
 
+### Automated Validation (Mission 2.1-2.3)
+- ✅ **Missing values:** 0/76,800 cells (0%)
+- ✅ **Duplicate rows:** 0/4,800 rows (0%)
+- ✅ **ID sequence:** Complete (0-4799)
+- ✅ **Label consistency:** 100% (label ↔ label_2 mapping)
+- ✅ **IOB2 alignment:** 100% (tags match tokens)
+- ✅ **Character spans:** 100% accurate
+- ✅ **Token spans:** 100% valid
+- ✅ **Encoding issues:** 0 (BOM, zero-width, control chars)
+- ✅ **Data quality score:** 9.2/10
+
 ### Preprocessing (Mission 2.1-2.4)
 - Unicode normalization (NFKC)
 - BOM character removal
 - Directional mark removal (LRM/RLM)
 - Whitespace normalization
 - IOB2 alignment verification
+- Comprehensive validation testing
 
 ---
 
@@ -300,6 +343,7 @@ cd hebrew-idiom-detection/data/splits/
 3. **Context:** Sentences may lack broader discourse context
 4. **Annotation:** Single annotator per sentence (no inter-annotator agreement scores)
 5. **Zero-Shot:** Test set covers only 6 idioms (10% of total)
+6. **Position bias:** 87.06% of idioms appear at sentence start (first 33%) - may reflect Hebrew language patterns or data collection artifact
 
 ---
 
@@ -322,6 +366,6 @@ For questions, issues, or contributions:
 
 ---
 
-**Last Updated:** November 9, 2025
+**Last Updated:** November 10, 2025 (Statistics updated with new dataset)
 **Dataset Version:** 1.0
 **Maintained By:** [Your Name]
