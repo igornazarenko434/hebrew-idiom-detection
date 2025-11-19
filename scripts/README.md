@@ -80,9 +80,10 @@ bash scripts/setup_vast_instance.sh
 **What it downloads:**
 - `data/expressions_data_tagged.csv` (main dataset, 4800 rows)
 - Verifies split files exist in repo:
-  - `data/splits/train.csv` (3840 samples)
-  - `data/splits/validation.csv` (480 samples)
-  - `data/splits/test.csv` (480 samples)
+  - `data/splits/train.csv` (3456 samples)
+  - `data/splits/validation.csv` (432 samples)
+  - `data/splits/test.csv` (432 samples, in-domain)
+  - `data/splits/unseen_idiom_test.csv` (480 samples, zero-shot)
 
 **Usage:**
 ```bash

@@ -2,9 +2,10 @@
 Dataset Splitting Module for Hebrew Idiom Detection
 Mission 2.5: Expression-Based Dataset Splitting
 
-CRITICAL: Expression-based splitting to prevent data leakage
-- No expression should appear in multiple splits
-- This ensures the model generalizes to unseen idioms
+CRITICAL: Hybrid splitting strategy to evaluate both in-domain and unseen idioms
+- Keep a dedicated unseen-idom test set (6 fixed idioms)
+- Remaining idioms are split by sentences (not expressions) so every idiom appears in train/val/in-domain-test
+- Maintains balanced literal/figurative coverage per idiom across splits
 """
 
 import pandas as pd
@@ -12,6 +13,7 @@ import numpy as np
 from pathlib import Path
 from typing import Dict, Tuple, List
 import json
+import math
 
 
 class ExpressionBasedSplitter:
@@ -41,10 +43,11 @@ class ExpressionBasedSplitter:
         self.train_df = None
         self.dev_df = None
         self.test_df = None
+        self.unseen_test_df = None
+        self.expression_split_counts: List[Dict] = []
 
-        # Test expressions: 6 specific idioms as defined in STEP_BY_STEP_MISSIONS.md
-        # Mission 2.5 requires these EXACT expressions
-        self.test_expressions = [
+        # Unseen idiom expressions (fixed list from mission spec)
+        self.unseen_idiom_expressions = [
             "חתך פינה",                    # cut corner
             "חצה קו אדום",                 # crossed red line
             "נשאר מאחור",                  # stayed behind
@@ -52,6 +55,10 @@ class ExpressionBasedSplitter:
             "איבד את הראש",                # lost the head
             "רץ אחרי הזנב של עצמו"         # ran after his own tail
         ]
+        self.train_ratio = 0.8
+        self.val_ratio = 0.1
+        self.test_ratio = 0.1
+        self.random_state = 42
 
     def load_dataset(self) -> pd.DataFrame:
         """Load the processed dataset"""
@@ -98,7 +105,7 @@ class ExpressionBasedSplitter:
 
         return expr_stats
 
-    def verify_test_expressions(self) -> Dict:
+    def verify_unseen_idiom_expressions(self) -> Dict:
         """
         Verify that test expressions are valid and have good coverage
 
@@ -113,7 +120,7 @@ class ExpressionBasedSplitter:
         print("=" * 80)
 
         all_expressions = set(self.df['expression'].unique())
-        test_expr_set = set(self.test_expressions)
+        test_expr_set = set(self.unseen_idiom_expressions)
 
         # Check if all test expressions exist
         missing = test_expr_set - all_expressions
@@ -121,14 +128,14 @@ class ExpressionBasedSplitter:
             print(f"❌ Missing test expressions: {missing}")
             raise ValueError(f"Test expressions not found in dataset: {missing}")
 
-        print(f"\n✅ All {len(self.test_expressions)} test expressions found in dataset")
+        print(f"\n✅ All {len(self.unseen_idiom_expressions)} test expressions found in dataset")
         print("\nTest Expression Details:")
 
         total_test_sentences = 0
         test_literal = 0
         test_figurative = 0
 
-        for expr in self.test_expressions:
+        for expr in self.unseen_idiom_expressions:
             expr_df = self.df[self.df['expression'] == expr]
             literal = (expr_df['label_2'] == 0).sum()
             figurative = (expr_df['label_2'] == 1).sum()
@@ -156,130 +163,111 @@ class ExpressionBasedSplitter:
             'test_balance': test_figurative / test_literal if test_literal > 0 else 0
         }
 
-    def select_dev_expressions(self, n_dev: int = 6) -> List[str]:
+    def _compute_split_counts(self, n: int) -> Tuple[int, int, int]:
         """
-        Select dev expressions using stratified sampling
-
-        Args:
-            n_dev: Number of dev expressions (default: 6 for ~10%)
-
-        Returns:
-            List of dev expression names
+        Compute train/validation/test counts for a group of size n while
+        honoring the configured ratios and ensuring each split receives
+        at least one sample when possible.
         """
-        if self.df is None:
-            raise ValueError("Dataset not loaded.")
+        if n == 0:
+            return 0, 0, 0
 
-        print("\n" + "=" * 80)
-        print(f"SELECTING {n_dev} DEV EXPRESSIONS")
-        print("=" * 80)
+        targets = [
+            ('train', self.train_ratio),
+            ('validation', self.val_ratio),
+            ('test_in_domain', self.test_ratio)
+        ]
 
-        # Get all expressions except test expressions
-        available_expressions = self.df[
-            ~self.df['expression'].isin(self.test_expressions)
-        ]['expression'].unique()
+        raw = {name: n * ratio for name, ratio in targets}
+        order_index = {name: idx for idx, (name, _) in enumerate(targets)}
+        counts = {name: int(math.floor(value)) for name, value in raw.items()}
+        assigned = sum(counts.values())
+        remainder = n - assigned
 
-        print(f"\nAvailable expressions (excluding test): {len(available_expressions)}")
+        if remainder > 0:
+            fractional = sorted(
+                ((name, raw[name] - counts[name]) for name in counts),
+                key=lambda x: (-x[1], order_index[x[0]])
+            )
+            idx = 0
+            while remainder > 0:
+                name, _ = fractional[idx % len(fractional)]
+                counts[name] += 1
+                remainder -= 1
+                idx += 1
 
-        # Calculate balance for each expression
-        expr_stats = []
-        for expr in available_expressions:
-            expr_df = self.df[self.df['expression'] == expr]
-            literal = (expr_df['label_2'] == 0).sum()
-            figurative = (expr_df['label_2'] == 1).sum()
-            total = len(expr_df)
+        # Guarantee at least one sentence per split when we have enough samples
+        if n >= len(targets):
+            for name in counts:
+                if counts[name] == 0:
+                    donor = max(counts, key=lambda k: counts[k])
+                    if counts[donor] <= 1:
+                        continue
+                    counts[donor] -= 1
+                    counts[name] += 1
 
-            # Prefer balanced expressions
-            balance_score = 1 / (abs(literal - figurative) + 1)
+        return counts['train'], counts['validation'], counts['test_in_domain']
 
-            expr_stats.append({
-                'expression': expr,
-                'total': total,
-                'literal': literal,
-                'figurative': figurative,
-                'balance_score': balance_score
-            })
-
-        # Sort by balance score (prefer balanced) and total sentences (prefer medium-sized)
-        expr_df = pd.DataFrame(expr_stats)
-        expr_df['size_score'] = 1 / (abs(expr_df['total'] - expr_df['total'].median()) + 1)
-        expr_df['combined_score'] = expr_df['balance_score'] * expr_df['size_score']
-        expr_df = expr_df.sort_values('combined_score', ascending=False)
-
-        # Select top n_dev expressions
-        dev_expressions = expr_df.head(n_dev)['expression'].tolist()
-
-        print("\nSelected Dev Expressions:")
-        for i, expr in enumerate(dev_expressions, 1):
-            stats = expr_df[expr_df['expression'] == expr].iloc[0]
-            print(f"{i}. {expr}")
-            print(f"   Total: {stats['total']} | Literal: {stats['literal']} | Figurative: {stats['figurative']}")
-
-        # Calculate dev set statistics
-        dev_df = self.df[self.df['expression'].isin(dev_expressions)]
-        dev_literal = (dev_df['label_2'] == 0).sum()
-        dev_figurative = (dev_df['label_2'] == 1).sum()
-
-        print("\n" + "-" * 80)
-        print(f"Dev Set Summary:")
-        print(f"  Total sentences: {len(dev_df)}")
-        print(f"  Literal: {dev_literal} ({dev_literal/len(dev_df)*100:.1f}%)")
-        print(f"  Figurative: {dev_figurative} ({dev_figurative/len(dev_df)*100:.1f}%)")
-        print(f"  Percentage of dataset: {len(dev_df)/len(self.df)*100:.1f}%")
-
-        return dev_expressions
-
-    def create_splits(self, n_dev: int = 6) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    def create_splits(self) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         """
-        Create train/dev/test splits based on expressions
-
-        Args:
-            n_dev: Number of dev expressions
-
-        Returns:
-            Tuple of (train_df, dev_df, test_df)
+        Create splits:
+        - unseen_idiom_test: fixed list of idioms kept entirely for zero-shot evaluation
+        - train/validation/test (in-domain): sentence-level split per remaining idiom/label
         """
         if self.df is None:
             raise ValueError("Dataset not loaded.")
 
         print("\n" + "=" * 80)
-        print("CREATING EXPRESSION-BASED SPLITS")
+        print("CREATING HYBRID SPLITS (UNSEEN + SEEN IDIOMS)")
         print("=" * 80)
 
-        # 1. Create test split
-        self.test_df = self.df[self.df['expression'].isin(self.test_expressions)].copy()
+        # 1. Unseen idiom test set (entire idioms)
+        self.unseen_test_df = self.df[self.df['expression'].isin(self.unseen_idiom_expressions)].copy()
+        self.unseen_test_df['split'] = 'unseen_idiom_test'
 
-        # 2. Select and create dev split
-        dev_expressions = self.select_dev_expressions(n_dev=n_dev)
-        self.dev_df = self.df[self.df['expression'].isin(dev_expressions)].copy()
+        # 2. Remaining sentences (all idioms that will appear in every seen split)
+        remaining_df = self.df[~self.df['expression'].isin(self.unseen_idiom_expressions)].copy()
 
-        # 3. Create train split (remaining expressions)
-        used_expressions = set(self.test_expressions) | set(dev_expressions)
-        self.train_df = self.df[~self.df['expression'].isin(used_expressions)].copy()
+        train_parts = []
+        val_parts = []
+        test_parts = []
+        expression_split_counts = []
 
-        # Set split column
+        for expr, expr_df in remaining_df.groupby('expression'):
+            expr_counts = {'expression': expr, 'train': 0, 'validation': 0, 'test_in_domain': 0}
+
+            for label_value, label_df in expr_df.groupby('label_2'):
+                label_df = label_df.sample(frac=1, random_state=self.random_state)
+                n_samples = len(label_df)
+                train_n, val_n, test_n = self._compute_split_counts(n_samples)
+
+                train_parts.append(label_df.iloc[:train_n])
+                val_parts.append(label_df.iloc[train_n:train_n + val_n])
+                test_parts.append(label_df.iloc[train_n + val_n:])
+
+                expr_counts['train'] += train_n
+                expr_counts['validation'] += val_n
+                expr_counts['test_in_domain'] += test_n
+
+            expression_split_counts.append(expr_counts)
+
+        self.expression_split_counts = expression_split_counts
+
+        self.train_df = pd.concat(train_parts).sort_values('id').reset_index(drop=True)
+        self.dev_df = pd.concat(val_parts).sort_values('id').reset_index(drop=True)
+        self.test_df = pd.concat(test_parts).sort_values('id').reset_index(drop=True)
+
         self.train_df['split'] = 'train'
-        self.dev_df['split'] = 'dev'
-        self.test_df['split'] = 'test'
+        self.dev_df['split'] = 'validation'
+        self.test_df['split'] = 'test_in_domain'
 
-        # Verify no overlap
-        train_expr = set(self.train_df['expression'].unique())
-        dev_expr = set(self.dev_df['expression'].unique())
-        test_expr = set(self.test_df['expression'].unique())
+        print("\n✅ Completed sentence-level splitting for remaining idioms.")
+        print(f"   Train sentences: {len(self.train_df)}")
+        print(f"   Validation sentences: {len(self.dev_df)}")
+        print(f"   In-domain test sentences: {len(self.test_df)}")
+        print(f"   Unseen idiom test sentences: {len(self.unseen_test_df)}")
 
-        overlap_train_dev = train_expr & dev_expr
-        overlap_train_test = train_expr & test_expr
-        overlap_dev_test = dev_expr & test_expr
-
-        if overlap_train_dev or overlap_train_test or overlap_dev_test:
-            print("❌ EXPRESSION OVERLAP DETECTED!")
-            print(f"Train-Dev overlap: {overlap_train_dev}")
-            print(f"Train-Test overlap: {overlap_train_test}")
-            print(f"Dev-Test overlap: {overlap_dev_test}")
-            raise ValueError("Expression overlap detected between splits!")
-
-        print("\n✅ Zero expression overlap verified!")
-
-        return self.train_df, self.dev_df, self.test_df
+        return self.train_df, self.dev_df, self.test_df, self.unseen_test_df
 
     def verify_splits(self) -> Dict:
         """
@@ -288,7 +276,7 @@ class ExpressionBasedSplitter:
         Returns:
             Dictionary with split statistics
         """
-        if self.train_df is None or self.dev_df is None or self.test_df is None:
+        if any(df is None for df in [self.train_df, self.dev_df, self.test_df, self.unseen_test_df]):
             raise ValueError("Splits not created. Call create_splits() first.")
 
         print("\n" + "=" * 80)
@@ -297,7 +285,14 @@ class ExpressionBasedSplitter:
 
         stats = {}
 
-        for split_name, split_df in [('Train', self.train_df), ('Dev', self.dev_df), ('Test', self.test_df)]:
+        split_map = [
+            ('Train', self.train_df),
+            ('Validation', self.dev_df),
+            ('In-Domain Test', self.test_df),
+            ('Unseen Idiom Test', self.unseen_test_df)
+        ]
+
+        for split_name, split_df in split_map:
             n_sentences = len(split_df)
             n_expressions = split_df['expression'].nunique()
             n_literal = (split_df['label_2'] == 0).sum()
@@ -307,7 +302,8 @@ class ExpressionBasedSplitter:
             pct_literal = (n_literal / n_sentences) * 100
             pct_figurative = (n_figurative / n_sentences) * 100
 
-            stats[split_name.lower()] = {
+            key = split_name.lower().replace('-', '_').replace(' ', '_')
+            stats[key] = {
                 'sentences': n_sentences,
                 'expressions': n_expressions,
                 'literal': n_literal,
@@ -318,22 +314,31 @@ class ExpressionBasedSplitter:
             }
 
             print(f"\n{split_name} Set:")
-            print(f"  Sentences: {n_sentences:,} ({pct_sentences:.1f}% of total)")
-            print(f"  Expressions: {n_expressions} ({n_expressions/60*100:.1f}% of 60)")
-            print(f"  Literal: {n_literal:,} ({pct_literal:.1f}%)")
-            print(f"  Figurative: {n_figurative:,} ({pct_figurative:.1f}%)")
-            print(f"  Balance: {'✅ Good' if abs(pct_literal - 50) < 5 else '⚠️ Imbalanced'}")
+            print(f"  Sentences: {n_sentences:,} ({pct_sentences:.2f}% of dataset)")
+            print(f"  Expressions: {n_expressions:,}")
+            print(f"  Literal: {n_literal:,} ({pct_literal:.2f}%)")
+            print(f"  Figurative: {n_figurative:,} ({pct_figurative:.2f}%)")
 
-        # Overall verification
-        total_sentences = stats['train']['sentences'] + stats['dev']['sentences'] + stats['test']['sentences']
-        total_expressions = stats['train']['expressions'] + stats['dev']['expressions'] + stats['test']['expressions']
+        coverage_issues = [
+            rec['expression']
+            for rec in self.expression_split_counts
+            if min(rec['train'], rec['validation'], rec['test_in_domain']) == 0
+        ]
+
+        if coverage_issues:
+            print("\n⚠️  Expressions missing from at least one seen split:")
+            for expr in coverage_issues:
+                print(f"   - {expr}")
+        else:
+            print("\n✅ Every seen idiom appears in train, validation, and in-domain test splits.")
+
+        total_sentences = sum(entry['sentences'] for entry in stats.values())
 
         print("\n" + "=" * 80)
         print("OVERALL VERIFICATION")
         print("=" * 80)
-        print(f"Total sentences: {total_sentences} (original: {len(self.df)})")
-        print(f"Total expressions: {total_expressions} (should be 60)")
-        print(f"Match: {'✅ Perfect' if total_sentences == len(self.df) and total_expressions == 60 else '❌ Mismatch'}")
+        print(f"Total sentences accounted for: {total_sentences} (dataset: {len(self.df)})")
+        print(f"Match: {'✅ Perfect' if total_sentences == len(self.df) else '❌ Mismatch'}")
 
         return stats
 
@@ -344,7 +349,7 @@ class ExpressionBasedSplitter:
         Args:
             output_dir: Directory to save splits (default: data/splits/)
         """
-        if self.train_df is None or self.dev_df is None or self.test_df is None:
+        if any(df is None for df in [self.train_df, self.dev_df, self.test_df, self.unseen_test_df]):
             raise ValueError("Splits not created. Call create_splits() first.")
 
         if output_dir is None:
@@ -359,28 +364,31 @@ class ExpressionBasedSplitter:
         print("=" * 80)
 
         # Save each split (validation.csv as per Mission 2.5, not dev.csv)
-        train_path = output_dir / "train.csv"
-        validation_path = output_dir / "validation.csv"
-        test_path = output_dir / "test.csv"
+        split_files = {
+            "train.csv": self.train_df,
+            "validation.csv": self.dev_df,
+            "test.csv": self.test_df,
+            "unseen_idiom_test.csv": self.unseen_test_df
+        }
 
-        self.train_df.to_csv(train_path, index=False, encoding='utf-8-sig')
-        print(f"✅ Train set saved: {train_path} ({len(self.train_df)} sentences)")
+        for filename, df in split_files.items():
+            path = output_dir / filename
+            df.to_csv(path, index=False, encoding='utf-8-sig')
+            print(f"✅ Saved {filename}: {len(df)} sentences")
 
-        self.dev_df.to_csv(validation_path, index=False, encoding='utf-8-sig')
-        print(f"✅ Validation set saved: {validation_path} ({len(self.dev_df)} sentences)")
-
-        self.test_df.to_csv(test_path, index=False, encoding='utf-8-sig')
-        print(f"✅ Test set saved: {test_path} ({len(self.test_df)} sentences)")
-
-        # Save split metadata (split_expressions.json as per Mission 2.5)
         metadata = {
-            'test_expressions': self.test_expressions,
-            'validation_expressions': list(self.dev_df['expression'].unique()),
-            'train_expressions': list(self.train_df['expression'].unique()),
+            'unseen_idiom_expressions': self.unseen_idiom_expressions,
+            'split_ratios': {
+                'train': self.train_ratio,
+                'validation': self.val_ratio,
+                'test_in_domain': self.test_ratio
+            },
+            'expression_split_counts': self.expression_split_counts,
             'statistics': {
-                'train': {'sentences': len(self.train_df), 'expressions': self.train_df['expression'].nunique()},
-                'validation': {'sentences': len(self.dev_df), 'expressions': self.dev_df['expression'].nunique()},
-                'test': {'sentences': len(self.test_df), 'expressions': self.test_df['expression'].nunique()}
+                'train': {'sentences': len(self.train_df)},
+                'validation': {'sentences': len(self.dev_df)},
+                'test_in_domain': {'sentences': len(self.test_df)},
+                'unseen_idiom_test': {'sentences': len(self.unseen_test_df)}
             }
         }
 
@@ -388,14 +396,17 @@ class ExpressionBasedSplitter:
         with open(metadata_path, 'w', encoding='utf-8') as f:
             json.dump(metadata, f, ensure_ascii=False, indent=2)
 
-        print(f"✅ Split expressions mapping saved: {metadata_path}")
+        print(f"✅ Split metadata saved: {metadata_path}")
 
         # Save updated dataset with split column (Mission 2.5 requirement)
         print("\n" + "-" * 80)
         print("Saving updated dataset with split column...")
 
         # Combine all splits back into one dataframe
-        full_dataset = pd.concat([self.train_df, self.dev_df, self.test_df], ignore_index=False)
+        full_dataset = pd.concat(
+            [self.train_df, self.dev_df, self.test_df, self.unseen_test_df],
+            ignore_index=False
+        )
         full_dataset = full_dataset.sort_values('id').reset_index(drop=True)
 
         # Save to data/ directory (not data/splits/)
@@ -405,12 +416,9 @@ class ExpressionBasedSplitter:
         full_dataset.to_csv(updated_dataset_path, index=False, encoding='utf-8-sig')
         print(f"✅ Updated dataset with split column saved: {updated_dataset_path}")
 
-    def run_mission_2_5(self, n_dev: int = 6) -> Dict:
+    def run_mission_2_5(self) -> Dict:
         """
-        Complete Mission 2.5: Expression-Based Dataset Splitting
-
-        Args:
-            n_dev: Number of dev expressions
+        Complete Mission 2.5 with the hybrid splitting strategy
 
         Returns:
             Dictionary with results
@@ -429,13 +437,13 @@ class ExpressionBasedSplitter:
         print("\n[Step 2] Analyzing expression distribution...")
         results['expression_stats'] = self.analyze_expressions()
 
-        # Step 3: Verify test expressions
-        print("\n[Step 3] Verifying test expressions...")
-        results['test_verification'] = self.verify_test_expressions()
+        # Step 3: Verify unseen idiom expressions
+        print("\n[Step 3] Verifying unseen idiom expressions...")
+        results['test_verification'] = self.verify_unseen_idiom_expressions()
 
         # Step 4: Create splits
         print("\n[Step 4] Creating splits...")
-        self.create_splits(n_dev=n_dev)
+        self.create_splits()
 
         # Step 5: Verify splits
         print("\n[Step 5] Verifying splits...")
@@ -451,26 +459,27 @@ class ExpressionBasedSplitter:
         print("=" * 80)
 
         train_stats = results['split_stats']['train']
-        dev_stats = results['split_stats']['dev']
-        test_stats = results['split_stats']['test']
+        dev_stats = results['split_stats']['validation']
+        test_stats = results['split_stats']['in_domain_test']
+        unseen_stats = results['split_stats']['unseen_idiom_test']
 
-        # Verify set intersections are empty (no data leakage)
-        train_expr = set(self.train_df['expression'].unique())
-        val_expr = set(self.dev_df['expression'].unique())
-        test_expr = set(self.test_df['expression'].unique())
+        seen_expressions = set(self.train_df['expression'].unique())
+        unseen_expressions = set(self.unseen_test_df['expression'].unique())
 
         criteria = [
-            ("Test set: 6 specific expressions only", test_stats['expressions'] == 6),
-            ("Zero data leakage: test ∩ train = ∅", len(test_expr & train_expr) == 0),
-            ("Zero data leakage: test ∩ val = ∅", len(test_expr & val_expr) == 0),
-            ("Zero data leakage: train ∩ val = ∅", len(train_expr & val_expr) == 0),
-            ("Each split balanced (50/50 ± 5%)",
-             abs(train_stats['pct_literal'] - 50) < 5 and
-             abs(dev_stats['pct_literal'] - 50) < 5 and
-             abs(test_stats['pct_literal'] - 50) < 5),
-            ("Expression-to-split mapping documented", True),  # Will be saved
+            ("Unseen idiom test contains 6 specified idioms",
+             unseen_stats['expressions'] == len(self.unseen_idiom_expressions)
+             and unseen_expressions == set(self.unseen_idiom_expressions)),
+            ("Seen vs unseen idioms are disjoint", len(seen_expressions & unseen_expressions) == 0),
+            ("Seen splits balanced (50/50 ± 5%)",
+             all(abs(stats['pct_literal'] - 50) < 5 for stats in [train_stats, dev_stats, test_stats])),
+            ("Every seen idiom appears in train/validation/test_in_domain",
+             all(rec['train'] > 0 and rec['validation'] > 0 and rec['test_in_domain'] > 0
+                 for rec in self.expression_split_counts)),
             ("All sentences preserved",
-             train_stats['sentences'] + dev_stats['sentences'] + test_stats['sentences'] == len(self.df)),
+             train_stats['sentences'] + dev_stats['sentences'] + test_stats['sentences'] +
+             unseen_stats['sentences'] == len(self.df)),
+            ("Split metadata recorded", True)
         ]
 
         all_passed = True
@@ -486,9 +495,11 @@ class ExpressionBasedSplitter:
             print("=" * 80)
             print(f"\n📋 Summary:")
             print(f"   • Train: {train_stats['sentences']:,} sentences ({train_stats['expressions']} expressions)")
-            print(f"   • Dev: {dev_stats['sentences']:,} sentences ({dev_stats['expressions']} expressions)")
-            print(f"   • Test: {test_stats['sentences']:,} sentences ({test_stats['expressions']} expressions)")
-            print(f"   • Zero data leakage - expressions never overlap!")
+            print(f"   • Validation: {dev_stats['sentences']:,} sentences ({dev_stats['expressions']} expressions)")
+            print(f"   • In-domain test: {test_stats['sentences']:,} sentences "
+                  f"({test_stats['expressions']} expressions)")
+            print(f"   • Unseen idiom test: {unseen_stats['sentences']:,} sentences "
+                  f"({unseen_stats['expressions']} expressions)")
             print(f"   • Ready for Mission 2.6: Data Preparation Testing")
         else:
             print("\n⚠️  Some criteria not met. Please review above.")
@@ -501,7 +512,7 @@ def main():
     """Main function to execute Mission 2.5"""
 
     splitter = ExpressionBasedSplitter()
-    results = splitter.run_mission_2_5(n_dev=6)
+    results = splitter.run_mission_2_5()
 
     return splitter, results
 

@@ -15,7 +15,7 @@ This directory contains the Hebrew Idiom Detection dataset - the first comprehen
 **Total Size:** 4,800 manually annotated sentences
 **Balance:** 2,400 literal + 2,400 figurative (perfect 50/50)
 **Unique Idioms:** 60 expressions
-**Annotation Quality:** Manually verified by native Hebrew speakers
+**Annotation Quality:** Manually verified by native Hebrew speakers (2 annotators, Cohen's κ = 0.9725)
 
 ---
 
@@ -29,10 +29,11 @@ data/
 ├── processed_data.csv                  # Preprocessed version (Mission 2.4)
 ├── expressions_data_with_splits.csv    # Dataset with split assignments
 └── splits/                             # Train/Val/Test splits
-    ├── train.csv                       # 3,840 samples (80%, 48 idioms)
-    ├── validation.csv                  # 480 samples (10%, 6 idioms)
-    ├── test.csv                        # 480 samples (10%, 6 idioms)
-    └── split_expressions.json          # Metadata: which idioms in which split
+    ├── train.csv                       # 3,456 samples (seen idioms, 80% of remaining data)
+    ├── validation.csv                  # 432 samples (seen idioms, 10%)
+    ├── test.csv                        # 432 samples (in-domain, seen idioms)
+    ├── unseen_idiom_test.csv           # 480 samples (6 idioms held out entirely)
+    └── split_expressions.json          # Metadata: per-idiom counts per split
 ```
 
 ---
@@ -71,42 +72,56 @@ data/
 42,train,"הוא שבר את הראש על הבעיה המורכבת","שבר את הראש","שבר את הראש",he,manual,פיגורטיבי,1,"O B-IDIOM I-IDIOM I-IDIOM O O O",7,1,4,4,16,"0000111111111110000000000000000"
 ```
 
-### 2. `splits/` Directory (Expression-Based Splits)
+### 2. `splits/` Directory (Hybrid Splits: Seen vs Unseen)
 
-**Splitting Strategy:** Expression-based (NOT random)
-**Purpose:** Prevent data leakage - ensure test idioms never seen during training
+**Splitting Strategy:**
+- **Unseen Idiom Test:** 6 idioms are held out entirely (all 80 sentences per idiom). This evaluates zero-shot generalization.
+- **Seen Splits (train/validation/test):** All remaining idioms contribute sentences to every split. We split by sentence (not expression) using an 80/10/10 ratio per idiom and per label to keep literal/figurative balance.
 
 #### `train.csv`
-- **Samples:** 3,840 (80%)
-- **Idioms:** 48 unique expressions
-- **Label Balance:** 1,920 literal + 1,920 figurative (50/50)
+- **Samples:** 3,456 (72% of dataset; 80% of seen sentences)
+- **Idioms:** 54 (every seen idiom contributes sentences)
+- **Label Balance:** 1,728 literal + 1,728 figurative (50/50)
 - **Usage:** Model training
 
 #### `validation.csv`
-- **Samples:** 480 (10%)
-- **Idioms:** 6 unique expressions (different from train/test)
-- **Label Balance:** 240 literal + 240 figurative (50/50)
+- **Samples:** 432 (9% of dataset; 10% of seen sentences)
+- **Idioms:** 54 (same idioms as train/test, but disjoint sentences)
+- **Label Balance:** 216 literal + 216 figurative (50/50)
 - **Usage:** Hyperparameter tuning, early stopping
 
 #### `test.csv`
-- **Samples:** 480 (10%)
-- **Idioms:** 6 unique expressions (completely unseen during training)
+- **Samples:** 432 (9% of dataset; 10% of seen sentences)
+- **Idioms:** 54 (same idioms as train/validation, disjoint sentences)
+- **Label Balance:** 216 literal + 216 figurative (50/50)
+- **Usage:** In-domain evaluation (seen idioms, unseen sentences)
+
+#### `unseen_idiom_test.csv`
+- **Samples:** 480 (10% of dataset)
+- **Idioms:** 6 fixed idioms held out entirely from training
 - **Label Balance:** 240 literal + 240 figurative (50/50)
-- **Usage:** Final evaluation, zero-shot generalization
+- **Usage:** Zero-shot generalization to idioms never seen during training
 
 #### `split_expressions.json`
-**Metadata file listing which idioms belong to which split.**
+Metadata file with per-idiom sentence counts for each split plus the list of unseen idioms. Example snippet:
 
-Example:
 ```json
 {
-  "train_expressions": ["שבר שיא", "זרק כדור", ...],
-  "dev_expressions": ["הלך לאיבוד", "נתן יד", ...],
-  "test_expressions": ["שבר את הראש", "לב זהב", ...]
+  "unseen_idiom_expressions": ["חתך פינה", "חצה קו אדום", ...],
+  "expression_split_counts": [
+    {"expression": "שבר את הצפון", "train": 32, "validation": 4, "test_in_domain": 4},
+    ...
+  ],
+  "statistics": {
+    "train": {"sentences": 3456},
+    "validation": {"sentences": 432},
+    "test_in_domain": {"sentences": 432},
+    "unseen_idiom_test": {"sentences": 480}
+  }
 }
 ```
 
-**Critical:** Zero overlap between splits ensures true zero-shot evaluation on test set.
+**Critical:** Seen splits share idioms but never share sentences. The unseen test idioms remain completely disjoint.
 
 ---
 
@@ -114,9 +129,10 @@ Example:
 
 ### Size Distribution
 - **Total Sentences:** 4,800
-- **Train Set:** 3,840 (80%)
-- **Validation Set:** 480 (10%)
-- **Test Set:** 480 (10%)
+- **Train Set:** 3,456 (72% overall; 80% of seen idioms)
+- **Validation Set:** 432 (9% overall)
+- **In-Domain Test Set:** 432 (9% overall)
+- **Unseen Idiom Test Set:** 480 (10% overall, zero-shot)
 
 ### Label Distribution
 - **Literal (מילולי):** 2,400 (50.0%)
@@ -125,44 +141,49 @@ Example:
 ### Idiom Statistics
 - **Unique Idioms:** 60 expressions
 - **Avg Sentences per Idiom:** 80 (perfectly balanced)
-- **Avg Idiom Length:** 2.48 tokens (median: 2) | 11.37 characters (median: 11)
-- **Idiom Length Range:** 2-5 tokens | 5-22 characters
+- **Avg Idiom Length:** 2.48 tokens (median: 2) | 11.39 characters (median: 11)
+- **Idiom Length Range:** 2-5 tokens | 5-23 characters
 - **Polysemy:** 100% of idioms appear in BOTH literal & figurative contexts
 
 ### Sentence Statistics
-- **Avg Sentence Length:** 14.95 tokens (median: 10) | 78.83 characters (median: 54)
-- **Sentence Length Range:** 5-37 tokens | 22-193 characters
-- **Declarative Sentences:** 4,425 (92.19%)
-- **Questions:** 341 (7.10%)
-- **Exclamatory:** 34 (0.71%)
+- **Avg Sentence Length:** 15.71 tokens (median: 12) | 83.04 characters (median: 63)
+- **Sentence Length Range:** 5-38 tokens | 22-193 characters
+- **Declarative Sentences:** 4,549 (94.77%)
+- **Questions:** 239 (4.98%)
+- **Exclamatory:** 12 (0.25%)
 
 ### Idiom Position in Sentences
-- **Start (0-33%):** 4,179 sentences (87.06%) - idioms predominantly appear early
-- **Middle (33-67%):** 553 sentences (11.52%)
-- **End (67-100%):** 68 sentences (1.42%)
-- **Mean Position Ratio:** 0.1670 (highly skewed toward sentence beginning)
+- **Start (0-33%):** 3,058 sentences (63.71%) - idioms still skew toward early positions
+- **Middle (33-67%):** 1,429 sentences (29.77%)
+- **End (67-100%):** 313 sentences (6.52%)
+- **Mean Position Ratio:** 0.2801 (idioms appear earlier but less extremely than before)
 
 ### Lexical Diversity & Richness
-- **Vocabulary Size:** 17,787 unique words
-- **Total Tokens:** 71,775
-- **Type-Token Ratio (TTR):** 0.2478
-- **Hapax Legomena:** 11,341 words (63.76% appear only once)
-- **Dis Legomena:** 2,703 words (appear exactly twice)
-- **Maas Index:** 0.0112
-- **Function Word Ratio:** 12.94%
+- **Vocabulary Size:** 18,784 unique words
+- **Total Tokens:** 75,412
+- **Type-Token Ratio (TTR):** 0.2491
+- **Hapax Legomena:** 11,921 words (63.46% appear only once)
+- **Dis Legomena:** 2,850 words (appear exactly twice)
+- **Maas Index:** 0.0110
+- **Function Word Ratio:** 12.57%
 
 ### Structural Complexity
-- **Sentences with Subclauses:** 1,172 (24.42%)
-- **Mean Subclause Markers:** 0.28 per sentence
-- **Mean Punctuation Marks:** 1.67 per sentence
+- **Sentences with Subclauses:** 1,177 (24.52%)
+- **Mean Subclause Markers:** 0.28 per sentence (ratio 0.0146)
+- **Mean Punctuation Marks:** 1.81 per sentence
 - **Figurative vs Literal Complexity:**
-  - Figurative sentences: 0.32 subclause markers (more complex)
-  - Literal sentences: 0.24 subclause markers (less complex)
+  - Figurative sentences: 0.31 subclause markers (mean ratio 0.0170)
+  - Literal sentences: 0.25 subclause markers (mean ratio 0.0122)
 
 ### Annotation Quality & Consistency
-- **Prefix Attachments:** 2,097 instances (43.69%) - Hebrew morphological flexibility
-- **Mean Consistency Rate per Idiom:** 40.08%
-- **Variant Forms:** High morphological variation (e.g., "שם רגליים" has 33 variants)
+- **Inter-Annotator Agreement (IAA):** 98.625% observed agreement
+- **Cohen's Kappa:** 0.9725 (near-perfect reliability)
+- **Annotators:** 2 native Hebrew speakers
+- **Disagreements:** 66 items (1.375%)
+- **Non-label Corrections:** 223 items (4.65%)
+- **Prefix Attachments:** 2,172 instances (45.25%) - Hebrew morphological flexibility
+- **Mean Consistency Rate per Idiom:** 39.54%
+- **Variant Forms:** High morphological variation (e.g., "שם רגליים" now shows 35 surface forms)
 - **IOB2 Tag Validation:** 100% aligned with token boundaries
 - **Character Span Validation:** 100% verified
 
@@ -220,7 +241,8 @@ Tags:   ["O", "B-IDIOM", "I-IDIOM", "I-IDIOM", "O", "O"]
 ## Data Quality
 
 ### Manual Validation
-- ✅ All sentences verified by native Hebrew speakers
+- ✅ All sentences verified by 2 native Hebrew speakers
+- ✅ Inter-Annotator Agreement: 98.625% (Cohen's κ = 0.9725)
 - ✅ IOB2 tags validated for 100% alignment with tokens
 - ✅ No duplicate sentences
 - ✅ All sentences grammatically correct
@@ -269,11 +291,13 @@ import pandas as pd
 # Load splits
 train = pd.read_csv('data/splits/train.csv')
 val = pd.read_csv('data/splits/validation.csv')
-test = pd.read_csv('data/splits/test.csv')
+test_in_domain = pd.read_csv('data/splits/test.csv')
+unseen_test = pd.read_csv('data/splits/unseen_idiom_test.csv')
 
 print(f"Train: {len(train)} samples")
 print(f"Validation: {len(val)} samples")
-print(f"Test: {len(test)} samples")
+print(f"In-domain test: {len(test_in_domain)} samples")
+print(f"Unseen idiom test: {len(unseen_test)} samples")
 ```
 
 ### Access IOB2 Tags
@@ -341,16 +365,15 @@ cd hebrew-idiom-detection/data/splits/
 1. **Domain:** Limited to contemporary Hebrew (modern usage)
 2. **Size:** 60 idioms (not exhaustive of all Hebrew idioms)
 3. **Context:** Sentences may lack broader discourse context
-4. **Annotation:** Single annotator per sentence (no inter-annotator agreement scores)
-5. **Zero-Shot:** Test set covers only 6 idioms (10% of total)
-6. **Position bias:** 87.06% of idioms appear at sentence start (first 33%) - may reflect Hebrew language patterns or data collection artifact
+4. **Zero-Shot:** Test set covers only 6 idioms (10% of total)
+5. **Position bias:** 63.71% of idioms appear at sentence start (first 33%) - still skewed but less extreme after data refresh
 
 ---
 
 ## Future Extensions
 
 - [ ] Add more idioms (target: 100+ expressions)
-- [ ] Multi-annotator validation
+- [x] Multi-annotator validation (completed: 2 annotators, κ = 0.9725)
 - [ ] Extended context (discourse-level)
 - [ ] Cross-lingual alignment (English translations)
 - [ ] Difficulty ratings per idiom
@@ -366,6 +389,6 @@ For questions, issues, or contributions:
 
 ---
 
-**Last Updated:** November 10, 2025 (Statistics updated with new dataset)
+**Last Updated:** November 19, 2025 (Statistics updated with new dataset)
 **Dataset Version:** 1.0
 **Maintained By:** [Your Name]

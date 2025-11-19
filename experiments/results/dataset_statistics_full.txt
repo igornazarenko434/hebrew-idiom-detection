@@ -26,19 +26,19 @@ Label Distribution:
 2. SENTENCE & IDIOM LENGTH STATISTICS
 --------------------------------------------------------------------------------
 Sentence Length:
-  Tokens - Mean: 14.95, Median: 10, Std: 8.22
-  Characters - Mean: 78.83, Median: 54.00, Std: 43.69
+  Tokens - Mean: 15.71, Median: 12, Std: 8.01
+  Characters - Mean: 83.04, Median: 63.00, Std: 42.55
 
 Idiom Length:
   Tokens - Mean: 2.48, Median: 2, Std: 0.64
-  Characters - Mean: 11.37, Median: 11.00, Std: 3.14
+  Characters - Mean: 11.39, Median: 11.00, Std: 3.15
 
 3. IDIOM POSITION ANALYSIS
 --------------------------------------------------------------------------------
-Mean position ratio: 0.1670
-Start (0-33%): 4179 (87.06%)
-Middle (33-67%): 553 (11.52%)
-End (67-100%): 68 (1.42%)
+Mean position ratio: 0.2801
+Start (0-33%): 3058 (63.71%)
+Middle (33-67%): 1429 (29.77%)
+End (67-100%): 313 (6.52%)
 
 4. POLYSEMY ANALYSIS
 --------------------------------------------------------------------------------
@@ -49,33 +49,33 @@ Only figurative: 0
 
 5. LEXICAL STATISTICS
 --------------------------------------------------------------------------------
-Vocabulary size: 17,787 unique words
-Total tokens: 71,775
-Type-Token Ratio (TTR): 0.2478
-Avg unique words per sentence: 14.64
-Function word ratio: 0.1294
+Vocabulary size: 18,784 unique words
+Total tokens: 75,412
+Type-Token Ratio (TTR): 0.2491
+Avg unique words per sentence: 15.38
+Function word ratio: 0.1257
 
 Top 20 Most Frequent Words:
-   1. 'את': 2231 (3.11%)
-   2. 'לא': 1241 (1.73%)
-   3. 'הוא': 1134 (1.58%)
-   4. 'היא': 1049 (1.46%)
-   5. 'על':  886 (1.23%)
-   6. 'של':  722 (1.01%)
-   7. '–':  649 (0.90%)
-   8. 'אם':  624 (0.87%)
-   9. 'הם':  565 (0.79%)
-  10. 'היה':  497 (0.69%)
-  11. 'אחרי':  491 (0.68%)
-  12. 'כדי':  423 (0.59%)
-  13. 'עם':  405 (0.56%)
-  14. 'כל':  377 (0.53%)
-  15. 'כי':  360 (0.50%)
-  16. 'אבל':  331 (0.46%)
-  17. 'הייתה':  288 (0.40%)
-  18. 'רק':  256 (0.36%)
-  19. 'זה':  255 (0.36%)
-  20. 'בין':  251 (0.35%)
+   1. 'את': 2295 (3.04%)
+   2. 'לא': 1289 (1.71%)
+   3. 'הוא': 1105 (1.47%)
+   4. 'היא': 1004 (1.33%)
+   5. 'על':  918 (1.22%)
+   6. 'של':  756 (1.00%)
+   7. 'אם':  623 (0.83%)
+   8. '–':  559 (0.74%)
+   9. 'הם':  521 (0.69%)
+  10. 'אחרי':  518 (0.69%)
+  11. 'היה':  509 (0.67%)
+  12. 'כדי':  475 (0.63%)
+  13. 'עם':  426 (0.56%)
+  14. 'כל':  420 (0.56%)
+  15. 'אבל':  326 (0.43%)
+  16. 'כי':  318 (0.42%)
+  17. 'זה':  300 (0.40%)
+  18. 'הייתה':  289 (0.38%)
+  19. 'בין':  253 (0.34%)
+  20. 'לו':  251 (0.33%)
 
 ================================================================================
 PART 2: OPTIONAL/RECOMMENDED ANALYSIS
@@ -84,35 +84,46 @@ PART 2: OPTIONAL/RECOMMENDED ANALYSIS
 6. STRUCTURAL COMPLEXITY
 --------------------------------------------------------------------------------
 Mean subclause markers per sentence: 0.28
-Mean subclause ratio: 0.0149
-Mean punctuation marks: 1.67
-Sentences with subclauses: 1172 (24.42%)
+Mean subclause ratio: 0.0146
+Mean punctuation marks: 1.81
+Sentences with subclauses: 1177 (24.52%)
 
 7. LEXICAL RICHNESS
 --------------------------------------------------------------------------------
-Hapax legomena: 11,341 (63.76%)
-Dis legomena: 2,703
-Maas Index: 0.0112
+Hapax legomena: 11,921 (63.46%)
+Dis legomena: 2,850
+Maas Index: 0.0110
 
 8. COLLOCATIONAL ANALYSIS
 --------------------------------------------------------------------------------
-Total context words (±3 tokens): 21,583
-Unique context words: 7,415
+Total context words (±3 tokens): 23,366
+Unique context words: 8,498
 
 Top 10 Context Words:
-   1. 'הוא':  905 (4.19%)
-   2. 'היא':  826 (3.83%)
-   3. 'הם':  496 (2.30%)
-   4. 'לא':  470 (2.18%)
-   5. 'על':  352 (1.63%)
-   6. 'את':  343 (1.59%)
-   7. 'אחרי':  277 (1.28%)
-   8. 'כדי':  271 (1.26%)
-   9. 'עם':  249 (1.15%)
-  10. 'של':  216 (1.00%)
+   1. 'הוא':  844 (3.61%)
+   2. 'היא':  745 (3.19%)
+   3. 'לא':  493 (2.11%)
+   4. 'הם':  423 (1.81%)
+   5. 'על':  362 (1.55%)
+   6. 'את':  328 (1.40%)
+   7. 'עם':  256 (1.10%)
+   8. 'של':  242 (1.04%)
+   9. 'כדי':  241 (1.03%)
+  10. 'אחרי':  234 (1.00%)
 
 9. ANNOTATION CONSISTENCY
 --------------------------------------------------------------------------------
-Prefix attachments: 2097 (43.69%)
-Mean consistency rate per idiom: 0.4008
+Prefix attachments: 2172 (45.25%)
+Mean consistency rate per idiom: 0.3954
+
+10. INTER-ANNOTATOR AGREEMENT (IAA)
+--------------------------------------------------------------------------------
+Annotators: 2 native Hebrew speakers
+Observed Agreement: 98.625%
+Expected Agreement (Chance): 50%
+Cohen's Kappa: 0.9725 (near-perfect reliability)
+Total Disagreements: 66 items (1.375%)
+  - 0→1 disagreements: 1
+  - 1→0 disagreements: 65
+Non-label Corrections: 223 items (4.65%)
 

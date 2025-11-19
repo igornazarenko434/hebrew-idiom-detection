@@ -451,127 +451,53 @@
 
 ---
 
-### Mission 2.5: Dataset Splitting (Expression-Based Strategy)
+### Mission 2.5: Dataset Splitting (Hybrid Strategy)
 
-**Objective:** Create train/validation/test splits based on specific expressions to avoid data leakage
+**Objective:** Support both in-domain and zero-shot evaluation with a unified splitting workflow.
 
-**Tasks:**
-1. **Test Set Creation (Expression-Based):**
-   - Define test set expressions:
-     - ״חתך פינה״
-     - ״חצה קו אדום״
-     - ״נשאר מאחור״
-     - ״שבר שתיקה״
-     - ״איבד את הראש״
-     - ״רץ אחרי הזנב של עצמו״
-   - Filter all samples with these expressions to test set
-   - Include both literal and figurative examples for each expression
-   - Verify test set has balanced labels (50/50 literal/figurative or close)
-   - Count total samples in test set
-2. **Train/Validation Split (From Remaining Expressions):**
-   - Take all remaining expressions (not in test set)
-   - Group samples by unique expression
-   - Split expressions (not individual samples) into train/validation
-   - Use stratification to maintain balance
-   - Common percentage: 80/20 or 85/15 for train/val from remaining data
-   - Ensure each expression appears in ONLY ONE split (no data leakage)
-   - Verify both splits have balanced labels
-3. **Data Leakage Verification:**
-   - Verify no expression appears in multiple splits
-   - Check: set(test_expressions) ∩ set(train_expressions) = ∅
-   - Check: set(test_expressions) ∩ set(val_expressions) = ∅
-   - Check: set(train_expressions) ∩ set(val_expressions) = ∅
-   - Document which expressions are in which split
-4. **Save Splits:**
-   - `data/splits/train.csv`
-   - `data/splits/validation.csv`
-   - `data/splits/test.csv`
-   - `data/splits/split_expressions.json` (mapping of expressions to splits)
-5. Add `split` column to original dataset indicating train/val/test
-6. Save updated dataset with split column
-
-**Validation:**
-- Test set contains only the 6 specified expressions
-- No expression overlap between splits (zero data leakage)
-- Each split has balanced labels (50% ± 5%)
-- All idioms from test expressions present in test set
-- Train and validation splits from remaining expressions only
-- Files saved successfully
-- Can reload splits and verify expression separation
-
-**Success Criteria:**
-✅ Test set: 6 specific expressions only
-✅ Train/Val: remaining expressions (80/20 or 85/15 split)
-✅ Zero data leakage verified (no shared expressions)
-✅ Each split balanced (50/50 ± 5%)
-✅ Expression-to-split mapping documented
-✅ Files saved and validated
-
----
-
-### Mission 2.5.1 (OPTIONAL - HIGH PRIORITY): Create Seen-Idiom Test Set
-
-**Objective:** Create an additional test set with idioms that appear in the training set to distinguish in-domain generalization from zero-shot generalization
-
-**Why this is important (Senior Researcher Recommendation):**
-The current test set (Mission 2.5) contains 6 idioms that are completely unseen during training. This evaluates **zero-shot idiom generalization**, which is valuable but different from standard evaluation. Adding a "seen-idiom test set" allows you to:
-1. Measure performance on idioms the model has been trained on (in-domain generalization)
-2. Compare in-domain vs zero-shot performance to understand the difficulty gap
-3. Make results more comparable to other idiom detection papers (most use seen idioms)
-4. Provide a clearer picture of model capabilities
+**Strategy Overview:**
+- Keep the 6 designated idioms as the **unseen idiom test set** (zero-shot evaluation).
+- For every remaining idiom, split its literal and figurative sentences into **train (80%) / validation (10%) / in-domain test (10%)** so each idiom appears in all three splits with disjoint sentences.
+- Maintain label balance (≈50/50) within each split.
 
 **Tasks:**
-1. Select 6 additional idioms from the training set (48 expressions):
-   - Use stratified sampling to ensure representativeness
-   - Choose idioms with medium frequency (not too rare, not too common)
-   - Maintain balance of literal/figurative usage
-   - Diversity in idiom length and complexity
-2. Extract 10% of samples for these 6 idioms from train/dev sets:
-   - Move these samples to new "seen_test" split
-   - Maintain 50/50 label balance
-   - Remove from train/dev splits
-3. Create new split files:
-   - `data/splits/seen_test.csv` (samples with seen idioms)
-   - Update `data/splits/train.csv` and `data/splits/validation.csv` (remove moved samples)
-   - Keep original `data/splits/test.csv` as "unseen_test.csv" (zero-shot evaluation)
-   - Update `data/splits/split_expressions.json` with new split information
-4. Document the distinction:
-   - `experiments/docs/test_sets_explanation.md`:
-     - **Seen Test Set:** 6 idioms present in training data (in-domain generalization)
-     - **Unseen Test Set:** 6 idioms absent from training data (zero-shot generalization)
-     - Clarify which test set is used for each evaluation
-5. Update all evaluation scripts to report both test sets:
-   - Results on seen test set (expected higher performance)
-   - Results on unseen test set (expected lower performance)
-   - Gap analysis: How much does the model rely on seeing idioms during training?
-
-**Alternative (if you prefer simpler approach):**
-Instead of creating a second test set, clearly document in `experiments/docs/evaluation_strategy.md`:
-- Current test set evaluates **zero-shot idiom generalization** (unseen idioms)
-- This is intentional and valuable for real-world applications
-- Performance may be lower than papers using seen-idiom test sets
-- This should be highlighted in the paper's evaluation section
+1. **Reserve the Unseen Idiom Test Set**
+   - Extract all sentences for the 6 fixed idioms:
+     - ״חתך פינה״, ״חצה קו אדום״, ״נשאר מאחור״, ״שבר שתיקה״, ״איבד את הראש״, ״רץ אחרי הזנב של עצמו״
+   - Save as `data/splits/unseen_idiom_test.csv`
+   - Confirm literal/figurative counts remain balanced
+2. **Per-Idiom Stratified Splitting for Remaining Data**
+   - For each other idiom:
+     - Separate literal vs figurative sentences
+     - Shuffle deterministically (seeded)
+     - Allocate 80%/10%/10% to train/validation/in-domain test (per label)
+     - Ensure each idiom contributes sentences to **all three** splits
+   - Aggregate results into:
+     - `data/splits/train.csv`
+     - `data/splits/validation.csv`
+     - `data/splits/test.csv` (now the in-domain test)
+3. **Metadata and Documentation**
+   - Update `data/splits/split_expressions.json` with per-idiom counts for each split
+   - Update `data/expressions_data_with_splits.csv` with a `split` column containing `train`, `validation`, `test_in_domain`, or `unseen_idiom_test`
+4. **Verification**
+   - Seen vs unseen idioms are disjoint
+   - Every seen idiom has sentences in train/validation/test_in_domain
+   - Literal/figurative ratios per split stay within ±5% of 50/50
+   - Total sentence count equals the original dataset
 
 **Validation:**
-- If creating seen test set:
-  - Seen test set contains 6 idioms present in training data
-  - Unseen test set contains 6 different idioms absent from training data
-  - No expression overlap between train/dev and unseen test
-  - Both test sets have balanced labels
-  - Documentation clearly explains the distinction
-- If documenting current approach:
-  - Clear explanation of zero-shot evaluation strategy
-  - Rationale for this design choice documented
-  - Expected performance differences noted
+- Unseen idiom test set contains exactly the 6 specified idioms
+- Train/validation/test_in_domain contain all remaining idioms with disjoint sentences
+- Every seen idiom contributes to all three seen splits
+- Label balance per split is within ±5% of 50/50
+- Saved files match expected counts and can be reloaded successfully
 
 **Success Criteria:**
-✅ Either created seen-idiom test set OR documented zero-shot evaluation strategy
-✅ Test set distinction clearly explained
-✅ Evaluation plan accounts for both scenarios
-✅ Paper will clearly communicate evaluation approach
-✅ Results will be interpretable and comparable
-
-**Recommendation:** This is HIGH PRIORITY for publication quality. Choose whichever approach fits your research goals better.
+✅ Four split files (`train`, `validation`, `test_in_domain`, `unseen_idiom_test`) created  
+✅ `split_expressions.json` documents per-idiom counts  
+✅ No overlap between unseen idioms and seen splits  
+✅ Balanced label distribution in every split  
+✅ `expressions_data_with_splits.csv` updated
 
 ---
 
@@ -585,9 +511,9 @@ Instead of creating a second test set, clearly document in `experiments/docs/eva
    - Dataset loading (correct shape, columns)
    - Label balance check
    - IOB2 validation
-   - Splitting function (correct sizes, stratification, no data leakage)
+   - Splitting function (correct sizes, stratification, seen vs unseen integrity)
    - Token count alignment
-   - Expression-based split validation
+   - Split metadata validation (per-idiom counts, seen vs unseen)
 3. Run tests using pytest framework
 4. Document any issues found and fix them
 5. Ensure all tests pass before proceeding
@@ -601,7 +527,7 @@ Instead of creating a second test set, clearly document in `experiments/docs/eva
 **Success Criteria:**
 ✅ All unit tests created
 ✅ All tests pass
-✅ Data leakage test passes
+✅ Split integrity tests pass (seen vs unseen)
 ✅ Code validated and reliable
 ✅ Ready for model training
 
@@ -2952,7 +2878,7 @@ for bin in bins:
 1. Write Dataset section:
    - Collection process
    - Annotation methodology
-   - Expression-based splitting strategy
+   - Hybrid seen/unseen splitting strategy
    - Statistics (table and description, including sentence types)
    - Examples (figure)
    - Quality control

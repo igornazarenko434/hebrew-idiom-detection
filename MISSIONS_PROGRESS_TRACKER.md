@@ -35,12 +35,10 @@
 - [x] **Mission 2.2:** Label Distribution Validation ✅ (Completed: Nov 8, 2025)
 - [x] **Mission 2.3:** IOB2 Tags Validation ✅ (Completed: Nov 8, 2025)
 - [x] **Mission 2.4:** Dataset Statistics Analysis (with sentence types) ✅ (Completed: Nov 8, 2025)
-- [x] **Mission 2.5:** Dataset Splitting (Expression-Based Strategy) ✅ (Completed: Nov 8, 2025)
-- [ ] **Mission 2.5.1 (OPTIONAL - HIGH PRIORITY):** Create Seen-Idiom Test Set
+- [x] **Mission 2.5:** Dataset Splitting (Hybrid Seen/Unseen Strategy) ✅ (Completed: Nov 19, 2025)
 - [ ] **Mission 2.6:** Data Preparation Testing
 
 **Phase 2 Progress:** 5/6 missions complete (83%)
-**Optional:** 0/1 missions complete
 
 ---
 
@@ -189,11 +187,6 @@
 - [ ] Thesis Document (8.6)
 
 **High-Priority Optional Missions (Senior Researcher Recommendations):**
-- [ ] **Mission 2.5.1:** Create Seen-Idiom Test Set (or document zero-shot evaluation strategy)
-  - **Why:** Distinguish in-domain vs zero-shot generalization, make results comparable to other papers
-  - **Time:** 4-5 hours (or 1 hour for documentation-only approach)
-  - **Impact:** HIGH - critical for publication quality and result interpretation
-
 - [ ] **Mission 3.3.5:** Trivial Baseline Evaluation
   - **Why:** Establish performance floor, verify models actually learn, increase credibility
   - **Time:** 2-3 hours (very quick)
@@ -228,12 +221,12 @@
 - ✅ Sentence types analyzed: 92.23% Declarative, 7.12% Questions, 0.65% Exclamatory
 - ✅ All 6 visualizations created and saved to paper/figures/
 - ✅ Statistics file saved to experiments/results/
-- ✅ Expression-based splits created:
-  - Train: 3,840 sentences (48 expressions, 80%)
-  - Dev: 480 sentences (6 expressions, 10%)
-  - Test: 480 sentences (6 expressions, 10%)
-  - Zero expression overlap - no data leakage!
-  - Perfect 50/50 label balance in all splits
+- ✅ Hybrid seen/unseen splits created:
+  - Train: 3,456 sentences (54 idioms, seen)
+  - Validation: 432 sentences (seen)
+  - In-domain test: 432 sentences (seen)
+  - Unseen idiom test: 480 sentences (6 idioms held out entirely)
+  - Every seen idiom appears in all seen splits, 50/50 balance everywhere
 - 📍 Next: Mission 2.6 - Data preparation testing
 
 ---
@@ -316,31 +309,27 @@
   - Saved statistics to experiments/results/dataset_statistics.txt
   - Saved processed dataset to data/processed_data.csv
 
-- ✅ **Mission 2.5**: Expression-Based Dataset Splitting
-  - **CRITICAL**: Implemented expression-based splitting to prevent data leakage
-  - Selected 6 test expressions (10% of 60 idioms):
-    - שבר את הראש (broke the head)
-    - לב זהב (golden heart)
-    - חטף חום (caught fever)
-    - שבר שתיקה (broke silence)
-    - חותך כמו סכין (cuts like knife)
-    - הייתה בעננים (was in clouds)
-  - Selected 6 dev expressions using stratified sampling (balanced, medium-sized)
-  - Created splits with **zero expression overlap**:
-    - **Train**: 3,840 sentences (48 expressions, 80%)
-    - **Dev**: 480 sentences (6 expressions, 10%)
-    - **Test**: 480 sentences (6 expressions, 10%)
-  - Perfect label balance in all splits: 50.0% literal, 50.0% figurative
+- ✅ **Mission 2.5**: Hybrid Dataset Splitting (Seen + Unseen)
+  - Reserved 6 idioms (80 sentences each) for `unseen_idiom_test.csv` → zero-shot evaluation set.
+  - For every remaining idiom, split literal/figurative sentences into train/validation/in-domain test with 80/10/10 ratios so each idiom appears in all seen splits.
+  - Final counts:
+    - **Train**: 3,456 sentences (54 idioms)
+    - **Validation**: 432 sentences (54 idioms)
+    - **In-domain test**: 432 sentences (54 idioms)
+    - **Unseen idiom test**: 480 sentences (6 idioms)
+  - Maintained perfect 50/50 label balance in every split.
   - Saved files:
-    - data/train.csv
-    - data/dev.csv
-    - data/test.csv
-    - data/split_metadata.json (expressions per split)
-  - **Data scientist best practices applied**:
-    - No expression appears in multiple splits
-    - Stratified sampling ensures representativeness
-    - Label balance maintained across all splits
-    - Metadata saved for reproducibility
+    - `data/splits/train.csv`
+    - `data/splits/validation.csv`
+    - `data/splits/test.csv` (in-domain)
+    - `data/splits/unseen_idiom_test.csv`
+    - `data/splits/split_expressions.json` (per-idiom counts)
+    - `data/expressions_data_with_splits.csv` (new `split` column)
+  - **Best practices applied**:
+    - Seen idioms contribute disjoint sentences to all seen splits
+    - Unseen idioms are fully isolated for zero-shot evaluation
+    - Deterministic shuffling ensures reproducibility
+    - Metadata documents counts for every idiom/split
 
 ### 🎉 PHASE 2 PROGRESS: 83% Complete! (5/6 missions)
 

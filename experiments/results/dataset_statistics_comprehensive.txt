@@ -19,23 +19,23 @@ Label Distribution:
   מילולי: 2400 (50.00%)
 
 Sentence Length Statistics:
-  Tokens - Mean: 14.95, Median: 10, Std: 8.22
-  Characters - Mean: 78.76, Median: 54.00, Std: 43.63
+  Tokens - Mean: 15.71, Median: 12, Std: 8.01
+  Characters - Mean: 83.04, Median: 63.00, Std: 42.55
 
 Idiom Length Statistics:
   Tokens - Mean: 2.48, Median: 2, Std: 0.64
-  Characters - Mean: 11.37, Median: 11.00, Std: 3.14
+  Characters - Mean: 11.39, Median: 11.00, Std: 3.15
 
 Sentence Type Distribution:
-  Declarative: 4425 (92.19%)
-  Question: 341 (7.10%)
-  Exclamatory: 34 (0.71%)
+  Declarative: 4549 (94.77%)
+  Question: 239 (4.98%)
+  Exclamatory: 12 (0.25%)
 
 Idiom Position Analysis:
-  Mean position ratio: 0.1670
-  Start (0-33%): 4179 (87.06%)
-  Middle (33-67%): 553 (11.52%)
-  End (67-100%): 68 (1.42%)
+  Mean position ratio: 0.2801
+  Start (0-33%): 3058 (63.71%)
+  Middle (33-67%): 1429 (29.77%)
+  End (67-100%): 313 (6.52%)
 
 Polysemy Analysis:
   Total expressions: 60
@@ -44,11 +44,11 @@ Polysemy Analysis:
   Only figurative: 0
 
 Lexical Statistics:
-  Vocabulary size: 17,785 unique words
-  Total tokens: 71,775
-  Type-Token Ratio (TTR): 0.2478
-  Avg unique words per sentence: 14.64
-  Function word ratio: 0.1294
+  Vocabulary size: 18,782 unique words
+  Total tokens: 75,412
+  Type-Token Ratio (TTR): 0.2491
+  Avg unique words per sentence: 15.38
+  Function word ratio: 0.1257
 
 Top 10 Most Frequent Idioms:
   1. שבר את הראש: 80
@@ -63,23 +63,33 @@ Top 10 Most Frequent Idioms:
   10. רץ אחרי הזנב של עצמו: 80
 
 Top 20 Most Frequent Words:
-  1. 'את': 2231 (3.11%)
-  2. 'לא': 1241 (1.73%)
-  3. 'הוא': 1134 (1.58%)
-  4. 'היא': 1049 (1.46%)
-  5. 'על': 886 (1.23%)
-  6. 'של': 722 (1.01%)
-  7. '-': 664 (0.93%)
-  8. 'אם': 624 (0.87%)
-  9. 'הם': 565 (0.79%)
-  10. 'היה': 497 (0.69%)
-  11. 'אחרי': 491 (0.68%)
-  12. 'כדי': 423 (0.59%)
-  13. 'עם': 405 (0.56%)
-  14. 'כל': 377 (0.53%)
-  15. 'כי': 360 (0.50%)
-  16. 'אבל': 331 (0.46%)
-  17. 'הייתה': 288 (0.40%)
-  18. 'רק': 256 (0.36%)
-  19. 'זה': 255 (0.36%)
-  20. 'בין': 251 (0.35%)
+  1. 'את': 2295 (3.04%)
+  2. 'לא': 1289 (1.71%)
+  3. 'הוא': 1105 (1.47%)
+  4. 'היא': 1004 (1.33%)
+  5. 'על': 918 (1.22%)
+  6. 'של': 756 (1.00%)
+  7. 'אם': 623 (0.83%)
+  8. '-': 574 (0.76%)
+  9. 'הם': 521 (0.69%)
+  10. 'אחרי': 518 (0.69%)
+  11. 'היה': 509 (0.67%)
+  12. 'כדי': 475 (0.63%)
+  13. 'עם': 426 (0.56%)
+  14. 'כל': 420 (0.56%)
+  15. 'אבל': 326 (0.43%)
+  16. 'כי': 318 (0.42%)
+  17. 'זה': 300 (0.40%)
+  18. 'הייתה': 289 (0.38%)
+  19. 'בין': 253 (0.34%)
+  20. 'לו': 251 (0.33%)
+
+Inter-Annotator Agreement (IAA):
+  Annotators: 2 native Hebrew speakers
+  Observed Agreement: 98.625%
+  Expected Agreement (Chance): 50%
+  Cohen's Kappa: 0.9725 (near-perfect reliability)
+  Total Disagreements: 66 items (1.375%)
+    - 0→1 disagreements: 1
+    - 1→0 disagreements: 65
+  Non-label Corrections: 223 items (4.65%)

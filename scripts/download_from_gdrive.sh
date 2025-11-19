@@ -65,23 +65,25 @@ echo "Step 2/3: Checking for split files..."
 echo "--------------------------------------"
 
 # Check if split files exist (they should be in GitHub repo)
-if [ -f "data/splits/train.csv" ] && [ -f "data/splits/validation.csv" ] && [ -f "data/splits/test.csv" ]; then
+if [ -f "data/splits/train.csv" ] && [ -f "data/splits/validation.csv" ] && [ -f "data/splits/test.csv" ] && [ -f "data/splits/unseen_idiom_test.csv" ]; then
     echo -e "${GREEN}✓ Split files found (from repository)${NC}"
 
     # Count samples in each split
     train_count=$(($(wc -l < data/splits/train.csv) - 1))
     val_count=$(($(wc -l < data/splits/validation.csv) - 1))
     test_count=$(($(wc -l < data/splits/test.csv) - 1))
+    unseen_count=$(($(wc -l < data/splits/unseen_idiom_test.csv) - 1))
 
     echo "  Train: ${train_count} samples"
     echo "  Validation: ${val_count} samples"
-    echo "  Test: ${test_count} samples"
+    echo "  In-domain test: ${test_count} samples"
+    echo "  Unseen idiom test: ${unseen_count} samples"
 
     # Verify expected counts
-    if [ "$train_count" -eq 3840 ] && [ "$val_count" -eq 480 ] && [ "$test_count" -eq 480 ]; then
-        echo -e "${GREEN}✓ Split counts verified (3840/480/480)${NC}"
+    if [ "$train_count" -eq 3456 ] && [ "$val_count" -eq 432 ] && [ "$test_count" -eq 432 ] && [ "$unseen_count" -eq 480 ]; then
+        echo -e "${GREEN}✓ Split counts verified (3456/432/432 + 480 unseen)${NC}"
     else
-        echo -e "${YELLOW}⚠ Warning: Expected 3840/480/480, got ${train_count}/${val_count}/${test_count}${NC}"
+        echo -e "${YELLOW}⚠ Warning: Expected 3456/432/432 + 480, got ${train_count}/${val_count}/${test_count} (+${unseen_count})${NC}"
     fi
 else
     echo -e "${YELLOW}⚠ Split files not found in repository${NC}"

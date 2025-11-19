@@ -17,7 +17,7 @@ This project focuses on automatic detection and interpretation of Hebrew idioms 
 - **Distribution**: 50% literal (2,400), 50% figurative (2,400)
 - **Unique Idioms**: 60 Hebrew expressions (exactly)
 - **Annotations**: IOB2 tags for idiom spans
-- **Splits**: Expression-based train (3,840) / validation (480) / test (480) to prevent data leakage
+- **Splits**: Train 3,456 / validation 432 / in-domain test 432 (seen idioms) + `unseen_idiom_test` 480 for zero-shot evaluation
 - **Documentation**: See [data/README.md](data/README.md) for complete dataset documentation
 
 ## Models Evaluated
@@ -96,14 +96,14 @@ pip install -r requirements.txt
 
 ### Zero-Shot Evaluation (Mission 3.2)
 
-Evaluate pre-trained models without fine-tuning:
+Evaluate pre-trained models on the **unseen idiom test set** (`data/splits/unseen_idiom_test.csv`):
 
 ```bash
 # Task 1: Sequence Classification
 python src/idiom_experiment.py \
   --mode zero_shot \
   --model_id onlplab/alephbert-base \
-  --data data/splits/test.csv \
+  --data data/splits/unseen_idiom_test.csv \
   --task cls \
   --device cpu
 
@@ -111,7 +111,7 @@ python src/idiom_experiment.py \
 python src/idiom_experiment.py \
   --mode zero_shot \
   --model_id onlplab/alephbert-base \
-  --data data/splits/test.csv \
+  --data data/splits/unseen_idiom_test.csv \
   --task span \
   --device cpu
 
@@ -119,7 +119,7 @@ python src/idiom_experiment.py \
 python src/idiom_experiment.py \
   --mode zero_shot \
   --model_id onlplab/alephbert-base \
-  --data data/splits/test.csv \
+  --data data/splits/unseen_idiom_test.csv \
   --task both \
   --device cpu
 ```
@@ -153,6 +153,8 @@ python src/idiom_experiment.py \
   --num_epochs 10 \
   --device cuda
 ```
+
+> **Note:** The default configs use `data/splits/test.csv` (in-domain test). Evaluate the final model on `data/splits/unseen_idiom_test.csv` as well to report zero-shot performance.
 
 ### Frozen Backbone Training
 
@@ -241,7 +243,7 @@ bash scripts/sync_to_gdrive.sh
 
 ## Key Features
 
-- Expression-based data splitting to prevent data leakage
+- Hybrid splitting (seen vs unseen idioms) to report both in-domain and zero-shot performance
 - Cross-seed validation for robust results
 - Statistical significance testing
 - Interpretability analysis with token importance visualization

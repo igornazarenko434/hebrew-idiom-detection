@@ -3,7 +3,7 @@ MASTER DATASET STATISTICS & VALIDATION REPORT
 Hebrew Idiom Detection Dataset - Hebrew-Idioms-4800 v1.0
 ================================================================================
 
-Generated: November 10, 2025
+Generated: November 19, 2025
 Dataset Location: data/expressions_data_tagged.csv
 Documentation: data/README.md
 
@@ -153,17 +153,17 @@ SECTION 3: LINGUISTIC STATISTICS
 3.1 SENTENCE LENGTH
 --------------------------------------------------------------------------------
 Tokens:
-  • Mean:     14.95
-  • Median:   10
-  • Std:      8.22
+  • Mean:     15.71
+  • Median:   12
+  • Std:      8.01
   • Min:      5
-  • Max:      37
-  • Range:    5-37 tokens
+  • Max:      38
+  • Range:    5-38 tokens
 
 Characters:
-  • Mean:     78.83
-  • Median:   54.00
-  • Std:      43.69
+  • Mean:     83.04
+  • Median:   63.00
+  • Std:      42.55
   • Min:      22
   • Max:      193
   • Range:    22-193 characters
@@ -179,56 +179,56 @@ Tokens:
   • Range:    2-5 tokens
 
 Characters:
-  • Mean:     11.37
+  • Mean:     11.39
   • Median:   11.00
-  • Std:      3.14
+  • Std:      3.15
   • Min:      5
-  • Max:      22
-  • Range:    5-22 characters
+  • Max:      23
+  • Range:    5-23 characters
 
 3.3 SENTENCE TYPES
 --------------------------------------------------------------------------------
-  • Declarative:   4,425 (92.19%)
-  • Questions:       341 ( 7.10%)
-  • Exclamatory:      34 ( 0.71%)
+  • Declarative:   4,549 (94.77%)
+  • Questions:       239 ( 4.98%)
+  • Exclamatory:      12 ( 0.25%)
 
 Distribution by Label:
   Literal:
-    - Declarative: 2,213 (92.21%)
-    - Questions:     160 ( 6.67%)
-    - Exclamatory:    27 ( 1.12%)
-  
+    - Declarative: 2,294 (95.58%)
+    - Questions:     101 ( 4.21%)
+    - Exclamatory:     5 ( 0.21%)
+
   Figurative:
-    - Declarative: 2,212 (92.17%)
-    - Questions:     181 ( 7.54%)
+    - Declarative: 2,255 (93.96%)
+    - Questions:     138 ( 5.75%)
     - Exclamatory:     7 ( 0.29%)
 
 3.4 IDIOM POSITION
 --------------------------------------------------------------------------------
 Position Ratio Statistics:
-  • Mean:     0.1670
-  • Median:   0.1250
-  • Std:      0.1465
-  • Min:     -0.1667
-  • Max:      0.9231
+  • Mean:     0.2801
+  • Median:   0.2000
+  • Std:      0.2114
+  • Min:      0.0000
+  • Max:      0.9355
 
 Position Distribution:
-  • Start (0-33%):     4,179 (87.06%)
-  • Middle (33-67%):     553 (11.52%)
-  • End (67-100%):        68 ( 1.42%)
+  • Start (0-33%):     3,058 (63.71%)
+  • Middle (33-67%):   1,429 (29.77%)
+  • End (67-100%):       313 ( 6.52%)
 
 By Label:
   Literal:
-    - Start:  2,096 (87.33%)
-    - Middle:   279 (11.62%)
-    - End:       25 ( 1.04%)
+    - Start:  1,515 (63.13%)
+    - Middle:   756 (31.50%)
+    - End:      129 ( 5.38%)
   
   Figurative:
-    - Start:  2,083 (86.79%)
-    - Middle:   274 (11.42%)
-    - End:       43 ( 1.79%)
+    - Start:  1,543 (64.29%)
+    - Middle:   673 (28.04%)
+    - End:      184 ( 7.67%)
 
-⚠️  NOTE: Strong position bias - 87.06% at sentence start
+⚠️  NOTE: Position bias remains (nearly two-thirds at sentence start), but more samples now appear mid-sentence
 
 3.5 POLYSEMY
 --------------------------------------------------------------------------------
@@ -246,26 +246,26 @@ SECTION 4: LEXICAL DIVERSITY & RICHNESS
 
 4.1 VOCABULARY
 --------------------------------------------------------------------------------
-  • Vocabulary size:          17,787 unique words
-  • Total tokens:             71,775
-  • Type-Token Ratio (TTR):    0.2478
-  • Avg unique per sentence:  14.64
+  • Vocabulary size:          18,784 unique words
+  • Total tokens:             75,412
+  • Type-Token Ratio (TTR):    0.2491
+  • Avg unique per sentence:  15.38
 
 Comparison to Literature:
   • Typical TTR range: 0.20-0.30
-  • Your dataset:      0.2478 (upper-middle)
+  • Your dataset:      0.2491 (upper-middle)
   • Assessment:        High lexical diversity ✅
 
 4.2 LEXICAL RICHNESS
 --------------------------------------------------------------------------------
-  • Hapax legomena:   11,341 (63.76% of vocabulary)
-  • Dis legomena:      2,703 (15.19% of vocabulary)
-  • Maas Index:        0.0112
+  • Hapax legomena:   11,921 (63.46% of vocabulary)
+  • Dis legomena:      2,850 (15.17% of vocabulary)
+  • Maas Index:        0.0110
 
 Hapax Comparison:
   • Template-generated datasets: 20-40%
   • Natural text datasets:       50-70%
-  • Your dataset:                63.76%
+  • Your dataset:                63.46%
   • Assessment:                  Genuine linguistic diversity ✅
 
 4.3 ZIPF'S LAW COMPLIANCE
@@ -277,29 +277,29 @@ Status: ✅ COMPLIES (verified in zipf_law_plot.png)
 
 4.4 FUNCTION WORDS
 --------------------------------------------------------------------------------
-  • Function word ratio: 0.1294 (12.94%)
+  • Function word ratio: 0.1257 (12.57%)
   
 Top 20 Most Frequent Words:
-   1. את     : 2,231 (3.11%)
-   2. לא     : 1,241 (1.73%)
-   3. הוא    : 1,134 (1.58%)
-   4. היא    : 1,049 (1.46%)
-   5. על     :   886 (1.23%)
-   6. של     :   722 (1.01%)
-   7. –      :   649 (0.90%)
-   8. אם     :   624 (0.87%)
-   9. הם     :   565 (0.79%)
-  10. היה    :   497 (0.69%)
-  11. אחרי   :   491 (0.68%)
-  12. כדי    :   423 (0.59%)
-  13. עם     :   405 (0.56%)
-  14. כל     :   377 (0.53%)
-  15. כי     :   360 (0.50%)
-  16. אבל    :   331 (0.46%)
-  17. הייתה  :   288 (0.40%)
-  18. רק     :   256 (0.36%)
-  19. זה     :   255 (0.36%)
-  20. בין    :   251 (0.35%)
+   1. את     : 2,295 (3.04%)
+   2. לא     : 1,289 (1.71%)
+   3. הוא    : 1,105 (1.47%)
+   4. היא    : 1,004 (1.33%)
+   5. על     :   918 (1.22%)
+   6. של     :   756 (1.00%)
+   7. אם     :   623 (0.83%)
+   8. –      :   559 (0.74%)
+   9. הם     :   521 (0.69%)
+  10. אחרי   :   518 (0.69%)
+  11. היה    :   509 (0.67%)
+  12. כדי    :   475 (0.63%)
+  13. עם     :   426 (0.56%)
+  14. כל     :   420 (0.56%)
+  15. אבל    :   326 (0.43%)
+  16. כי     :   318 (0.42%)
+  17. זה     :   300 (0.40%)
+  18. הייתה  :   289 (0.38%)
+  19. בין    :   253 (0.34%)
+  20. לו     :   251 (0.33%)
 
 ================================================================================
 SECTION 5: STRUCTURAL COMPLEXITY
@@ -308,24 +308,24 @@ SECTION 5: STRUCTURAL COMPLEXITY
 5.1 OVERALL COMPLEXITY
 --------------------------------------------------------------------------------
   • Mean subclause markers:       0.28 per sentence
-  • Mean subclause ratio:         0.0149
-  • Mean punctuation marks:       1.67 per sentence
-  • Sentences with subclauses:    1,172 (24.42%)
+  • Mean subclause ratio:         0.0146
+  • Mean punctuation marks:       1.81 per sentence
+  • Sentences with subclauses:    1,177 (24.52%)
 
 5.2 COMPLEXITY BY LABEL
 --------------------------------------------------------------------------------
 Literal Sentences:
-  • Mean subclause markers:   0.24
-  • Mean subclause ratio:     0.0119
-  • Mean punctuation:         1.63
+  • Mean subclause markers:   0.25
+  • Mean subclause ratio:     0.0122
+  • Mean punctuation:         1.75
 
 Figurative Sentences:
-  • Mean subclause markers:   0.32
-  • Mean subclause ratio:     0.0180
-  • Mean punctuation:         1.72
+  • Mean subclause markers:   0.31
+  • Mean subclause ratio:     0.0170
+  • Mean punctuation:         1.87
 
-KEY FINDING: Figurative sentences are more syntactically complex
-Ratio: 0.32 / 0.24 = 1.33x more complex
+KEY FINDING: Figurative sentences remain more complex
+Ratio: 0.31 / 0.25 ≈ 1.24x more subclause markers
 
 This is linguistically plausible and adds research value.
 
@@ -335,8 +335,8 @@ SECTION 6: MORPHOLOGICAL RICHNESS (HEBREW-SPECIFIC)
 
 6.1 PREFIX ATTACHMENTS
 --------------------------------------------------------------------------------
-  • Total instances:          2,097 (43.69% of samples)
-  • Mean consistency rate:     0.4008 (40.08%)
+  • Total instances:          2,172 (45.25% of samples)
+  • Mean consistency rate:     0.3954 (39.54%)
 
 Hebrew Morphological Features:
   • Prefix markers: ה, ו, ל, כ, ב, מ, ש
@@ -346,18 +346,49 @@ Hebrew Morphological Features:
 6.2 VARIANT FORMS
 --------------------------------------------------------------------------------
 Top 10 Idioms by Morphological Variance:
-   1. שם רגליים:           33 variants (consistency: 0.19)
-   2. סגר חשבון:           24 variants (consistency: 0.26)
-   3. הוריד פרופיל:        22 variants (consistency: 0.30)
-   4. שבר את הלב:          20 variants (consistency: 0.33)
-   5. פתח דלתות:           19 variants (consistency: 0.30)
-   6. חתך פינה:            17 variants (consistency: 0.28)
-   7. יצא מהקופסה:         17 variants (consistency: 0.45)
-   8. שבר את הראש:         16 variants (consistency: 0.41)
-   9. קיבל סטירה:          16 variants (consistency: 0.55)
-  10. שבר את הכלים:        15 variants (consistency: 0.28)
+   1. שם רגליים:           35 variants (consistency: 0.19)
+   2. שבר את הלב:          32 variants (consistency: 0.34)
+   3. פתח דלתות:           29 variants (consistency: 0.29)
+   4. סגר חשבון:           28 variants (consistency: 0.24)
+   5. הוריד פרופיל:        23 variants (consistency: 0.31)
+   6. יצא מהקופסה:         22 variants (consistency: 0.44)
+   7. חתך פינה:            18 variants (consistency: 0.31)
+   8. קיבל סטירה:          18 variants (consistency: 0.55)
+   9. שם עליו פס:          18 variants (consistency: 0.28)
+  10. שבר את הראש:         17 variants (consistency: 0.41)
 
 STRENGTH: High morphological flexibility demonstrates authentic Hebrew
+
+================================================================================
+SECTION 6B: INTER-ANNOTATOR AGREEMENT (IAA)
+================================================================================
+
+6B.1 ANNOTATION RELIABILITY
+--------------------------------------------------------------------------------
+  • Annotators:              2 native Hebrew speakers
+  • Observed Agreement:      98.625%
+  • Expected Agreement:      50% (chance)
+  • Cohen's Kappa:           0.9725 (near-perfect reliability)
+
+Kappa Interpretation:
+  • 0.81-1.00: Almost perfect agreement
+  • Your dataset: 0.9725 (EXCELLENT)
+
+6B.2 DISAGREEMENT ANALYSIS
+--------------------------------------------------------------------------------
+  • Total Disagreements:     66 items (1.375%)
+  • 0→1 Disagreements:       1 (literal → figurative)
+  • 1→0 Disagreements:       65 (figurative → literal)
+
+Pattern: Annotators were more likely to initially label figurative
+         as literal than vice versa.
+
+6B.3 CORRECTION STATISTICS
+--------------------------------------------------------------------------------
+  • Non-label Corrections:   223 items (4.65%)
+  • Type:                    Text/span corrections (not label changes)
+
+STRENGTH: Near-perfect inter-annotator agreement validates annotation quality
 
 ================================================================================
 SECTION 7: COLLOCATIONAL ANALYSIS
@@ -365,21 +396,21 @@ SECTION 7: COLLOCATIONAL ANALYSIS
 
 7.1 CONTEXT WORDS (±3 tokens around idiom)
 --------------------------------------------------------------------------------
-  • Total context words:      21,583
-  • Unique context words:      7,415
-  • Context TTR:               0.3436
+  • Total context words:      23,366
+  • Unique context words:      8,498
+  • Context TTR:               0.3637
 
 Top 10 Context Words:
-   1. הוא    :   905 (4.19%)
-   2. היא    :   826 (3.83%)
-   3. הם     :   496 (2.30%)
-   4. לא     :   470 (2.18%)
-   5. על     :   352 (1.63%)
-   6. את     :   343 (1.59%)
-   7. אחרי   :   277 (1.28%)
-   8. כדי    :   271 (1.26%)
-   9. עם     :   249 (1.15%)
-  10. של     :   216 (1.00%)
+   1. הוא    :   844 (3.61%)
+   2. היא    :   745 (3.19%)
+   3. לא     :   493 (2.11%)
+   4. הם     :   423 (1.81%)
+   5. על     :   362 (1.55%)
+   6. את     :   328 (1.40%)
+   7. עם     :   256 (1.10%)
+   8. של     :   242 (1.04%)
+   9. כדי    :   241 (1.03%)
+  10. אחרי   :   234 (1.00%)
 
 Context patterns show natural Hebrew pronoun usage and prepositions.
 
@@ -389,30 +420,36 @@ SECTION 8: DATASET SPLITS
 
 8.1 SPLIT STRATEGY
 --------------------------------------------------------------------------------
-Strategy: Expression-Based (NOT random)
-Purpose: Zero data leakage - test idioms unseen during training
+- **Unseen Idiom Test:** 6 idioms (80 sentences each) are held out entirely for zero-shot evaluation.
+- **Seen Splits (train/validation/test):** Remaining idioms are split by sentence. Each idiom (and each label) distributes its sentences across train/validation/test with an 80/10/10 ratio so every idiom appears in all three seen splits.
 
 8.2 SPLIT DISTRIBUTION
 --------------------------------------------------------------------------------
 Train Set:
-  • Samples:        3,840 (80.00%)
-  • Idioms:            48 (80.00%)
-  • Literal:        1,920 (50.00%)
-  • Figurative:     1,920 (50.00%)
+  • Samples:        3,456 (72.00%)
+  • Idioms:            54 (all seen idioms)
+  • Literal:        1,728 (50.00%)
+  • Figurative:     1,728 (50.00%)
 
 Validation Set:
+  • Samples:          432 (9.00%)
+  • Idioms:            54
+  • Literal:          216 (50.00%)
+  • Figurative:       216 (50.00%)
+
+In-Domain Test Set:
+  • Samples:          432 (9.00%)
+  • Idioms:            54
+  • Literal:          216 (50.00%)
+  • Figurative:       216 (50.00%)
+
+Unseen Idiom Test:
   • Samples:          480 (10.00%)
-  • Idioms:             6 (10.00%)
+  • Idioms:             6 (entirely unseen during training)
   • Literal:          240 (50.00%)
   • Figurative:       240 (50.00%)
 
-Test Set:
-  • Samples:          480 (10.00%)
-  • Idioms:             6 (10.00%)
-  • Literal:          240 (50.00%)
-  • Figurative:       240 (50.00%)
-
-8.3 TEST SET IDIOMS
+8.3 UNSEEN IDIOMS
 --------------------------------------------------------------------------------
   1. חתך פינה (cut corner)
   2. חצה קו אדום (crossed red line)
@@ -421,21 +458,13 @@ Test Set:
   5. איבד את הראש (lost head)
   6. רץ אחרי הזנב של עצמו (chased own tail)
 
-8.4 VALIDATION SET IDIOMS
+8.4 SPLIT VERIFICATION
 --------------------------------------------------------------------------------
-  1. שבר את הראש (broke head - different from test!)
-  2. נשבר מבפנים (broke inside)
-  3. לב זהב (golden heart)
-  4. חותך כמו סכין (cuts like knife)
-  5. הייתה בעננים (was in clouds)
-  6. יצא מהקופסה (out of box)
-
-8.5 SPLIT VERIFICATION
---------------------------------------------------------------------------------
-  • Zero expression overlap:     ✅ Verified
-  • All splits balanced:         ✅ All 50/50
-  • Total sentences preserved:   ✅ 4,800
-  • Metadata documented:         ✅ split_expressions.json
+  • Seen idioms appear in train/validation/in-domain test (no empty buckets): ✅
+  • Unseen idioms are fully disjoint from seen splits: ✅
+  • All splits balanced (50/50 literal vs figurative): ✅
+  • Total sentences preserved: ✅ 4,800
+  • Metadata documented: ✅ split_expressions.json
 
 ================================================================================
 SECTION 9: VISUALIZATIONS GENERATED
@@ -476,10 +505,11 @@ Main Dataset:
   • expressions_data_with_splits.csv 1.8M (with split column)
 
 Split Files:
-  • splits/train.csv                1.5M  (3,840 rows)
-  • splits/validation.csv           182K  (480 rows)
-  • splits/test.csv                 199K  (480 rows)
-  • splits/split_expressions.json   2.0K  (metadata)
+  • splits/train.csv                1.3M  (3,456 rows)
+  • splits/validation.csv           164K  (432 rows)
+  • splits/test.csv                 164K  (432 rows, in-domain)
+  • splits/unseen_idiom_test.csv    182K  (480 rows, zero-shot)
+  • splits/split_expressions.json   4.0K  (metadata)
 
 10.2 STATISTICS FILES
 --------------------------------------------------------------------------------
@@ -518,7 +548,7 @@ Advantages:
   • Dual-task annotation (classification + span)
   • 100% polysemy (all idioms in both contexts)
   • High morphological richness
-  • Expression-based splits (zero leakage)
+  • Hybrid seen/unseen splits (zero leakage + in-domain coverage)
 
 11.2 DATASET QUALITY VS PUBLISHED STANDARDS
 --------------------------------------------------------------------------------
@@ -545,16 +575,16 @@ SECTION 12: PUBLICATION READINESS
   ✅ 100% polysemy (all idioms in both contexts)
   ✅ High lexical diversity (63.76% hapax)
   ✅ Morphological richness (Hebrew-specific)
-  ✅ Expression-based splits (zero leakage)
+  ✅ Hybrid seen/unseen splits (zero leakage + in-domain coverage)
   ✅ Comprehensive statistics (16 visualizations)
   ✅ High data quality (9.2/10)
   ✅ Professional documentation
   ✅ Reproducible (code + data available)
 
-12.2 WEAKNESSES (8/8 identified)
+12.2 WEAKNESSES (7/7 identified)
 --------------------------------------------------------------------------------
-  ⚠️  Position bias (87% at start) - CRITICAL
-  ⚠️  No IAA scores - CRITICAL
+  ⚠️  Position bias (63.71% at start) - still skewed but improved
+  ✅  IAA scores - COMPLETED (κ = 0.9725)
   ⚠️  Small test set (6 idioms)
   ⚠️  No annotation guidelines document
   ⚠️  Limited idiom coverage (60 idioms)
@@ -564,15 +594,15 @@ SECTION 12: PUBLICATION READINESS
 
 12.3 PUBLICATION PROBABILITY
 --------------------------------------------------------------------------------
-Current State (without improvements):
-  • LREC-COLING:  60-70%
-  • ACL/EMNLP:    30-40%
-  • Workshops:    80-90%
-
-With Critical Improvements (IAA + position bias):
+Current State (with IAA completed):
   • LREC-COLING:  80-90%
   • ACL/EMNLP:    50-60%
   • Workshops:    95%+
+
+With Additional Improvements (annotation guidelines, baselines):
+  • LREC-COLING:  90-95%
+  • ACL/EMNLP:    60-70%
+  • Workshops:    98%+
 
 12.4 RECOMMENDED VENUE
 --------------------------------------------------------------------------------
@@ -606,10 +636,11 @@ Priority 1: Address Position Bias
   • Or collect 300-500 balanced samples
   • Analyze if models exploit position
 
-Priority 2: Inter-Annotator Agreement
-  • Re-annotate 10% (480 samples) with 2nd annotator
-  • Calculate Cohen's Kappa (target: κ > 0.75)
-  • Document in paper
+Priority 2: Inter-Annotator Agreement ✅ COMPLETED
+  • Re-annotated with 2nd annotator
+  • Cohen's Kappa: 0.9725 (exceeds target of κ > 0.75)
+  • Observed Agreement: 98.625%
+  • Documented in IAA_Report.md
 
 Priority 3: Annotation Guidelines
   • Document decision rules
@@ -641,7 +672,7 @@ END OF MASTER STATISTICS REPORT
 
 Generated by: Data Preparation Pipeline (Mission 2.1-2.5)
 Validated by: Comprehensive Quality Checks
-Last Updated: November 10, 2025
+Last Updated: November 19, 2025
 Contact: [Your Email]
 Repository: https://github.com/igornazarenko434/hebrew-idiom-detection
 

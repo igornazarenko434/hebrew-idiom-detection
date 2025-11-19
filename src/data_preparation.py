@@ -10,6 +10,7 @@ from typing import Dict, Tuple, List
 import re
 import matplotlib.pyplot as plt
 import seaborn as sns
+from bidi.algorithm import get_display
 
 
 class DatasetLoader:
@@ -28,6 +29,7 @@ class DatasetLoader:
 
         self.data_path = Path(data_path)
         self.df = None
+        self._hebrew_pattern = re.compile(r'[\u0590-\u05FF]')
 
     def load_dataset(self) -> pd.DataFrame:
         """
@@ -230,6 +232,60 @@ class DatasetLoader:
         text = text.replace('\xa0', ' ')
         text = text.replace('–', '-').replace('—', '-').replace('־', '-')  # en/em dash & maqaf
         return text
+
+    def _rtl_text(self, text: str):
+        """
+        Prepare Hebrew text for correct right-to-left rendering in matplotlib.
+        Uses python-bidi to reorder glyphs when Hebrew characters are detected.
+        """
+        if isinstance(text, str) and self._hebrew_pattern.search(text):
+            return get_display(text)
+        return text
+
+    def _rtl_list(self, labels):
+        """Apply RTL conversion to an iterable of labels."""
+        return [self._rtl_text(label) for label in labels]
+
+    def _rtl_ticklabels(self, ax, axis: str = 'both'):
+        """
+        Apply RTL conversion to axis tick labels (x, y, or both).
+        """
+        axes = [axis] if isinstance(axis, str) else list(axis)
+
+        for ax_name in axes:
+            if ax_name in ('x', 'both'):
+                labels = ax.get_xticklabels()
+                converted = []
+                changed = False
+                for label in labels:
+                    text = label.get_text()
+                    new_text = self._rtl_text(text)
+                    converted.append(new_text)
+                    if text != new_text:
+                        changed = True
+                if changed and converted:
+                    ax.set_xticks(ax.get_xticks())
+                    ax.set_xticklabels(converted)
+            if ax_name in ('y', 'both'):
+                labels = ax.get_yticklabels()
+                converted = []
+                changed = False
+                for label in labels:
+                    text = label.get_text()
+                    new_text = self._rtl_text(text)
+                    converted.append(new_text)
+                    if text != new_text:
+                        changed = True
+                if changed and converted:
+                    ax.set_yticks(ax.get_yticks())
+                    ax.set_yticklabels(converted)
+
+    def _rtl_legend(self, legend):
+        """Apply RTL conversion to legend texts."""
+        if legend:
+            for text in legend.get_texts():
+                new_text = self._rtl_text(text.get_text())
+                text.set_text(new_text)
 
     def clean_text(self, text: str) -> str:
         """
@@ -618,17 +674,25 @@ class DatasetLoader:
 
         # Add sentence type column
         def classify_sentence_type(text: str) -> str:
-            """Classify sentence type based on punctuation and structure"""
+            """Classify sentence type based on FINAL punctuation.
+
+            Note: We check the ending punctuation, not anywhere in the text.
+            This correctly handles quoted speech (e.g., '"מה קורה?" שאלה אותו.')
+            which should be classified as Declarative, not Question.
+
+            For Hebrew, imperatives are harder to detect without morphological
+            analysis, so we classify based on punctuation only:
+            - ? at end → Question (Interrogative)
+            - ! at end → Exclamatory
+            - Otherwise → Declarative
+            """
             text = str(text).strip()
 
-            # Check for question mark
-            if '?' in text:
+            # Check ending punctuation (correct NLP approach)
+            if text.endswith('?'):
                 return 'Question'
-            # Check for exclamation mark
-            elif '!' in text:
+            elif text.endswith('!'):
                 return 'Exclamatory'
-            # For Hebrew, imperatives are harder to detect without morphological analysis
-            # We'll use declarative as default for statements
             else:
                 return 'Declarative'
 
@@ -1324,9 +1388,10 @@ class DatasetLoader:
         fig, ax = plt.subplots(figsize=(8, 6))
 
         label_counts = self.df['label'].value_counts()
+        label_display = self._rtl_list(label_counts.index.tolist())
         colors = ['#3498db', '#e74c3c']  # Blue for literal, Red for figurative
 
-        bars = ax.bar(label_counts.index, label_counts.values, color=colors, alpha=0.8, edgecolor='black')
+        bars = ax.bar(label_display, label_counts.values, color=colors, alpha=0.8, edgecolor='black')
 
         # Add value labels on bars
         for bar in bars:
@@ -1400,6 +1465,7 @@ class DatasetLoader:
         fig, ax = plt.subplots(figsize=(12, 8))
 
         top_10 = self.df['expression'].value_counts().head(10)
+        display_expressions = self._rtl_list(top_10.index.tolist())
 
         bars = ax.barh(range(len(top_10)), top_10.values, color='#e67e22', alpha=0.8, edgecolor='black')
 
@@ -1408,7 +1474,7 @@ class DatasetLoader:
             ax.text(value, i, f' {value}', va='center', fontsize=10, fontweight='bold')
 
         ax.set_yticks(range(len(top_10)))
-        ax.set_yticklabels(top_10.index, fontsize=10)
+        ax.set_yticklabels(display_expressions, fontsize=10)
         ax.set_xlabel('Frequency (occurrences)', fontsize=12, fontweight='bold')
         ax.set_title('Top 10 Most Frequent Idioms\n(Mission 2.4)', fontsize=14, fontweight='bold')
         ax.grid(axis='x', alpha=0.3)
@@ -1469,7 +1535,8 @@ class DatasetLoader:
         ax.set_ylabel('Count', fontsize=12, fontweight='bold')
         ax.set_title('Sentence Type Distribution by Label\n(Literal vs Figurative - Mission 2.4)',
                     fontsize=14, fontweight='bold')
-        ax.legend(title='Label', fontsize=10, title_fontsize=11)
+        legend = ax.legend(title='Label', fontsize=10, title_fontsize=11)
+        self._rtl_legend(legend)
         ax.grid(axis='y', alpha=0.3)
         ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
 
@@ -1491,8 +1558,13 @@ class DatasetLoader:
         literal_lengths = self.df[self.df['label'] == 'מילולי']['num_tokens']
         figurative_lengths = self.df[self.df['label'] == 'פיגורטיבי']['num_tokens']
 
+        box_labels = [
+            f"Literal\n({self._rtl_text('מילולי')})",
+            f"Figurative\n({self._rtl_text('פיגורטיבי')})"
+        ]
+
         bp = ax.boxplot([literal_lengths, figurative_lengths],
-                        labels=['Literal\n(מילולי)', 'Figurative\n(פיגורטיבי)'],
+                        labels=box_labels,
                         patch_artist=True,
                         showmeans=True,
                         meanprops=dict(marker='D', markerfacecolor='red', markersize=8))
@@ -1538,6 +1610,8 @@ class DatasetLoader:
                         fontsize=14, fontweight='bold', pad=20)
             ax.set_xlabel('Figurative %', fontsize=12, fontweight='bold')
             ax.set_ylabel('Idiom Expression', fontsize=12, fontweight='bold')
+            y_labels = [tick.get_text() for tick in ax.get_yticklabels()]
+            ax.set_yticklabels(self._rtl_list(y_labels))
 
             plt.tight_layout()
             heatmap_path = figures_dir / "polysemy_heatmap.png"
@@ -1586,7 +1660,8 @@ class DatasetLoader:
             ax.set_xlabel('Idiom Position', fontsize=12, fontweight='bold')
             ax.set_ylabel('Count', fontsize=12, fontweight='bold')
             ax.set_title('Idiom Position Distribution by Label', fontsize=14, fontweight='bold')
-            ax.legend(title='Label', fontsize=10)
+            legend = ax.legend(title='Label', fontsize=10)
+            self._rtl_legend(legend)
             ax.grid(axis='y', alpha=0.3)
             ax.set_xticklabels(['Start (0-33%)', 'Middle (33-67%)', 'End (67-100%)'], rotation=0)
 
@@ -1616,6 +1691,7 @@ class DatasetLoader:
         ax.set_ylabel('Sentence Length (tokens)', fontsize=12, fontweight='bold')
         ax.set_title('Sentence Length Distribution by Label\n(Violin Plot)', fontsize=14, fontweight='bold')
         ax.grid(axis='y', alpha=0.3)
+        self._rtl_ticklabels(ax, axis='x')
 
         plt.tight_layout()
         violin_path = figures_dir / "sentence_length_violin_by_label.png"
@@ -1704,6 +1780,7 @@ class DatasetLoader:
             axes[0].set_ylabel('Subclause Markers Count', fontsize=11, fontweight='bold')
             axes[0].set_title('Subclause Markers by Label', fontsize=12, fontweight='bold')
             axes[0].get_figure().suptitle('')  # Remove default title
+            self._rtl_ticklabels(axes[0], axis='x')
 
             # Punctuation count by label
             self.df.boxplot(column='punctuation_count', by='label', ax=axes[1], patch_artist=True)
@@ -1711,6 +1788,7 @@ class DatasetLoader:
             axes[1].set_ylabel('Punctuation Marks Count', fontsize=11, fontweight='bold')
             axes[1].set_title('Punctuation by Label', fontsize=12, fontweight='bold')
             axes[1].get_figure().suptitle('')  # Remove default title
+            self._rtl_ticklabels(axes[1], axis='x')
 
             plt.tight_layout()
             complexity_path = figures_dir / "structural_complexity_by_label.png"
@@ -1729,15 +1807,17 @@ class DatasetLoader:
                 fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
                 # Literal context word cloud
+                literal_freq = {self._rtl_text(word): freq for word, freq in self.context_freq_literal.items()}
                 wc_literal = WordCloud(width=800, height=400, background_color='white',
-                                      max_words=50, colormap='Blues').generate_from_frequencies(self.context_freq_literal)
+                                      max_words=50, colormap='Blues').generate_from_frequencies(literal_freq)
                 axes[0].imshow(wc_literal, interpolation='bilinear')
                 axes[0].axis('off')
                 axes[0].set_title('Context Words: Literal Usage', fontsize=14, fontweight='bold')
 
                 # Figurative context word cloud
+                figurative_freq = {self._rtl_text(word): freq for word, freq in self.context_freq_figurative.items()}
                 wc_figurative = WordCloud(width=800, height=400, background_color='white',
-                                         max_words=50, colormap='Reds').generate_from_frequencies(self.context_freq_figurative)
+                                         max_words=50, colormap='Reds').generate_from_frequencies(figurative_freq)
                 axes[1].imshow(wc_figurative, interpolation='bilinear')
                 axes[1].axis('off')
                 axes[1].set_title('Context Words: Figurative Usage', fontsize=14, fontweight='bold')
@@ -1808,6 +1888,7 @@ class DatasetLoader:
             # We need to run lexical richness by label first
             # This data should be available from analyze_lexical_richness()
             labels = ['מילולי', 'פיגורטיבי']
+            display_labels = self._rtl_list(labels)
             hapax_counts = []
             total_vocab = []
 
@@ -1834,7 +1915,7 @@ class DatasetLoader:
             ax.set_ylabel('Word Count', fontsize=12, fontweight='bold')
             ax.set_title('Vocabulary vs Hapax Legomena by Label', fontsize=14, fontweight='bold')
             ax.set_xticks(x)
-            ax.set_xticklabels(labels)
+            ax.set_xticklabels(display_labels)
             ax.legend(fontsize=10)
             ax.grid(axis='y', alpha=0.3)
 
@@ -1864,11 +1945,12 @@ class DatasetLoader:
             # Top 15 literal context words
             top_literal = self.context_freq_literal.most_common(15)
             words_lit = [w for w, c in top_literal]
+            display_words_lit = self._rtl_list(words_lit)
             counts_lit = [c for w, c in top_literal]
 
             axes[0].barh(range(len(words_lit)), counts_lit, color='#3498db', alpha=0.8, edgecolor='black')
             axes[0].set_yticks(range(len(words_lit)))
-            axes[0].set_yticklabels(words_lit, fontsize=10)
+            axes[0].set_yticklabels(display_words_lit, fontsize=10)
             axes[0].set_xlabel('Frequency', fontsize=11, fontweight='bold')
             axes[0].set_title('Top 15 Context Words: Literal Usage', fontsize=12, fontweight='bold')
             axes[0].invert_yaxis()
@@ -1881,11 +1963,12 @@ class DatasetLoader:
             # Top 15 figurative context words
             top_figurative = self.context_freq_figurative.most_common(15)
             words_fig = [w for w, c in top_figurative]
+            display_words_fig = self._rtl_list(words_fig)
             counts_fig = [c for w, c in top_figurative]
 
             axes[1].barh(range(len(words_fig)), counts_fig, color='#e74c3c', alpha=0.8, edgecolor='black')
             axes[1].set_yticks(range(len(words_fig)))
-            axes[1].set_yticklabels(words_fig, fontsize=10)
+            axes[1].set_yticklabels(display_words_fig, fontsize=10)
             axes[1].set_xlabel('Frequency', fontsize=11, fontweight='bold')
             axes[1].set_title('Top 15 Context Words: Figurative Usage', fontsize=12, fontweight='bold')
             axes[1].invert_yaxis()
@@ -2075,7 +2158,8 @@ class DatasetLoader:
 
         fig, ax = plt.subplots(figsize=(8, 6))
         colors = ['#3498db', '#e74c3c']
-        bars = ax.bar(label_counts.index, label_counts.values, color=colors, alpha=0.8, edgecolor='black')
+        display_labels = self._rtl_list(label_counts.index.tolist())
+        bars = ax.bar(display_labels, label_counts.values, color=colors, alpha=0.8, edgecolor='black')
 
         for bar in bars:
             height = bar.get_height()

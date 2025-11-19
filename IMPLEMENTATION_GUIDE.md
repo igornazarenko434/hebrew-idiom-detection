@@ -116,12 +116,13 @@ cat experiments/results/tokenization_alignment_test.txt
 
 ### Understanding the Data Splits
 
-Your data is split by **expressions** (not randomly):
-- **Train:** 3,840 samples from 48 idioms
-- **Validation:** 480 samples from 6 idioms (different from train/test)
-- **Test:** 480 samples from 6 idioms (completely unseen during training)
+Hybrid strategy (seen vs unseen):
+- **Train:** 3,456 samples (54 idioms) – every seen idiom contributes sentences.
+- **Validation:** 432 samples – same idioms as train, different sentences.
+- **Test (`data/splits/test.csv`):** 432 samples – in-domain evaluation (seen idioms, unseen sentences).
+- **Unseen Idiom Test (`data/splits/unseen_idiom_test.csv`):** 480 samples – 6 idioms held out entirely for zero-shot evaluation.
 
-This ensures **zero data leakage** - the model never sees test idioms during training!
+This allows you to report both **in-domain** and **zero-shot** results without regenerating splits.
 
 ---
 
