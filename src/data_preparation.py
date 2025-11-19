@@ -1658,6 +1658,8 @@ class DatasetLoader:
 
             # Create crosstab
             position_label_crosstab = pd.crosstab(self.df['position_category'], self.df['label'])
+            desired_order = ['start', 'middle', 'end']
+            position_label_crosstab = position_label_crosstab.reindex(desired_order).fillna(0)
 
             position_label_crosstab.plot(kind='bar', ax=ax, color=['#3498db', '#e74c3c'],
                                          alpha=0.8, edgecolor='black', width=0.7)
