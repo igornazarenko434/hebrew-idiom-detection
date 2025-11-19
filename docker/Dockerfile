@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y \
     wget \
     curl \
     vim \
+    build-essential \
+    fonts-dejavu-core \
     && rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip
@@ -47,9 +49,14 @@ EXPOSE 8888
 # Expose TensorBoard port (if needed)
 EXPOSE 6006
 
+# HuggingFace + tokenizer defaults
+RUN mkdir -p /workspace/.cache/huggingface
+
 # Set environment variables
-ENV PYTHONUNBUFFERED=1
-ENV CUDA_VISIBLE_DEVICES=0
+ENV PYTHONUNBUFFERED=1 \
+    CUDA_VISIBLE_DEVICES=0 \
+    HF_HOME=/workspace/.cache/huggingface \
+    TOKENIZERS_PARALLELISM=false
 
 # Default command: start bash
 CMD ["/bin/bash"]

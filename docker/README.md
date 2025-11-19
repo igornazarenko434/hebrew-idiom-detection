@@ -10,6 +10,8 @@ The Docker setup provides:
 - All project dependencies pre-installed
 - Jupyter notebook support
 - TensorBoard integration
+- Automatic mounting of `data/`, `professor_review/`, and experiment directories
+- Optional `.env` injection via Docker Compose
 
 ## Files
 
@@ -54,6 +56,7 @@ docker build -t hebrew-idiom-detection:latest -f docker/Dockerfile .
 # Run the container
 docker run -it --name hebrew-idiom \
   -v $(pwd)/data:/workspace/data \
+  -v $(pwd)/professor_review:/workspace/professor_review \
   -v $(pwd)/src:/workspace/src \
   -v $(pwd)/experiments:/workspace/experiments \
   -v $(pwd)/models:/workspace/models \
@@ -71,6 +74,7 @@ docker-compose up -d
 docker run -it --gpus all \
   --name hebrew-idiom \
   -v $(pwd)/data:/workspace/data \
+  -v $(pwd)/professor_review:/workspace/professor_review \
   -v $(pwd)/src:/workspace/src \
   -v $(pwd)/experiments:/workspace/experiments \
   -v $(pwd)/models:/workspace/models \
@@ -138,6 +142,7 @@ docker push yourusername/hebrew-idiom-detection:latest
      pip install -r requirements.txt
      ```
    - **Ports:** Open port 8888 for Jupyter
+   - **Environment:** export variables from `.env` (copy the template without secrets or use Compose locally to inject)
 
 ### Step 3: Connect to VAST.ai Instance
 

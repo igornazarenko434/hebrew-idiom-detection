@@ -20,6 +20,7 @@ services:
     # Mount local directories to container
     volumes:
       - ./data:/workspace/data
+      - ./professor_review:/workspace/professor_review
       - ./src:/workspace/src
       - ./experiments:/workspace/experiments
       - ./models:/workspace/models
@@ -34,6 +35,8 @@ services:
       - "6006:6006"  # TensorBoard
 
     # Environment variables
+    env_file:
+      - .env
     environment:
       - PYTHONUNBUFFERED=1
       - CUDA_VISIBLE_DEVICES=0

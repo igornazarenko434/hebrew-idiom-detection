@@ -42,11 +42,20 @@ venv.bak/
 .conda/
 conda-meta/
 
-# PyCharm
+# IDE / Editor
 .idea/
+.vscode/
+*.code-workspace
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Type checker / lint caches
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+.dmypy.json
 
 # Distribution / packaging
 .Python
@@ -83,6 +92,12 @@ coverage.xml
 
 # Logs
 *.log
+
+# Secrets
+*.secrets
+*.secret
+*.key
+*.pem
 
 # Temporary files
 *.tmp

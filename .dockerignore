@@ -43,8 +43,13 @@ models/*
 experiments/results/*
 experiments/logs/*
 
-# Documentation
+# Documentation (keep key references inside image)
 *.md
+!README.md
+!FINAL_PRD_Hebrew_Idiom_Detection.md
+!IMPLEMENTATION_GUIDE.md
+!STEP_BY_STEP_MISSIONS.md
+!DATASET_EXPERT_REVIEW.md
 !docker/README.md
 !requirements.txt
 
