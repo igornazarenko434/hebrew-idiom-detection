@@ -13,12 +13,50 @@ This project focuses on automatic detection and interpretation of Hebrew idioms 
 
 ## Dataset
 
-- **Total Samples**: 4,800 sentences
-- **Distribution**: 50% literal (2,400), 50% figurative (2,400)
-- **Unique Idioms**: 60 Hebrew expressions (exactly)
-- **Annotations**: IOB2 tags for idiom spans
-- **Splits**: Train 3,456 / validation 432 / in-domain test 432 (seen idioms) + `unseen_idiom_test` 480 for zero-shot evaluation
-- **Documentation**: See [data/README.md](data/README.md) for complete dataset documentation
+### Overview (Hebrew-Idioms-4800 v1.0)
+
+| Metric | Value |
+|--------|-------|
+| Total sentences | 4,800 (manually authored) |
+| Unique idioms | 60 (80 samples per idiom, 100% polysemous) |
+| Label balance | 2,400 literal / 2,400 figurative (perfect 50/50) |
+| Annotators | 2 native Hebrew speakers |
+| IAA | Cohen's κ = **0.9725** (98.625% observed agreement) |
+| Data quality | 14/14 validation checks passed, score **9.2/10** |
+| Annotations | Sentence label + token spans (IOB2 + char spans + token spans) |
+
+Additional details plus visualizations live in [professor_review/](professor_review/), including the full `Complete_Dataset_Analysis.ipynb`.
+
+### Split Strategy
+
+We follow a **hybrid split** that supports both in-domain and zero-shot evaluation:
+
+| Split | Samples | % | Idioms | Literal | Figurative |
+|-------|---------|---|--------|---------|------------|
+| Train | 3,456 | 72% | 54 seen idioms | 1,728 | 1,728 |
+| Validation | 432 | 9% | Same 54 | 216 | 216 |
+| Test (seen) | 432 | 9% | Same 54 | 216 | 216 |
+| Unseen idiom test | 480 | 10% | 6 held-out idioms | 240 | 240 |
+
+- **Seen idioms:** Stratified 80/10/10 split per idiom and label (32/4/4 literal + figurative).  
+- **Unseen idioms:** חתך פינה, חצה קו אדום, נשאר מאחור, שבר שתיקה, איבד את הראש, רץ אחרי הזנב של עצמו (all 80 samples per idiom held out).
+
+### Key Statistics (from professor review package)
+
+- **Sentence length:** 15.71 tokens on average (median 12, range 5-38); 83.04 characters on average (median 63, range 22-193).  
+- **Idiom span length:** 2.48 tokens (median 2, range 2-5); 11.39 characters (median 11, range 5-23).  
+- **Sentence types:** 94.77% declarative, 4.98% interrogative, 0.25% exclamatory.  
+- **Idiom position:** 63.71% start, 29.77% middle, 6.52% end (figurative spans skew slightly later than literal).  
+- **Lexical diversity:** 18,784 unique tokens across 75,412 total words (TTR 0.2491, hapax 63.46%, Maas 0.0110, function word ratio 12.57%).  
+- **Morphology:** 45.25% of tokens have prefix attachments; top idioms by morphological variance—שם רגליים (35 variants), שבר את הלב (32), פתח דלתות (29), סגר חשבון (28), הוריד פרופיל (23).  
+- **Complexity:** Figurative sentences contain 24% more subclause markers (mean subclause ratio 0.017 vs. 0.012) and slightly more punctuation.  
+- **Collocations:** 23,366 context words collected (8,498 unique); הו/היא/לא/הם/על/את/עם/של/כדי/אחרי dominate.  
+- **Quality validation:** 0 missing values, 0 duplicates, character/token spans verified 100%, IOB2 sequences valid, encoding normalized (NFKC, BOM removed, no zero-width chars).
+
+### Documentation
+
+- [data/README.md](data/README.md) — column definitions and usage notes  
+- [professor_review/README.md](professor_review/README.md) — full statistical report and notebook links
 
 ## Models Evaluated
 
@@ -255,14 +293,28 @@ bash scripts/sync_to_gdrive.sh
 
 ## Citation
 
-(To be added upon publication)
+If you use this dataset or code in your research, please cite:
+
+```bibtex
+@dataset{hebrew_idioms_4800,
+  author = {Nazarenko, Igor and Amit, Yuval},
+  title = {Hebrew-Idioms-4800: A Dual-Task Dataset for Hebrew Idiom Detection},
+  year = {2025},
+  publisher = {Reichman University},
+  note = {Master's Project Dataset},
+  url = {https://github.com/igornazarenko434/hebrew-idiom-detection}
+}
+```
 
 ## Contact
 
-(To be added)
+- **Igor Nazarenko**: igor.nazarenko@post.runi.ac.il
+- **Yuval Amit**: yuval.amit@post.runi.ac.il
+
+**Repository:** https://github.com/igornazarenko434/hebrew-idiom-detection
 
 ---
 
 **Status**: In Development
 
-This project is part of an academic research effort to advance Hebrew NLP and idiom detection capabilities.
+This project is part of a Master's research effort at Reichman University to advance Hebrew NLP and idiom detection capabilities.

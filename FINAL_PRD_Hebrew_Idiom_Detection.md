@@ -94,27 +94,30 @@ Challenge: Models must use context to distinguish meaning.
 
 ### 2.1 Dataset Overview
 
-**Name:** Hebrew-Idioms-4800  
-**Size:** 4,800 manually annotated sentences  
-**Language:** Hebrew  
-**Annotation Levels:** 2 (sentence + token)  
-**Balance:** 2,400 literal + 2,400 figurative  
-**Status:** ✅ Complete and validated  
+**Name:** Hebrew-Idioms-4800 v1.0  
+**Size:** 4,800 manually authored sentences (80 per idiom)  
+**Language:** Hebrew (he)  
+**Annotation Levels:** 2 (sentence classification + token-level IOB2 spans with character/token indices)  
+**Balance:** 2,400 literal + 2,400 figurative (perfect 50/50 per idiom)  
+**Annotators:** 2 native Hebrew speakers (dual annotation)  
+**IAA:** Cohen's κ = **0.9725** (98.625% agreement, 66 disagreements)  
+**Quality Score:** 9.2/10 across 14 validation checks  
+**Status:** ✅ Complete, validated, and packaged with preprocessing + QA notebook (`professor_review/Complete_Dataset_Analysis.ipynb`)  
 
 ### 2.2 Data Schema
 
 ```python
 {
     # Identifiers
-    "id": int,                      # Unique identifier
-    "split": str,                   # "train", "validation", or "test"
+    "id": int,                      # Unique identifier (0-4799)
+    "split": str,                   # "train", "validation", "test", "unseen_idiom_test"
     
     # Text Data
-    "text": str,                    # Full sentence
-    "expression": str,              # Idiom (normalized form)
-    "matched_expression": str,      # Idiom as it appears in text
+    "text": str,                    # Full sentence (UTF-8, normalized)
+    "expression": str,              # Idiom (normalized/canonical form)
+    "matched_expression": str,      # Idiom as it appears in text (with inflection)
     "language": str,                # "he" (Hebrew)
-    "source": str,                  # Data source
+    "source": str,                  # Data source ("inhouse", "manual")
     
     # Sentence-Level Label (Task 1)
     "label": str,                   # "מילולי" or "פיגורטיבי"
@@ -152,30 +155,65 @@ Challenge: Models must use context to distinguish meaning.
 
 ### 2.3 Dataset Statistics
 
-| Metric | Value          |
-|--------|----------------|
-| Total sentences | 4,800          |
-| Literal samples | 2,400 (50%)    |
-| Figurative samples | 2,400 (50%)    |
-| Unique idioms | 60 expressions |
-| Avg sentence length | 12.5 tokens    |
-| Avg idiom length | 3.2 tokens     |
-| Train split | 3,360 (70%)    |
-| Validation split | 720 (15%)      |
-| Test split | 720 (15%)      |
+| Metric | Value |
+|--------|-------|
+| Total sentences | 4,800 |
+| Unique idioms | 60 (100% polysemous) |
+| Samples per idiom | 80 (40 literal + 40 figurative) |
+| Vocabulary size | 18,784 unique words / 75,412 total tokens |
+| Type-Token Ratio | 0.2491 (Maas 0.0110, hapax 63.46%) |
+| Prefix attachments | 2,172 tokens (45.25%) |
+| Function word ratio | 12.57% |
+| Context window | 23,366 context words (8,498 unique) |
+
+**Sentence Length (Tokens):** mean 15.71, median 12, std 8.01, range 5-38  
+**Sentence Length (Characters):** mean 83.04, median 63, std 42.55, range 22-193  
+**Idiom Length (Tokens):** mean 2.48, median 2, range 2-5  
+**Idiom Length (Characters):** mean 11.39, median 11, range 5-23  
+
+**Sentence Type Distribution:**
+
+| Type | Count | Percentage |
+|------|-------|------------|
+| Declarative | 4,549 | 94.77% |
+| Questions | 239 | 4.98% |
+| Exclamatory | 12 | 0.25% |
+
+**Idiom Position (by relative sentence span):**
+
+| Position | Count | Percentage | Literal | Figurative |
+|----------|-------|------------|---------|------------|
+| Start (0-33%) | 3,058 | 63.71% | 63.13% | 64.29% |
+| Middle (33-67%) | 1,429 | 29.77% | 31.50% | 28.04% |
+| End (67-100%) | 313 | 6.52% | 5.38% | 7.67% |
 
 ### 2.4 Split Strategy
 
-**Standard Stratified Split:**
-- 70% train / 15% validation / 15% test
-- Stratified by label (maintain 50/50 balance)
-- Stratified by idiom (ensure all idioms represented)
+**Hybrid Split (Seen + Zero-Shot):**
 
-**Quality Control:**
-- ✅ Manually verified by native Hebrew speakers
-- ✅ IOB2 tags validated for alignment
-- ✅ No duplicate sentences
-- ✅ Grammatically correct
+| Split | Samples | % | Idioms | Literal | Figurative | Notes |
+|-------|---------|---|--------|---------|------------|-------|
+| Train | 3,456 | 72% | 54 (seen) | 1,728 | 1,728 | 32 literal + 32 figurative per idiom |
+| Validation | 432 | 9% | 54 (seen) | 216 | 216 | 4 literal + 4 figurative per idiom |
+| Test (in-domain) | 432 | 9% | 54 (seen) | 216 | 216 | 4 literal + 4 figurative per idiom |
+| Unseen idiom test | 480 | 10% | 6 idioms | 240 | 240 | Zero-shot evaluation only |
+
+- **Seen idioms:** Stratified by idiom + label; supports standard training/validation/test loops.  
+- **Unseen idioms:** חתך פינה, חצה קו אדום, נשאר מאחור, שבר שתיקה, איבד את הראש, רץ אחרי הזנב של עצמו. All 80 samples per idiom (balanced literal/figurative) are held out for zero-shot transfer evaluation.
+
+### 2.5 Linguistic & Structural Highlights
+
+- **Polysemy:** 100% of idioms appear in both literal and figurative contexts.  
+- **Complexity:** Figurative sentences show 24% more subclause markers (mean subclause ratio 0.017 vs. 0.012) and slightly higher punctuation counts (1.87 vs. 1.75).  
+- **Collocations:** Top context tokens (±3) include הוא, היא, לא, הם, על, את, עם, של, כדי, אחרי.  
+- **Morphological variance:** Highest variation for שם רגליים (35 forms), שבר את הלב (32), פתח דלתות (29), סגר חשבון (28), הוריד פרופיל (23).  
+
+### 2.6 Data Quality & Validation
+
+- 14/14 automated validations pass (missing values, duplicates, ID sequence, label consistency, IOB2 alignment, span checks, encoding normalization, zero-width characters, Hebrew text verification).  
+- Preprocessing includes Unicode NFKC normalization, BOM + directional mark removal, whitespace normalization, and explicit span verification (`text[span_start:span_end] == matched_expression`).  
+- Manual QA performed on text/span corrections (223 items updated without label changes).  
+- Result: Clean, analysis-ready dataset suitable for publication on HuggingFace.  
 
 ---
 
