@@ -777,13 +777,18 @@ class DatasetLoader:
         self.df['position_ratio'] = self.df['token_span_start'] / self.df['num_tokens']
 
         # Classify positions
-        def classify_position(ratio):
-            if ratio < 0.33:
+        def classify_position(ratio: float) -> str:
+            """
+            Match the professor review analysis where boundaries are:
+            - Start: 0%–33% (inclusive)
+            - Middle: >33%–67% (inclusive)
+            - End: >67%
+            """
+            if ratio <= 0.33:
                 return 'start'
-            elif ratio < 0.67:
+            elif ratio <= 0.67:
                 return 'middle'
-            else:
-                return 'end'
+            return 'end'
 
         self.df['position_category'] = self.df['position_ratio'].apply(classify_position)
 
