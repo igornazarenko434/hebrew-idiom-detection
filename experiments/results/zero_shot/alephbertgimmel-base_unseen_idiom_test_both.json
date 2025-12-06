@@ -1,0 +1,72 @@
+{
+  "mode": "zero_shot",
+  "mission": "3.2",
+  "model_id": "dicta-il/alephbertgimmel-base",
+  "split": "unseen_idiom_test",
+  "n_samples": 480,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "stats": {
+      "total_samples": 480,
+      "missing_iob2": 0,
+      "valid_iob2": 480,
+      "tokenization_misaligned": 0,
+      "tokenization_aligned": 480
+    }
+  },
+  "tasks": {
+    "classification": {
+      "metrics": {
+        "accuracy": 0.4625,
+        "precision_binary": 0.4697986577181208,
+        "recall_binary": 0.5833333333333334,
+        "f1_binary": 0.5204460966542751,
+        "precision_macro": 0.46017405413378565,
+        "recall_macro": 0.4625,
+        "f1_macro": 0.45453584453566837,
+        "confusion_matrix": [
+          [
+            82,
+            158
+          ],
+          [
+            100,
+            140
+          ]
+        ],
+        "roc_auc": 0.4659027777777778
+      }
+    },
+    "span_heuristic": {
+      "notes": "String-match IOB baseline (zero-shot)",
+      "n_evaluated": 480,
+      "token_metrics_avg": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "span_metrics_avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "span_untrained_model": {
+      "notes": "Untrained model (random head) - establishes lower bound",
+      "metrics": {
+        "loss": NaN,
+        "model_preparation_time": 0.0012,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.13025210084033614,
+        "runtime": 6.7782,
+        "samples_per_second": 70.816,
+        "steps_per_second": 4.426
+      }
+    }
+  }
+}

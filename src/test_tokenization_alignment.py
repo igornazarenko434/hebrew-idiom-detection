@@ -61,15 +61,15 @@ def test_alignment_for_model(model_name: str, model_id: str, examples: pd.DataFr
 
     # Test on each example
     for idx, row in examples.iterrows():
-        text = row['text']
-        iob2_tags_str = row['iob2_tags']
+        text = row['sentence']
+        iob_tags_str = row['iob_tags']
 
         # Skip if missing IOB2 tags
-        if pd.isna(iob2_tags_str) or str(iob2_tags_str) == 'nan':
+        if pd.isna(iob_tags_str) or str(iob_tags_str) == 'nan':
             continue
 
         # Parse IOB2 tags
-        word_labels = str(iob2_tags_str).split()
+        word_labels = str(iob_tags_str).split()
         words = text.split()
 
         # Check word-label alignment (original data validation)

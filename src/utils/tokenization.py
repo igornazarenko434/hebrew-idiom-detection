@@ -155,8 +155,8 @@ def tokenize_and_align_labels(
     examples: Dict,
     tokenizer,
     label2id: Dict[str, int],
-    text_column: str = "text",
-    label_column: str = "iob2_tags",
+    text_column: str = "sentence",
+    label_column: str = "iob_tags",
     max_length: int = 128,
     label_all_tokens: bool = False
 ) -> Dict:

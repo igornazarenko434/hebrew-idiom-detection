@@ -18,6 +18,7 @@ Design aligned with PRD and step-by-step missions.
 """
 
 import argparse
+import ast
 import json
 import sys
 import yaml
@@ -286,7 +287,7 @@ def validate_dataset_for_evaluation(df: pd.DataFrame, task: str) -> Dict:
     # Check required columns for Task 1 (Classification)
     if task in ("cls", "both"):
         print("\n[Task 1 - Classification] Validating required columns...")
-        required_cols_task1 = ["text", "label_2"]
+        required_cols_task1 = ["sentence", "label"]
         for col in required_cols_task1:
             if col not in df.columns:
                 validation_results["errors"].append(f"Missing required column for Task 1: '{col}'")
@@ -305,7 +306,7 @@ def validate_dataset_for_evaluation(df: pd.DataFrame, task: str) -> Dict:
     # Check required columns for Task 2 (Token Classification)
     if task in ("span", "both"):
         print("\n[Task 2 - Token Classification] Validating required columns...")
-        required_cols_task2 = ["text", "expression"]
+        required_cols_task2 = ["sentence", "base_pie", "tokens", "iob_tags"]
         for col in required_cols_task2:
             if col not in df.columns:
                 validation_results["errors"].append(f"Missing required column for Task 2: '{col}'")
@@ -320,7 +321,7 @@ def validate_dataset_for_evaluation(df: pd.DataFrame, task: str) -> Dict:
                     print(f"  ✓ Column '{col}': {len(df)} valid values")
 
         # Check IOB2 tags column (critical for evaluation)
-        iob2_col = "iob2_tags" if "iob2_tags" in df.columns else "iob2"
+        iob2_col = "iob_tags" if "iob_tags" in df.columns else "iob2"
         if iob2_col in df.columns:
             print(f"\n[IOB2 Tags Validation] Checking '{iob2_col}' column...")
 
@@ -349,12 +350,32 @@ def validate_dataset_for_evaluation(df: pd.DataFrame, task: str) -> Dict:
             valid_rows = df[df[iob2_col].notna() & (df[iob2_col].astype(str) != 'nan')]
 
             for idx, row in valid_rows.iterrows():
-                text = str(row["text"])
+                text = str(row["sentence"])
                 iob2_tags_str = str(row[iob2_col])
 
+                # Parse IOB2 tags if they are in list format
+                try:
+                    if iob2_tags_str.strip().startswith("[") and iob2_tags_str.strip().endswith("]"):
+                        tags_from_column = ast.literal_eval(iob2_tags_str)
+                    else:
+                        tags_from_column = iob2_tags_str.split()
+                except (ValueError, SyntaxError):
+                    tags_from_column = iob2_tags_str.split()
+
                 # Tokenize using whitespace (same method used in evaluation)
-                tokens_from_text = text.split()
-                tags_from_column = iob2_tags_str.split()
+                # CRITICAL: Use the pre-tokenized 'tokens' column if available for validation
+                if "tokens" in df.columns:
+                    tokens_val = row["tokens"]
+                    if isinstance(tokens_val, str):
+                        try:
+                            tokens_from_text = ast.literal_eval(tokens_val)
+                        except:
+                            tokens_from_text = str(tokens_val).split()
+                    else:
+                        tokens_from_text = tokens_val # Already a list
+                else:
+                    # Fallback to splitting sentence (less reliable for v2 data)
+                    tokens_from_text = text.split()
 
                 if len(tokens_from_text) != len(tags_from_column):
                     misaligned_count += 1
@@ -382,7 +403,7 @@ def validate_dataset_for_evaluation(df: pd.DataFrame, task: str) -> Dict:
             validation_results["stats"]["tokenization_aligned"] = int(len(valid_rows) - misaligned_count)
         else:
             validation_results["warnings"].append(
-                f"No IOB2 tags column found (looking for 'iob2' or 'iob2_tags'). Task 2 evaluation will be limited."
+                f"No IOB2 tags column found (looking for 'iob2' or 'iob_tags'). Task 2 evaluation will be limited."
             )
             print(f"  ⚠️  No IOB2 tags column found - Task 2 evaluation will be limited")
 
@@ -635,43 +656,66 @@ class ZeroShotEvaluator:
 
     # -------- Task 2: Span detection via string matching --------
     @staticmethod
-    def iob_from_string_match(text: str, surface: str) -> List[str]:
+    def iob_from_string_match(text: str, tokens: List[str], surface: str) -> List[str]:
         """
-        Predict IOB2 tags using exact string matching
+        Predict IOB2 tags using exact string matching against PRE-TOKENIZED tokens.
 
-        Method: Find the idiom expression in the sentence and tag
-        overlapping whitespace tokens as B-IDIOM/I-IDIOM
+        Args:
+            text: Full sentence string
+            tokens: List of token strings (from dataset 'tokens' column)
+            surface: The idiom string to find
+
+        Returns:
+            List of IOB2 tags aligned to 'tokens'
         """
-        tokens = text.split()
         tags = ["O"] * len(tokens)
 
-        if not surface:
+        if not surface or not text:
             return tags
 
-        # Simple exact search (case-sensitive for Hebrew)
+        # 1. Find the idiom in the text (character offsets)
+        # Note: This is a simple first-match heuristic.
         start_char = text.find(surface)
         if start_char < 0:
             return tags
-
         end_char = start_char + len(surface)
 
-        # Map token character offsets
-        offsets = []
-        pos = 0
-        for tok in tokens:
-            s = pos
-            e = pos + len(tok)
-            offsets.append((s, e))
-            pos = e + 1  # account for single space
+        # 2. Map tokens to character offsets in 'text'
+        # We scan 'text' to find each token sequentially to handle spacing/punctuation
+        token_spans = []
+        current_pos = 0
+        for token in tokens:
+            # Find this token starting from current position
+            # We skip whitespace to find the next token
+            token_start = -1
+            
+            # Heuristic: search forward for the token
+            # We limit search window to avoid jumping too far (e.g. duplicate words)
+            search_limit = current_pos + 50 # reasonable buffer
+            found_at = text.find(token, current_pos)
+            
+            if found_at != -1:
+                token_start = found_at
+                token_end = token_start + len(token)
+                token_spans.append((token_start, token_end))
+                current_pos = token_end
+            else:
+                # Fallback: if token not found (rare encoding issues), skip
+                token_spans.append((-1, -1))
 
-        # Tag tokens whose offsets overlap [start_char, end_char)
-        first = True
-        for i, (s, e) in enumerate(offsets):
-            overlap = max(0, min(e, end_char) - max(s, start_char))
-            if overlap > 0:
-                if first:
+        # 3. Tag tokens based on overlap with idiom char span
+        first_tag = True
+        for i, (t_start, t_end) in enumerate(token_spans):
+            if t_start == -1: continue
+            
+            # Check overlap: [t_start, t_end) overlaps [start_char, end_char)
+            overlap_start = max(t_start, start_char)
+            overlap_end = min(t_end, end_char)
+            
+            if overlap_start < overlap_end:
+                if first_tag:
                     tags[i] = "B-IDIOM"
-                    first = False
+                    first_tag = False
                 else:
                     tags[i] = "I-IDIOM"
 
@@ -679,15 +723,15 @@ class ZeroShotEvaluator:
 
 def evaluate_task1(df: pd.DataFrame, evaluator: ZeroShotEvaluator) -> Dict:
     """Evaluate Task 1 (sentence classification)"""
-    assert "text" in df.columns, "CSV must contain 'text' column"
-    assert "label_2" in df.columns, "CSV must contain 'label_2' column (0=literal, 1=figurative)"
+    assert "sentence" in df.columns, "CSV must contain 'sentence' column"
+    assert "label" in df.columns, "CSV must contain 'label' column (0=literal, 1=figurative)"
 
     print(f"\n[Task 1: Sentence Classification]")
     print(f"Evaluating {len(df)} samples...")
 
-    sentences = df["text"].tolist()
+    sentences = df["sentence"].tolist()
     probs = evaluator.predict_task1_probs(sentences)
-    y = df["label_2"].to_numpy().astype(int)
+    y = df["label"].to_numpy().astype(int)
     metrics = classification_metrics(y, probs)
 
     print(f"✓ Accuracy: {metrics['accuracy']:.4f}")
@@ -698,15 +742,15 @@ def evaluate_task1(df: pd.DataFrame, evaluator: ZeroShotEvaluator) -> Dict:
 
 def evaluate_task2(df: pd.DataFrame, evaluator: ZeroShotEvaluator) -> Dict:
     """Evaluate Task 2 (token classification / span detection)"""
-    assert "text" in df.columns and "expression" in df.columns, \
-        "CSV must contain 'text' and 'expression' columns"
+    assert "sentence" in df.columns and "base_pie" in df.columns, \
+        "CSV must contain 'sentence' and 'base_pie' columns"
 
     print(f"\n[Task 2: Token Classification (IOB2)]")
 
-    surface_col = "matched_expression" if "matched_expression" in df.columns else "expression"
+    surface_col = "pie_span" if "pie_span" in df.columns else "base_pie"
 
-    # Handle both 'iob2' and 'iob2_tags' column names
-    iob2_col = "iob2_tags" if "iob2_tags" in df.columns else "iob2"
+    # Handle both 'iob2' and 'iob_tags' column names
+    iob2_col = "iob_tags" if "iob_tags" in df.columns else "iob2"
 
     # Only evaluate rows with valid IOB2 tags (validation already checked this)
     pred_tags_all = []
@@ -715,18 +759,38 @@ def evaluate_task2(df: pd.DataFrame, evaluator: ZeroShotEvaluator) -> Dict:
     evaluated_count = 0
 
     for _, row in df.iterrows():
-        text = str(row["text"])
+        text = str(row["sentence"])
         surface = str(row.get(surface_col, ""))
+        
+        # Get tokens: try 'tokens' column first (parsed), else fallback
+        tokens = []
+        if "tokens" in row and pd.notna(row["tokens"]):
+            val = row["tokens"]
+            if isinstance(val, list):
+                tokens = val
+            else:
+                try:
+                    tokens = ast.literal_eval(str(val))
+                except:
+                    tokens = str(val).split()
+        else:
+            tokens = text.split()
 
-        # Get predicted tags
-        pred_tags = evaluator.iob_from_string_match(text, surface)
+        # Get predicted tags using CORRECT tokens list
+        pred_tags = evaluator.iob_from_string_match(text, tokens, surface)
 
         # Only add to evaluation if gold tags exist and are valid
         if iob2_col in df.columns and pd.notna(row[iob2_col]) and str(row[iob2_col]) != 'nan':
-            gold_tags = str(row[iob2_col]).split()
+            val_tags = row[iob2_col]
+            if isinstance(val_tags, list):
+                gold_tags = val_tags
+            else:
+                try:
+                    gold_tags = ast.literal_eval(str(val_tags))
+                except:
+                    gold_tags = str(val_tags).split()
 
-            # Tokenization should be aligned (validation checked this)
-            # If somehow misaligned, skip this sample
+            # Tokenization should be aligned
             if len(pred_tags) == len(gold_tags):
                 pred_tags_all.append(pred_tags)
                 gold_tags_all.append(gold_tags)
@@ -736,6 +800,8 @@ def evaluate_task2(df: pd.DataFrame, evaluator: ZeroShotEvaluator) -> Dict:
                 ps = iob_entity_spans(pred_tags)
                 gs = iob_entity_spans(gold_tags)
                 span_scores.append(span_prf1(ps, gs))
+            else:
+                pass # Validation already warned about this
 
     print(f"Evaluating {evaluated_count} samples with valid IOB2 tags...")
 
@@ -770,6 +836,128 @@ def evaluate_task2(df: pd.DataFrame, evaluator: ZeroShotEvaluator) -> Dict:
 # Mode: Zero-Shot Evaluation
 # -------------------------
 
+def evaluate_model_task2_untrained(args, df: pd.DataFrame, label2id: Dict[str, int]) -> Dict:
+    """
+    Evaluate Task 2 using the Model Architecture (Pretrained Body + Random Head).
+    This represents the 'True Model Zero-Shot' performance without any fine-tuning.
+    It uses the exact same preprocessing pipeline as training.
+    """
+    print(f"\n[Task 2: Untrained Model Evaluation]")
+    print("  Evaluating model architecture (pretrained backbone + random classification head)...")
+
+    # Load tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+
+    # Load model with classification head (randomly initialized)
+    model = AutoModelForTokenClassification.from_pretrained(
+        args.model_id,
+        num_labels=len(label2id),
+        id2label={v: k for k, v in label2id.items()},
+        label2id=label2id
+    )
+
+    # Prepare dataset
+    # Must include 'tokens' and 'iob_tags' columns
+    dataset = Dataset.from_pandas(df[['sentence', 'tokens', 'iob_tags']])
+
+    # Define tokenize and align function (same as training, but with fixed padding for safety)
+    def tokenize_and_align(examples):
+        tokenized_inputs = tokenizer(
+            [ast.literal_eval(t) if isinstance(t, str) else t for t in examples['tokens']],
+            truncation=True,
+            padding="max_length", # Force rectangular shape to avoid collator issues
+            max_length=args.max_length,
+            is_split_into_words=True
+        )
+
+        all_labels = []
+        for i, labels in enumerate(examples['iob_tags']):
+            word_ids = tokenized_inputs.word_ids(batch_index=i)
+            
+            if pd.isna(labels):
+                all_labels.append([-100] * args.max_length)
+                continue
+            
+            word_labels = ast.literal_eval(labels) if isinstance(labels, str) else labels
+            
+            try:
+                aligned_labels = align_labels_with_tokens(
+                    tokenized_inputs, 
+                    word_labels, 
+                    label2id, 
+                    label_all_tokens=False
+                )
+                # Pad labels to max_length manually since we forced padding on inputs
+                # align_labels_with_tokens returns labels for the *actual* tokens + special tokens
+                # We need to append -100 for the padding tokens
+                padding_length = args.max_length - len(aligned_labels)
+                if padding_length > 0:
+                    aligned_labels.extend([-100] * padding_length)
+                all_labels.append(aligned_labels)
+            except:
+                all_labels.append([-100] * args.max_length) # Fallback
+
+        tokenized_inputs["labels"] = all_labels
+        return tokenized_inputs
+
+    # Tokenize dataset
+    tokenized_dataset = dataset.map(tokenize_and_align, batched=True, remove_columns=dataset.column_names)
+    
+    # Metrics function
+    seqeval_metric = evaluate.load("seqeval")
+    id2label = {v: k for k, v in label2id.items()}
+
+    def compute_metrics(eval_pred):
+        predictions, labels = eval_pred
+        predictions = np.argmax(predictions, axis=2)
+
+        true_labels = []
+        pred_labels = []
+
+        for prediction, label in zip(predictions, labels):
+            true_label = []
+            pred_label = []
+            for p, l in zip(prediction, label):
+                if l != -100:
+                    true_label.append(id2label[l])
+                    pred_label.append(id2label[p])
+            true_labels.append(true_label)
+            pred_labels.append(pred_label)
+
+        results = seqeval_metric.compute(predictions=pred_labels, references=true_labels)
+        return {
+            "precision": results["overall_precision"],
+            "recall": results["overall_recall"],
+            "f1": results["overall_f1"],
+            "accuracy": results["overall_accuracy"],
+        }
+
+    # Setup Trainer for evaluation only
+    trainer = Trainer(
+        model=model,
+        args=TrainingArguments(
+            output_dir=f"experiments/results/temp_zero_shot_{args.model_id.split('/')[-1]}",
+            per_device_eval_batch_size=args.batch_size,
+            report_to="none",
+        ),
+        data_collator=DataCollatorForTokenClassification(tokenizer),
+        compute_metrics=compute_metrics,
+    )
+
+    # Run evaluation
+    print("  Running inference...")
+    metrics = trainer.evaluate(tokenized_dataset)
+    
+    # Cleanup temp dir
+    import shutil
+    try:
+        shutil.rmtree(f"experiments/results/temp_zero_shot_{args.model_id.split('/')[-1]}")
+    except:
+        pass
+
+    print(f"✓ Untrained Model F1: {metrics['eval_f1']:.4f}")
+    return metrics
+
 def run_zero_shot(args):
     """
     Run zero-shot evaluation (Mission 3.2)
@@ -777,6 +965,7 @@ def run_zero_shot(args):
     This function evaluates pre-trained models without any fine-tuning:
     - Task 1: Prototype-based classification using [CLS] embeddings
     - Task 2: String-matching baseline for IOB2 tags
+    - Task 2 (Extra): Untrained Model Baseline (Random Head)
     """
     print("\n" + "=" * 80)
     print("MODE: ZERO-SHOT EVALUATION")
@@ -831,7 +1020,18 @@ def run_zero_shot(args):
         results["tasks"]["classification"] = evaluate_task1(df, evaluator)
 
     if args.task in ("span", "both"):
-        results["tasks"]["span"] = evaluate_task2(df, evaluator)
+        # 1. Heuristic Baseline (String Match) - The "100%" Baseline
+        print(f"\n--- Task 2 Baseline 1: Exact String Matching (Heuristic) ---")
+        results["tasks"]["span_heuristic"] = evaluate_task2(df, evaluator)
+        
+        # 2. Model Baseline (Untrained) - The "True" Zero-Shot
+        print(f"\n--- Task 2 Baseline 2: Untrained Model Architecture ---")
+        label2id = {"O": 0, "B-IDIOM": 1, "I-IDIOM": 2}
+        untrained_metrics = evaluate_model_task2_untrained(args, df, label2id)
+        results["tasks"]["span_untrained_model"] = {
+            "notes": "Untrained model (random head) - establishes lower bound",
+            "metrics": {k.replace("eval_", ""): v for k, v in untrained_metrics.items() if isinstance(v, (int, float))}
+        }
 
     # Save results
     if args.output is None:
@@ -961,7 +1161,7 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         # Task 1: Sequence Classification
         print(f"\n🎯 Task 1: Sequence Classification")
         num_labels = 2  # literal (0) vs figurative (1)
-        label_column = 'label_2'
+        label_column = 'label'
 
         # Load model
         print(f"  Loading model: {model_checkpoint}")
@@ -973,16 +1173,16 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         # Tokenize data
         def tokenize_function(examples):
             return tokenizer(
-                examples['text'],
+                examples['sentence'],
                 truncation=True,
                 padding=False,  # Dynamic padding by data collator
                 max_length=max_length
             )
 
         # Convert to HuggingFace datasets
-        train_dataset = Dataset.from_pandas(train_df[['text', label_column]])
-        dev_dataset = Dataset.from_pandas(dev_df[['text', label_column]])
-        test_dataset = Dataset.from_pandas(test_df[['text', label_column]])
+        train_dataset = Dataset.from_pandas(train_df[['sentence', label_column]])
+        dev_dataset = Dataset.from_pandas(dev_df[['sentence', label_column]])
+        test_dataset = Dataset.from_pandas(test_df[['sentence', label_column]])
 
         # Rename label column
         train_dataset = train_dataset.rename_column(label_column, 'labels')
@@ -990,9 +1190,9 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         test_dataset = test_dataset.rename_column(label_column, 'labels')
 
         # Tokenize
-        train_dataset = train_dataset.map(tokenize_function, batched=True, remove_columns=['text'])
-        dev_dataset = dev_dataset.map(tokenize_function, batched=True, remove_columns=['text'])
-        test_dataset = test_dataset.map(tokenize_function, batched=True, remove_columns=['text'])
+        train_dataset = train_dataset.map(tokenize_function, batched=True, remove_columns=['sentence'])
+        dev_dataset = dev_dataset.map(tokenize_function, batched=True, remove_columns=['sentence'])
+        test_dataset = test_dataset.map(tokenize_function, batched=True, remove_columns=['sentence'])
 
         # Data collator
         data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
@@ -1047,10 +1247,10 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         label_counts = {0: 0, 1: 0, 2: 0}  # O, B-IDIOM, I-IDIOM
 
         for idx, row in train_df.iterrows():
-            iob2_tags_str = row['iob2_tags']
-            if pd.isna(iob2_tags_str) or str(iob2_tags_str) == 'nan':
+            iob_tags_str = row['iob_tags']
+            if pd.isna(iob_tags_str) or str(iob_tags_str) == 'nan':
                 continue
-            word_labels = str(iob2_tags_str).split()
+            word_labels = str(iob_tags_str).split()
             for label_str in word_labels:
                 if label_str in label2id:
                     label_counts[label2id[label_str]] += 1
@@ -1111,26 +1311,28 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         # Tokenization with IOB2 alignment (CRITICAL - Mission 4.2 Task 3.5)
         def tokenize_and_align(examples):
             """Tokenize and align IOB2 labels with subword tokens"""
+            # CRITICAL: Use pre-tokenized 'tokens' column from CSV (punctuation-separated)
+            # NOT runtime text.split() which would attach punctuation to words!
             tokenized_inputs = tokenizer(
-                [text.split() for text in examples['text']],  # Pre-tokenized by whitespace
+                [ast.literal_eval(tokens_str) for tokens_str in examples['tokens']],  # Use pre-tokenized tokens
                 truncation=True,
                 padding=False,
                 max_length=max_length,
-                is_split_into_words=True  # CRITICAL: aligns word_ids() with whitespace tokens
+                is_split_into_words=True  # CRITICAL: aligns word_ids() with pre-tokenized tokens
             )
 
             all_labels = []
-            for i, text in enumerate(examples['text']):
-                iob2_tags_str = examples['iob2_tags'][i]
+            for i in range(len(examples['sentence'])):
+                iob_tags_str = examples['iob_tags'][i]
 
                 # Skip if missing IOB2 tags
-                if pd.isna(iob2_tags_str) or str(iob2_tags_str) == 'nan':
+                if pd.isna(iob_tags_str) or str(iob_tags_str) == 'nan':
                     word_ids = tokenized_inputs.word_ids(batch_index=i)
                     all_labels.append([-100] * len(word_ids))
                     continue
 
-                # Parse IOB2 tags
-                word_labels = str(iob2_tags_str).split()
+                # Parse IOB2 tags (stored as string repr of list in CSV)
+                word_labels = ast.literal_eval(str(iob_tags_str))
 
                 # Get word IDs for this example
                 word_ids = tokenized_inputs.word_ids(batch_index=i)
@@ -1158,15 +1360,15 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
             tokenized_inputs["labels"] = all_labels
             return tokenized_inputs
 
-        # Convert to HuggingFace datasets
-        train_dataset = Dataset.from_pandas(train_df[['text', 'iob2_tags']])
-        dev_dataset = Dataset.from_pandas(dev_df[['text', 'iob2_tags']])
-        test_dataset = Dataset.from_pandas(test_df[['text', 'iob2_tags']])
+        # Convert to HuggingFace datasets - MUST include 'tokens' column for pre-tokenized data
+        train_dataset = Dataset.from_pandas(train_df[['sentence', 'tokens', 'iob_tags']])
+        dev_dataset = Dataset.from_pandas(dev_df[['sentence', 'tokens', 'iob_tags']])
+        test_dataset = Dataset.from_pandas(test_df[['sentence', 'tokens', 'iob_tags']])
 
         # Tokenize and align
-        train_dataset = train_dataset.map(tokenize_and_align, batched=True, remove_columns=['text', 'iob2_tags'])
-        dev_dataset = dev_dataset.map(tokenize_and_align, batched=True, remove_columns=['text', 'iob2_tags'])
-        test_dataset = test_dataset.map(tokenize_and_align, batched=True, remove_columns=['text', 'iob2_tags'])
+        train_dataset = train_dataset.map(tokenize_and_align, batched=True, remove_columns=['sentence', 'tokens', 'iob_tags'])
+        dev_dataset = dev_dataset.map(tokenize_and_align, batched=True, remove_columns=['sentence', 'tokens', 'iob_tags'])
+        test_dataset = test_dataset.map(tokenize_and_align, batched=True, remove_columns=['sentence', 'tokens', 'iob_tags'])
 
         # Data collator for token classification
         data_collator = DataCollatorForTokenClassification(tokenizer=tokenizer)
@@ -1264,7 +1466,8 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         greater_is_better=True,
         seed=seed,
         fp16=config.get('fp16', False),
-        report_to="none",  # Disable wandb/tensorboard
+        report_to=config.get('report_to', 'tensorboard'),  # Enable TensorBoard by default
+        logging_first_step=True,  # Log first step for monitoring
     )
 
     # -------------------------
@@ -1332,9 +1535,15 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         print(f"  Recall: {test_results['eval_recall']:.4f}")
 
     # -------------------------
-    # 11. Save Results
+    # 11. Save Comprehensive Results
     # -------------------------
     results_file = output_dir / "training_results.json"
+
+    # Extract ALL test metrics (not just F1, precision, recall)
+    test_metrics_full = {k.replace('eval_', ''): float(v) for k, v in test_results.items()
+                        if isinstance(v, (int, float))}
+
+    # Build comprehensive results dictionary
     results = {
         "model": model_checkpoint,
         "task": task,
@@ -1345,26 +1554,74 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
             "batch_size": batch_size,
             "num_epochs": num_epochs,
             "warmup_ratio": warmup_ratio,
-            "weight_decay": weight_decay
+            "weight_decay": weight_decay,
+            "seed": seed,
+            "max_length": max_length
         },
-        "train_samples": len(train_dataset),
-        "dev_samples": len(dev_dataset),
-        "test_samples": len(test_dataset),
+        "dataset": {
+            "train_samples": len(train_dataset),
+            "dev_samples": len(dev_dataset),
+            "test_samples": len(test_dataset),
+            "train_file": train_file,
+            "dev_file": dev_file,
+            "test_file": test_file
+        },
         "train_metrics": {
             "runtime": float(train_result.metrics['train_runtime']),
-            "loss": float(train_result.metrics['train_loss'])
+            "samples_per_second": float(train_result.metrics.get('train_samples_per_second', 0)),
+            "steps_per_second": float(train_result.metrics.get('train_steps_per_second', 0)),
+            "final_loss": float(train_result.metrics['train_loss']),
+            "epochs_completed": float(train_result.metrics.get('epoch', num_epochs))
         },
-        "test_metrics": {
-            "f1": float(test_results['eval_f1']),
-            "precision": float(test_results.get('eval_precision', 0)),
-            "recall": float(test_results.get('eval_recall', 0))
-        }
+        "test_metrics": test_metrics_full,  # All metrics from compute_metrics
+        "training_history": []  # Will be populated below
     }
 
+    # Save complete training history (per-epoch metrics)
+    print(f"\n📊 Extracting training history...")
+    if hasattr(trainer.state, 'log_history'):
+        # Extract and organize training history
+        for log_entry in trainer.state.log_history:
+            if 'loss' in log_entry or 'eval_loss' in log_entry:
+                history_entry = {
+                    'epoch': log_entry.get('epoch', None),
+                    'step': log_entry.get('step', None)
+                }
+                # Add all metrics from this log entry
+                for key, value in log_entry.items():
+                    if key not in ['epoch', 'step'] and isinstance(value, (int, float)):
+                        history_entry[key] = float(value)
+                results["training_history"].append(history_entry)
+
+        print(f"  ✓ Saved {len(results['training_history'])} training log entries")
+
+    # Save results to JSON
     with open(results_file, 'w') as f:
         json.dump(results, f, indent=2)
 
-    print(f"\n✅ Results saved to: {results_file}")
+    print(f"\n✅ Comprehensive results saved to: {results_file}")
+
+    # Also save a summary file for quick comparison
+    summary_file = output_dir / "summary.txt"
+    with open(summary_file, 'w') as f:
+        f.write(f"{'='*80}\n")
+        f.write(f"TRAINING SUMMARY\n")
+        f.write(f"{'='*80}\n\n")
+        f.write(f"Model: {model_checkpoint}\n")
+        f.write(f"Task: {task}\n")
+        f.write(f"Mode: {mode_name}\n\n")
+        f.write(f"--- Configuration ---\n")
+        for k, v in results['config'].items():
+            f.write(f"{k:20s}: {v}\n")
+        f.write(f"\n--- Training Metrics ---\n")
+        for k, v in results['train_metrics'].items():
+            f.write(f"{k:20s}: {v:.4f if isinstance(v, float) else v}\n")
+        f.write(f"\n--- Test Metrics ---\n")
+        for k, v in results['test_metrics'].items():
+            f.write(f"{k:20s}: {v:.4f if isinstance(v, float) else v}\n")
+        f.write(f"\n{'='*80}\n")
+
+    print(f"✅ Summary saved to: {summary_file}")
     print(f"{'=' * 80}\n")
 
     return results

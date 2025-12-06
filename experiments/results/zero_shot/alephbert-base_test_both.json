@@ -3,47 +3,45 @@
   "mission": "3.2",
   "model_id": "onlplab/alephbert-base",
   "split": "test",
-  "n_samples": 100,
+  "n_samples": 432,
   "validation": {
     "valid": true,
     "errors": [],
-    "warnings": [
-      "IOB2 tags column 'iob2_tags' has 10 missing/NaN values (10.0%)"
-    ],
+    "warnings": [],
     "stats": {
-      "total_samples": 100,
-      "missing_iob2": 10,
-      "valid_iob2": 90,
+      "total_samples": 432,
+      "missing_iob2": 0,
+      "valid_iob2": 432,
       "tokenization_misaligned": 0,
-      "tokenization_aligned": 95
+      "tokenization_aligned": 432
     }
   },
   "tasks": {
     "classification": {
       "metrics": {
-        "accuracy": 0.5,
-        "precision_binary": 0.5609756097560976,
-        "recall_binary": 0.7666666666666667,
-        "f1_binary": 0.647887323943662,
-        "precision_macro": 0.3915989159891599,
-        "recall_macro": 0.43333333333333335,
-        "f1_macro": 0.39290917921321034,
+        "accuracy": 0.4837962962962963,
+        "precision_binary": 0.48771929824561405,
+        "recall_binary": 0.6435185185185185,
+        "f1_binary": 0.5548902195608783,
+        "precision_macro": 0.48195488721804514,
+        "recall_macro": 0.4837962962962963,
+        "f1_macro": 0.4702825753451774,
         "confusion_matrix": [
           [
-            4,
-            36
+            70,
+            146
           ],
           [
-            14,
-            46
+            77,
+            139
           ]
         ],
-        "roc_auc": 0.42625
+        "roc_auc": 0.47387259945130317
       }
     },
-    "span": {
+    "span_heuristic": {
       "notes": "String-match IOB baseline (zero-shot)",
-      "n_evaluated": 95,
+      "n_evaluated": 432,
       "token_metrics_avg": {
         "accuracy": 1.0,
         "precision": 1.0,
@@ -54,6 +52,20 @@
         "precision": 1.0,
         "recall": 1.0,
         "f1": 1.0
+      }
+    },
+    "span_untrained_model": {
+      "notes": "Untrained model (random head) - establishes lower bound",
+      "metrics": {
+        "loss": 1.171367883682251,
+        "model_preparation_time": 0.0012,
+        "precision": 0.0113314447592068,
+        "recall": 0.04,
+        "f1": 0.01766004415011038,
+        "accuracy": 0.3229665071770335,
+        "runtime": 6.2132,
+        "samples_per_second": 69.529,
+        "steps_per_second": 4.346
       }
     }
   }

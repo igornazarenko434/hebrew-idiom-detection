@@ -1,0 +1,72 @@
+{
+  "mode": "zero_shot",
+  "mission": "3.2",
+  "model_id": "bert-base-multilingual-cased",
+  "split": "unseen_idiom_test",
+  "n_samples": 480,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "stats": {
+      "total_samples": 480,
+      "missing_iob2": 0,
+      "valid_iob2": 480,
+      "tokenization_misaligned": 0,
+      "tokenization_aligned": 480
+    }
+  },
+  "tasks": {
+    "classification": {
+      "metrics": {
+        "accuracy": 0.5458333333333333,
+        "precision_binary": 0.5491071428571429,
+        "recall_binary": 0.5125,
+        "f1_binary": 0.5301724137931034,
+        "precision_macro": 0.5460379464285714,
+        "recall_macro": 0.5458333333333334,
+        "f1_macro": 0.5453281423804226,
+        "confusion_matrix": [
+          [
+            139,
+            101
+          ],
+          [
+            117,
+            123
+          ]
+        ],
+        "roc_auc": 0.5559375
+      }
+    },
+    "span_heuristic": {
+      "notes": "String-match IOB baseline (zero-shot)",
+      "n_evaluated": 480,
+      "token_metrics_avg": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "span_metrics_avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "span_untrained_model": {
+      "notes": "Untrained model (random head) - establishes lower bound",
+      "metrics": {
+        "loss": NaN,
+        "model_preparation_time": 0.0013,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.6386554621848739,
+        "runtime": 6.7637,
+        "samples_per_second": 70.967,
+        "steps_per_second": 4.435
+      }
+    }
+  }
+}

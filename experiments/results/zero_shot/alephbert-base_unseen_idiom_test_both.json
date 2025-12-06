@@ -1,0 +1,72 @@
+{
+  "mode": "zero_shot",
+  "mission": "3.2",
+  "model_id": "onlplab/alephbert-base",
+  "split": "unseen_idiom_test",
+  "n_samples": 480,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "stats": {
+      "total_samples": 480,
+      "missing_iob2": 0,
+      "valid_iob2": 480,
+      "tokenization_misaligned": 0,
+      "tokenization_aligned": 480
+    }
+  },
+  "tasks": {
+    "classification": {
+      "metrics": {
+        "accuracy": 0.5229166666666667,
+        "precision_binary": 0.515850144092219,
+        "recall_binary": 0.7458333333333333,
+        "f1_binary": 0.6098807495741057,
+        "precision_macro": 0.5286017637754328,
+        "recall_macro": 0.5229166666666667,
+        "f1_macro": 0.4979698654036748,
+        "confusion_matrix": [
+          [
+            72,
+            168
+          ],
+          [
+            61,
+            179
+          ]
+        ],
+        "roc_auc": 0.47963541666666665
+      }
+    },
+    "span_heuristic": {
+      "notes": "String-match IOB baseline (zero-shot)",
+      "n_evaluated": 480,
+      "token_metrics_avg": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "span_metrics_avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "span_untrained_model": {
+      "notes": "Untrained model (random head) - establishes lower bound",
+      "metrics": {
+        "loss": NaN,
+        "model_preparation_time": 0.0012,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "accuracy": 0.24369747899159663,
+        "runtime": 6.7607,
+        "samples_per_second": 70.999,
+        "steps_per_second": 4.437
+      }
+    }
+  }
+}

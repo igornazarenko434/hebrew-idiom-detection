@@ -11,6 +11,8 @@ import re
 import matplotlib.pyplot as plt
 import seaborn as sns
 from bidi.algorithm import get_display
+import json
+import ast
 
 
 class DatasetLoader:
@@ -25,7 +27,8 @@ class DatasetLoader:
         """
         if data_path is None:
             project_root = Path(__file__).parent.parent
-            data_path = project_root / "data" / "expressions_data_tagged.csv"
+            # Default to latest dataset in main data folder
+            data_path = project_root / "data" / "expressions_data_tagged_v2.csv"
 
         self.data_path = Path(data_path)
         self.df = None
@@ -41,8 +44,13 @@ class DatasetLoader:
         print(f"Loading dataset from: {self.data_path}")
 
         try:
-            # Load CSV with UTF-8 encoding for Hebrew text
+            # Load CSV with UTF-8 encoding for Hebrew text (v2 schema)
             self.df = pd.read_csv(self.data_path, encoding='utf-8-sig')
+            for col in ['label', 'start_token', 'end_token',
+                        'num_tokens', 'start_char', 'end_char']:
+                if col in self.df.columns:
+                    self.df[col] = pd.to_numeric(self.df[col], errors='coerce')
+
             print("✅ Dataset loaded successfully!")
             print(f"Total rows: {len(self.df)}")
             return self.df
@@ -109,10 +117,18 @@ class DatasetLoader:
         print("MISSING VALUES CHECK")
         print("=" * 80)
 
+        # v2 canonical columns
+        text_col = 'sentence'
+        expr_col = 'base_pie'
+        matched_col = 'pie_span'
+        iob_col = 'iob_tags'
+        start_char_col = 'start_char'
+        end_char_col = 'end_char'
+
         # Define critical fields per PRD (adjust if PRD allows NAs)
-        critical_fields = ['text', 'expression', 'num_tokens', 'label', 'label_2']
+        critical_fields = ['sentence', 'base_pie', 'num_tokens', 'label']
         # Annotation-critical fields (may be allowed NA if PRD specifies)
-        annotation_fields = ['matched_expression', 'span_start', 'span_end', 'iob2_tags']
+        annotation_fields = ['pie_span', 'start_char', 'end_char', 'iob_tags']
 
         missing_stats = pd.DataFrame({
             'Missing_Count': self.df.isnull().sum(),
@@ -167,7 +183,7 @@ class DatasetLoader:
         print(f"📌 Duplicate IDs: {id_duplicates}")
 
         # Duplicate text (same sentence)
-        text_duplicates = self.df['text'].duplicated().sum()
+        text_duplicates = self.df['sentence'].duplicated().sum()
         print(f"📌 Duplicate sentences (text): {text_duplicates}")
 
         if complete_duplicates == 0 and id_duplicates == 0:
@@ -197,10 +213,9 @@ class DatasetLoader:
 
         # Expected columns from PRD Section 2.2
         expected_columns = [
-            'id', 'split', 'language', 'source', 'text', 'expression',
-            'matched_expression', 'span_start', 'span_end',
-            'token_span_start', 'token_span_end', 'num_tokens',
-            'label', 'label_2', 'iob2_tags', 'char_mask'
+            'id', 'sentence', 'base_pie', 'pie_span', 'label', 'label_str',
+            'tokens', 'iob_tags', 'start_token', 'end_token', 'num_tokens',
+            'char_mask', 'start_char', 'end_char', 'split', 'language', 'source'
         ]
 
         actual_columns = set(self.df.columns)
@@ -232,6 +247,194 @@ class DatasetLoader:
         text = text.replace('\xa0', ' ')
         text = text.replace('–', '-').replace('—', '-').replace('־', '-')  # en/em dash & maqaf
         return text
+
+    # ---------- NEW: punctuation-aware tokenization & span realignment ----------
+    def _tokenize_with_punctuation(self, text: str) -> List[Tuple[str, int, int]]:
+        """
+        Tokenize Hebrew text while separating leading/trailing punctuation.
+        Returns a list of (token, start_char, end_char) tuples.
+        """
+        # Common punctuation to peel from token edges
+        punct_chars = set(".,!?;:()[]{}\"'״׳“”‘’«»‹›„‚…")
+
+        tokens_with_offsets = []
+        i = 0
+        n = len(text)
+
+        while i < n:
+            if text[i].isspace():
+                i += 1
+                continue
+
+            start = i
+            while i < n and not text[i].isspace():
+                i += 1
+            raw = text[start:i]
+
+            # Peel leading punctuation
+            cursor = start
+            while raw and raw[0] in punct_chars:
+                tokens_with_offsets.append((raw[0], cursor, cursor + 1))
+                raw = raw[1:]
+                cursor += 1
+
+            # Peel trailing punctuation (collect, then append in order)
+            trailing = []
+            tail_end = cursor + len(raw)
+            while raw and raw[-1] in punct_chars:
+                tail_end -= 1
+                trailing.append((raw[-1], tail_end, tail_end + 1))
+                raw = raw[:-1]
+
+            if raw:
+                tokens_with_offsets.append((raw, cursor, cursor + len(raw)))
+
+            # Append trailing punctuation in original order
+            for tok in reversed(trailing):
+                tokens_with_offsets.append(tok)
+
+        return tokens_with_offsets
+
+    def retokenize_and_realign(self) -> Dict:
+        """
+        Re-tokenize sentences with punctuation separation and recompute
+        tokens/num_tokens/start_token/end_token/iob_tags/char_mask so that
+        token spans align with pie_span and character spans.
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        print("\n" + "=" * 80)
+        print("RE-TOKENIZATION & SPAN REALIGNMENT")
+        print("=" * 80)
+
+        mismatched_spans = []
+        missing_idiom_tokens = []
+
+        for idx, row in self.df.iterrows():
+            text = str(row['sentence'])
+            pie_span = str(row['pie_span'])
+
+            # Recompute char spans from the actual sentence to avoid drift
+            pos = text.find(pie_span)
+            if pos != -1:
+                start_char = pos
+                end_char = pos + len(pie_span)
+            else:
+                start_char = int(row['start_char'])
+                end_char = int(row['end_char'])
+
+            tok_with_offsets = self._tokenize_with_punctuation(text)
+            tokens = [t for t, _, _ in tok_with_offsets]
+            offsets = [(s, e) for _, s, e in tok_with_offsets]
+
+            idiom_token_indices = [
+                i for i, (s, e) in enumerate(offsets)
+                if s >= start_char and e <= end_char
+            ]
+
+            if not idiom_token_indices:
+                missing_idiom_tokens.append(row['id'])
+                continue
+
+            start_token = min(idiom_token_indices)
+            end_token = max(idiom_token_indices) + 1
+
+            iob = ['O'] * len(tokens)
+            iob[start_token] = 'B-IDIOM'
+            for j in idiom_token_indices[1:]:
+                iob[j] = 'I-IDIOM'
+
+            token_span_text = ' '.join(tokens[start_token:end_token])
+            if token_span_text != pie_span:
+                mismatched_spans.append(row['id'])
+
+            # Update row in-place
+            self.df.at[idx, 'tokens'] = tokens  # keep as list for JSON friendliness
+            self.df.at[idx, 'num_tokens'] = len(tokens)
+            self.df.at[idx, 'start_token'] = start_token
+            self.df.at[idx, 'end_token'] = end_token
+            self.df.at[idx, 'start_char'] = start_char
+            self.df.at[idx, 'end_char'] = end_char
+            self.df.at[idx, 'iob_tags'] = iob  # list of tags
+            self.df.at[idx, 'char_mask'] = ''.join(
+                '1' if start_char <= pos < end_char else '0'
+                for pos in range(len(text))
+            )
+
+        if missing_idiom_tokens:
+            print(f"❌ Missing idiom token alignment in {len(missing_idiom_tokens)} rows "
+                  f"(examples: {missing_idiom_tokens[:5]})")
+        if mismatched_spans:
+            print(f"⚠️ Token span text mismatch with pie_span in {len(mismatched_spans)} rows "
+                  f"(examples: {mismatched_spans[:5]})")
+
+        if not missing_idiom_tokens and not mismatched_spans:
+            print("\n✅ Re-tokenization complete: tokens, IOB, and spans align.")
+
+        return {
+            'missing_idiom_tokens': missing_idiom_tokens,
+            'mismatched_token_spans': mismatched_spans
+        }
+
+    def _coerce_types_for_export(self) -> None:
+        """
+        Ensure columns have consistent Python types for JSON/CSV export.
+        - tokens: list[str]
+        - iob_tags: list[str]
+        - numeric spans/counts: int
+        - char_mask: str (compact)
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        list_cols = ['tokens', 'iob_tags']
+        int_cols = ['label', 'start_token', 'end_token', 'num_tokens', 'start_char', 'end_char']
+
+        for col in list_cols:
+            if col not in self.df.columns:
+                continue
+            def to_list(v):
+                if isinstance(v, list):
+                    return v
+                try:
+                    return json.loads(v)
+                except Exception:
+                    return str(v).split()
+            self.df[col] = self.df[col].apply(to_list)
+
+        for col in int_cols:
+            if col in self.df.columns:
+                self.df[col] = pd.to_numeric(self.df[col], errors='coerce').astype('Int64').astype('object').apply(lambda x: int(x) if pd.notna(x) else None)
+
+        if 'char_mask' in self.df.columns:
+            self.df['char_mask'] = self.df['char_mask'].astype(str)
+
+    def save_datasets(self, base_path: Path, with_splits_path: Path = None, splits_dir: Path = None) -> None:
+        """
+        Save the dataset to CSV/XLSX/JSON plus optional split files.
+        """
+        if self.df is None:
+            raise ValueError("Dataset not loaded.")
+
+        self._coerce_types_for_export()
+
+        base_path.parent.mkdir(parents=True, exist_ok=True)
+        self.df.to_csv(base_path.with_suffix('.csv'), index=False, encoding='utf-8-sig')
+        self.df.to_excel(base_path.with_suffix('.xlsx'), index=False)
+        self.df.to_json(base_path.with_suffix('.json'), orient='records', force_ascii=False)
+
+        if with_splits_path:
+            self.df.to_csv(with_splits_path.with_suffix('.csv'), index=False, encoding='utf-8-sig')
+            self.df.to_json(with_splits_path.with_suffix('.json'), orient='records', force_ascii=False)
+
+        if splits_dir:
+            splits_dir.mkdir(parents=True, exist_ok=True)
+            if 'split' in self.df.columns:
+                for split_name in self.df['split'].unique():
+                    sub = self.df[self.df['split'] == split_name]
+                    sub.to_csv(splits_dir / f'{split_name}.csv', index=False, encoding='utf-8-sig')
+                    sub.to_json(splits_dir / f'{split_name}.json', orient='records', force_ascii=False)
 
     def _rtl_text(self, text: str):
         """
@@ -325,8 +528,8 @@ class DatasetLoader:
         if self.df is None:
             raise ValueError("Dataset not loaded.")
 
-        # Use 'text' as-is if original not present yet
-        base_text_col = 'text_original' if 'text_original' in self.df.columns else 'text'
+        # Use 'sentence' as-is if original not present yet
+        base_text_col = 'sentence_original' if 'sentence_original' in self.df.columns else 'sentence'
 
         print("\n" + "=" * 80)
         print("CHAR SPAN & MASK VERIFICATION")
@@ -340,17 +543,17 @@ class DatasetLoader:
             txt = row[base_text_col]
             cm = row.get('char_mask', None)
 
-            if pd.isna(row.get('span_start')) or pd.isna(row.get('span_end')) or pd.isna(row.get('matched_expression')):
+            if pd.isna(row.get('start_char')) or pd.isna(row.get('end_char')) or pd.isna(row.get('pie_span')):
                 # allow NA if PRD permits; just skip verification
                 continue
 
-            s = int(row['span_start'])
-            e = int(row['span_end'])  # exclusive end by data design
+            s = int(row['start_char'])
+            e = int(row['end_char'])  # exclusive end by data design
             if e < s or s < 0 or e > len(txt):
                 length_mismatch.append(idx)
                 continue
 
-            if txt[s:e].strip() != str(row['matched_expression']).strip():
+            if txt[s:e].strip() != str(row['pie_span']).strip():
                 span_mismatch.append(idx)
 
             if isinstance(cm, str):
@@ -387,14 +590,14 @@ class DatasetLoader:
         print("Cleaning and normalizing Hebrew text...")
 
         # Store original text (for comparison if needed)
-        if 'text_original' not in self.df.columns:
-            self.df['text_original'] = self.df['text'].copy()
+        if 'sentence_original' not in self.df.columns:
+            self.df['sentence_original'] = self.df['sentence'].copy()
 
         # Clean text
-        self.df['text'] = self.df['text'].apply(self.clean_text)
+        self.df['sentence'] = self.df['sentence'].apply(self.clean_text)
 
         # Check how many texts were modified
-        modified_count = (self.df['text'] != self.df['text_original']).sum()
+        modified_count = (self.df['sentence'] != self.df['sentence_original']).sum()
 
         print("✅ Text preprocessing complete!")
         print(f"   Modified {modified_count} out of {len(self.df)} texts")
@@ -403,9 +606,9 @@ class DatasetLoader:
         if modified_count > 0:
             print(f"\nExample of text cleaning:")
             for idx in range(min(3, len(self.df))):
-                if self.df.iloc[idx]['text'] != self.df.iloc[idx]['text_original']:
-                    print(f"\n  Original: '{self.df.iloc[idx]['text_original'][:60]}...'")
-                    print(f"  Cleaned:  '{self.df.iloc[idx]['text'][:60]}...'")
+                if self.df.iloc[idx]['sentence'] != self.df.iloc[idx]['sentence_original']:
+                    print(f"\n  Original: '{self.df.iloc[idx]['sentence_original'][:60]}...'")
+                    print(f"  Cleaned:  '{self.df.iloc[idx]['sentence'][:60]}...'")
                     break
 
     def verify_iob2_tags(self) -> Dict:
@@ -431,17 +634,26 @@ class DatasetLoader:
         whitespace_token_mismatch = 0  # diagnostic only
 
         for idx, row in self.df.iterrows():
-            if pd.isna(row['iob2_tags']):
+            if pd.isna(row['iob_tags']):
                 # allow NA if PRD permits; counted earlier in missing-values report
                 continue
 
             # 0) Diagnostic: naive whitespace token count vs. num_tokens
-            ws_tokens = len(str(row['text']).split())
-            if ws_tokens != int(row['num_tokens']):
+            # Using pre-tokenized 'tokens' column from v2
+            tok_field = row['tokens']
+            if isinstance(tok_field, list):
+                actual_tokens = tok_field
+            else:
+                try:
+                    actual_tokens = json.loads(tok_field)
+                except (json.JSONDecodeError, TypeError):
+                    actual_tokens = str(row['sentence']).split()
+
+            if len(actual_tokens) != int(row['num_tokens']):
                 whitespace_token_mismatch += 1
 
             # 1) Parse IOB2 tags
-            iob2_tags = str(row['iob2_tags']).split()
+            iob2_tags = row['iob_tags'] if isinstance(row['iob_tags'], list) else str(row['iob_tags']).split()
             num_tags = len(iob2_tags)
             expected_tokens = int(row['num_tokens'])
 
@@ -464,8 +676,8 @@ class DatasetLoader:
 
             # 5) Token span indices are half-open [start, end)
             try:
-                s = int(row['token_span_start'])
-                e = int(row['token_span_end'])  # exclusive end
+                s = int(row['start_token'])
+                e = int(row['end_token'])  # exclusive end
                 if s < 0 or e < 0 or s > e or e > expected_tokens:
                     span_mismatch_errors.append(idx)
                 else:
@@ -476,7 +688,7 @@ class DatasetLoader:
                 # if indices are NA, earlier missing check will cover
                 pass
 
-        total_checked = (self.df['iob2_tags'].notna()).sum()
+        total_checked = (self.df['iob_tags'].notna()).sum()
         alignment_rate = ((total_checked - len(misalignment_errors)) / total_checked) * 100 if total_checked else 0.0
         valid_tags_rate = ((total_checked - len(invalid_tag_errors)) / total_checked) * 100 if total_checked else 0.0
         valid_sequence_rate = ((total_checked - len(sequence_errors)) / total_checked) * 100 if total_checked else 0.0
@@ -531,6 +743,11 @@ class DatasetLoader:
 
         stats = {}
 
+        text_col = 'sentence'
+        matched_col = 'pie_span'
+        token_start_col = 'start_token'
+        token_end_col = 'end_token'
+
         # Total sentences
         stats['total_sentences'] = len(self.df)
         print(f"\n📊 Total Sentences: {stats['total_sentences']}")
@@ -542,15 +759,15 @@ class DatasetLoader:
         print(f"\n📊 Label Distribution:")
         for label, count in label_counts.items():
             percentage = (count / len(self.df)) * 100
-            print(f"  • {label:15s}: {count:5d} ({percentage:.2f}%)")
+            print(f"  • {str(label):>2}: {count:5d} ({percentage:.2f}%)")
 
         # Unique idioms/expressions
-        unique_expressions = self.df['expression'].nunique()
+        unique_expressions = self.df['base_pie'].nunique()
         stats['unique_expressions'] = unique_expressions
         print(f"\n📊 Unique Idioms/Expressions: {unique_expressions}")
 
         # ---------- NEW: Expression occurrence statistics (min/max/mean/std) ----------
-        expr_counts = self.df['expression'].value_counts()
+        expr_counts = self.df['base_pie'].value_counts()
         stats['expression_occurrences'] = {
             'min': int(expr_counts.min()),
             'max': int(expr_counts.max()),
@@ -586,8 +803,8 @@ class DatasetLoader:
         print(f"  • Max:     {max_tokens:.0f} tokens")
 
         # ---------- NEW: Character-level length statistics ----------
-        self.df['sentence_char_length'] = self.df['text'].str.len()
-        self.df['idiom_char_length'] = self.df['matched_expression'].str.len()
+        self.df['sentence_char_length'] = self.df[text_col].str.len()
+        self.df['idiom_char_length'] = self.df[matched_col].str.len()
 
         stats['sentence_char_length'] = {
             'mean': float(self.df['sentence_char_length'].mean()),
@@ -605,7 +822,7 @@ class DatasetLoader:
         print(f"  • Max:     {stats['sentence_char_length']['max']} chars")
 
         # Idiom length (token-span) – computed using half-open [s:e)
-        self.df['idiom_length'] = (self.df['token_span_end'] - self.df['token_span_start']).astype(int)
+        self.df['idiom_length'] = (self.df[token_end_col] - self.df[token_start_col]).astype(int)
         avg_idiom_length = self.df['idiom_length'].mean()
         median_idiom_length = self.df['idiom_length'].median()
         std_idiom_length = self.df['idiom_length'].std()
@@ -641,7 +858,7 @@ class DatasetLoader:
         print(f"  • Max:     {stats['idiom_char_length']['max']} chars")
 
         # Top 10 most frequent expressions
-        top_expressions = self.df['expression'].value_counts().head(10)
+        top_expressions = self.df['base_pie'].value_counts().head(10)
         stats['top_10_expressions'] = top_expressions.to_dict()
 
         print(f"\n📊 Top 10 Most Frequent Expressions:")
@@ -649,7 +866,7 @@ class DatasetLoader:
             print(f"  {i:2d}. {expr:40s} : {count:3d} occurrences")
 
         # ---------- NEW: per-expression label coverage (diagnostic) ----------
-        coverage = self.df.pivot_table(index='expression', columns='label_2', values='id', aggfunc='count', fill_value=0)
+        coverage = self.df.pivot_table(index='base_pie', columns='label', values='id', aggfunc='count', fill_value=0)
         stats['per_expression_label_counts'] = coverage.to_dict()
 
         return stats
@@ -671,6 +888,9 @@ class DatasetLoader:
         print("\n" + "=" * 80)
         print("SENTENCE TYPE ANALYSIS (Mission 2.4)")
         print("=" * 80)
+
+        text_col = 'sentence'
+        label_col = 'label'
 
         # Add sentence type column
         def classify_sentence_type(text: str) -> str:
@@ -696,7 +916,7 @@ class DatasetLoader:
             else:
                 return 'Declarative'
 
-        self.df['sentence_type'] = self.df['text'].apply(classify_sentence_type)
+        self.df['sentence_type'] = self.df[text_col].apply(classify_sentence_type)
 
         # Overall sentence type distribution
         type_counts = self.df['sentence_type'].value_counts()
@@ -708,21 +928,13 @@ class DatasetLoader:
             print(f"  • {stype:15s}: {count:5d} ({pct:5.2f}%)")
 
         # Cross-tabulation: sentence type by label
-        crosstab = pd.crosstab(
-            self.df['sentence_type'],
-            self.df['label'],
-            margins=True
-        )
+        crosstab = pd.crosstab(self.df['sentence_type'], self.df[label_col], margins=True)
 
         print("\n📊 Sentence Type by Label (Literal vs Figurative):")
         print(crosstab.to_string())
 
         # Percentage breakdown
-        crosstab_pct = pd.crosstab(
-            self.df['sentence_type'],
-            self.df['label'],
-            normalize='columns'
-        ) * 100
+        crosstab_pct = pd.crosstab(self.df['sentence_type'], self.df[label_col], normalize='columns') * 100
 
         print("\n📊 Percentage Distribution within each Label:")
         print(crosstab_pct.round(2).to_string())
@@ -730,8 +942,8 @@ class DatasetLoader:
         # Check balance across labels
         print("\n📊 Balance Check (are sentence types distributed evenly across labels?):")
         for stype in type_counts.index:
-            literal_count = self.df[(self.df['sentence_type'] == stype) & (self.df['label'] == 'מילולי')].shape[0]
-            figurative_count = self.df[(self.df['sentence_type'] == stype) & (self.df['label'] == 'פיגורטיבי')].shape[0]
+            literal_count = self.df[(self.df['sentence_type'] == stype) & (self.df[label_col] == 0)].shape[0]
+            figurative_count = self.df[(self.df['sentence_type'] == stype) & (self.df[label_col] == 1)].shape[0]
             total_type = literal_count + figurative_count
 
             if total_type > 0:
@@ -741,10 +953,10 @@ class DatasetLoader:
 
         # Sentence types by expression (top 10 expressions)
         print("\n📊 Sentence Types by Top Expressions:")
-        top_expressions = self.df['expression'].value_counts().head(10).index
+        top_expressions = self.df['base_pie'].value_counts().head(10).index
 
         for expr in top_expressions:
-            expr_df = self.df[self.df['expression'] == expr]
+            expr_df = self.df[self.df['base_pie'] == expr]
             type_dist = expr_df['sentence_type'].value_counts()
             print(f"\n  {expr}:")
             for stype, count in type_dist.items():
@@ -773,8 +985,8 @@ class DatasetLoader:
         print("IDIOM POSITION ANALYSIS")
         print("=" * 80)
 
-        # Compute position ratio
-        self.df['position_ratio'] = self.df['token_span_start'] / self.df['num_tokens']
+        # Compute position ratio using canonical token span columns
+        self.df['position_ratio'] = self.df['start_token'] / self.df['num_tokens']
 
         # Classify positions
         def classify_position(ratio: float) -> str:
@@ -827,6 +1039,24 @@ class DatasetLoader:
         print(f"  • Middle (33-67%): {stats['position_distribution']['middle']} ({stats['position_percentages']['middle']:.2f}%)")
         print(f"  • End (67-100%): {stats['position_distribution']['end']} ({stats['position_percentages']['end']:.2f}%)")
 
+        # Per-split stats if split column exists
+        if 'split' in self.df.columns:
+            stats['by_split'] = {}
+            for split_name in sorted(self.df['split'].unique()):
+                sub = self.df[self.df['split'] == split_name]
+                pos_counts = sub['position_category'].value_counts()
+                total_split = len(sub)
+                stats['by_split'][split_name] = {
+                    'start_pct': float((pos_counts.get('start', 0) / total_split) * 100),
+                    'middle_pct': float((pos_counts.get('middle', 0) / total_split) * 100),
+                    'end_pct': float((pos_counts.get('end', 0) / total_split) * 100),
+                    'sentences': total_split
+                }
+                print(f"\n🔎 Split '{split_name}':")
+                print(f"  • Start: {pos_counts.get('start', 0)} ({stats['by_split'][split_name]['start_pct']:.2f}%)")
+                print(f"  • Middle: {pos_counts.get('middle', 0)} ({stats['by_split'][split_name]['middle_pct']:.2f}%)")
+                print(f"  • End: {pos_counts.get('end', 0)} ({stats['by_split'][split_name]['end_pct']:.2f}%)")
+
         # Compare positions by label
         print(f"\n📊 Position Distribution by Label:")
         for label in self.df['label'].unique():
@@ -857,20 +1087,16 @@ class DatasetLoader:
         print("POLYSEMY ANALYSIS")
         print("=" * 80)
 
-        # Group by expression and label
-        expr_label_counts = self.df.groupby(['expression', 'label']).size().unstack(fill_value=0)
-
+        expr_label_counts = self.df.groupby(['base_pie', 'label']).size().unstack(fill_value=0)
         # Calculate figurative ratio for each expression
         expr_label_counts['total'] = expr_label_counts.sum(axis=1)
-        expr_label_counts['figurative_ratio'] = (
-            expr_label_counts.get('פיגורטיבי', 0) / expr_label_counts['total']
-        )
+        expr_label_counts['figurative_ratio'] = expr_label_counts.get(1, 0) / expr_label_counts['total']
         expr_label_counts['figurative_percentage'] = expr_label_counts['figurative_ratio'] * 100
-
+        
         # Identify polysemous idioms (appear in both categories)
-        has_literal = expr_label_counts.get('מילולי', 0) > 0
-        has_figurative = expr_label_counts.get('פיגורטיבי', 0) > 0
-        polysemous_idioms = expr_label_counts[has_literal & has_figurative]
+        has_literal = expr_label_counts.get(0, 0) > 0
+        has_figurative = expr_label_counts.get(1, 0) > 0
+        polysemous_idioms = expr_label_counts[has_literal & has_figurative].copy()
 
         # Identify mono-sense idioms
         only_literal = expr_label_counts[has_literal & ~has_figurative]
@@ -902,8 +1128,8 @@ class DatasetLoader:
             fig_pct = row['figurative_percentage']
             lit_pct = 100 - fig_pct
             print(f"  {i}. {expr}")
-            print(f"     Figurative: {row.get('פיגורטיבי', 0):.0f} ({fig_pct:.1f}%) | "
-                  f"Literal: {row.get('מילולי', 0):.0f} ({lit_pct:.1f}%)")
+            print(f"     Figurative: {row.get(1, 0):.0f} ({fig_pct:.1f}%) | "
+                  f"Literal: {row.get(0, 0):.0f} ({lit_pct:.1f}%)")
 
         # Store for heatmap visualization
         self.polysemy_data = expr_label_counts
@@ -934,8 +1160,14 @@ class DatasetLoader:
         all_tokens = []
         tokens_per_sentence = []
 
-        for text in self.df['text']:
-            tokens = text.split()
+        for tokens_str in self.df['tokens']:
+            if isinstance(tokens_str, list):
+                tokens = tokens_str
+            else:
+                try:
+                    tokens = json.loads(tokens_str)
+                except (json.JSONDecodeError, TypeError):
+                    tokens = str(tokens_str).split()  # Fallback for malformed tokens column
             all_tokens.extend(tokens)
             tokens_per_sentence.append(set(tokens))
 
@@ -958,7 +1190,7 @@ class DatasetLoader:
         for label in self.df['label'].unique():
             label_df = self.df[self.df['label'] == label]
             label_tokens = []
-            for text in label_df['text']:
+            for text in label_df['sentence']:
                 label_tokens.extend(text.split())
 
             label_vocab = set(label_tokens)
@@ -982,7 +1214,7 @@ class DatasetLoader:
 
         # Top words in idioms
         idiom_tokens = []
-        for matched_expr in self.df['matched_expression'].dropna():
+        for matched_expr in self.df['pie_span'].dropna():
             idiom_tokens.extend(str(matched_expr).split())
 
         idiom_word_freq = Counter(idiom_tokens)
@@ -1065,8 +1297,12 @@ class DatasetLoader:
         self.df['subclause_ratio'] = 0.0
 
         for idx, row in self.df.iterrows():
-            text = row['text']
-            tokens = text.split()
+            text = row['sentence'] # Keep 'sentence' for punctuation count
+            try:
+                tokens = json.loads(row['tokens'])
+            except (json.JSONDecodeError, TypeError):
+                # Fallback to whitespace split if 'tokens' is not valid JSON
+                tokens = str(row['sentence']).split() # Use 'sentence' for fallback
 
             # Count subclause markers
             subclause_count = sum(1 for token in tokens if token in subclause_markers)
@@ -1133,8 +1369,13 @@ class DatasetLoader:
 
         # Collect all tokens
         all_tokens = []
-        for text in self.df['text']:
-            all_tokens.extend(text.split())
+        for tokens_str in self.df['tokens']:
+            try:
+                tokens = json.loads(tokens_str)
+            except (json.JSONDecodeError, TypeError):
+                # Fallback to whitespace split if 'tokens' is not valid JSON
+                tokens = str(tokens_str).split()
+            all_tokens.extend(tokens)
 
         # Word frequencies
         word_freq = Counter(all_tokens)
@@ -1193,7 +1434,7 @@ class DatasetLoader:
         for label in self.df['label'].unique():
             label_df = self.df[self.df['label'] == label]
             label_tokens = []
-            for text in label_df['text']:
+            for text in label_df['sentence']:
                 label_tokens.extend(text.split())
 
             label_word_freq = Counter(label_tokens)
@@ -1240,13 +1481,20 @@ class DatasetLoader:
 
         # Extract context words (±3 tokens around idiom)
         context_words_all = []
-        context_by_label = {'מילולי': [], 'פיגורטיבי': []}
+        from collections import defaultdict
+        context_by_label = defaultdict(list)
 
         for idx, row in self.df.iterrows():
-            tokens = row['text'].split()
-            span_start = int(row['token_span_start'])
-            span_end = int(row['token_span_end'])
-            label = row['label']
+            try:
+                tokens = json.loads(row['tokens'])
+            except (json.JSONDecodeError, TypeError):
+                # Fallback to whitespace split if 'tokens' is not valid JSON
+                tokens = str(row['sentence']).split()
+            span_start = int(row['start_token'])
+            span_end = int(row['end_token'])
+
+            label_val = row['label']
+            label = {0: 'Literal', 1: 'Figurative'}.get(label_val, str(label_val))
 
             # Get context (3 tokens before and after)
             context_before = tokens[max(0, span_start-3):span_start]
@@ -1261,8 +1509,8 @@ class DatasetLoader:
         top_20_context = context_freq_all.most_common(20)
 
         # By label
-        context_freq_literal = Counter(context_by_label['מילולי'])
-        context_freq_figurative = Counter(context_by_label['פיגורטיבי'])
+        context_freq_literal = Counter(context_by_label['Literal'])
+        context_freq_figurative = Counter(context_by_label['Figurative'])
 
         top_20_literal = context_freq_literal.most_common(20)
         top_20_figurative = context_freq_figurative.most_common(20)
@@ -1322,23 +1570,23 @@ class DatasetLoader:
         prefix_patterns = []
 
         for idx, row in self.df.iterrows():
-            matched_expr = str(row['matched_expression'])
+            matched_expr = str(row['pie_span'])
             if any(matched_expr.startswith(prefix) for prefix in prefixes):
                 prefix_patterns.append({
-                    'expression': row['expression'],
+                    'expression': row['base_pie'],
                     'matched_expression': matched_expr,
                     'has_prefix': True
                 })
 
         # Consistency per idiom
         idiom_consistency = {}
-        for expr in self.df['expression'].unique():
-            expr_df = self.df[self.df['expression'] == expr]
+        for expr in self.df['base_pie'].unique():
+            expr_df = self.df[self.df['base_pie'] == expr]
 
             # Check how consistent the matched expressions are
-            matched_variants = expr_df['matched_expression'].nunique()
-            most_common_match = expr_df['matched_expression'].mode()[0] if len(expr_df) > 0 else None
-            most_common_count = (expr_df['matched_expression'] == most_common_match).sum()
+            matched_variants = expr_df['pie_span'].nunique()
+            most_common_match = expr_df['pie_span'].mode()[0] if len(expr_df) > 0 else None
+            most_common_count = (expr_df['pie_span'] == most_common_match).sum()
             consistency_rate = most_common_count / len(expr_df)
 
             idiom_consistency[expr] = {
@@ -1367,6 +1615,125 @@ class DatasetLoader:
 
         return stats
 
+    # def apply_professor_corrections(self, output_dir: str = None) -> None:
+    #     """
+    #     Apply corrections and formatting requested by the professor:
+    #     1. Regenerate IDs
+    #     2. Add 'tokens' column
+    #     3. Rename columns (Strict Mapping: text->sentence, expression->base_pie, etc.)
+    #     4. Map labels to English
+    #     5. Drop char-level columns
+    #     6. Reorder columns
+    #     7. Save as CSV and XLSX
+    #     """
+    #     if self.df is None:
+    #         raise ValueError("Dataset not loaded.")
+
+    #     print("\n" + "=" * 80)
+    #     print("APPLYING PROFESSOR CORRECTIONS (Strict Mode)")
+    #     print("=" * 80)
+
+    #     df_new = self.df.copy()
+
+    #     # 1. Generate New IDs
+    #     # Sort to ensure deterministic IDs
+    #     df_new = df_new.sort_values(by=['expression', 'label', 'text'])
+        
+    #     # Map expressions to IDs (1 to 60)
+    #     unique_expressions = sorted(df_new['base_pie'].unique())
+    #     expr_to_id = {expr: i+1 for i, expr in enumerate(unique_expressions)}
+        
+    #     # Helper to generate ID
+    #     # Format: {idiom_id}_{lit/fig}_{count}
+    #     new_ids = []
+    #     counters = {}  # Key: (expr_id, label_type) -> current_count
+        
+    #     for _, row in df_new.iterrows():
+    #         expr_id = expr_to_id[row['base_pie']]
+    #         # Map label to short form
+    #         label_type = 'lit' if row['label'] == 'מילולי' else 'fig'
+            
+    #         key = (expr_id, label_type)
+    #         if key not in counters:
+    #             counters[key] = 0
+    #         counters[key] += 1
+            
+    #         new_id = f"{expr_id}_{label_type}_{counters[key]}"
+    #         new_ids.append(new_id)
+            
+    #     df_new['id'] = new_ids
+    #     print("✅ IDs regenerated (Format: ID_Type_Count)")
+
+    #     # 2. Create 'tokens' column
+    #     # Split text by whitespace to get tokens matching IOB2 tags
+    #     df_new['tokens'] = df_new['sentence'].apply(lambda x: str(x.strip().split()))
+    #     print("✅ 'tokens' column created")
+
+    #     # 3. Logic for Labels:
+    #     # label (Hebrew) -> label_str (English)
+    #     # label_2 (Int) -> label (Int) - Overwrite original label
+        
+    #     label_map = {'מילולי': 'Literal', 'פיגורטיבי': 'Figurative'}
+    #     df_new['label_str'] = df_new['label'].map(label_map)
+        
+    #     # Overwrite 'label' with the binary values from 'label_2'
+    #     if 'label_2' in df_new.columns:
+    #          df_new['label'] = df_new['label_2']
+    #          df_new.drop(columns=['label_2'], inplace=True)
+        
+    #     # 4. Renaming Columns
+    #     rename_map = {
+    #         'text': 'sentence',
+    #         'expression': 'base_pie',
+    #         'matched_expression': 'pie_span',
+    #         'iob2_tags': 'iob_tags',
+    #         'token_span_start': 'start_token',
+    #         'token_span_end': 'end_token',
+    #         'span_start': 'start_char',
+    #         'span_end': 'end_char'
+    #     }
+        
+    #     df_new = df_new.rename(columns=rename_map)
+        
+    #     # 5. Drops
+    #     # We already dropped label_2. 
+        
+    #     # 6. Reorder Columns
+    #     desired_cols = [
+    #         'id', 'sentence', 'base_pie', 'pie_span', 'label', 'label_str', 
+    #         'tokens', 'iob_tags', 'start_token', 'end_token', 'num_tokens',
+    #         'char_mask', 'start_char', 'end_char',
+    #         'split', 'language', 'source'
+    #     ]
+        
+    #     # Ensure columns exist
+    #     for col in desired_cols:
+    #         if col not in df_new.columns:
+    #             print(f"⚠️ Warning: Column '{col}' missing, filling with NaN or default")
+    #             if col == 'language': df_new[col] = 'he'
+    #             elif col == 'source': df_new[col] = 'inhouse'
+    #             else: df_new[col] = None
+                
+    #     df_final = df_new[desired_cols]
+    #     print("✅ Columns renamed, mapped, and reordered")
+
+    #     # 7. Save
+    #     if output_dir is None:
+    #         output_dir = self.data_path.parent.parent / "professor_review" / "data"
+        
+    #     output_dir = Path(output_dir)
+    #     output_dir.mkdir(parents=True, exist_ok=True)
+        
+    #     csv_path = output_dir / "expressions_data_tagged_v2.csv"
+    #     xlsx_path = output_dir / "expressions_data_tagged_v2.xlsx"
+        
+    #     df_final.to_csv(csv_path, index=False, encoding='utf-8-sig')
+    #     df_final.to_excel(xlsx_path, index=False)
+        
+    #     print(f"\n💾 Saved updated dataset to:")
+    #     print(f"  • CSV: {csv_path}")
+    #     print(f"  • XLSX: {xlsx_path}")
+
     def create_visualizations(self) -> None:
         """
         Create all required visualizations for Missions 2.2 and 2.4
@@ -1392,7 +1759,7 @@ class DatasetLoader:
         print("\n[1/6] Creating label distribution bar chart...")
         fig, ax = plt.subplots(figsize=(8, 6))
 
-        label_counts = self.df['label'].value_counts()
+        label_counts = self.df['label_str'].value_counts()
         label_display = self._rtl_list(label_counts.index.tolist())
         colors = ['#3498db', '#e74c3c']  # Blue for literal, Red for figurative
 
@@ -1444,7 +1811,7 @@ class DatasetLoader:
 
         # Ensure idiom_length column exists
         if 'idiom_length' not in self.df.columns:
-            self.df['idiom_length'] = (self.df['token_span_end'] - self.df['token_span_start']).astype(int)
+            self.df['idiom_length'] = (self.df['end_token'] - self.df['start_token']).astype(int)
 
         ax.hist(self.df['idiom_length'], bins=range(1, int(self.df['idiom_length'].max()) + 2),
                color='#9b59b6', alpha=0.7, edgecolor='black', align='left')
@@ -1469,7 +1836,7 @@ class DatasetLoader:
         print("\n[4/6] Creating top 10 idioms bar chart...")
         fig, ax = plt.subplots(figsize=(12, 8))
 
-        top_10 = self.df['expression'].value_counts().head(10)
+        top_10 = self.df['base_pie'].value_counts().head(10)
         display_expressions = self._rtl_list(top_10.index.tolist())
 
         bars = ax.barh(range(len(top_10)), top_10.values, color='#e67e22', alpha=0.8, edgecolor='black')
@@ -1560,16 +1927,16 @@ class DatasetLoader:
         fig, ax = plt.subplots(figsize=(10, 6))
 
         # Prepare data for boxplot
-        literal_lengths = self.df[self.df['label'] == 'מילולי']['num_tokens']
-        figurative_lengths = self.df[self.df['label'] == 'פיגורטיבי']['num_tokens']
+        literal_lengths = self.df[self.df['label'] == 0]['num_tokens']
+        figurative_lengths = self.df[self.df['label'] == 1]['num_tokens']
 
         box_labels = [
-            f"Literal\n({self._rtl_text('מילולי')})",
-            f"Figurative\n({self._rtl_text('פיגורטיבי')})"
+            f"Literal",
+            f"Figurative"
         ]
 
         bp = ax.boxplot([literal_lengths, figurative_lengths],
-                        labels=box_labels,
+                        tick_labels=box_labels,
                         patch_artist=True,
                         showmeans=True,
                         meanprops=dict(marker='D', markerfacecolor='red', markersize=8))
@@ -1689,16 +2056,15 @@ class DatasetLoader:
         fig, ax = plt.subplots(figsize=(10, 6))
 
         # Prepare data
-        plot_data = self.df[['num_tokens', 'label']].copy()
+        plot_data = self.df[['num_tokens', 'label_str']].copy()
 
-        sns.violinplot(data=plot_data, x='label', y='num_tokens', ax=ax,
-                      palette=['#3498db', '#e74c3c'], alpha=0.7)
+        sns.violinplot(data=plot_data, x='label_str', y='num_tokens', ax=ax,
+                      hue='label_str', palette=['#3498db', '#e74c3c'], alpha=0.7, legend=False)
 
         ax.set_xlabel('Label', fontsize=12, fontweight='bold')
         ax.set_ylabel('Sentence Length (tokens)', fontsize=12, fontweight='bold')
         ax.set_title('Sentence Length Distribution by Label\n(Violin Plot)', fontsize=14, fontweight='bold')
         ax.grid(axis='y', alpha=0.3)
-        self._rtl_ticklabels(ax, axis='x')
 
         plt.tight_layout()
         violin_path = figures_dir / "sentence_length_violin_by_label.png"
@@ -1846,10 +2212,10 @@ class DatasetLoader:
 
         # Calculate types and tokens per idiom
         idiom_diversity = []
-        for expr in self.df['expression'].unique():
-            expr_df = self.df[self.df['expression'] == expr]
+        for expr in self.df['base_pie'].unique():
+            expr_df = self.df[self.df['base_pie'] == expr]
             all_tokens = []
-            for text in expr_df['text']:
+            for text in expr_df['sentence']:
                 all_tokens.extend(text.split())
 
             types = len(set(all_tokens))
@@ -1894,16 +2260,21 @@ class DatasetLoader:
 
             # We need to run lexical richness by label first
             # This data should be available from analyze_lexical_richness()
-            labels = ['מילולי', 'פיגורטיבי']
-            display_labels = self._rtl_list(labels)
+            labels = [0, 1]
+            display_labels = ['Literal', 'Figurative']
             hapax_counts = []
             total_vocab = []
 
             for label in labels:
                 label_df = self.df[self.df['label'] == label]
                 label_tokens = []
-                for text in label_df['text']:
-                    label_tokens.extend(text.split())
+                
+                for tokens_str in label_df['tokens']:
+                    try:
+                        tokens = json.loads(tokens_str)
+                    except (json.JSONDecodeError, TypeError):
+                        tokens = str(tokens_str).split()
+                    label_tokens.extend(tokens)
 
                 from collections import Counter
                 word_freq = Counter(label_tokens)
@@ -2008,34 +2379,39 @@ class DatasetLoader:
     # ---------- NEW: simple label consistency check (Mission 2.2 aid) ----------
     def verify_label_consistency(self) -> Dict:
         """
-        Verify that label textual values match label_2 numeric coding (0 literal, 1 figurative).
+        Verify that label_str textual values match label numeric coding (0 Literal, 1 Figurative).
         """
         if self.df is None:
             raise ValueError("Dataset not loaded.")
 
         print("\n" + "=" * 80)
-        print("LABEL CONSISTENCY CHECK (label vs label_2)")
+        print("LABEL CONSISTENCY CHECK (label_str vs label)")
         print("=" * 80)
 
+        # Check if label_str exists (it should in v2)
+        if 'label_str' not in self.df.columns:
+             print("⚠️ label_str column missing. Cannot verify consistency.")
+             return {'inconsistencies': 0, 'status': 'skipped'}
+
         mapping_ok = (
-            ((self.df['label'] == 'מילולי') & (self.df['label_2'] == 0)) |
-            ((self.df['label'] == 'פיגורטיבי') & (self.df['label_2'] == 1))
+            ((self.df['label_str'] == 'Literal') & (self.df['label'] == 0)) |
+            ((self.df['label_str'] == 'Figurative') & (self.df['label'] == 1))
         )
         inconsistencies = (~mapping_ok).sum()
 
+        label_str_counts = self.df['label_str'].value_counts().to_dict()
         label_counts = self.df['label'].value_counts().to_dict()
-        label2_counts = self.df['label_2'].value_counts().to_dict()
 
-        print(f"\nCounts: label={label_counts} | label_2={label2_counts}")
+        print(f"\nCounts: label_str={label_str_counts} | label={label_counts}")
         if inconsistencies == 0:
-            print("✅ label and label_2 are consistent for all rows.")
+            print("✅ label_str and label are consistent for all rows.")
         else:
-            print(f"❌ Found {inconsistencies} inconsistencies between label and label_2.")
+            print(f"❌ Found {inconsistencies} inconsistencies between label_str and label.")
 
         return {
             'inconsistencies': int(inconsistencies),
-            'label_counts': label_counts,
-            'label_2_counts': label2_counts
+            'label_str_counts': label_str_counts,
+            'label_counts': label_counts
         }
 
     def run_mission_2_1(self) -> Dict:
@@ -2150,8 +2526,8 @@ class DatasetLoader:
 
         # Step 2: Get label counts
         label_counts = self.df['label'].value_counts()
-        literal_count = label_counts.get('מילולי', 0)
-        figurative_count = label_counts.get('פיגורטיבי', 0)
+        literal_count = label_counts.get(0, 0)
+        figurative_count = label_counts.get(1, 0)
 
         results['literal_count'] = int(literal_count)
         results['figurative_count'] = int(figurative_count)
@@ -2672,11 +3048,50 @@ class DatasetLoader:
         if output_path is None:
             output_path = self.data_path.parent / "processed_data.csv"
 
-        # Drop the original text column (we keep the cleaned version)
-        df_to_save = self.df.drop(columns=['text_original'], errors='ignore')
+        # Define v2 columns
+        v2_columns = [
+            'id', 'sentence', 'base_pie', 'pie_span', 'label', 'label_str',
+            'tokens', 'iob_tags', 'start_token', 'end_token', 'num_tokens',
+            'char_mask', 'start_char', 'end_char', 'split', 'language', 'source'
+        ]
 
+        # Filter to keep only v2 columns if they exist
+        # We use list comprehension to preserve order and ignore missing columns if any
+        cols_to_save = [col for col in v2_columns if col in self.df.columns]
+        
+        df_to_save = self.df[cols_to_save]
+
+        # Save CSV
         df_to_save.to_csv(output_path, index=False, encoding='utf-8-sig')
-        print(f"\n✅ Processed dataset saved to: {output_path}")
+        print(f"\n✅ Processed dataset saved to (CSV): {output_path}")
+
+        # Save JSON
+        json_path = str(output_path).replace('.csv', '.json')
+        
+        # Convert to JSON-friendly format
+        records = df_to_save.to_dict('records')
+        for record in records:
+            # Convert 'tokens'
+            if 'tokens' in record and isinstance(record['tokens'], str):
+                try:
+                    record['tokens'] = ast.literal_eval(record['tokens'])
+                except (ValueError, SyntaxError):
+                    pass
+            
+            # Convert 'iob_tags'
+            if 'iob_tags' in record and isinstance(record['iob_tags'], str):
+                record['iob_tags'] = record['iob_tags'].split()
+                
+            # Convert 'char_mask'
+            if 'char_mask' in record and isinstance(record['char_mask'], str):
+                try:
+                    record['char_mask'] = [int(c) for c in record['char_mask']]
+                except ValueError:
+                    pass
+
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(records, f, ensure_ascii=False, indent=2)
+        print(f"✅ Processed dataset saved to (JSON): {json_path}")
 
 
 def main():

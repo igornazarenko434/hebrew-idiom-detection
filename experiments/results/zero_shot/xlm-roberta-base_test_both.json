@@ -1,0 +1,72 @@
+{
+  "mode": "zero_shot",
+  "mission": "3.2",
+  "model_id": "xlm-roberta-base",
+  "split": "test",
+  "n_samples": 432,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "stats": {
+      "total_samples": 432,
+      "missing_iob2": 0,
+      "valid_iob2": 432,
+      "tokenization_misaligned": 0,
+      "tokenization_aligned": 432
+    }
+  },
+  "tasks": {
+    "classification": {
+      "metrics": {
+        "accuracy": 0.5046296296296297,
+        "precision_binary": 0.5023474178403756,
+        "recall_binary": 0.9907407407407407,
+        "f1_binary": 0.6666666666666666,
+        "precision_macro": 0.5845070422535211,
+        "recall_macro": 0.5046296296296297,
+        "f1_macro": 0.3513513513513513,
+        "confusion_matrix": [
+          [
+            4,
+            212
+          ],
+          [
+            2,
+            214
+          ]
+        ],
+        "roc_auc": 0.4253257887517147
+      }
+    },
+    "span_heuristic": {
+      "notes": "String-match IOB baseline (zero-shot)",
+      "n_evaluated": 432,
+      "token_metrics_avg": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "span_metrics_avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "span_untrained_model": {
+      "notes": "Untrained model (random head) - establishes lower bound",
+      "metrics": {
+        "loss": 1.427594542503357,
+        "model_preparation_time": 0.0015,
+        "precision": 0.008549931600547196,
+        "recall": 0.08333333333333333,
+        "f1": 0.015508684863523574,
+        "accuracy": 0.10287081339712918,
+        "runtime": 6.3098,
+        "samples_per_second": 68.465,
+        "steps_per_second": 4.279
+      }
+    }
+  }
+}

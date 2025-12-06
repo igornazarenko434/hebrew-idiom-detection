@@ -1,9 +1,9 @@
-# Hebrew Idiom Detection Dataset
+# Hebrew Idiom Identification Dataset
 ## Comprehensive Data Analysis Report
 
-**Dataset:** Hebrew-Idioms-4800 v1.0
-**Date:** November 19, 2025
-**Purpose:** Master's Thesis - Hebrew Idiom Detection with Dual-Task Annotation
+**Dataset:** Hebrew-Idioms-4800 v2.0  
+**Date:** November 2025  
+**Purpose:** Master's Thesis - Hebrew Idiom Identification with Dual-Task Annotation
 
 ---
 
@@ -26,12 +26,12 @@
 | **Samples per Idiom** | 80 (perfectly balanced) |
 | **Label Balance** | 50% Literal / 50% Figurative |
 | **Annotators** | 2 native Hebrew speakers |
-| **Inter-Annotator Agreement** | **κ = 0.9725** (near-perfect) |
+| **Inter-Annotator Agreement** | **κ = 0.9725 (Cohen’s kappa)** (near-perfect) |
 | **Data Quality Score** | **9.2/10** |
 
 ### Key Achievements
 
-- **First Hebrew idiom detection dataset**
+- **First Hebrew idiom identification dataset**
 - **Dual-task annotation** (sentence classification + token-level span)
 - **100% polysemy** (all idioms in both literal & figurative contexts)
 - **Near-perfect IAA** (Cohen's κ = 0.9725)
@@ -45,47 +45,51 @@
 
 | Column | Type | Description | Example |
 |--------|------|-------------|---------|
-| `id` | int | Unique identifier for each sentence | 0, 1, ..., 4799 |
+| `id` | str | Informative identifier `{idiom_id}_{lit/fig}_{count}` | `12_fig_7` |
 | `split` | str | Dataset split assignment | train, validation, test, unseen_idiom_test |
 | `language` | str | Language code | he |
 | `source` | str | Data source identifier | inhouse, manual |
-| `text` | str | Full Hebrew sentence (UTF-8) | הוא שבר את הראש על הבעיה |
-| `expression` | str | Canonical/normalized idiom form | שבר את הראש |
-| `matched_expression` | str | Idiom as it appears in text (with morphology) | שברתי את הראש |
-| `span_start` | int | Character start position of idiom (0-indexed) | 4 |
-| `span_end` | int | Character end position (exclusive) | 16 |
-| `token_span_start` | int | Token start position (0-indexed) | 1 |
-| `token_span_end` | int | Token end position (exclusive) | 4 |
+| `sentence` | str | Full Hebrew sentence (UTF-8) | הוא שבר את הראש על הבעיה. |
+| `base_pie` | str | Canonical/normalized idiom form | שבר את הראש |
+| `pie_span` | str | Idiom as it appears in text (with morphology) | שבר את הראש |
+| `tokens` | list[str] | Tokenized sentence with punctuation separated (not just whitespace) | `['הוא','שבר','את','הראש','על','הבעיה','.']` |
+| `iob_tags` | list[str] | IOB2 sequence aligned to `tokens` | `['O','B-IDIOM','I-IDIOM','I-IDIOM','O','O','O']` |
+| `start_token` | int | Token start position (0-indexed) | 1 |
+| `end_token` | int | Token end position (exclusive) | 4 |
 | `num_tokens` | int | Total tokens in sentence | 7 |
-| `label` | str | Hebrew label | מילולי, פיגורטיבי |
-| `label_2` | int | Binary numeric label | 0 (literal), 1 (figurative) |
-| `iob2_tags` | str | IOB2 sequence (space-separated) | O B-IDIOM I-IDIOM I-IDIOM O O O |
-| `char_mask` | str | Binary character mask | 0000111111111110000000 |
+| `start_char` | int | Character start position of idiom (0-indexed) | 4 |
+| `end_char` | int | Character end position (exclusive) | 15 |
+| `char_mask` | str | Binary character mask over `sentence` | 0000111111111000000000000 |
+| `label` | int | Binary label (0=literal, 1=figurative) | 1 |
+| `label_str` | str | English label | Figurative |
 
 ### Data Format Notes
 
 - **Encoding:** UTF-8 with BOM (utf-8-sig)
 - **Span Convention:** Python-style half-open intervals `[start, end)`
-  - `text[span_start:span_end]` extracts `matched_expression`
-- **IOB2 Tags:** Space-separated, one tag per whitespace-tokenized token
+  - `sentence[start_char:end_char]` extracts `pie_span`
+  - Token spans use punctuation-separated tokens; `tokens[start_token:end_token]` covers the idiom tokens
+- **IOB2 Tags:** List of tags aligned to `tokens` (length equals `num_tokens`)
+- **Tokens Column:** Explicit token list (punctuation separated) is provided to avoid tokenizer ambiguity; it aligns with all span fields
 
 ### Example Row
 
 ```
-id: 42
+id: 1_lit_1
 split: train
-text: הוא שבר את הראש על הבעיה המורכבת
-expression: שבר את הראש
-matched_expression: שבר את הראש
-span_start: 4
-span_end: 16
-token_span_start: 1
-token_span_end: 4
-num_tokens: 7
-label: פיגורטיבי
-label_2: 1
-iob2_tags: O B-IDIOM I-IDIOM I-IDIOM O O O
-char_mask: 0000111111111110000000000000000
+sentence: אם היא לא הייתה מאבדת את הצפון באמצע הטיול בהר, אולי הייתה מוצאת את השביל בזמן, אבל במקום זה המשיכה לרדת במורד הלא נכון עד ששמעה סוף סוף את קולות המטיילים האחרים.
+base_pie: איבד את הצפון
+pie_span: מאבדת את הצפון
+start_char: 16
+end_char: 30
+start_token: 4
+end_token: 7
+num_tokens: 35
+label: 0
+label_str: Literal
+tokens: ['אם','היא','לא','הייתה','מאבדת','את','הצפון','באמצע','הטיול','בהר',',','אולי','הייתה','מוצאת','את','השביל','בזמן',',','אבל','במקום','זה','המשיכה','לרדת','במורד','הלא','נכון','עד','ששמעה','סוף','סוף','את','קולות','המטיילים','האחרים','.']
+iob_tags: ['O','O','O','O','B-IDIOM','I-IDIOM','I-IDIOM','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O','O']
+char_mask: 000000000000000011111111111111000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 ```
 
 ---
@@ -94,53 +98,43 @@ char_mask: 0000111111111110000000000000000
 
 ### Data Creation Tokenization
 
-The dataset was created using **whitespace-based tokenization** (`text.split()`). This means:
-- `num_tokens` = number of whitespace-separated tokens
-- `iob2_tags` has exactly `num_tokens` tags
-- `token_span_start` and `token_span_end` refer to whitespace token indices
+The dataset uses a **punctuation-separated tokenizer** (punctuation kept as standalone tokens), and the explicit `tokens` column stores the exact token list so users don’t need to tokenize themselves:
+- `num_tokens` = length of `tokens`
+- `iob_tags` has exactly `num_tokens` tags (list of strings)
+- `start_token` and `end_token` refer to token indices in this punctuation-aware list
+- Punctuation tokens are present and tagged `O`
 
 ### Model Training Considerations
 
 When using this dataset with **multilingual transformer models** (mBERT, XLM-RoBERTa, AlephBERT, etc.):
 
-1. **Sentence Classification:** No special handling needed - use the full text
-2. **Token Classification (IOB2):** Requires subword alignment
+1. **Sentence Classification:** Feed the full `sentence` string (no extra preprocessing needed).
+2. **Token Classification (IOB2):** Align the word-level IOB tags to subwords using `offset_mapping`.
 
-#### Subword Alignment Strategy
-
-Multilingual tokenizers produce subwords, not whitespace tokens. For token classification:
+#### Subword Alignment Strategy (word-level tags → subwords)
 
 ```python
-# Example alignment strategy
-def align_labels_with_tokens(text, iob_tags, tokenizer):
-    words = text.split()
-    encoding = tokenizer(text, return_offsets_mapping=True)
-
-    aligned_labels = []
-    word_idx = 0
-
-    for idx, (start, end) in enumerate(encoding.offset_mapping):
-        if start == end:  # Special token
-            aligned_labels.append(-100)  # Ignore in loss
-        elif start == 0 or text[start-1] == ' ':  # First subword
-            aligned_labels.append(tag_to_id[iob_tags[word_idx]])
-            if end >= len(text) or text[end] == ' ':
-                word_idx += 1
-        else:  # Continuation subword
-            # Option 1: Copy label (I-IDIOM remains I-IDIOM)
-            # Option 2: Use -100 to ignore
-            aligned_labels.append(tag_to_id[iob_tags[word_idx-1]])
-
-    return aligned_labels
+def align_labels_with_tokens(text, word_tags, tokenizer, tag_to_id):
+    encoding = tokenizer(text, return_offsets_mapping=True, add_special_tokens=True)
+    offsets = encoding["offset_mapping"]
+    aligned = []
+    # Map character spans to word indices by counting spaces (punctuation-separated tokens)
+    for (s, e) in offsets:
+        if s == e:
+            aligned.append(-100)  # Special tokens
+        else:
+            word_idx = text[:s].count(' ')
+            aligned.append(tag_to_id[word_tags[word_idx]] if word_idx < len(word_tags) else -100)
+    return aligned
 ```
 
-This alignment ensures the model can correctly learn token-level classification despite different tokenization schemes.
+Best practice: keep punctuation tokens with `O` so alignment is straightforward and matches how the models see the input. The dataset already supplies `tokens` and `iob_tags`; you only need to map them to subwords.
 
 ---
 
 ## 1. Inter-Annotator Agreement (IAA)
 
-### Agreement Metrics
+### Agreement Metrics (Cohen’s kappa)
 
 | Metric | Value |
 |--------|-------|
@@ -178,14 +172,14 @@ This alignment ensures the model can correctly learn token-level classification 
 
 ### 2.2 Sentence Length Statistics
 
-**Tokens:**
-- Mean: 15.71
-- Median: 12
-- Std: 8.01
-- Range: 5-38
+**Tokens (punctuation-separated):**
+- Mean: 17.47
+- Median: 13
+- Std: 9.11
+- Range: 5-47
 
 **Characters:**
-- Mean: 83.04
+- Mean: 83.03
 - Median: 63
 - Std: 42.55
 - Range: 22-193
@@ -214,15 +208,21 @@ This alignment ensures the model can correctly learn token-level classification 
 
 | Position | Count | Percentage |
 |----------|-------|------------|
-| Start (0-33%) | 3,058 | 63.71% |
-| Middle (33-67%) | 1,429 | 29.77% |
-| End (67-100%) | 313 | 6.52% |
+| Start (0-33%) | 3,123 | 65.06% |
+| Middle (33-67%) | 1,449 | 30.19% |
+| End (67-100%) | 228 | 4.75% |
 
-- Mean position ratio: 0.2801
+- Mean position ratio: 0.2678
 
 **By Label:**
-- Literal: 63.13% start, 31.50% middle, 5.38% end
-- Figurative: 64.29% start, 28.04% middle, 7.67% end
+- Literal: 64.71% start, 31.50% middle, 3.79% end
+- Figurative: 65.42% start, 28.88% middle, 5.71% end
+
+**By Split:**
+- Train (3,456): 64.96% start, 30.12% middle, 4.92% end
+- Validation (432): 62.50% start, 32.18% middle, 5.32% end
+- In-domain test (432): 65.97% start, 29.17% middle, 4.86% end
+- Unseen idiom test (480): 67.29% start, 29.79% middle, 2.92% end
 
 ---
 
@@ -241,54 +241,56 @@ This alignment ensures the model can correctly learn token-level classification 
 
 ### 3.2 Lexical Diversity
 
-| Metric | Value |
-|--------|-------|
-| Vocabulary size | 18,784 unique words |
-| Total tokens | 75,412 |
-| Type-Token Ratio (TTR) | 0.2491 |
-| Avg unique words per sentence | 15.38 |
-| Function word ratio | 12.57% |
+| Metric | Value | Meaning |
+|--------|-------|---------|
+| Vocabulary size | 15,107 unique tokens | Distinct surface word forms (punctuation separated) |
+| Total tokens | 83,844 | Total token count across corpus |
+| Type-Token Ratio (TTR) | 0.1802 | Lexical diversity (unique/total) |
+| Avg unique tokens per sentence | 16.84 | Mean distinct tokens (punctuation-separated) per sentence |
+| Function word ratio | 11.43% | Share of function words in tokens |
+| Word-only vocab | 15,089 | Tokens with letters only (punctuation excluded) |
+| Word-only total tokens | 74,883 | Tokens with letters only |
+| Word-only TTR | 0.2015 | Lexical diversity (letters-only) |
 
 **Top 10 Most Frequent Words:**
 
-1. את - 2,295 (3.04%)
-2. לא - 1,289 (1.71%)
-3. הוא - 1,105 (1.47%)
-4. היא - 1,004 (1.33%)
-5. על - 918 (1.22%)
-6. של - 756 (1.00%)
-7. אם - 623 (0.83%)
-8. – - 559 (0.74%)
-9. הם - 521 (0.69%)
-10. אחרי - 518 (0.69%)
+1. ',' - 3,733 (4.45%)
+2. '.' - 3,690 (4.40%)
+3. את - 2,295 (2.74%)
+4. לא - 1,296 (1.54%)
+5. הוא - 1,107 (1.32%)
+6. היא - 1,007 (1.20%)
+7. על - 918 (1.10%)
+8. של - 756 (0.90%)
+9. אם - 659 (0.79%)
+10. – - 558 (0.67%)
 
 ### 3.3 Lexical Richness
 
-| Metric | Value |
-|--------|-------|
-| Hapax legomena | 11,921 (63.46%) |
-| Dis legomena | 2,850 |
-| Maas Index | 0.0110 |
+| Metric | Value | Meaning |
+|--------|-------|---------|
+| Hapax legomena | 8,594 (56.9%) | Tokens appearing once |
+| Dis legomena | 2,430 | Tokens appearing twice |
+| Maas Index | (not recomputed) | Lexical diversity measure (lower = richer) |
 
-**High hapax rate (63.46%) confirms genuine linguistic diversity, not template-based generation**
+Letters-only view: vocab 15,089; total tokens 74,883; TTR 0.2015; hapax 8,588 (56.9% of vocab); dis legomena 2,430.
+
+**High hapax rate (56.9%) confirms genuine linguistic diversity, not template-based generation**
 
 ### 3.4 Structural Complexity
 
-| Metric | Overall | Literal | Figurative |
-|--------|---------|---------|------------|
-| Mean subclause markers | 0.28 | 0.25 | 0.31 |
-| Mean subclause ratio | 0.0146 | 0.0122 | 0.0170 |
-| Mean punctuation | 1.81 | 1.75 | 1.87 |
-| Sentences with subclauses | 24.52% | - | - |
+| Metric | Overall | Literal | Figurative | Meaning |
+|--------|---------|---------|------------|---------|
+| Mean subclause markers | 1.91 | 1.73 | 1.83 | Subclause-like tokens per sentence |
+| Mean punctuation | 1.78 | 1.73 | 1.83 | Punctuation marks per sentence |
 
-**Finding:** Figurative sentences are **24% more complex** than literal sentences
+**Note:** Structural counts reflect punctuation-separated tokens; figurative sentences have slightly higher punctuation averages.
 
 ### 3.5 Morphological Richness (Hebrew-Specific)
 
-| Metric | Value |
-|--------|-------|
-| Prefix attachments | 2,172 (45.25%) |
-| Mean consistency rate | 39.54% |
+| Metric | Value | Meaning |
+|--------|-------|---------|
+| Prefix attachments | 4,800 (100%) | Sentences containing a prefixed token |
 
 **Top 5 Idioms by Morphological Variance:**
 
@@ -301,21 +303,21 @@ This alignment ensures the model can correctly learn token-level classification 
 ### 3.6 Collocational Analysis
 
 **Context Words (±3 tokens around idiom):**
-- Total context words: 23,366
-- Unique context words: 8,498
+- Total context tokens: 23,955
+- Unique context tokens: 7,095
 
-**Top 10 Context Words:**
+**Top 10 Context Tokens:**
 
-1. הוא - 844 (3.61%)
-2. היא - 745 (3.19%)
-3. לא - 493 (2.11%)
-4. הם - 423 (1.81%)
-5. על - 362 (1.55%)
-6. את - 328 (1.40%)
-7. עם - 256 (1.10%)
-8. של - 242 (1.04%)
-9. כדי - 241 (1.03%)
-10. אחרי - 234 (1.00%)
+1. , - 1,424 (5.95%)
+2. הוא - 841 (3.51%)
+3. היא - 742 (3.10%)
+4. . - 557 (2.33%)
+5. לא - 456 (1.90%)
+6. הם - 420 (1.75%)
+7. על - 345 (1.44%)
+8. את - 301 (1.26%)
+9. עם - 243 (1.01%)
+10. כדי - 236 (0.99%)
 
 ---
 
@@ -338,11 +340,6 @@ This alignment ensures the model can correctly learn token-level classification 
 | Expression presence | 100% |
 | Data types | All correct |
 | Unique values | Valid |
-
-### 4.2 Minor Issues (Acceptable)
-
-- Trailing whitespace: 3.35% (handled by tokenizers)
-- Multiple consecutive spaces: 3.42%
 
 **Overall Quality Score: 9.2/10**
 
@@ -396,7 +393,7 @@ This alignment ensures the model can correctly learn token-level classification 
 
 For each sentence, we verified:
 ```python
-text[span_start:span_end] matches matched_expression
+sentence[start_char:end_char] matches pie_span
 ```
 Result: **100% match** across all 4,800 sentences
 
@@ -404,7 +401,7 @@ Result: **100% match** across all 4,800 sentences
 
 For each sentence, we verified:
 ```python
-0 <= token_span_start < token_span_end <= num_tokens
+0 <= start_token < end_token <= num_tokens
 ```
 Result: **100% valid** across all 4,800 sentences
 
@@ -589,28 +586,28 @@ Below are examples from each of the 6 unseen idioms, showing both literal and fi
 
 **Example:**
 ```
-Tokens: ["הוא", "שבר", "את", "הראש", "על", "הבעיה"]
-Tags:   ["O", "B-IDIOM", "I-IDIOM", "I-IDIOM", "O", "O"]
+Tokens: ["הוא", "שבר", "את", "הראש", "על", "הבעיה", "."]
+Tags:   ["O", "B-IDIOM", "I-IDIOM", "I-IDIOM", "O", "O", "O"]
 ```
 
 **Baseline:** Random = 33% (3 classes) *(Will be computed as part of this project)*
 
-### Task 3: Character Span Detection (Available for Future Research)
+### Task 3: Character Span Identification (Available for Future Research)
 
 **Objective:** Identify the exact character positions of the idiom
 
 **Columns Provided:**
-- `span_start`: Character start position
-- `span_end`: Character end position
+- `start_char`: Character start position
+- `end_char`: Character end position
 - `char_mask`: Binary character-level mask
 
 **Example:**
 ```python
-text = "הוא שבר את הראש על הבעיה"
-span_start = 4
-span_end = 16
-extracted = text[4:16]  # "שבר את הראש"
-char_mask = "0000111111111110000000000"
+sentence = "הוא שבר את הראש על הבעיה"
+start_char = 3
+end_char = 15
+extracted = sentence[start_char:end_char]  # "שבר את הראש"
+char_mask = "00011111111110000000"
 ```
 
 **Note:** This task is available in the dataset for future research but is not the focus of the current thesis.
@@ -621,18 +618,18 @@ char_mask = "0000111111111110000000000"
 
 ### 7.1 Novel Contributions
 
-1. **First Hebrew idiom detection dataset**
-2. **Dual-task annotation** (classification + span)
+1. **First Hebrew idiom identification dataset**
+2. **Dual-task annotation** (idiomaticity classification + span identification)
 3. **100% polysemy** (unique among similar datasets)
-4. **Near-perfect IAA** (κ = 0.9725)
+4. **Near-perfect IAA** (κ = 0.9725, Cohen’s kappa)
 5. **Rich morphological variance** (captures Hebrew complexity)
 
 ### 7.2 Linguistic Findings
 
-1. **Figurative sentences are more complex** (24% more subclause markers)
-2. **High lexical diversity** (63.46% hapax legomena)
-3. **Significant morphological variance** (up to 35 variants per idiom)
-4. **Annotators default to literal** (65:1 disagreement ratio)
+1. **Figurative sentences are slightly more punctuated** (~1.83 vs 1.73 punctuation marks on average)
+2. **High lexical diversity** (56.9% hapax; many words appear once)
+3. **Significant morphological variance** (up to 35 variants per idiom; wide inflection/attachment range)
+4. **Annotators default to literal** (65:1 disagreement ratio; literal seen as default reading)
 
 ### 7.3 Comparison to Published Datasets
 
@@ -756,7 +753,7 @@ char_mask = "0000111111111110000000000"
 
 ### 11.1 Primary Research Questions
 
-This thesis focuses on evaluating model performance for Hebrew idiom detection:
+This thesis focuses on evaluating model performance for Hebrew idiom identification:
 
 1. **Multilingual vs Hebrew-Specific Models**
    - How do multilingual models (mBERT, XLM-RoBERTa) compare to Hebrew-specific models (AlephBERT, DictaBERT)?
@@ -815,7 +812,7 @@ After experiments, we will perform:
 
 - Hebrew NLP resource for the community
 - Benchmark for Hebrew figurative language understanding
-- Cross-lingual idiom detection research
+- Cross-lingual idiom identification research
 - Educational tool for Hebrew learners
 
 ---
@@ -826,7 +823,7 @@ After experiments, we will perform:
 
 | Limitation | Details | Impact | Mitigation |
 |------------|---------|--------|------------|
-| **Position Bias** | 63.71% of idioms at sentence start | Models may learn position heuristics | Report position-stratified results |
+| **Position Bias** | 65.06% of idioms at sentence start | Models may learn position heuristics | Report position-stratified results |
 | **Limited Idiom Coverage** | 60 idioms (not exhaustive) | May not cover all Hebrew idioms | Future expansion planned |
 | **Small Unseen Test** | Only 6 held-out idioms | High variance in zero-shot results | Report confidence intervals |
 | **Sentence Type Bias** | 95% declarative sentences | Limited to formal written Hebrew | Note as limitation |
@@ -880,8 +877,8 @@ The following extensions are planned for after the thesis is completed:
 
 - Contextual embeddings analysis
 - Attention visualization studies
-- Cross-lingual idiom detection
-- Multi-word expression detection beyond idioms
+- Cross-lingual idiom identification
+- Multi-word expression identification beyond idioms
 
 ---
 
@@ -909,8 +906,9 @@ professor_review/
 ├── README.md                           # This file (complete documentation)
 ├── Complete_Dataset_Analysis.ipynb     # Comprehensive analysis notebook
 └── data/
-    ├── expressions_data_tagged.csv     # Full dataset (4,800 sentences)
-    ├── expressions_data_tagged.xlsx    # Full dataset (Excel format)
+    ├── expressions_data_tagged_v2.csv  # Full dataset (4,800 sentences, updated schema)
+    ├── expressions_data_tagged_v2.xlsx # Full dataset (Excel format)
+    ├── expressions_data_with_splits.csv# Dataset with split column
     └── splits/
         ├── train.csv                   # Training set (3,456 samples)
         ├── validation.csv              # Validation set (432 samples)
@@ -937,18 +935,18 @@ Open `Complete_Dataset_Analysis.ipynb` in any Jupyter-compatible environment to:
 ```python
 import pandas as pd
 
-# Load dataset
-df = pd.read_csv('data/expressions_data_tagged.csv')
+# Load dataset (latest identification-ready version)
+df = pd.read_csv('data/expressions_data_tagged_v2.csv')
 print(f"Total samples: {len(df)}")
-print(f"Literal: {(df['label_2'] == 0).sum()}")
-print(f"Figurative: {(df['label_2'] == 1).sum()}")
+print(f"Literal: {(df['label'] == 0).sum()}")
+print(f"Figurative: {(df['label'] == 1).sum()}")
 ```
 
 ---
 
 ## 17. Summary
 
-**Hebrew-Idioms-4800** is a high-quality, professionally annotated dataset for Hebrew idiom detection featuring:
+**Hebrew-Idioms-4800** is a high-quality, professionally annotated dataset for Hebrew idiom identification featuring:
 
 - **Excellent annotation quality** (κ = 0.9725)
 - **Perfect class balance** (50/50)

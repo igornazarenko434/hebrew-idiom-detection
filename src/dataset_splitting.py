@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Dict, Tuple, List
 import json
 import math
+import ast
 
 
 class ExpressionBasedSplitter:
@@ -36,7 +37,8 @@ class ExpressionBasedSplitter:
         """
         if data_path is None:
             project_root = Path(__file__).parent.parent
-            data_path = project_root / "data" / "processed_data.csv"
+            # Default to the latest professor_review v2 dataset
+            data_path = project_root / "professor_review" / "data" / "expressions_data_tagged_v2.csv"
 
         self.data_path = Path(data_path)
         self.df = None
@@ -64,6 +66,10 @@ class ExpressionBasedSplitter:
         """Load the processed dataset"""
         print(f"Loading dataset from: {self.data_path}")
         self.df = pd.read_csv(self.data_path, encoding='utf-8-sig')
+
+        # Ensure label is int
+        if 'label' in self.df.columns:
+            self.df['label'] = self.df['label'].astype(int)
         print(f"✅ Loaded {len(self.df)} sentences")
         return self.df
 
@@ -82,12 +88,12 @@ class ExpressionBasedSplitter:
         print("=" * 80)
 
         # Group by expression and count labels
-        expr_stats = self.df.groupby('expression').agg({
+        expr_stats = self.df.groupby('base_pie').agg({
             'id': 'count',
-            'label_2': ['sum', lambda x: (x == 0).sum()]
+            'label': ['sum', lambda x: (x == 0).sum()]
         }).reset_index()
 
-        expr_stats.columns = ['expression', 'total_sentences', 'figurative_count', 'literal_count']
+        expr_stats.columns = ['base_pie', 'total_sentences', 'figurative_count', 'literal_count']
 
         # Calculate balance
         expr_stats['balance_ratio'] = expr_stats['figurative_count'] / expr_stats['literal_count']
@@ -119,7 +125,7 @@ class ExpressionBasedSplitter:
         print("TEST EXPRESSIONS VERIFICATION")
         print("=" * 80)
 
-        all_expressions = set(self.df['expression'].unique())
+        all_expressions = set(self.df['base_pie'].unique())
         test_expr_set = set(self.unseen_idiom_expressions)
 
         # Check if all test expressions exist
@@ -136,9 +142,9 @@ class ExpressionBasedSplitter:
         test_figurative = 0
 
         for expr in self.unseen_idiom_expressions:
-            expr_df = self.df[self.df['expression'] == expr]
-            literal = (expr_df['label_2'] == 0).sum()
-            figurative = (expr_df['label_2'] == 1).sum()
+            expr_df = self.df[self.df['base_pie'] == expr]
+            literal = (expr_df['label'] == 0).sum()
+            figurative = (expr_df['label'] == 1).sum()
             total = len(expr_df)
 
             total_test_sentences += total
@@ -222,21 +228,21 @@ class ExpressionBasedSplitter:
         print("=" * 80)
 
         # 1. Unseen idiom test set (entire idioms)
-        self.unseen_test_df = self.df[self.df['expression'].isin(self.unseen_idiom_expressions)].copy()
+        self.unseen_test_df = self.df[self.df['base_pie'].isin(self.unseen_idiom_expressions)].copy()
         self.unseen_test_df['split'] = 'unseen_idiom_test'
 
         # 2. Remaining sentences (all idioms that will appear in every seen split)
-        remaining_df = self.df[~self.df['expression'].isin(self.unseen_idiom_expressions)].copy()
+        remaining_df = self.df[~self.df['base_pie'].isin(self.unseen_idiom_expressions)].copy()
 
         train_parts = []
         val_parts = []
         test_parts = []
         expression_split_counts = []
 
-        for expr, expr_df in remaining_df.groupby('expression'):
-            expr_counts = {'expression': expr, 'train': 0, 'validation': 0, 'test_in_domain': 0}
+        for expr, expr_df in remaining_df.groupby('base_pie'):
+            expr_counts = {'base_pie': expr, 'train': 0, 'validation': 0, 'test_in_domain': 0}
 
-            for label_value, label_df in expr_df.groupby('label_2'):
+            for label_value, label_df in expr_df.groupby('label'):
                 label_df = label_df.sample(frac=1, random_state=self.random_state)
                 n_samples = len(label_df)
                 train_n, val_n, test_n = self._compute_split_counts(n_samples)
@@ -294,9 +300,9 @@ class ExpressionBasedSplitter:
 
         for split_name, split_df in split_map:
             n_sentences = len(split_df)
-            n_expressions = split_df['expression'].nunique()
-            n_literal = (split_df['label_2'] == 0).sum()
-            n_figurative = (split_df['label_2'] == 1).sum()
+            n_expressions = split_df['base_pie'].nunique()
+            n_literal = (split_df['label'] == 0).sum()
+            n_figurative = (split_df['label'] == 1).sum()
 
             pct_sentences = (n_sentences / len(self.df)) * 100
             pct_literal = (n_literal / n_sentences) * 100
@@ -320,7 +326,7 @@ class ExpressionBasedSplitter:
             print(f"  Figurative: {n_figurative:,} ({pct_figurative:.2f}%)")
 
         coverage_issues = [
-            rec['expression']
+            rec['base_pie']
             for rec in self.expression_split_counts
             if min(rec['train'], rec['validation'], rec['test_in_domain']) == 0
         ]
@@ -342,6 +348,39 @@ class ExpressionBasedSplitter:
 
         return stats
 
+    def _convert_to_json_records(self, df: pd.DataFrame) -> List[Dict]:
+        """
+        Convert DataFrame to a list of dictionaries with proper list objects
+        instead of string representations.
+        """
+        # Work on a copy to avoid modifying the original dataframe in place if referenced elsewhere
+        df_copy = df.copy()
+        records = df_copy.to_dict('records')
+        
+        for record in records:
+            # Convert 'tokens' from string representation to list
+            # Example: "['a', 'b']" -> ['a', 'b']
+            if 'tokens' in record and isinstance(record['tokens'], str):
+                try:
+                    record['tokens'] = ast.literal_eval(record['tokens'])
+                except (ValueError, SyntaxError):
+                    # Fallback or keep as string if parsing fails
+                    pass
+            
+            # Convert 'iob_tags' from space-separated string to list
+            # Example: "O B-IDIOM" -> ['O', 'B-IDIOM']
+            if 'iob_tags' in record and isinstance(record['iob_tags'], str):
+                record['iob_tags'] = record['iob_tags'].split()
+                
+            # Convert 'char_mask' from string "00110" to list of ints [0,0,1,1,0]
+            if 'char_mask' in record and isinstance(record['char_mask'], str):
+                try:
+                    record['char_mask'] = [int(c) for c in record['char_mask']]
+                except ValueError:
+                    pass
+                    
+        return records
+
     def save_splits(self, output_dir: str = None) -> None:
         """
         Save splits to CSV files in data/splits/ directory (as per Mission 2.5)
@@ -352,16 +391,30 @@ class ExpressionBasedSplitter:
         if any(df is None for df in [self.train_df, self.dev_df, self.test_df, self.unseen_test_df]):
             raise ValueError("Splits not created. Call create_splits() first.")
 
-        if output_dir is None:
-            output_dir = Path(__file__).parent.parent / "data" / "splits"
-        else:
-            output_dir = Path(output_dir)
+        project_root = Path(__file__).parent.parent
 
-        output_dir.mkdir(parents=True, exist_ok=True)
+        # Support saving to multiple locations (main data folder and professor_review folder)
+        if output_dir is None:
+            output_dirs = [
+                project_root / "data" / "splits",
+                project_root / "professor_review" / "data" / "splits"
+            ]
+        else:
+            output_dirs = [Path(output_dir)]
+
+        for odir in output_dirs:
+            odir.mkdir(parents=True, exist_ok=True)
 
         print("\n" + "=" * 80)
         print("SAVING SPLITS")
         print("=" * 80)
+
+        # Define v2 columns
+        v2_columns = [
+            'id', 'sentence', 'base_pie', 'pie_span', 'label', 'label_str',
+            'tokens', 'iob_tags', 'start_token', 'end_token', 'num_tokens',
+            'char_mask', 'start_char', 'end_char', 'split', 'language', 'source'
+        ]
 
         # Save each split (validation.csv as per Mission 2.5, not dev.csv)
         split_files = {
@@ -370,11 +423,6 @@ class ExpressionBasedSplitter:
             "test.csv": self.test_df,
             "unseen_idiom_test.csv": self.unseen_test_df
         }
-
-        for filename, df in split_files.items():
-            path = output_dir / filename
-            df.to_csv(path, index=False, encoding='utf-8-sig')
-            print(f"✅ Saved {filename}: {len(df)} sentences")
 
         metadata = {
             'unseen_idiom_expressions': self.unseen_idiom_expressions,
@@ -392,11 +440,35 @@ class ExpressionBasedSplitter:
             }
         }
 
-        metadata_path = output_dir / "split_expressions.json"
-        with open(metadata_path, 'w', encoding='utf-8') as f:
-            json.dump(metadata, f, ensure_ascii=False, indent=2)
+        for odir in output_dirs:
+            print(f"\nSaving splits to: {odir}")
+            for filename, df in split_files.items():
+                path = odir / filename
+                # Filter columns to ensure only v2 columns are saved
+                if set(v2_columns).issubset(df.columns):
+                    df_final = df[v2_columns]
+                else:
+                    print(f"⚠️ Warning: Missing columns in {filename}, saving all columns available.")
+                    missing = set(v2_columns) - set(df.columns)
+                    print(f"   Missing: {missing}")
+                    df_final = df
+                
+                # Save CSV
+                df_final.to_csv(path, index=False, encoding='utf-8-sig')
+                print(f"✅ Saved {filename}: {len(df)} sentences -> {path}")
+                
+                # Save JSON
+                json_filename = filename.replace('.csv', '.json')
+                json_path = odir / json_filename
+                json_records = self._convert_to_json_records(df_final)
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(json_records, f, ensure_ascii=False, indent=2)
+                print(f"✅ Saved {json_filename}: {len(json_records)} records -> {json_path}")
 
-        print(f"✅ Split metadata saved: {metadata_path}")
+            metadata_path = odir / "split_expressions.json"
+            with open(metadata_path, 'w', encoding='utf-8') as f:
+                json.dump(metadata, f, ensure_ascii=False, indent=2)
+            print(f"✅ Split metadata saved: {metadata_path}")
 
         # Save updated dataset with split column (Mission 2.5 requirement)
         print("\n" + "-" * 80)
@@ -409,12 +481,28 @@ class ExpressionBasedSplitter:
         )
         full_dataset = full_dataset.sort_values('id').reset_index(drop=True)
 
-        # Save to data/ directory (not data/splits/)
-        data_dir = Path(__file__).parent.parent / "data"
-        updated_dataset_path = data_dir / "expressions_data_with_splits.csv"
+        if set(v2_columns).issubset(full_dataset.columns):
+            full_dataset = full_dataset[v2_columns]
 
-        full_dataset.to_csv(updated_dataset_path, index=False, encoding='utf-8-sig')
-        print(f"✅ Updated dataset with split column saved: {updated_dataset_path}")
+        data_dirs = [
+            Path(__file__).parent.parent / "data",
+            Path(__file__).parent.parent / "professor_review" / "data"
+        ]
+        for data_dir in data_dirs:
+            updated_dataset_path = data_dir / "expressions_data_with_splits.csv"
+            updated_dataset_json_path = data_dir / "expressions_data_with_splits.json"
+            
+            data_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Save CSV
+            full_dataset.to_csv(updated_dataset_path, index=False, encoding='utf-8-sig')
+            print(f"✅ Updated dataset with split column saved (CSV): {updated_dataset_path}")
+            
+            # Save JSON
+            json_records = self._convert_to_json_records(full_dataset)
+            with open(updated_dataset_json_path, 'w', encoding='utf-8') as f:
+                json.dump(json_records, f, ensure_ascii=False, indent=2)
+            print(f"✅ Updated dataset with split column saved (JSON): {updated_dataset_json_path}")
 
     def run_mission_2_5(self) -> Dict:
         """
@@ -463,8 +551,8 @@ class ExpressionBasedSplitter:
         test_stats = results['split_stats']['in_domain_test']
         unseen_stats = results['split_stats']['unseen_idiom_test']
 
-        seen_expressions = set(self.train_df['expression'].unique())
-        unseen_expressions = set(self.unseen_test_df['expression'].unique())
+        seen_expressions = set(self.train_df['base_pie'].unique())
+        unseen_expressions = set(self.unseen_test_df['base_pie'].unique())
 
         criteria = [
             ("Unseen idiom test contains 6 specified idioms",

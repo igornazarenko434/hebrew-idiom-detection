@@ -1,0 +1,72 @@
+{
+  "mode": "zero_shot",
+  "mission": "3.2",
+  "model_id": "bert-base-multilingual-cased",
+  "split": "test",
+  "n_samples": 432,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "stats": {
+      "total_samples": 432,
+      "missing_iob2": 0,
+      "valid_iob2": 432,
+      "tokenization_misaligned": 0,
+      "tokenization_aligned": 432
+    }
+  },
+  "tasks": {
+    "classification": {
+      "metrics": {
+        "accuracy": 0.5023148148148148,
+        "precision_binary": 0.5023696682464455,
+        "recall_binary": 0.49074074074074076,
+        "f1_binary": 0.4964871194379391,
+        "precision_macro": 0.5023160558426798,
+        "recall_macro": 0.5023148148148148,
+        "f1_macro": 0.5022481363780085,
+        "confusion_matrix": [
+          [
+            111,
+            105
+          ],
+          [
+            110,
+            106
+          ]
+        ],
+        "roc_auc": 0.5217656893004116
+      }
+    },
+    "span_heuristic": {
+      "notes": "String-match IOB baseline (zero-shot)",
+      "n_evaluated": 432,
+      "token_metrics_avg": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "span_metrics_avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    "span_untrained_model": {
+      "notes": "Untrained model (random head) - establishes lower bound",
+      "metrics": {
+        "loss": 1.0908769369125366,
+        "model_preparation_time": 0.0013,
+        "precision": 0.02640642939150402,
+        "recall": 0.07666666666666666,
+        "f1": 0.03928266438941076,
+        "accuracy": 0.3632946001367054,
+        "runtime": 6.1696,
+        "samples_per_second": 70.02,
+        "steps_per_second": 4.376
+      }
+    }
+  }
+}

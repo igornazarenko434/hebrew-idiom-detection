@@ -55,8 +55,8 @@ evaluation_strategy: "steps"                # Options: "steps", "epoch", "no"
 save_strategy: "steps"                      # Options: "steps", "epoch", "no"
 
 # Logging
-report_to: "none"                           # Options: "tensorboard", "wandb", "none"
-logging_dir: "experiments/logs/"            # Directory for training logs
+report_to: "tensorboard"                    # Options: "tensorboard", "wandb", "none" (tensorboard enables learning curves)
+logging_dir: "experiments/logs/"            # Directory for training logs (TensorBoard files saved here)
 
 # Additional settings
 dataloader_num_workers: 0                   # Number of workers for data loading (0 for single-threaded)

@@ -1,0 +1,11 @@
+Model,Type,Dataset,Task 1 Accuracy,Task 1 F1,Task 2 Span F1,Confusion Matrix
+bert-base-multilingual-cased,Multilingual,test,0.5023148148148148,0.5022481363780085,0.03928266438941076,"[[111, 105], [110, 106]]"
+alephbert-base,Hebrew,test,0.4837962962962963,0.4702825753451774,0.01766004415011038,"[[70, 146], [77, 139]]"
+alephbertgimmel-base,Hebrew,test,0.4652777777777778,0.45830868024079513,0.03815113719735876,"[[76, 140], [91, 125]]"
+xlm-roberta-base,Multilingual,test,0.5046296296296297,0.3513513513513513,0.015508684863523574,"[[4, 212], [2, 214]]"
+dictabert,Hebrew,test,0.49537037037037035,0.33922707754483455,0.01795332136445242,"[[212, 4], [214, 2]]"
+bert-base-multilingual-cased,Multilingual,unseen_idiom_test,0.5458333333333333,0.5453281423804226,0.0,"[[139, 101], [117, 123]]"
+alephbert-base,Hebrew,unseen_idiom_test,0.5229166666666667,0.4979698654036748,0.0,"[[72, 168], [61, 179]]"
+alephbertgimmel-base,Hebrew,unseen_idiom_test,0.4625,0.45453584453566837,0.0,"[[82, 158], [100, 140]]"
+xlm-roberta-base,Multilingual,unseen_idiom_test,0.5104166666666666,0.35949486403461456,0.0,"[[6, 234], [1, 239]]"
+dictabert,Hebrew,unseen_idiom_test,0.47708333333333336,0.3229901269393512,0.0,"[[229, 11], [240, 0]]"

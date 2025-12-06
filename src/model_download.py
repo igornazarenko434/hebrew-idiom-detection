@@ -16,7 +16,7 @@ class ModelDownloader:
         """Initialize with model list from PRD Section 4.1"""
         self.models = {
             'alephbert-base': 'onlplab/alephbert-base',
-            'alephbert-gimmel': 'imvladikon/alephbertgimmel-base-512',  # AlephBERT Gimmel
+            'alephbert-gimmel': 'dicta-il/alephbertgimmel-base',  # Official AlephBERT Gimmel (128K vocab, SOTA)
             'dictabert': 'dicta-il/dictabert',
             'mbert': 'bert-base-multilingual-cased',
             'xlm-roberta-base': 'xlm-roberta-base'
