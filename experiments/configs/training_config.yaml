@@ -51,7 +51,7 @@ early_stopping_threshold: 0.0001            # Minimum change to qualify as impro
 device: "cuda"                              # Options: "cuda", "cpu", "mps"
 
 # Evaluation settings
-evaluation_strategy: "steps"                # Options: "steps", "epoch", "no"
+eval_strategy: "steps"                      # Options: "steps", "epoch", "no" (was: evaluation_strategy in transformers <4.30)
 save_strategy: "steps"                      # Options: "steps", "epoch", "no"
 
 # Logging

@@ -76,7 +76,7 @@ python-dotenv>=1.0.0
 tqdm>=4.65.0                       # Progress bars (used by transformers)
 
 # ============================================================================
-# Optional Dependencies (for specific features)
+# Experiment Tracking & Visualization
 # ============================================================================
-# tensorboard>=2.12.0              # For TensorBoard logging (if needed)
+tensorboard>=2.12.0                # For TensorBoard logging (Mission 4.2 - Training visualization)
 # wandb>=0.15.0                    # For Weights & Biases logging (if needed)

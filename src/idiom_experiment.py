@@ -1450,7 +1450,7 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     # -------------------------
     training_args = TrainingArguments(
         output_dir=str(output_dir),
-        evaluation_strategy="epoch",
+        eval_strategy="epoch",  # Fixed: was evaluation_strategy in older transformers
         save_strategy="epoch",
         learning_rate=learning_rate,
         per_device_train_batch_size=batch_size,
@@ -1615,10 +1615,12 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
             f.write(f"{k:20s}: {v}\n")
         f.write(f"\n--- Training Metrics ---\n")
         for k, v in results['train_metrics'].items():
-            f.write(f"{k:20s}: {v:.4f if isinstance(v, float) else v}\n")
+            val_str = f"{v:.4f}" if isinstance(v, float) else str(v)
+            f.write(f"{k:20s}: {val_str}\n")
         f.write(f"\n--- Test Metrics ---\n")
         for k, v in results['test_metrics'].items():
-            f.write(f"{k:20s}: {v:.4f if isinstance(v, float) else v}\n")
+            val_str = f"{v:.4f}" if isinstance(v, float) else str(v)
+            f.write(f"{k:20s}: {val_str}\n")
         f.write(f"\n{'='*80}\n")
 
     print(f"✅ Summary saved to: {summary_file}")

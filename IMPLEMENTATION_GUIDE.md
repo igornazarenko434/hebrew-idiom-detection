@@ -1,9 +1,9 @@
 # Hebrew Idiom Detection - Complete Implementation Guide
 **Easy-to-Follow Instructions for Running All Experiments**
 
-Version: 1.0
-Last Updated: November 9, 2025
-Based on: PRD v2.1, STEP_BY_STEP_MISSIONS.md
+Version: 2.0
+Last Updated: December 6, 2025
+Based on: FINAL_PRD v3.0, STEP_BY_STEP_MISSIONS.md, Actual Implementation
 
 ---
 
@@ -88,7 +88,7 @@ print(f'Train: {len(train)}, Val: {len(val)}, Test: {len(test)}')
 "
 ```
 
-**Expected output:** `Train: 3840, Val: 480, Test: 480`
+**Expected output:** `Train: 3456, Val: 432, Test: 432, Unseen: 480, Total: 4800`
 
 ---
 
@@ -116,11 +116,21 @@ cat experiments/results/tokenization_alignment_test.txt
 
 ### Understanding the Data Splits
 
-Hybrid strategy (seen vs unseen):
-- **Train:** 3,456 samples (54 idioms) – every seen idiom contributes sentences.
-- **Validation:** 432 samples – same idioms as train, different sentences.
-- **Test (`data/splits/test.csv`):** 432 samples – in-domain evaluation (seen idioms, unseen sentences).
-- **Unseen Idiom Test (`data/splits/unseen_idiom_test.csv`):** 480 samples – 6 idioms held out entirely for zero-shot evaluation.
+**Hybrid Strategy (Seen + Unseen Idioms):**
+- **Train:** 3,456 samples (54 seen idioms) – 64 sentences per idiom (32 literal + 32 figurative)
+- **Validation:** 432 samples (54 seen idioms) – 8 sentences per idiom (4 literal + 4 figurative)
+- **Test (in-domain):** 432 samples (54 seen idioms) – 8 sentences per idiom (4 literal + 4 figurative)
+- **Unseen Idiom Test:** 480 samples (6 held-out idioms) – 80 sentences per idiom (40 literal + 40 figurative)
+
+**Perfect 50/50 literal/figurative balance maintained across all splits**
+
+**Unseen Idioms (Zero-Shot Evaluation):**
+1. חתך פינה (cut corner)
+2. חצה קו אדום (crossed red line)
+3. נשאר מאחור (stayed behind)
+4. שבר שתיקה (broke silence)
+5. איבד את הראש (lost head)
+6. רץ אחרי הזנב של עצמו (chased own tail)
 
 This allows you to report both **in-domain** and **zero-shot** results without regenerating splits.
 
@@ -139,7 +149,7 @@ Evaluate pre-trained models **without any fine-tuning** - just use them as-is.
 | `dicta-il/dictabert` | DictaBERT | Hebrew-specific | ⭐⭐⭐ |
 | `bert-base-multilingual-cased` | mBERT | Multilingual | ⭐⭐⭐ |
 | `xlm-roberta-base` | XLM-RoBERTa | Multilingual | ⭐⭐⭐ |
-| `onlplab/alephbert-gimmel` | AlephBERT-Gimmel | Hebrew-specific | ⭐⭐ |
+| `dicta-il/alephbertgimmel-base` | AlephBERT-Gimmel | Hebrew-specific | ⭐⭐⭐ |
 
 ### Task Options
 
