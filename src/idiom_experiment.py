@@ -1929,6 +1929,10 @@ def run_evaluation(args):
         # Get base output directory (hardcoded to ensure project-relative path)
         base_output_dir = Path("experiments/results")
 
+        # Define variables needed for filename
+        dataset_name = Path(args.data).stem
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
         # Intelligent path parsing to mirror training structure
         # Expected training path: .../results/<mode>/<model>/<task>
         # Example: .../results/full_fine-tuning/alephbert-base/span
