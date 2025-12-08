@@ -1927,19 +1927,39 @@ def run_evaluation(args):
         # Structure: experiments/results/evaluation/{model_name}/{task}/eval_results_{dataset}_{timestamp}.json
 
         # Get base output directory (hardcoded to ensure project-relative path)
-        base_output_dir = "experiments/results"
+        base_output_dir = Path("experiments/results")
 
-        # Extract model name from checkpoint path
-        model_name = model_checkpoint.name if model_checkpoint.name else model_checkpoint.parent.name
+        # Intelligent path parsing to mirror training structure
+        # Expected training path: .../results/<mode>/<model>/<task>
+        # Example: .../results/full_fine-tuning/alephbert-base/span
+        try:
+            # Try to extract components from the checkpoint path
+            # model_checkpoint is a Path object or string
+            ckpt_path = Path(model_checkpoint).resolve()
+            
+            # Check if we are inside a checkpoint folder (e.g. checkpoint-500)
+            if "checkpoint-" in ckpt_path.name:
+                ckpt_path = ckpt_path.parent
+            
+            # Now ckpt_path should be the task folder (e.g. .../span)
+            inferred_task = ckpt_path.name
+            inferred_model = ckpt_path.parent.name
+            inferred_mode = ckpt_path.parent.parent.name
+            
+            # validate if these look like our structure
+            # mode usually contains "fine-tuning" or "backbone" or "zero_shot"
+            if "fine-tuning" in inferred_mode or "backbone" in inferred_mode or "zero_shot" in inferred_mode:
+                output_dir = base_output_dir / "evaluation" / inferred_mode / inferred_model / task
+            else:
+                # Fallback if structure is not standard
+                model_name = ckpt_path.parent.name
+                output_dir = base_output_dir / "evaluation" / "external_model" / model_name / task
+                
+        except Exception:
+            # Absolute fallback
+            model_name = Path(model_checkpoint).name
+            output_dir = base_output_dir / "evaluation" / "unknown_mode" / model_name / task
 
-        # Get dataset name
-        dataset_name = Path(args.data).stem
-
-        # Generate timestamp
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-        # Build output path: base/evaluation/model/task/eval_results_dataset_timestamp.json
-        output_dir = Path(base_output_dir) / "evaluation" / model_name / task
         output_dir.mkdir(parents=True, exist_ok=True)
 
         output_filename = f"eval_results_{dataset_name}_{timestamp}.json"
