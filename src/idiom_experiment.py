@@ -20,9 +20,11 @@ Design aligned with PRD and step-by-step missions.
 import argparse
 import ast
 import json
+import os
 import sys
 import yaml
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any
 
@@ -1250,7 +1252,13 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
             iob_tags_str = row['iob_tags']
             if pd.isna(iob_tags_str) or str(iob_tags_str) == 'nan':
                 continue
-            word_labels = str(iob_tags_str).split()
+            try:
+                if str(iob_tags_str).strip().startswith('[') and str(iob_tags_str).strip().endswith(']'):
+                    word_labels = ast.literal_eval(str(iob_tags_str))
+                else:
+                    word_labels = str(iob_tags_str).split()
+            except (ValueError, SyntaxError):
+                word_labels = str(iob_tags_str).split()
             for label_str in word_labels:
                 if label_str in label2id:
                     label_counts[label2id[label_str]] += 1
@@ -1915,17 +1923,37 @@ def run_evaluation(args):
     if args.output:
         output_path = Path(args.output)
     else:
-        # Auto-generate output path
-        model_name = model_checkpoint.name if model_checkpoint.name else model_checkpoint.parent.name
-        dataset_name = Path(args.data).stem
-        output_path = Path(f"evaluation_{model_name}_{dataset_name}_{task}.json")
+        # Auto-generate output path aligned with training structure
+        # Structure: experiments/results/evaluation/{model_name}/{task}/eval_results_{dataset}_{timestamp}.json
 
+        # Get base output directory (respect environment variable if set)
+        base_output_dir = os.environ.get('LOCAL_RESULTS_DIR', 'experiments/results')
+
+        # Extract model name from checkpoint path
+        model_name = model_checkpoint.name if model_checkpoint.name else model_checkpoint.parent.name
+
+        # Get dataset name
+        dataset_name = Path(args.data).stem
+
+        # Generate timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+        # Build output path: base/evaluation/model/task/eval_results_dataset_timestamp.json
+        output_dir = Path(base_output_dir) / "evaluation" / model_name / task
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        output_filename = f"eval_results_{dataset_name}_{timestamp}.json"
+        output_path = output_dir / output_filename
+
+    # Ensure parent directory exists
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with open(output_path, 'w') as f:
         json.dump(output_data, f, indent=2)
 
     print(f"\n💾 Results saved to: {output_path}")
+    print(f"   Directory structure matches training outputs")
+    print(f"   Will be synced to Google Drive via sync_to_gdrive.sh")
     print("=" * 80 + "\n")
 
     return output_data
