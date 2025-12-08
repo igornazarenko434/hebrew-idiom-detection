@@ -1794,7 +1794,7 @@ def run_evaluation(args):
             for i, labels in enumerate(examples['labels_str']):
                 word_ids = tokenized.word_ids(batch_index=i)
                 aligned = align_labels_with_tokens(
-                    tokenized_input={'input_ids': [0]},  # dummy, word_ids used
+                    tokenized_inputs={'input_ids': [0], 'token_type_ids': [0], 'attention_mask': [0]},  # dummy object with needed keys
                     word_labels=labels,
                     label2id=label2id,
                     label_all_tokens=False,
