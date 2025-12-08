@@ -5,9 +5,11 @@
 # ============================================================================
 # Deep Learning Framework
 # ============================================================================
-torch>=2.0.0
-torchvision>=0.15.0
-torchaudio>=2.0.0
+# Updated to torch>=2.6.0 due to security vulnerability (CVE-2025-32434)
+# Requires torch 2.6+ for safe model loading with weights_only=True
+torch>=2.6.0
+torchvision>=0.20.0
+torchaudio>=2.6.0
 
 # ============================================================================
 # HuggingFace Libraries
