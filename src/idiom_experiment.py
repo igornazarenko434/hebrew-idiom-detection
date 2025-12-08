@@ -1762,7 +1762,7 @@ def run_evaluation(args):
                 max_length=args.max_length
             )
 
-        tokenized_dataset = dataset.map(tokenize_function, batched=True)
+        tokenized_dataset = dataset.map(tokenize_function, batched=True, remove_columns=['sentence'])
         print(f"  ✓ Tokenized {len(tokenized_dataset)} samples for classification")
 
     else:  # task == "span"
