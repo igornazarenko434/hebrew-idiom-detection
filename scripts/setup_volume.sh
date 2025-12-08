@@ -426,7 +426,7 @@ echo -e "${CYAN}Step 10/11: Pre-downloading transformer models${NC}"
 echo "==============================================="
 echo ""
 
-read -p "$(echo -e ${YELLOW}Download all 5 models now? (~10 GB, saves time later) [y/N]: ${NC})" -n 1 -r
+read -p "$(echo -e ${YELLOW}Download all 5 models now? \(~10 GB, saves time later\) [y/N]: ${NC})" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Downloading models to cache..."
