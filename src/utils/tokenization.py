@@ -32,7 +32,8 @@ def align_labels_with_tokens(
     tokenized_inputs,
     word_labels: List[str],
     label2id: Dict[str, int],
-    label_all_tokens: bool = False
+    label_all_tokens: bool = False,
+    word_ids: Optional[List[Optional[int]]] = None
 ) -> List[int]:
     """
     Align word-level IOB2 labels with subword tokens.
@@ -54,6 +55,7 @@ def align_labels_with_tokens(
                  Example: {"O": 0, "B-IDIOM": 1, "I-IDIOM": 2}
         label_all_tokens: If True, label all subword tokens (not recommended for IOB2)
                          If False, only first subword gets label, rest get -100 (default)
+        word_ids: Optional pre-computed list of word IDs. If provided, tokenized_inputs is ignored.
 
     Returns:
         aligned_labels: List of label IDs for each subword token
@@ -72,7 +74,9 @@ def align_labels_with_tokens(
         >>> #          [CLS]  הוא  ##ש  ##בר  את  ##ה ##ראש [SEP]
     """
     aligned_labels = []
-    word_ids = tokenized_inputs.word_ids()  # Maps each token to its word index
+    
+    if word_ids is None:
+        word_ids = tokenized_inputs.word_ids()  # Maps each token to its word index
 
     previous_word_idx = None
     for word_idx in word_ids:
