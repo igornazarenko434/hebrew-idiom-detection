@@ -1629,6 +1629,308 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     return results
 
 # -------------------------
+# Mode: Evaluate Trained Model
+# -------------------------
+
+def run_evaluation(args):
+    """
+    Evaluate a trained model on a specified dataset
+
+    This function:
+    1. Loads a trained model from checkpoint
+    2. Loads the specified dataset
+    3. Runs evaluation
+    4. Saves results to JSON
+
+    Args:
+        args: Command-line arguments with:
+            - model_checkpoint: Path to trained model directory
+            - data: Path to CSV dataset file
+            - task: Task type ('cls' or 'span')
+            - device: Device to use ('cpu' or 'cuda')
+            - batch_size: Batch size for evaluation
+            - output: Optional output path for results JSON
+
+    Returns:
+        Dict with evaluation metrics
+    """
+    import ast
+    from pathlib import Path
+
+    print("\n" + "=" * 80)
+    print("EVALUATION MODE: TRAINED MODEL")
+    print("=" * 80)
+
+    # Validate required arguments
+    if not args.model_checkpoint:
+        print("\n❌ ERROR: --model_checkpoint is required for evaluate mode")
+        print("   Example: --model_checkpoint experiments/results/full_fine-tuning/alephbert-base/cls/")
+        sys.exit(1)
+
+    if not args.data:
+        print("\n❌ ERROR: --data is required for evaluate mode")
+        print("   Example: --data data/splits/test.csv")
+        sys.exit(1)
+
+    model_checkpoint = Path(args.model_checkpoint)
+    if not model_checkpoint.exists():
+        print(f"\n❌ ERROR: Model checkpoint not found: {model_checkpoint}")
+        sys.exit(1)
+
+    task = args.task
+    if task == "both":
+        print("\n❌ ERROR: 'both' task not supported in evaluate mode. Choose 'cls' or 'span'")
+        sys.exit(1)
+
+    print(f"\n📋 Configuration:")
+    print(f"  Model checkpoint: {model_checkpoint}")
+    print(f"  Dataset: {args.data}")
+    print(f"  Task: {task}")
+    print(f"  Device: {args.device}")
+    print(f"  Batch size: {args.batch_size}")
+
+    # -------------------------
+    # 1. Load Data
+    # -------------------------
+    print(f"\n📊 Loading data: {args.data}")
+    df = pd.read_csv(args.data)
+
+    # Apply split filter if specified
+    if args.split:
+        if 'split' in df.columns:
+            original_len = len(df)
+            df = df[df['split'] == args.split].copy()
+            print(f"  Filtered to split '{args.split}': {len(df)} samples (from {original_len})")
+        else:
+            print(f"  ⚠️  Warning: 'split' column not found, using all data")
+
+    # Apply sample limit if specified
+    if args.max_samples:
+        df = df.head(args.max_samples)
+        print(f"  Limited to {args.max_samples} samples")
+
+    print(f"  ✓ Loaded {len(df)} samples")
+
+    # Validate dataset for this task
+    validation_results = validate_dataset_for_evaluation(df, task)
+    if not validation_results['valid']:
+        print(f"\n❌ ERROR: Dataset validation failed:")
+        for error in validation_results['errors']:
+            print(f"   - {error}")
+        sys.exit(1)
+
+    # -------------------------
+    # 2. Load Model and Tokenizer
+    # -------------------------
+    print(f"\n📦 Loading model from checkpoint...")
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+    print(f"  ✓ Tokenizer loaded")
+
+    if task == "cls":
+        model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint)
+        print(f"  ✓ Sequence classification model loaded")
+    else:  # task == "span"
+        model = AutoModelForTokenClassification.from_pretrained(model_checkpoint)
+        print(f"  ✓ Token classification model loaded")
+
+    model.to(args.device)
+    model.eval()
+    print(f"  ✓ Model moved to {args.device}")
+
+    # -------------------------
+    # 3. Prepare Dataset
+    # -------------------------
+    print(f"\n🔧 Preparing dataset...")
+
+    if task == "cls":
+        # Task 1: Sentence Classification
+        dataset = Dataset.from_pandas(df[['sentence', 'label']])
+
+        def tokenize_function(examples):
+            return tokenizer(
+                examples['sentence'],
+                truncation=True,
+                padding='max_length',
+                max_length=args.max_length
+            )
+
+        tokenized_dataset = dataset.map(tokenize_function, batched=True)
+        print(f"  ✓ Tokenized {len(tokenized_dataset)} samples for classification")
+
+    else:  # task == "span"
+        # Task 2: Token Classification
+        # Parse pre-tokenized tokens and IOB tags
+        df['tokens_parsed'] = df['tokens'].apply(ast.literal_eval)
+        df['iob_tags_parsed'] = df['iob_tags'].apply(ast.literal_eval)
+
+        dataset = Dataset.from_pandas(df[['tokens_parsed', 'iob_tags_parsed']])
+        dataset = dataset.rename_column('tokens_parsed', 'tokens')
+        dataset = dataset.rename_column('iob_tags_parsed', 'labels_str')
+
+        # Label mapping
+        label2id = {"O": 0, "B-IDIOM": 1, "I-IDIOM": 2}
+        id2label = {v: k for k, v in label2id.items()}
+
+        def tokenize_and_align(examples):
+            from src.utils.tokenization import align_labels_with_tokens
+
+            tokenized = tokenizer(
+                examples['tokens'],
+                truncation=True,
+                is_split_into_words=True,
+                max_length=args.max_length,
+                padding='max_length'
+            )
+
+            aligned_labels = []
+            for i, labels in enumerate(examples['labels_str']):
+                word_ids = tokenized.word_ids(batch_index=i)
+                aligned = align_labels_with_tokens(
+                    tokenized_input={'input_ids': [0]},  # dummy, word_ids used
+                    word_labels=labels,
+                    label2id=label2id,
+                    label_all_tokens=False,
+                    word_ids=word_ids
+                )
+                aligned_labels.append(aligned)
+
+            tokenized['labels'] = aligned_labels
+            return tokenized
+
+        tokenized_dataset = dataset.map(tokenize_and_align, batched=True, remove_columns=['tokens', 'labels_str'])
+        print(f"  ✓ Tokenized {len(tokenized_dataset)} samples for token classification")
+
+    # -------------------------
+    # 4. Setup Metrics
+    # -------------------------
+    print(f"\n📊 Setting up metrics...")
+
+    if task == "cls":
+        metric_acc = evaluate.load('accuracy')
+        metric_f1 = evaluate.load('f1')
+        metric_precision = evaluate.load('precision')
+        metric_recall = evaluate.load('recall')
+
+        def compute_metrics(eval_pred):
+            predictions, labels = eval_pred
+            predictions = predictions.argmax(axis=-1)
+
+            # Confusion matrix
+            from sklearn.metrics import confusion_matrix
+            cm = confusion_matrix(labels, predictions)
+            tn, fp, fn, tp = cm.ravel() if cm.size == 4 else (0, 0, 0, 0)
+
+            return {
+                'accuracy': metric_acc.compute(predictions=predictions, references=labels)['accuracy'],
+                'f1': metric_f1.compute(predictions=predictions, references=labels, average='macro')['f1'],
+                'precision': metric_precision.compute(predictions=predictions, references=labels, average='macro')['precision'],
+                'recall': metric_recall.compute(predictions=predictions, references=labels, average='macro')['recall'],
+                'confusion_matrix_tn': float(tn),
+                'confusion_matrix_fp': float(fp),
+                'confusion_matrix_fn': float(fn),
+                'confusion_matrix_tp': float(tp),
+            }
+    else:  # task == "span"
+        metric_seqeval = evaluate.load('seqeval')
+
+        def compute_metrics(eval_pred):
+            predictions, labels = eval_pred
+            predictions = predictions.argmax(axis=-1)
+
+            # Convert to label strings, removing special tokens
+            true_labels = [[id2label.get(l, "O") for l in label if l != -100]
+                          for label in labels]
+            true_predictions = [[id2label.get(p, "O") for (p, l) in zip(prediction, label) if l != -100]
+                               for prediction, label in zip(predictions, labels)]
+
+            results = metric_seqeval.compute(predictions=true_predictions, references=true_labels)
+
+            return {
+                "precision": results["overall_precision"],
+                "recall": results["overall_recall"],
+                "f1": results["overall_f1"],
+                "accuracy": results["overall_accuracy"],
+            }
+
+    print(f"  ✓ Metrics configured")
+
+    # -------------------------
+    # 5. Run Evaluation
+    # -------------------------
+    print(f"\n🚀 Running evaluation...")
+
+    training_args = TrainingArguments(
+        output_dir="./tmp_eval",
+        per_device_eval_batch_size=args.batch_size,
+        report_to="none",
+        remove_unused_columns=False,
+    )
+
+    if task == "cls":
+        data_collator = DataCollatorWithPadding(tokenizer)
+    else:
+        data_collator = DataCollatorForTokenClassification(tokenizer)
+
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        data_collator=data_collator,
+        compute_metrics=compute_metrics,
+    )
+
+    eval_results = trainer.evaluate(tokenized_dataset)
+
+    # -------------------------
+    # 6. Display and Save Results
+    # -------------------------
+    print(f"\n" + "=" * 80)
+    print("EVALUATION RESULTS")
+    print("=" * 80)
+
+    print(f"\n📊 Metrics:")
+    for key, value in eval_results.items():
+        if not key.startswith('eval_'):
+            continue
+        metric_name = key.replace('eval_', '')
+        if isinstance(value, float):
+            print(f"  {metric_name:20s}: {value:.4f}")
+        else:
+            print(f"  {metric_name:20s}: {value}")
+
+    # Prepare output
+    output_data = {
+        'model_checkpoint': str(model_checkpoint),
+        'dataset': args.data,
+        'task': task,
+        'num_samples': len(df),
+        'metrics': {k.replace('eval_', ''): v for k, v in eval_results.items() if k.startswith('eval_')},
+        'config': {
+            'batch_size': args.batch_size,
+            'max_length': args.max_length,
+            'device': args.device,
+        }
+    }
+
+    # Save results
+    if args.output:
+        output_path = Path(args.output)
+    else:
+        # Auto-generate output path
+        model_name = model_checkpoint.name if model_checkpoint.name else model_checkpoint.parent.name
+        dataset_name = Path(args.data).stem
+        output_path = Path(f"evaluation_{model_name}_{dataset_name}_{task}.json")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(output_path, 'w') as f:
+        json.dump(output_data, f, indent=2)
+
+    print(f"\n💾 Results saved to: {output_path}")
+    print("=" * 80 + "\n")
+
+    return output_data
+
+# -------------------------
 # Mode: Hyperparameter Optimization (Placeholder for Mission 4.3)
 # -------------------------
 
@@ -1951,12 +2253,13 @@ Examples:
         "--mode",
         type=str,
         required=True,
-        choices=["zero_shot", "full_finetune", "frozen_backbone", "hpo"],
+        choices=["zero_shot", "full_finetune", "frozen_backbone", "hpo", "evaluate"],
         help="Experiment mode to run"
     )
 
     # Model configuration
     ap.add_argument("--model_id", type=str, default=None, help="HuggingFace model ID (required unless using --config)")
+    ap.add_argument("--model_checkpoint", type=str, default=None, help="Path to trained model checkpoint (for evaluate mode)")
     ap.add_argument("--device", type=str, default="cpu", help="Device (cpu/cuda/mps)")
     ap.add_argument("--max_length", type=int, default=128, help="Maximum sequence length")
     ap.add_argument("--batch_size", type=int, default=16, help="Batch size")
@@ -2016,6 +2319,20 @@ def main():
             print(f"\n❌ ERROR: {args.mode} mode requires either --config or --model_id")
             print(f"   Recommended: Use --config experiments/configs/training_config.yaml")
             sys.exit(1)
+    elif args.mode == "evaluate":
+        # Evaluate mode requires --model_checkpoint and --data
+        if not args.model_checkpoint:
+            print("\n❌ ERROR: --model_checkpoint is required for evaluate mode")
+            print("   Example: --model_checkpoint experiments/results/full_fine-tuning/alephbert-base/cls/")
+            sys.exit(1)
+        if not args.data:
+            print("\n❌ ERROR: --data is required for evaluate mode")
+            print("   Example: --data data/splits/test.csv")
+            sys.exit(1)
+        if not args.task:
+            print("\n❌ ERROR: --task is required for evaluate mode")
+            print("   Valid values: cls, span")
+            sys.exit(1)
 
     # Load and merge configuration (Mission 4.1)
     config = None
@@ -2061,6 +2378,9 @@ def main():
 
     elif args.mode == "hpo":
         run_hpo(args, config=config)
+
+    elif args.mode == "evaluate":
+        run_evaluation(args)
 
     else:
         raise ValueError(f"Unknown mode: {args.mode}")
