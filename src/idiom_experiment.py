@@ -1926,8 +1926,8 @@ def run_evaluation(args):
         # Auto-generate output path aligned with training structure
         # Structure: experiments/results/evaluation/{model_name}/{task}/eval_results_{dataset}_{timestamp}.json
 
-        # Get base output directory (respect environment variable if set)
-        base_output_dir = os.environ.get('LOCAL_RESULTS_DIR', 'experiments/results')
+        # Get base output directory (hardcoded to ensure project-relative path)
+        base_output_dir = "experiments/results"
 
         # Extract model name from checkpoint path
         model_name = model_checkpoint.name if model_checkpoint.name else model_checkpoint.parent.name
