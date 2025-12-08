@@ -5,7 +5,7 @@
 # Purpose: Initialize persistent volume with complete environment
 # Usage: bash scripts/setup_volume.sh
 # Time: ~20-30 minutes (one-time only!)
-# Run this on: Temporary Vast.ai instance with volume attached at /mnt/volume
+# Run this on: Temporary Vast.ai instance with volume attached at /workspace
 # ============================================================================
 
 set -e  # Exit on error
@@ -20,7 +20,7 @@ MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Configuration
-VOLUME_PATH="/mnt/volume"
+VOLUME_PATH="/workspace"
 GITHUB_REPO_URL="https://github.com/igornazarenko434/hebrew-idiom-detection.git"
 PYTHON_VERSION="3.10"
 DATASET_FILE_ID="140zJatqT4LBl7yG-afFSoUrYrisi9276"
@@ -49,7 +49,7 @@ if [ ! -d "$VOLUME_PATH" ]; then
     echo ""
     echo "Make sure you:"
     echo "  1. Created a storage volume in Vast.ai"
-    echo "  2. Attached it to this instance at /mnt/volume"
+    echo "  2. Attached it to this instance at /workspace"
     echo "  3. Restarted the instance"
     exit 1
 fi

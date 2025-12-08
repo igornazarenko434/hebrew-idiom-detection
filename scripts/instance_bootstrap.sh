@@ -3,7 +3,7 @@
 # Vast.ai Instance Bootstrap Script (RUN EVERY SESSION)
 # ============================================================================
 # Purpose: Quickly prepare a new instance using persistent volume
-# Usage: bash /mnt/volume/project/scripts/instance_bootstrap.sh
+# Usage: bash /workspace/project/scripts/instance_bootstrap.sh
 # Time: ~1 minute
 # Prerequisites: Volume setup completed (setup_volume.sh)
 # ============================================================================
@@ -20,7 +20,7 @@ MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 
 # Configuration
-VOLUME_PATH="/mnt/volume"
+VOLUME_PATH="/workspace"
 PROJECT_PATH="$VOLUME_PATH/project"
 
 echo ""
@@ -48,7 +48,7 @@ if [ ! -d "$VOLUME_PATH" ]; then
     echo "  1. Search for instances"
     echo "  2. Before clicking 'Rent', click 'Storage' button"
     echo "  3. Attach your volume: hebrew-idiom-volume"
-    echo "  4. Mount point: /mnt/volume"
+    echo "  4. Mount point: /workspace"
     echo "  5. Then rent the instance"
     exit 1
 fi
