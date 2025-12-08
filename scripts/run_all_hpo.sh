@@ -152,8 +152,8 @@ echo ""
 # CREATE RESULTS DIRECTORY
 # ============================================================================
 
-mkdir -p experiments/hpo_results
-mkdir -p experiments/logs
+mkdir -p experiments/results/hpo
+
 
 # ============================================================================
 # MAIN LOOP
@@ -272,7 +272,7 @@ echo ""
 
 # Show results directories
 echo "Results saved to:"
-echo "  experiments/hpo_results/"
+echo "  experiments/results/hpo/"
 echo "  experiments/results/best_hyperparameters/"
 echo ""
 

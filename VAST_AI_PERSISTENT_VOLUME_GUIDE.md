@@ -203,21 +203,11 @@ git push origin main
 ├─ project/                      # Git repository (PULL on each session)
 │  ├─ .git/
 │  ├─ src/
-│  ├─ experiments/configs/
+│  ├─ experiments/
+│  │  └─ results/                # Training results (PERSISTENT, synced)
 │  ├─ scripts/
 │  └─ requirements.txt
 │
-├─ outputs/                      # Training results (PERSISTENT)
-│  ├─ full_fine-tuning/
-│  │  ├─ alephbert-base/
-│  │  │  ├─ cls/
-│  │  │  │  ├─ checkpoint-best/
-│  │  │  │  ├─ training_results.json
-│  │  │  │  └─ logs/
-│  │  │  └─ span/
-│  │  └─ ... (other models)
-│  ├─ hpo_results/
-│  └─ optuna_studies/
 │
 ├─ cache/                        # HuggingFace cache (REUSED)
 │  └─ huggingface/
@@ -532,11 +522,9 @@ cp /mnt/volume/project/.env /mnt/volume/config/.env
 # Edit if needed
 nano /mnt/volume/config/.env
 
-# Add/verify these paths point to volume:
-# LOCAL_DATA_DIR=/mnt/volume/data
-# LOCAL_MODELS_DIR=/mnt/volume/cache/huggingface
-# LOCAL_RESULTS_DIR=/mnt/volume/outputs
-# LOCAL_LOGS_DIR=/mnt/volume/outputs/logs
+# Add any API keys here (e.g. OPENAI_API_KEY if needed later)
+# Note: We use project-relative paths for data/results, so no need to set
+# LOCAL_RESULTS_DIR etc.
 
 # Save and exit (Ctrl+X, Y, Enter)
 ```
@@ -683,7 +671,7 @@ cd /mnt/volume/project
 bash scripts/sync_to_gdrive.sh
 
 # This uploads:
-# /mnt/volume/outputs/ → gdrive:Hebrew_Idiom_Detection/results/
+# project/experiments/results/ → gdrive:Hebrew_Idiom_Detection/results/
 ```
 
 ---

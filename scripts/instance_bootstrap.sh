@@ -147,8 +147,6 @@ if [ -f "$VOLUME_PATH/config/.env" ]; then
     set +a
 
     echo "  HF_HOME: $HF_HOME"
-    echo "  DATA_DIR: $LOCAL_DATA_DIR"
-    echo "  RESULTS_DIR: $LOCAL_RESULTS_DIR"
 else
     echo -e "${YELLOW}⚠️  .env file not found on volume${NC}"
 fi
