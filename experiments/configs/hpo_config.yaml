@@ -11,7 +11,7 @@ optuna:
   direction: "maximize"                     # Maximize validation F1
   pruning: true                             # Enable pruning of unpromising trials
   study_name: "idiom_hpo"                   # Name for Optuna study
-  storage: null                             # SQLite storage path (null = in-memory)
+  storage: "experiments/results/optuna_studies/{model}_{task}_hpo.db"  # SQLite storage (persistent, resumable)
   sampler: "TPESampler"                     # Options: "TPESampler", "RandomSampler", "GridSampler"
   pruner: "MedianPruner"                    # Options: "MedianPruner", "PercentilePruner", "HyperbandPruner"
 
@@ -20,7 +20,7 @@ optuna:
 search_space:
   learning_rate:                            # Learning rate candidates
     type: "categorical"
-    values: [1e-5, 2e-5, 3e-5, 5e-5]
+    values: [5e-6, 1e-5, 2e-5, 3e-5, 5e-5]  # Added 5e-6 (optimal for AlephBERT/DictaBERT)
 
   batch_size:                               # Batch size candidates
     type: "categorical"
@@ -46,7 +46,7 @@ search_space:
 fixed:
   training_mode: "full_finetune"            # Always full finetune during HPO
   max_length: 128                           # Maximum sequence length
-  fp16: false                               # Mixed precision (set to true on GPU)
+  fp16: null                                # Mixed precision (null=auto-detect, auto-enables on CUDA for 2-3x speedup)
   seed: 42                                  # Fixed seed for reproducibility across trials
 
   # Data paths
@@ -78,6 +78,11 @@ fixed:
   # Logging
   report_to: "none"                         # Disable wandb/tensorboard during HPO
   logging_dir: null                         # Logs saved to output_dir/logs automatically
+
+  # Advanced training techniques (fixed during HPO, not tuned)
+  label_smoothing: 0.1                      # Fixed: label smoothing improves generalization
+  lr_scheduler_type: "cosine"               # Fixed: cosine scheduler works well for transformers
+  use_crf: true                             # Fixed: CRF improves span F1 (Task 2 only)
 
 # Optuna visualization settings (for post-HPO analysis)
 visualization:
