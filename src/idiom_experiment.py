@@ -1416,7 +1416,6 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
                 print(f"    {label_name:10s}: {count:6d} ({percentage:5.2f}%) - weight: {weight:.4f}")
 
             # Convert to tensor for PyTorch
-            import torch
             class_weights_tensor = torch.tensor([class_weights[i] for i in range(num_labels)], dtype=torch.float32)
         else:
             print(f"  ⚠️  No valid labels found, using uniform weights")
