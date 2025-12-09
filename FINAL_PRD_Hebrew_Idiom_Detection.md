@@ -704,6 +704,34 @@ Expression: {base_pie}
 [Same JSON output format]
 ```
 
+#### **Few-Shot Example Selection Methodology**
+
+**Critical for Reproducibility and Publication Quality:**
+
+To ensure rigorous evaluation and avoid data leakage:
+
+1. **Selection Pool:** Training set ONLY (never use test set examples)
+2. **Strategy:** Stratified random sampling with fixed seed (42)
+3. **N Examples:** 3-5 examples per prompt
+4. **Selection Criteria:**
+   - Balanced representation (literal and figurative)
+   - Different idioms (no duplicates)
+   - Medium sentence length (10-20 tokens)
+   - Mix of sentence types (question, declarative)
+5. **Documentation:**
+   - Save selected example IDs to `experiments/configs/few_shot_examples.json`
+   - Document exact sentences used in paper methodology
+   - Ensure reproducibility with fixed random seed
+6. **Validation:** Verify no overlap between few-shot examples and test set
+
+**Rationale:** Many research papers get criticized for poor LLM evaluation methodology. Reviewers will ask:
+- Which exact examples were used?
+- How were they selected?
+- Are they from the test set? (data leakage!)
+- Can others reproduce the results?
+
+**Implementation:** See STEP_BY_STEP_MISSIONS.md Mission 5.2.1 for detailed code examples and selection strategies.
+
 #### **Method 2: Chain-of-Thought Reasoning**
 
 **Zero-Shot with CoT:**
@@ -782,8 +810,22 @@ Expression: {base_pie}
 - Accuracy
 - Precision & Recall (per class: literal, figurative)
 - Confusion matrix
-- **Cost:** Inference time (seconds per sample)
+- **Cost:** Inference time (seconds per sample), total cost (for API models)
 - **Analysis:** Error patterns by idiom type
+
+**Manual Review (Quality Assessment):**
+- Randomly sample 50 predictions per model
+- Evaluate reasoning quality (1-5 scale):
+  - 5: Excellent reasoning, correct prediction
+  - 4: Good reasoning, correct prediction
+  - 3: Adequate reasoning, correct prediction
+  - 2: Poor reasoning, but correct prediction
+  - 1: Incorrect prediction
+- Document patterns:
+  - Does model identify literal/figurative cues correctly?
+  - Does model use context effectively?
+  - What error types are most common?
+- Save analysis to: `experiments/results/llm_evaluation/manual_review_analysis.md`
 
 **Implementation:**
 ```python

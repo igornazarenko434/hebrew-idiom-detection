@@ -1677,40 +1677,126 @@ c) **First-N-Tokens Heuristic:**
 
 ## PHASE 5: LLM EVALUATION (Week 7)
 
-### Mission 5.1: LLM Selection and API Setup
+### Mission 5.1: LLM Selection and Environment Setup
 
-**Objective:** Choose LLM and setup API access
+**Objective:** Setup local LLM inference environment with Hebrew-native and multilingual models
+
+**Research Question:** Does Hebrew-native LLM (DictaLM) outperform multilingual LLM (Llama) for Hebrew idiom detection?
 
 **Tasks:**
-1. Select one LLM from options (PRD Section 4.2):
-   - Option 1: Llama 3.1 70B (via Together AI or Azure)
-   - Option 2: Mistral Large (via Azure)
-   - Option 3: GPT-3.5-Turbo (via Azure OpenAI)
-   - Consider: Cost, Hebrew support, API availability
-2. Create account and setup API access:
+
+1. **Select LLMs for evaluation (PRD Section 4.2):**
+
+   **Tier 1: Primary Models (Local Inference - Free)**
+   - **DictaLM-3.0-1.7B-Instruct** (`dicta-il/DictaLM-3.0-1.7B-Instruct`)
+     - Hebrew-native LLM (SOTA 2025)
+     - 1.7B parameters, runs on Mac/24GB GPU
+     - Open-weight, no API costs
+   - **DictaLM-3.0-1.7B-Instruct-W4A16** (`dicta-il/DictaLM-3.0-1.7B-Instruct-W4A16`)
+     - Quantized version for faster inference
+     - Use if GPU memory limited
+   - **Llama-3.1-8B-Instruct** (`meta-llama/Llama-3.1-8B-Instruct`)
+     - Multilingual baseline
+     - 8B parameters, requires 24GB GPU (or quantization)
+     - Open-weight, no API costs
+
+   **Tier 2: Optional Model (API Inference - ~$30 cost)**
+   - **Llama-3.1-70B-Instruct** (via Together AI or Azure)
+     - Larger model for performance comparison
+     - Only if budget allows and want SOTA comparison
+
+   **Research Design:** Compare Hebrew-native (DictaLM) vs Multilingual (Llama)
+
+2. **Setup local inference environment:**
+   - Install required packages:
+     ```bash
+     pip install transformers>=4.30.0 torch>=2.6.0 accelerate>=0.20.0
+     pip install bitsandbytes>=0.41.0  # For quantization if needed
+     ```
+   - Test HuggingFace Hub access:
+     ```python
+     from huggingface_hub import login
+     login()  # Login with HF token if needed for gated models
+     ```
+   - Download and test models:
+     ```python
+     from transformers import AutoModelForCausalLM, AutoTokenizer
+
+     # Test DictaLM-3.0 (1.7B)
+     model = AutoModelForCausalLM.from_pretrained(
+         "dicta-il/DictaLM-3.0-1.7B-Instruct",
+         device_map="auto",
+         torch_dtype="auto"
+     )
+     tokenizer = AutoTokenizer.from_pretrained("dicta-il/DictaLM-3.0-1.7B-Instruct")
+
+     # Test with Hebrew sentence
+     prompt = "שלום, איך אתה?"
+     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+     outputs = model.generate(**inputs, max_new_tokens=50)
+     print(tokenizer.decode(outputs[0]))
+     ```
+   - Verify GPU memory requirements:
+     - DictaLM-3.0-1.7B: ~4GB GPU memory (FP16)
+     - Llama-3.1-8B: ~16GB GPU memory (FP16)
+     - Use quantization (W4A16) if GPU memory limited
+
+3. **Estimate inference requirements:**
+   - Test set: 432 samples (in-domain) + 480 samples (unseen idiom) = 912 samples
+   - Tasks: 2 (Task 1: cls, Task 2: span)
+   - Total inferences per model: 912 × 2 = 1,824 inferences
+   - Estimated time per sample: ~2-5 seconds (1.7B model), ~5-10 seconds (8B model)
+   - Total runtime:
+     - DictaLM-3.0-1.7B: ~1-2 hours per task (3-4 hours total)
+     - Llama-3.1-8B: ~2-4 hours per task (6-8 hours total)
+
+4. **(Optional) If using Llama-70B via API:**
+   - Create account on Together AI or Azure
    - Get API key
    - Test API connection
-   - Understand rate limits
-   - Check pricing
-3. Estimate total cost:
-   - Test set samples × 2 tasks = API calls needed
-   - Add few-shot examples: ~3-5 per call
-   - Calculate total tokens and cost
-4. Create `.env` file with API credentials (DO NOT commit to Git)
-5. Test API with sample Hebrew sentence
+   - Estimate cost:
+     - 912 samples × 2 tasks × ~1000 tokens per call × $0.00002/token ≈ $30-40
+   - Create `.env` file with API credentials (DO NOT commit to Git)
+   - Budget constraint: <$50 recommended
+
+5. **Create configuration:**
+   - Create `experiments/configs/llm_config.yaml`:
+     ```yaml
+     llm_models:
+       dictalm_1.7b:
+         model_id: "dicta-il/DictaLM-3.0-1.7B-Instruct"
+         type: "local"
+         device_map: "auto"
+         torch_dtype: "auto"
+       dictalm_1.7b_quantized:
+         model_id: "dicta-il/DictaLM-3.0-1.7B-Instruct-W4A16"
+         type: "local"
+         device_map: "auto"
+       llama_8b:
+         model_id: "meta-llama/Llama-3.1-8B-Instruct"
+         type: "local"
+         device_map: "auto"
+         torch_dtype: "auto"
+       llama_70b_api:  # Optional
+         model_id: "meta-llama/Llama-3.1-70B-Instruct"
+         type: "api"
+         api_provider: "together"
+         api_key_env: "TOGETHER_API_KEY"
+     ```
 
 **Validation:**
-- API access working
-- Can send request and get response
-- Hebrew text handled correctly
-- Cost estimated and acceptable
-- API key secured in `.env`
+- ✅ Models downloaded and load successfully
+- ✅ Hebrew text inference works correctly
+- ✅ GPU memory sufficient (or quantization configured)
+- ✅ Inference time estimated
+- ✅ Configuration file created
+- ✅ (Optional) API access working if using Llama-70B
 
 **Success Criteria:**
-✅ LLM selected
-✅ API access configured
-✅ Cost estimated (<$100)
-✅ Test call successful
+✅ Primary models (DictaLM + Llama-8B) working locally
+✅ Test inference on sample Hebrew sentences successful
+✅ Runtime estimated (<8 hours total for all models)
+✅ Cost: $0 for local models, <$50 if using optional API model
 ✅ Ready for evaluation
 
 ---
@@ -2019,141 +2105,455 @@ assert set(few_shot_ids).isdisjoint(set(test_ids)), "Data leakage detected!"
 
 ### Mission 5.3: LLM Evaluation Script
 
-**Objective:** Create script for automated LLM evaluation
+**Objective:** Create script for automated LLM evaluation supporting both local and API inference
 
 **Tasks:**
-1. Create `src/llm_evaluation.py` script
-2. Implement functions:
-   - Load test set
-   - Format prompt for each sample
-   - Send API request with retry logic
-   - Parse JSON response
-   - Extract prediction
-   - Handle errors gracefully
-3. Implement rate limiting:
-   - Respect API rate limits
-   - Add delays between requests
-   - Batch requests if supported
-4. Implement result saving:
-   - Save predictions for each sample
-   - Save raw LLM responses
-   - Calculate metrics
-   - Track API costs
-5. Add progress tracking:
-   - Progress bar
-   - Time estimation
-   - Cost tracking
-6. Test on small subset (20 samples) first
+
+1. **Create `src/llm_evaluation.py` script with support for:**
+   - Local inference (DictaLM, Llama-8B)
+   - API inference (optional Llama-70B)
+   - Both Task 1 (classification) and Task 2 (span detection)
+
+2. **Implement core functions:**
+
+   **a) Model Loading:**
+   ```python
+   def load_llm_model(config):
+       """
+       Load LLM model based on config (local or API)
+       Args:
+           config: Dict with model_id, type (local/api), device_map, etc.
+       Returns:
+           model, tokenizer (for local) or api_client (for API)
+       """
+       if config['type'] == 'local':
+           model = AutoModelForCausalLM.from_pretrained(
+               config['model_id'],
+               device_map=config.get('device_map', 'auto'),
+               torch_dtype=config.get('torch_dtype', 'auto')
+           )
+           tokenizer = AutoTokenizer.from_pretrained(config['model_id'])
+           return model, tokenizer
+       elif config['type'] == 'api':
+           # Setup API client (Together AI, Azure, etc.)
+           return setup_api_client(config)
+   ```
+
+   **b) Prompt Formatting:**
+   ```python
+   def format_prompt(sample, method='direct', num_examples=0, few_shot_examples=None):
+       """
+       Format prompt for LLM evaluation
+       Args:
+           sample: Dict with 'sentence', 'expression', 'label' (for validation)
+           method: 'direct' or 'cot' (chain-of-thought)
+           num_examples: 0 (zero-shot) or 3-5 (few-shot)
+           few_shot_examples: List of example dicts (if num_examples > 0)
+       Returns:
+           prompt: Formatted string
+       """
+       # Load prompt template from experiments/configs/llm_prompts.json
+       # Insert few-shot examples if num_examples > 0
+       # Return formatted prompt
+   ```
+
+   **c) Inference:**
+   ```python
+   def run_inference_local(model, tokenizer, prompt, max_new_tokens=256):
+       """Local inference using transformers"""
+       inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+       outputs = model.generate(
+           **inputs,
+           max_new_tokens=max_new_tokens,
+           temperature=0.7,
+           do_sample=True
+       )
+       response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+       return response
+
+   def run_inference_api(api_client, prompt, model_id):
+       """API inference with retry logic"""
+       for attempt in range(3):  # Retry up to 3 times
+           try:
+               response = api_client.generate(prompt, model=model_id)
+               return response
+           except Exception as e:
+               if attempt == 2:
+                   raise e
+               time.sleep(2 ** attempt)  # Exponential backoff
+   ```
+
+   **d) Response Parsing:**
+   ```python
+   def parse_llm_response(response, task='cls'):
+       """
+       Parse JSON response from LLM
+       Args:
+           response: Raw LLM output string
+           task: 'cls' (classification) or 'span' (span detection)
+       Returns:
+           prediction: Dict with 'classification', 'confidence', 'reasoning'
+                      or 'span_start', 'span_end' for span task
+       """
+       # Extract JSON from response (handle markdown code blocks)
+       # Parse JSON
+       # Validate format
+       # Return structured prediction
+   ```
+
+   **e) Batch Evaluation:**
+   ```python
+   def evaluate_llm(model_config, test_file, task='cls', method='direct', num_examples=0):
+       """
+       Run full evaluation on test set
+       Args:
+           model_config: Dict from llm_config.yaml
+           test_file: Path to test.csv or unseen_idiom_test.csv
+           task: 'cls' or 'span'
+           method: 'direct' or 'cot'
+           num_examples: 0 (zero-shot) or 3-5 (few-shot)
+       Returns:
+           results: Dict with predictions, metrics, runtime
+       """
+       # Load model
+       # Load test data
+       # Load few-shot examples if needed
+       # For each sample:
+       #   - Format prompt
+       #   - Run inference
+       #   - Parse response
+       #   - Save prediction
+       # Calculate metrics
+       # Return results
+   ```
+
+3. **Implement rate limiting (for API models only):**
+   - Respect API rate limits (e.g., 10 requests/minute for Together AI)
+   - Add delays between requests (e.g., `time.sleep(6)` for 10 req/min)
+   - Implement exponential backoff for retries
+
+4. **Implement result saving:**
+   - Save predictions for each sample:
+     - `experiments/results/llm_evaluation/{model}/{task}/{method}_{num_examples}shot_predictions.csv`
+   - Save raw LLM responses:
+     - `experiments/results/llm_evaluation/{model}/{task}/{method}_{num_examples}shot_raw_responses.json`
+   - Calculate and save metrics:
+     - F1 (macro), Accuracy, Precision, Recall
+     - `experiments/results/llm_evaluation/{model}/{task}/{method}_{num_examples}shot_metrics.json`
+   - Track inference time and cost:
+     - Runtime per sample
+     - Total runtime
+     - Total cost (for API models)
+
+5. **Add progress tracking:**
+   - Use `tqdm` progress bar
+   - Show: samples completed, estimated time remaining
+   - For API models: show cost accumulation
+
+6. **Test on small subset first:**
+   - Test on 20 validation samples before full evaluation
+   - Verify:
+     - Inference works correctly
+     - JSON parsing reliable
+     - Metrics calculated correctly
+     - Output saved properly
+
+**Implementation Notes:**
+- Run local inference on Mac/GPU (no need for VAST.ai)
+- API inference can run from local machine (CPU is fine)
+- Save all intermediate results (for debugging and analysis)
+- Handle Hebrew text encoding correctly (UTF-8)
 
 **Validation:**
-- Script runs without errors
-- API calls successful
-- Responses parsed correctly
-- Predictions saved
-- Metrics calculated
-- Cost tracking accurate
+- ✅ Script runs without errors
+- ✅ Local inference works (DictaLM, Llama-8B)
+- ✅ API inference works (if using Llama-70B)
+- ✅ JSON responses parsed correctly
+- ✅ Predictions saved in correct format
+- ✅ Metrics calculated accurately
+- ✅ Progress tracking clear
 
 **Success Criteria:**
-✅ Evaluation script complete
-✅ Error handling robust
-✅ Rate limiting implemented
-✅ Cost tracking working
-✅ Tested successfully
+✅ Evaluation script complete for both local and API
+✅ Error handling robust (retries, graceful failures)
+✅ Rate limiting implemented (for API)
+✅ Cost tracking working (for API)
+✅ Tested successfully on validation subset
+✅ Ready for full evaluation
 
 ---
 
 ### Mission 5.4: LLM Evaluation Execution
 
-**Objective:** Run LLM evaluation on full test set
+**Objective:** Run LLM evaluation on full test set for all model-method combinations
 
-**IMPORTANT:** Run this mission **LOCALLY on PyCharm** (not VAST.ai)
-- LLM evaluation only makes API calls - no GPU needed!
-- Can run on your local machine (CPU is fine)
-- Saves VAST.ai costs
+**IMPORTANT:** Run this mission **LOCALLY** (not VAST.ai)
+- Local LLM inference uses Mac/GPU (DictaLM-1.7B, Llama-8B)
+- Optional API inference runs from local machine (Llama-70B)
+- Saves VAST.ai costs (no GPU rental needed)
+
+**Experimental Design (8-12 conditions):**
+
+| Model | Type | Method | Examples | Task 1 | Task 2 | Priority |
+|-------|------|--------|----------|--------|--------|----------|
+| DictaLM-1.7B | Local | Direct | 0 (zero-shot) | ✅ | ✅ | ⭐⭐⭐ |
+| DictaLM-1.7B | Local | Direct | 3 (few-shot) | ✅ | ✅ | ⭐⭐⭐ |
+| DictaLM-1.7B | Local | CoT | 0 (zero-shot) | ✅ | ✅ | ⭐⭐ |
+| DictaLM-1.7B | Local | CoT | 3 (few-shot) | ✅ | ✅ | ⭐⭐ |
+| Llama-8B | Local | Direct | 0 (zero-shot) | ✅ | ✅ | ⭐⭐⭐ |
+| Llama-8B | Local | Direct | 3 (few-shot) | ✅ | ✅ | ⭐⭐⭐ |
+| Llama-8B | Local | CoT | 0 (zero-shot) | ✅ | ✅ | ⭐⭐ |
+| Llama-8B | Local | CoT | 3 (few-shot) | ✅ | ✅ | ⭐⭐ |
+| Llama-70B | API | Direct | 3 (few-shot) | ✅ | ✅ | ⭐ (optional) |
+
+**Total:** 8 primary conditions + 1 optional = 9 conditions × 2 tasks = 18 evaluation runs
 
 **Tasks:**
-1. Task 1: Sentence Classification
-   - Zero-shot evaluation:
-     - Run on full test set
-     - Save predictions and metrics
-     - Track cost and latency
-   - Few-shot evaluation:
-     - Run on full test set
-     - Save predictions and metrics
-     - Track cost and latency
-   - Compare zero-shot vs few-shot
-2. Task 2: Token Classification (Span Detection)
-   - Zero-shot evaluation:
-     - Run on full test set
-     - Parse span predictions
-     - Convert to IOB2 format
-     - Calculate metrics
-   - Few-shot evaluation:
-     - Run on full test set
-     - Calculate metrics
-3. Save all results:
-   - Predictions (CSV format)
-   - Metrics summary (JSON)
-   - Cost report
-   - Latency statistics
-4. Manual review of 50 responses:
-   - Evaluate reasoning quality (1-5 scale)
-   - Note interesting insights
-   - Identify error patterns
+
+1. **Task 1: Sentence Classification (Literal vs Figurative)**
+
+   For each model-method-examples combination:
+
+   a) **Run evaluation on in-domain test set (432 samples):**
+   ```bash
+   python src/llm_evaluation.py \
+     --model dictalm_1.7b \
+     --config experiments/configs/llm_config.yaml \
+     --test_file data/splits/test.csv \
+     --task cls \
+     --method direct \
+     --num_examples 0 \
+     --output_dir experiments/results/llm_evaluation/
+   ```
+
+   b) **Run evaluation on unseen idiom test set (480 samples):**
+   ```bash
+   python src/llm_evaluation.py \
+     --model dictalm_1.7b \
+     --config experiments/configs/llm_config.yaml \
+     --test_file data/splits/unseen_idiom_test.csv \
+     --task cls \
+     --method direct \
+     --num_examples 0 \
+     --output_dir experiments/results/llm_evaluation/
+   ```
+
+   c) **Collect results:**
+   - Predictions: `experiments/results/llm_evaluation/dictalm_1.7b/cls/direct_0shot_test_predictions.csv`
+   - Metrics: `experiments/results/llm_evaluation/dictalm_1.7b/cls/direct_0shot_test_metrics.json`
+   - Raw responses: `experiments/results/llm_evaluation/dictalm_1.7b/cls/direct_0shot_test_raw_responses.json`
+   - Runtime: Total inference time per test set
+
+2. **Task 2: Span Detection (Idiom Localization)**
+
+   For each model-method-examples combination:
+
+   a) **Run evaluation on in-domain test set:**
+   ```bash
+   python src/llm_evaluation.py \
+     --model dictalm_1.7b \
+     --config experiments/configs/llm_config.yaml \
+     --test_file data/splits/test.csv \
+     --task span \
+     --method direct \
+     --num_examples 3 \
+     --output_dir experiments/results/llm_evaluation/
+   ```
+
+   b) **Parse span predictions:**
+   - LLM returns idiom span (e.g., "span: [2, 5]" or "idiom tokens: 2-5")
+   - Convert to IOB2 format for metric calculation
+   - Calculate span F1 (exact match), token F1, and partial match
+
+   c) **Collect results:**
+   - Predictions with IOB2 labels
+   - Metrics: Span F1, Token F1, Exact match accuracy
+   - Raw responses for error analysis
+
+3. **Compare Experimental Conditions:**
+
+   a) **Zero-shot vs Few-shot:**
+   - Calculate improvement from adding 3 examples
+   - Which model benefits more from examples?
+
+   b) **Direct vs Chain-of-Thought:**
+   - Does CoT improve accuracy?
+   - Does CoT provide better explanations?
+
+   c) **DictaLM (Hebrew-native) vs Llama (Multilingual):**
+   - Which performs better on Hebrew idioms?
+   - Performance gap on seen vs unseen idioms?
+
+   d) **Model Size (1.7B vs 8B vs 70B - optional):**
+   - Does larger model size improve performance?
+   - Cost-performance tradeoff?
+
+4. **Save consolidated results:**
+   - Create summary table: `experiments/results/llm_evaluation/summary_all_models.csv`
+   - Columns: model, method, num_examples, task, test_set, f1, accuracy, precision, recall, runtime, cost
+   - Save to: `experiments/results/llm_evaluation/summary_all_models.json`
+
+5. **Manual review of responses (50 samples per model):**
+   - Randomly sample 50 predictions from each primary model (DictaLM-1.7B, Llama-8B)
+   - Evaluate reasoning quality:
+     - 5: Excellent reasoning, correct prediction
+     - 4: Good reasoning, correct prediction
+     - 3: Adequate reasoning, correct prediction
+     - 2: Poor reasoning, but correct prediction
+     - 1: Incorrect prediction
+   - Note interesting patterns:
+     - Does model identify literal/figurative cues correctly?
+     - Does model use context effectively?
+     - What types of errors occur?
+   - Document findings: `experiments/results/llm_evaluation/manual_review_analysis.md`
+
+**Execution Order:**
+1. Start with DictaLM-1.7B (fastest, free)
+2. Then Llama-8B (slower, still free)
+3. Optionally Llama-70B (if budget allows, ~$30-40)
+4. Prioritize: Direct prompts before CoT, Few-shot before Zero-shot
 
 **Validation:**
-- All evaluations complete
-- Predictions saved
-- Metrics calculated correctly
-- Cost within budget
-- Manual review documented
+- ✅ All evaluations complete (at least 8 primary conditions)
+- ✅ Predictions saved for all test sets
+- ✅ Metrics calculated correctly (F1, accuracy, precision, recall)
+- ✅ Cost within budget ($0 for local, <$50 if using API)
+- ✅ Runtime reasonable (<8 hours total for all local models)
+- ✅ Manual review documented (50 samples per model)
 
 **Success Criteria:**
-✅ LLM evaluated on both tasks
-✅ Zero-shot and few-shot results
-✅ Cost < $100
-✅ Metrics competitive with fine-tuned models (within 5-10%)
-✅ Results documented
+✅ LLM evaluated on both tasks (cls + span)
+✅ Zero-shot and few-shot results available
+✅ Hebrew-native (DictaLM) vs multilingual (Llama) comparison complete
+✅ Cost: $0-50 (depending on optional Llama-70B)
+✅ Metrics competitive with fine-tuned models (within 5-10% acceptable)
+✅ Results documented and ready for analysis
 
 ---
 
 ### Mission 5.5: LLM vs Fine-Tuned Comparison
 
-**Objective:** Compare LLM performance with fine-tuned models
+**Objective:** Compare LLM prompting performance with fine-tuned encoder models
+
+**Research Questions:**
+1. **Hebrew-native vs Multilingual:** Does DictaLM (Hebrew-native) outperform Llama (multilingual) on Hebrew idioms?
+2. **Architecture:** Do encoder models (fine-tuned) or decoder models (prompted) perform better?
+3. **Cost-Performance:** Is prompting competitive with fine-tuning for Hebrew idioms?
 
 **Tasks:**
-1. Create comprehensive comparison:
-   - Task 1 F1: LLM vs best fine-tuned model
-   - Task 2 F1: LLM vs best fine-tuned model
-   - Zero-shot LLM vs zero-shot encoder models
-   - Few-shot LLM vs fine-tuned encoder models
-2. Create comparison visualizations:
-   - Bar chart: All approaches side-by-side
-   - Performance vs cost plot
-   - Performance vs latency plot
-3. Analyze trade-offs:
-   - Accuracy vs cost
-   - Accuracy vs development time
-   - Accuracy vs inference speed
-4. Document findings:
-   - When is LLM better?
-   - When is fine-tuning better?
-   - Cost-benefit analysis
-5. Create presentation-ready tables and figures
+
+1. **Create comprehensive comparison table:**
+
+   | Model | Type | Arch | Method | Task 1 F1 | Task 2 F1 | Cost | Inference Time |
+   |-------|------|------|--------|-----------|-----------|------|----------------|
+   | AlephBERT | Encoder | Fine-tuned | Full FT | X.XX | X.XX | $0 | Xms |
+   | DictaBERT | Encoder | Fine-tuned | Full FT | X.XX | X.XX | $0 | Xms |
+   | DictaLM-1.7B | Decoder | Prompted | Zero-shot | X.XX | X.XX | $0 | Xs |
+   | DictaLM-1.7B | Decoder | Prompted | Few-shot | X.XX | X.XX | $0 | Xs |
+   | Llama-8B | Decoder | Prompted | Zero-shot | X.XX | X.XX | $0 | Xs |
+   | Llama-8B | Decoder | Prompted | Few-shot | X.XX | X.XX | $0 | Xs |
+   | Llama-70B | Decoder | Prompted | Few-shot | X.XX | X.XX | $40 | Xs |
+
+   **Key Comparisons:**
+   - Best fine-tuned encoder vs best prompted decoder
+   - Zero-shot LLM vs zero-shot encoder (no training baseline)
+   - Few-shot LLM vs fine-tuned encoder (development effort comparison)
+   - Hebrew-native (DictaLM, AlephBERT, DictaBERT) vs multilingual (Llama)
+
+2. **Create comparison visualizations:**
+
+   a) **Bar chart: All models side-by-side**
+   - X-axis: Models (grouped by type)
+   - Y-axis: F1 score
+   - Separate charts for Task 1 and Task 2
+   - Color-code: Encoder (blue), Decoder Hebrew-native (green), Decoder Multilingual (orange)
+
+   b) **Performance vs Cost plot**
+   - X-axis: Total cost ($0-50)
+   - Y-axis: F1 score
+   - Size: Inference time
+   - Show Pareto frontier (best cost-performance tradeoff)
+
+   c) **Performance vs Development Time**
+   - X-axis: Development time (hours)
+     - Zero-shot LLM: ~4 hours (prompt design)
+     - Few-shot LLM: ~8 hours (prompt + example selection)
+     - Fine-tuning: ~20 hours (training + HPO)
+   - Y-axis: F1 score
+
+   d) **Hebrew-native vs Multilingual comparison**
+   - Compare: DictaLM vs Llama (both 8B size, same prompting method)
+   - Compare: AlephBERT/DictaBERT vs XLM-R (if available)
+   - Bar chart showing performance gap
+
+3. **Analyze trade-offs:**
+
+   a) **Accuracy vs Cost:**
+   - Fine-tuned encoders: High accuracy, $0 cost (if GPU available)
+   - Few-shot LLM: Moderate accuracy, $0 cost (local) or $40 (API)
+   - Zero-shot LLM: Lower accuracy, $0 cost
+
+   b) **Accuracy vs Development Time:**
+   - Zero-shot LLM: Fastest (4 hours), lowest accuracy
+   - Few-shot LLM: Fast (8 hours), moderate accuracy
+   - Fine-tuning: Slow (20+ hours), highest accuracy
+
+   c) **Accuracy vs Inference Speed:**
+   - Fine-tuned encoders: Fast inference (~10-50ms per sample)
+   - Small LLM (1.7B): Moderate inference (~2-5s per sample)
+   - Large LLM (8B, 70B): Slow inference (~5-20s per sample)
+
+4. **Document findings:**
+
+   Create analysis document: `experiments/results/llm_evaluation/llm_vs_finetuning_analysis.md`
+
+   **Key Questions to Answer:**
+
+   a) **When is LLM prompting better?**
+   - Quick prototyping and experimentation
+   - Low-resource scenarios (no training data needed)
+   - When development time is critical
+   - When model needs to be updated frequently (no retraining)
+
+   b) **When is fine-tuning better?**
+   - Maximum accuracy required
+   - Large training dataset available
+   - Low-latency inference critical
+   - Cost-per-inference matters (production deployment)
+
+   c) **Hebrew-native advantage:**
+   - Does DictaLM outperform Llama on Hebrew idioms?
+   - Is the gap larger for unseen idioms?
+   - Do Hebrew-native encoders (AlephBERT/DictaBERT) show similar advantage?
+
+   d) **Cost-benefit analysis:**
+   - Best value: Few-shot local LLM (good accuracy, $0 cost, moderate time)
+   - Best performance: Fine-tuned Hebrew-native encoder (AlephBERT/DictaBERT)
+   - Best for exploration: Zero-shot LLM (fast prototyping)
+
+5. **Create presentation-ready tables and figures:**
+   - Save all visualizations to: `paper/figures/llm_comparison/`
+   - Create summary table for paper: `paper/tables/model_comparison.tex`
+   - Ensure all figures have:
+     - Clear labels (English)
+     - Hebrew text rendered correctly (if needed)
+     - Publication-quality resolution (300 DPI)
+     - Color-blind friendly color schemes
 
 **Validation:**
-- All comparisons complete
-- Visualizations created
-- Trade-offs analyzed
-- Findings documented clearly
-- Ready for paper inclusion
+- ✅ All model results compiled in single table
+- ✅ Comparison visualizations created and clear
+- ✅ Trade-offs analyzed across multiple dimensions
+- ✅ Key findings documented with evidence
+- ✅ Research questions answered
+- ✅ Figures publication-ready
 
 **Success Criteria:**
-✅ Comprehensive comparison complete
-✅ Visualizations created
-✅ Trade-offs documented
-✅ Clear recommendations
-✅ Results ready for paper
+✅ Comprehensive comparison complete (encoder vs decoder, Hebrew vs multilingual)
+✅ Visualizations created (4+ figures)
+✅ Trade-offs documented (cost, time, accuracy, speed)
+✅ Clear recommendations for different scenarios
+✅ Results ready for paper inclusion (figures + tables + analysis)
 
 ---
 
