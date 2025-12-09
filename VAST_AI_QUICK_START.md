@@ -82,7 +82,7 @@ cp ~/.config/rclone/rclone.conf ~/Desktop/rclone_backup.conf
    - Click **"Storage"** button
    - Select **"Attach storage volume"**
    - Choose: `hebrew-idiom-volume`
-   - Mount point: `/mnt/volume`
+   - Mount point: `/workspace`
 4. Click **"Rent"** (should be <$0.20/hour)
 
 **Connect via SSH:**
@@ -117,9 +117,9 @@ bash setup_volume.sh
 # 1. Create directory structure on volume
 # 2. Install Python 3.10 + venv
 # 3. Install PyTorch with CUDA
-# 4. Clone your GitHub repo to /mnt/volume/project
+# 4. Clone your GitHub repo to /workspace/project
 # 5. Install all dependencies (5-10 min)
-# 6. Download dataset to /mnt/volume/data
+# 6. Download dataset to /workspace/data
 # 7. Setup rclone (you'll manually authenticate)
 # 8. Configure environment variables
 # 9. Optionally pre-download models (~10 GB)
@@ -130,8 +130,8 @@ bash setup_volume.sh
 # - Copy verification code back
 
 # Or manually copy your rclone config:
-mkdir -p /mnt/volume/config/
-cp /tmp/rclone.conf /mnt/volume/config/.rclone.conf
+mkdir -p /workspace/config/
+cp /tmp/rclone.conf /workspace/config/.rclone.conf
 ```
 
 **Destroy setup instance (KEEP VOLUME!):**
@@ -159,7 +159,7 @@ exit
 
 - Go to https://vast.ai/console/create/
 - Search: RTX 4090, ≥24GB VRAM, >98% reliability
-- **Attach storage:** `hebrew-idiom-volume` at `/mnt/volume`
+- **Attach storage:** `hebrew-idiom-volume` at `/workspace`
 - Rent (~$0.30-0.50/hour)
 
 **2. Connect & Bootstrap (1 min)**
@@ -169,7 +169,7 @@ exit
 ssh -p <PORT> root@<IP>
 
 # Run bootstrap (automatically sets up everything)
-bash /mnt/volume/project/scripts/instance_bootstrap.sh
+bash /workspace/project/scripts/instance_bootstrap.sh
 
 # This takes ~30 seconds and:
 # - Symlinks rclone config from volume
@@ -184,7 +184,7 @@ bash /mnt/volume/project/scripts/instance_bootstrap.sh
 **Option A: Quick test (5 min)**
 
 ```bash
-cd /mnt/volume/project
+cd /workspace/project
 python src/idiom_experiment.py \
   --mode full_finetune \
   --model_id onlplab/alephbert-base \
@@ -198,7 +198,7 @@ python src/idiom_experiment.py \
 **Option B: Single model full training (15-30 min)**
 
 ```bash
-cd /mnt/volume/project
+cd /workspace/project
 python src/idiom_experiment.py \
   --mode full_finetune \
   --model_id onlplab/alephbert-base \
@@ -210,7 +210,7 @@ python src/idiom_experiment.py \
 **Option C: HPO for one model (4-8 hours)**
 
 ```bash
-cd /mnt/volume/project
+cd /workspace/project
 python src/idiom_experiment.py \
   --mode hpo \
   --model_id onlplab/alephbert-base \
@@ -225,7 +225,7 @@ python src/idiom_experiment.py \
 # Use screen/tmux for long runs
 screen -S training
 
-cd /mnt/volume/project
+cd /workspace/project
 bash scripts/run_all_hpo.sh
 
 # Detach: Ctrl+A then D
@@ -235,11 +235,11 @@ bash scripts/run_all_hpo.sh
 **4. Sync Results to Google Drive**
 
 ```bash
-cd /mnt/volume/project
+cd /workspace/project
 bash scripts/sync_to_gdrive.sh
 
 # This uploads:
-# - /mnt/volume/outputs/ → gdrive:Hebrew_Idiom_Detection/results/
+# - project/experiments/results/ → gdrive:Hebrew_Idiom_Detection/results/
 ```
 
 **5. Destroy Instance**
@@ -309,14 +309,15 @@ exit
 - Documentation
 - Small data files (splits)
 
-### Vast.ai Volume (`/mnt/volume/`)
+### Vast.ai Volume (`/workspace/`)
 
 ```
-/mnt/volume/
+/workspace/
 ├── env/                    ← Python + all packages (5 GB)
 ├── data/                   ← Dataset + splits (3 MB)
 ├── project/                ← Git clone (auto-updated)
-├── outputs/                ← Training results (grows)
+│   └── experiments/
+│       └── results/        ← Training results (grows)
 ├── cache/                  ← Downloaded models (10 GB)
 └── config/
     ├── .rclone.conf        ← Google Drive auth
@@ -327,7 +328,7 @@ exit
 
 ```
 Hebrew_Idiom_Detection/
-├── results/                ← Synced from /mnt/volume/outputs/
+├── results/                ← Synced from project/experiments/results/
 ├── logs/                   ← TensorBoard logs
 └── models/                 ← Optional: best checkpoints
 ```
@@ -356,7 +357,7 @@ Hebrew_Idiom_Detection/
 # On instance:
 rclone config
 # Or copy from your Mac:
-# scp -P <PORT> ~/Desktop/rclone_backup.conf root@<IP>:/mnt/volume/config/.rclone.conf
+# scp -P <PORT> ~/Desktop/rclone_backup.conf root@<IP>:/workspace/config/.rclone.conf
 ```
 
 ### "Python packages missing"
@@ -365,8 +366,8 @@ rclone config
 
 **Fix:**
 ```bash
-source /mnt/volume/env/bin/activate
-pip install -r /mnt/volume/project/requirements.txt
+source /workspace/env/bin/activate
+pip install -r /workspace/project/requirements.txt
 ```
 
 ### "Dataset not found"
@@ -375,12 +376,12 @@ pip install -r /mnt/volume/project/requirements.txt
 
 **Fix:**
 ```bash
-cd /mnt/volume/data
+cd /workspace/data
 pip install gdown
 gdown 140zJatqT4LBl7yG-afFSoUrYrisi9276 -O expressions_data_tagged_v2.csv
 
 # Copy splits from repo
-cp -r /mnt/volume/project/data/splits/ /mnt/volume/data/
+cp -r /workspace/project/data/splits/ /workspace/data/
 ```
 
 ### "Git pull fails"
@@ -389,7 +390,7 @@ cp -r /mnt/volume/project/data/splits/ /mnt/volume/data/
 
 **Fix:**
 ```bash
-cd /mnt/volume/project
+cd /workspace/project
 git reset --hard origin/main
 git pull
 ```
@@ -421,7 +422,7 @@ screen -r training
 watch -n 1 nvidia-smi
 
 # Monitor logs (if saved to file)
-tail -f /mnt/volume/outputs/training.log
+tail -f /workspace/outputs/training.log
 
 # TensorBoard (on local Mac after sync)
 tensorboard --logdir experiments/results/
@@ -467,7 +468,7 @@ If you encounter issues:
 1. Check troubleshooting section above
 2. Review `VAST_AI_PERSISTENT_VOLUME_GUIDE.md` for detailed explanations
 3. Verify volume is attached in Vast.ai console
-4. Check volume contents: `ls -la /mnt/volume/`
+4. Check volume contents: `ls -la /workspace/`
 
 **Emergency backup recovery:**
 

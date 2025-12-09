@@ -22,12 +22,12 @@
 
 ### During Training (`full_finetune` mode)
 
-**Location:** `/workspace/project/experiments/results/full_fine-tuning/{model_name}/{task}/`
+**Location:** `/workspace/project/experiments/results/full_finetune/{model_name}/{task}/`
 
 **Files Created:**
 
 ```
-full_fine-tuning/alephbert-base/cls/
+full_finetune/alephbert-base/cls/
 ├── checkpoint-864/              # Intermediate checkpoint (epoch 4)
 │   ├── model.safetensors        # Model weights (503 MB)
 │   ├── optimizer.pt             # Optimizer state (1 GB)
@@ -132,7 +132,7 @@ Contains training curves:
 
 **View them:**
 ```bash
-tensorboard --logdir experiments/results/full_fine-tuning/alephbert-base/cls/logs/
+tensorboard --logdir experiments/results/full_finetune/alephbert-base/cls/logs/
 ```
 
 ---
@@ -143,7 +143,7 @@ tensorboard --logdir experiments/results/full_fine-tuning/alephbert-base/cls/log
 
 **Best model weights:**
 ```
-/workspace/project/experiments/results/full_fine-tuning/alephbert-base/cls/model.safetensors
+/workspace/project/experiments/results/full_finetune/alephbert-base/cls/model.safetensors
 ```
 
 This is the **final best model** (503 MB). It has:
@@ -153,7 +153,7 @@ This is the **final best model** (503 MB). It has:
 
 **All checkpoints:**
 ```
-/workspace/project/experiments/results/full_fine-tuning/alephbert-base/cls/checkpoint-{step}/
+/workspace/project/experiments/results/full_finetune/alephbert-base/cls/checkpoint-{step}/
 ```
 
 ---
@@ -182,17 +182,17 @@ To get them:
 
 ```bash
 # Option 1: Download from Google Drive via rclone
-rclone copy gdrive:Hebrew_Idiom_Detection/results/full_fine-tuning/alephbert-base/cls/ \
+rclone copy gdrive:Hebrew_Idiom_Detection/results/full_finetune/alephbert-base/cls/ \
   ~/Desktop/training_results/alephbert-base-cls/
 
 # Option 2: Just download the essential files (not full checkpoints)
-rclone copy gdrive:Hebrew_Idiom_Detection/results/full_fine-tuning/alephbert-base/cls/model.safetensors \
+rclone copy gdrive:Hebrew_Idiom_Detection/results/full_finetune/alephbert-base/cls/model.safetensors \
   ~/Desktop/models/alephbert-base-cls/
-rclone copy gdrive:Hebrew_Idiom_Detection/results/full_fine-tuning/alephbert-base/cls/config.json \
+rclone copy gdrive:Hebrew_Idiom_Detection/results/full_finetune/alephbert-base/cls/config.json \
   ~/Desktop/models/alephbert-base-cls/
-rclone copy gdrive:Hebrew_Idiom_Detection/results/full_fine-tuning/alephbert-base/cls/tokenizer* \
+rclone copy gdrive:Hebrew_Idiom_Detection/results/full_finetune/alephbert-base/cls/tokenizer* \
   ~/Desktop/models/alephbert-base-cls/
-rclone copy gdrive:Hebrew_Idiom_Detection/results/full_fine-tuning/alephbert-base/cls/vocab.txt \
+rclone copy gdrive:Hebrew_Idiom_Detection/results/full_finetune/alephbert-base/cls/vocab.txt \
   ~/Desktop/models/alephbert-base-cls/
 ```
 
@@ -269,7 +269,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load training results
-results_path = Path("~/Desktop/training_results/full_fine-tuning/alephbert-base/cls/training_results.json").expanduser()
+results_path = Path("~/Desktop/training_results/full_finetune/alephbert-base/cls/training_results.json").expanduser()
 
 with open(results_path, 'r') as f:
     results = json.load(f)
@@ -336,7 +336,7 @@ import glob
 
 # Load all results
 all_results = {}
-results_dir = Path("~/Desktop/training_results/full_fine-tuning/").expanduser()
+results_dir = Path("~/Desktop/training_results/full_finetune/").expanduser()
 
 for model_dir in results_dir.glob("*/cls/"):
     model_name = model_dir.parent.name
@@ -384,193 +384,258 @@ plt.show()
 
 ## How to Evaluate Trained Models
 
-### Current Situation
+### Built-in Evaluation Mode
 
-**❌ MISSING:** Your `idiom_experiment.py` does NOT have a standalone evaluation mode!
+**✅ AVAILABLE:** Your `idiom_experiment.py` has a comprehensive standalone evaluation mode!
 
 **Available modes:**
-- `zero_shot` - Evaluate untrained models
+- `zero_shot` - Evaluate pre-trained models (no fine-tuning)
 - `full_finetune` - Train and auto-evaluate on test set
 - `frozen_backbone` - Train (frozen) and auto-evaluate
 - `hpo` - Hyperparameter optimization
-
-**What's missing:**
-- ❌ No `evaluate` mode to load trained model and test on different datasets
-- ❌ Can't easily evaluate on unseen_idiom_test.csv after training
-- ❌ Can't load best checkpoint and re-evaluate
+- **`evaluate`** - Load trained model and evaluate on any dataset ⭐
 
 ---
 
-### Workaround 1: Evaluation is Already Done
+### Option 1: Automatic Evaluation (During Training)
 
-**The good news:** When you run `full_finetune`, it **automatically evaluates** on:
+**When you run `full_finetune`**, it **automatically evaluates** on:
 - ✅ Validation set (after each epoch)
 - ✅ Test set (at the end)
 
-**The results are saved in `training_results.json`**
+**The results are saved in `training_results.json`:**
 
-So you already have:
-- ✅ Test F1: 94.04%
-- ✅ Test accuracy: 93.98%
-- ✅ Confusion matrix
-- ✅ All metrics
+```json
+{
+  "test_metrics": {
+    "f1": 0.9404,
+    "accuracy": 0.9398,
+    "precision": 0.9318,
+    "recall": 0.9491,
+    "confusion_matrix_tn": 201,
+    "confusion_matrix_fp": 15,
+    "confusion_matrix_fn": 11,
+    "confusion_matrix_tp": 205
+  }
+}
+```
 
-**What you DON'T have:**
+**This gives you:**
+- ✅ Performance on `test.csv` (in-domain, seen idioms)
+- ✅ All metrics automatically saved
+- ✅ Confusion matrix included
+
+**What you DON'T have automatically:**
 - ❌ Results on `unseen_idiom_test.csv` (6 unseen idioms)
+- ❌ Evaluation on custom datasets
+
+**→ Use Option 2 for these cases!**
 
 ---
 
-### Workaround 2: Manual Evaluation Script
+### Option 2: Standalone Evaluation Mode ⭐ RECOMMENDED
 
-Since there's no built-in evaluate mode, you can create a simple evaluation script.
+Use the built-in `evaluate` mode to test trained models on any dataset.
 
-**On Vast.ai instance, create:** `/workspace/project/scripts/evaluate_model.py`
-
-```python
-#!/usr/bin/env python3
-"""
-Evaluate a trained model on a specific dataset
-"""
-import argparse
-from pathlib import Path
-import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
-import pandas as pd
-from datasets import Dataset
-import evaluate as hf_evaluate
-import json
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--model_path", required=True, help="Path to trained model checkpoint")
-    parser.add_argument("--data_path", required=True, help="Path to CSV dataset")
-    parser.add_argument("--task", default="cls", choices=["cls", "span"])
-    parser.add_argument("--output", help="Output JSON path")
-    parser.add_argument("--device", default="cuda")
-    args = parser.parse_args()
-
-    print(f"\n🔍 Evaluating model: {args.model_path}")
-    print(f"📊 Dataset: {args.data_path}")
-
-    # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(args.model_path)
-    tokenizer = AutoTokenizer.from_pretrained(args.model_path)
-    model.to(args.device)
-
-    # Load data
-    df = pd.read_csv(args.data_path)
-    print(f"✓ Loaded {len(df)} samples")
-
-    # Prepare dataset
-    dataset = Dataset.from_pandas(df[['sentence', 'label']])
-
-    def tokenize_function(examples):
-        return tokenizer(examples['sentence'], truncation=True, padding='max_length', max_length=128)
-
-    tokenized_dataset = dataset.map(tokenize_function, batched=True)
-
-    # Metrics
-    metric_acc = hf_evaluate.load('accuracy')
-    metric_f1 = hf_evaluate.load('f1')
-    metric_precision = hf_evaluate.load('precision')
-    metric_recall = hf_evaluate.load('recall')
-
-    def compute_metrics(eval_pred):
-        predictions, labels = eval_pred
-        predictions = predictions.argmax(axis=-1)
-
-        return {
-            'accuracy': metric_acc.compute(predictions=predictions, references=labels)['accuracy'],
-            'f1': metric_f1.compute(predictions=predictions, references=labels, average='macro')['f1'],
-            'precision': metric_precision.compute(predictions=predictions, references=labels, average='macro')['precision'],
-            'recall': metric_recall.compute(predictions=predictions, references=labels, average='macro')['recall'],
-        }
-
-    # Evaluate
-    trainer = Trainer(
-        model=model,
-        args=TrainingArguments(
-            output_dir="./tmp_eval",
-            per_device_eval_batch_size=16,
-            report_to="none"
-        ),
-        compute_metrics=compute_metrics
-    )
-
-    results = trainer.evaluate(tokenized_dataset)
-
-    print("\n📊 Results:")
-    for key, value in results.items():
-        print(f"  {key}: {value:.4f}")
-
-    # Save results
-    if args.output:
-        with open(args.output, 'w') as f:
-            json.dump(results, f, indent=2)
-        print(f"\n💾 Results saved to: {args.output}")
-
-if __name__ == "__main__":
-    main()
-```
-
-**Usage:**
+#### Usage: Evaluate on Unseen Idioms
 
 ```bash
-# Evaluate on unseen idioms
-python scripts/evaluate_model.py \
-  --model_path /workspace/project/experiments/results/full_fine-tuning/alephbert-base/cls/ \
-  --data_path data/splits/unseen_idiom_test.csv \
+# Activate environment
+source /workspace/env/bin/activate
+cd /workspace/project
+
+# Evaluate trained model on unseen idioms
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+  --data data/splits/unseen_idiom_test.csv \
   --task cls \
-  --output unseen_idiom_results.json \
+  --device cuda
+```
+
+#### What This Does:
+
+1. **Loads your trained model** from the checkpoint directory
+2. **Loads the specified dataset** (any CSV with `sentence` and `label` columns)
+3. **Runs evaluation** with proper metrics
+4. **Saves results** to `experiments/results/evaluation/` with structure:
+   ```
+   experiments/results/evaluation/
+   └── full_finetune/
+       └── alephbert-base/
+           └── cls/
+               └── eval_results_unseen_idiom_test_20251208_143052.json
+   ```
+
+#### Output Structure:
+
+**Saved to:** `experiments/results/evaluation/{mode}/{model}/{task}/eval_results_{dataset}_{timestamp}.json`
+
+```json
+{
+  "model_checkpoint": "experiments/results/full_finetune/alephbert-base/cls/",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "cls",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 0.4523,
+    "f1": 0.8234,
+    "accuracy": 0.8271,
+    "precision": 0.8156,
+    "recall": 0.8314,
+    "confusion_matrix_tn": 198,
+    "confusion_matrix_fp": 42,
+    "confusion_matrix_fn": 41,
+    "confusion_matrix_tp": 199
+  },
+  "config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  }
+}
+```
+
+---
+
+### Complete Evaluation Workflow
+
+#### Step 1: Train Model
+
+```bash
+python src/idiom_experiment.py \
+  --mode full_finetune \
+  --model_id onlplab/alephbert-base \
+  --task cls \
+  --config experiments/configs/training_config.yaml \
+  --device cuda
+```
+
+**Result:** Model saved to `experiments/results/full_finetune/alephbert-base/cls/`
+
+---
+
+#### Step 2: Evaluate on In-Domain Test Set
+
+**Already done automatically!** Results in `experiments/results/full_finetune/alephbert-base/cls/training_results.json`
+
+---
+
+#### Step 3: Evaluate on Unseen Idioms
+
+```bash
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+  --data data/splits/unseen_idiom_test.csv \
+  --task cls \
+  --device cuda
+```
+
+**Result:** Saved to `experiments/results/evaluation/full_finetune/alephbert-base/cls/eval_results_unseen_idiom_test_*.json`
+
+---
+
+#### Step 4: Evaluate on Custom Dataset
+
+```bash
+# Evaluate on any CSV with 'sentence' and 'label' columns
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+  --data path/to/your/custom_dataset.csv \
+  --task cls \
+  --device cuda \
+  --output path/to/custom_results.json  # Optional: specify output path
+```
+
+---
+
+### Advanced Evaluation Options
+
+#### Evaluate on Validation Split Only
+
+```bash
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+  --data data/expressions_data_tagged_v2.csv \
+  --split validation \
+  --task cls \
+  --device cuda
+```
+
+#### Evaluate with Limited Samples (Quick Test)
+
+```bash
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+  --data data/splits/test.csv \
+  --max_samples 100 \
+  --task cls \
+  --device cuda
+```
+
+#### Evaluate Task 2 (Token Classification)
+
+```bash
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_finetune/alephbert-base/span/ \
+  --data data/splits/test.csv \
+  --task span \
   --device cuda
 ```
 
 ---
 
-### Workaround 3: Use HuggingFace Trainer Directly
+### What Gets Evaluated
 
-If you just want quick evaluation without creating a script:
+#### For Task 1 (cls - Sequence Classification):
 
-```python
-# In Python/Jupyter on Vast.ai
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, Trainer, TrainingArguments
-import pandas as pd
-from datasets import Dataset
-import evaluate as hf_evaluate
+**Metrics computed:**
+- ✅ F1 Score (macro-averaged)
+- ✅ Accuracy
+- ✅ Precision (macro-averaged)
+- ✅ Recall (macro-averaged)
+- ✅ Confusion Matrix (TN, FP, FN, TP)
 
-# Load model
-model_path = "/workspace/project/experiments/results/full_fine-tuning/alephbert-base/cls/"
-model = AutoModelForSequenceClassification.from_pretrained(model_path)
-tokenizer = AutoTokenizer.from_pretrained(model_path)
+#### For Task 2 (span - Token Classification):
 
-# Load unseen test data
-df = pd.read_csv("data/splits/unseen_idiom_test.csv")
-dataset = Dataset.from_pandas(df[['sentence', 'label']])
+**Metrics computed:**
+- ✅ F1 Score (seqeval - entity level)
+- ✅ Precision (seqeval - entity level)
+- ✅ Recall (seqeval - entity level)
+- ✅ Accuracy (token level)
 
-# Tokenize
-def tokenize_function(examples):
-    return tokenizer(examples['sentence'], truncation=True, padding='max_length', max_length=128)
+---
 
-tokenized = dataset.map(tokenize_function, batched=True)
+### Evaluation Results Organization
 
-# Metrics
-metric_f1 = hf_evaluate.load('f1')
+**All evaluation results are saved to:**
 
-def compute_metrics(eval_pred):
-    predictions, labels = eval_pred
-    predictions = predictions.argmax(axis=-1)
-    return {'f1': metric_f1.compute(predictions=predictions, references=labels, average='macro')['f1']}
-
-# Evaluate
-trainer = Trainer(
-    model=model,
-    args=TrainingArguments(output_dir="./tmp", per_device_eval_batch_size=16, report_to="none"),
-    compute_metrics=compute_metrics
-)
-
-results = trainer.evaluate(tokenized)
-print(results)
 ```
+experiments/results/evaluation/
+├── full_finetune/          # Evaluating full fine-tuned models
+│   ├── alephbert-base/
+│   │   ├── cls/
+│   │   │   ├── eval_results_unseen_idiom_test_20251208_143052.json
+│   │   │   ├── eval_results_test_20251208_150234.json
+│   │   │   └── eval_results_custom_dataset_20251208_152145.json
+│   │   └── span/
+│   │       └── eval_results_unseen_idiom_test_20251208_160312.json
+│   ├── dictabert/
+│   └── xlm-roberta-base/
+└── frozen_backbone/        # Evaluating frozen backbone models
+    └── ...
+```
+
+**Structure mirrors training outputs!**
+
+**This gets synced to Google Drive** automatically by `sync_to_gdrive.sh`:
+- From: `experiments/results/evaluation/`
+- To: `gdrive:Hebrew_Idiom_Detection/results/evaluation/`
 
 ---
 
@@ -578,19 +643,18 @@ print(results)
 
 ### ❌ What's Missing in `idiom_experiment.py`
 
-1. **No standalone evaluation mode**
-   - Can't run: `python src/idiom_experiment.py --mode evaluate --model_checkpoint <path> --data <test_file>`
-   - Have to use workarounds
-
-2. **No unseen idiom evaluation built-in**
-   - Training only evaluates on `test.csv` (seen idioms)
-   - Have to manually evaluate on `unseen_idiom_test.csv`
-
-3. **No cross-validation mode**
+1. **No cross-validation mode**
    - Can't easily run k-fold cross-validation
+   - Would need to implement manually
 
-4. **No ensemble evaluation**
+2. **No ensemble evaluation**
    - Can't evaluate ensemble of multiple models
+   - Would need custom script to aggregate predictions
+
+3. **No automated unseen idiom testing**
+   - Training auto-evaluates on `test.csv` (seen idioms)
+   - Need to manually run `--mode evaluate` with `unseen_idiom_test.csv`
+   - Could add this to training pipeline as additional automatic step
 
 ---
 
@@ -603,23 +667,32 @@ print(results)
    - ✅ Saves best model based on validation F1
    - ✅ Saves all metrics to JSON
 
-2. **Model Checkpointing**
+2. **Standalone Evaluation Mode** ⭐ NEW!
+   - ✅ Load any trained model checkpoint
+   - ✅ Evaluate on any dataset (CSV with sentence/label)
+   - ✅ Full metrics (F1, accuracy, precision, recall, confusion matrix)
+   - ✅ Results saved to organized structure
+   - ✅ Supports both Task 1 (cls) and Task 2 (span)
+
+3. **Model Checkpointing**
    - ✅ Saves checkpoints per epoch
    - ✅ Loads best model at end
    - ✅ Saves final model with best weights
 
-3. **Hyperparameter Optimization**
+4. **Hyperparameter Optimization**
    - ✅ HPO mode with Optuna
    - ✅ Saves best hyperparameters
    - ✅ Can resume interrupted HPO
 
-4. **Results Organization**
+5. **Results Organization**
    - ✅ Hierarchical folder structure
    - ✅ Separate folders per model/task/mode
-   - ✅ Clear naming conventions
+   - ✅ Evaluation results mirror training structure
+   - ✅ Clear naming conventions with timestamps
 
-5. **Google Drive Sync**
+6. **Google Drive Sync**
    - ✅ Syncs all results automatically
+   - ✅ Includes evaluation results
    - ✅ Preserves folder structure
    - ✅ Doesn't re-upload unchanged files
 
@@ -830,6 +903,7 @@ If you want to enhance the workflow:
 
 - ✅ Complete training pipeline
 - ✅ Automatic evaluation on test set
+- ✅ **Standalone evaluation mode** for any dataset ⭐
 - ✅ All metrics saved to JSON
 - ✅ Model weights saved (best model)
 - ✅ TensorBoard logs
@@ -837,18 +911,21 @@ If you want to enhance the workflow:
 - ✅ Persistent volume setup
 - ✅ All configs aligned perfectly
 
-### ❌ What's Missing (Minor)
+### ❌ What's Missing (Very Minor)
 
-- ❌ Standalone evaluation mode (have workarounds)
-- ❌ Built-in unseen idiom evaluation (can add manually)
-- ❌ Analysis scripts (easy to create in PyCharm)
+- ❌ Automated unseen idiom evaluation (manual command works)
+- ❌ Cross-validation mode (not needed for this project)
+- ❌ Ensemble evaluation (nice-to-have)
 
 ### 🎯 Bottom Line
 
-**Your setup is production-ready!** The missing features are nice-to-have, not blockers. You can:
+**Your setup is production-ready!** You have everything needed:
 - ✅ Train all 5 models on both tasks
-- ✅ Run HPO
-- ✅ Get all metrics
+- ✅ Run HPO with Optuna
+- ✅ Evaluate on in-domain test set (automatic)
+- ✅ Evaluate on unseen idioms (standalone mode)
+- ✅ Evaluate on custom datasets (standalone mode)
+- ✅ Get all metrics with confusion matrices
 - ✅ Analyze results in PyCharm
 - ✅ Use trained models for inference
 

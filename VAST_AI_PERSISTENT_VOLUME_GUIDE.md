@@ -93,12 +93,13 @@ Your current scripts (`setup_vast_instance.sh`, `sync_to_gdrive.sh`) assume:
 │                         ▼                                      │
 │  ╔═══════════════════════════════════════════════════════╗    │
 │  ║           VAST.AI PERSISTENT VOLUME                   ║    │
-│  ║  /mnt/volume/ (Mounted to every instance)             ║    │
+│  ║  /workspace/ (Mounted to every instance)              ║    │
 │  ║  ├─ env/              (Python environment - installed │    │
 │  ║  │                     ONCE, reused forever)          ║    │
 │  ║  ├─ data/             (Dataset - downloaded ONCE)     ║    │
 │  ║  ├─ project/          (Git clone, pull latest)        ║    │
-│  ║  ├─ outputs/          (Training results)              ║    │
+│  ║  │  └─ experiments/                                   ║    │
+│  ║  │     └─ results/    (Training results, persistent)  ║    │
 │  ║  ├─ cache/            (HuggingFace cache)             ║    │
 │  ║  └─ config/           (rclone, secrets, .env)         ║    │
 │  ║                                                        ║    │
@@ -112,7 +113,7 @@ Your current scripts (`setup_vast_instance.sh`, `sync_to_gdrive.sh`) assume:
 │  │  ├─ Symlink volume configs                 │               │
 │  │  ├─ Activate volume environment             │               │
 │  │  ├─ Pull latest code from GitHub            │               │
-│  │  ├─ Run training → save to /mnt/volume      │               │
+│  │  ├─ Run training → save to /workspace       │               │
 │  │  └─ DESTROY when done (save money!)         │               │
 │  │                                              │               │
 │  │  Cost: ~$0.30-0.50/hour (ONLY when training)│               │
@@ -180,10 +181,10 @@ git push origin main
 
 ### 3. Vast.ai Persistent Volume (Working State)
 
-**Volume Structure:** `/mnt/volume/`
+**Volume Structure:** `/workspace/`
 
 ```
-/mnt/volume/
+/workspace/
 ├─ env/                          # Python virtual environment (INSTALLED ONCE)
 │  ├─ bin/python                 # Python 3.10+
 │  └─ lib/python3.10/site-packages/
@@ -204,10 +205,15 @@ git push origin main
 │  ├─ .git/
 │  ├─ src/
 │  ├─ experiments/
+│  │  ├─ configs/                # Training configs
 │  │  └─ results/                # Training results (PERSISTENT, synced)
+│  │     ├─ zero_shot/           # Zero-shot evaluation results
+│  │     ├─ full_finetune/       # Full fine-tuning results
+│  │     ├─ hpo/                 # HPO trial results
+│  │     ├─ optuna_studies/      # HPO databases
+│  │     └─ best_hyperparameters/ # Best params from HPO
 │  ├─ scripts/
 │  └─ requirements.txt
-│
 │
 ├─ cache/                        # HuggingFace cache (REUSED)
 │  └─ huggingface/
@@ -234,26 +240,26 @@ git push origin main
 **Purpose:** Just compute, nothing persistent!
 
 **What happens on instance:**
-1. Mount `/mnt/volume/` (your persistent volume)
+1. Mount `/workspace/` (your persistent volume)
 2. Symlink configs:
    ```bash
-   ln -sf /mnt/volume/config/.rclone.conf ~/.config/rclone/rclone.conf
-   ln -sf /mnt/volume/config/.env /workspace/.env
+   ln -sf /workspace/config/.rclone.conf ~/.config/rclone/rclone.conf
+   ln -sf /workspace/config/.env /workspace/project/.env
    ```
 3. Activate environment:
    ```bash
-   source /mnt/volume/env/bin/activate
+   source /workspace/env/bin/activate
    ```
 4. Pull latest code:
    ```bash
-   cd /mnt/volume/project
+   cd /workspace/project
    git pull origin main
    ```
 5. Run training:
    ```bash
    python src/idiom_experiment.py --mode hpo --task cls --device cuda
    ```
-6. Results automatically saved to `/mnt/volume/outputs/`
+6. Results automatically saved to `/workspace/project/experiments/results/`
 7. **Destroy instance** when done (no data loss!)
 
 **Instance Pricing:**
@@ -331,7 +337,7 @@ Hebrew_Idiom_Detection/
    - In instance config, find "Storage" section
    - Click "Attach storage volume"
    - Select `hebrew-idiom-volume`
-   - Mount point: `/mnt/volume`
+   - Mount point: `/workspace`
    - Click "Rent"
 
 4. **Connect via SSH:**
@@ -342,7 +348,7 @@ Hebrew_Idiom_Detection/
 
 5. **Verify volume is mounted:**
    ```bash
-   df -h | grep /mnt/volume
+   df -h | grep /workspace
    # Should show ~100GB volume
    ```
 
@@ -354,10 +360,10 @@ Hebrew_Idiom_Detection/
 
 ```bash
 # Create directory structure
-mkdir -p /mnt/volume/{env,data,data/splits,project,outputs,cache,config,config/secrets}
+mkdir -p /workspace/{env,data,data/splits,project,cache,config,config/secrets}
 
 # Verify
-ls -la /mnt/volume/
+ls -la /workspace/
 ```
 
 ---
@@ -369,10 +375,10 @@ ls -la /mnt/volume/
 apt-get update && apt-get install -y python3.10 python3.10-venv python3-pip git curl
 
 # Create virtual environment on VOLUME (not instance)
-python3.10 -m venv /mnt/volume/env
+python3.10 -m venv /workspace/env
 
 # Activate
-source /mnt/volume/env/bin/activate
+source /workspace/env/bin/activate
 
 # Upgrade pip
 pip install --upgrade pip
@@ -397,10 +403,10 @@ python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
 
 ```bash
 # Activate environment
-source /mnt/volume/env/bin/activate
+source /workspace/env/bin/activate
 
 # Clone your GitHub repo to VOLUME
-cd /mnt/volume/
+cd /workspace/
 git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git project
 
 cd project
@@ -419,30 +425,30 @@ python -c "import optuna; print(f'Optuna: {optuna.__version__}')"
 
 ```bash
 # Activate environment
-source /mnt/volume/env/bin/activate
+source /workspace/env/bin/activate
 
 # Navigate to project
-cd /mnt/volume/project
+cd /workspace/project
 
 # Copy dataset script to volume data folder
-cp scripts/download_from_gdrive.sh /mnt/volume/data/
+cp scripts/download_from_gdrive.sh /workspace/data/
 
 # Download dataset
-cd /mnt/volume/data/
+cd /workspace/data/
 bash download_from_gdrive.sh
 
 # Verify files
-ls -lh /mnt/volume/data/
+ls -lh /workspace/data/
 # Should show:
 # - expressions_data_tagged_v2.csv (~3 MB)
 # - splits/ directory with train/val/test/unseen CSVs
 
 # Or download manually:
 pip install gdown
-gdown 140zJatqT4LBl7yG-afFSoUrYrisi9276 -O /mnt/volume/data/expressions_data_tagged.csv
+gdown 140zJatqT4LBl7yG-afFSoUrYrisi9276 -O /workspace/data/expressions_data_tagged.csv
 
 # If splits are in repo, copy them:
-cp -r splits/ /mnt/volume/data/
+cp -r splits/ /workspace/data/
 ```
 
 ---
@@ -498,15 +504,15 @@ rclone mkdir gdrive:Hebrew_Idiom_Detection/models
 
 ```bash
 # Copy rclone config to volume (so it persists!)
-mkdir -p /mnt/volume/config/.config/rclone/
-cp ~/.config/rclone/rclone.conf /mnt/volume/config/.rclone.conf
+mkdir -p /workspace/config/.config/rclone/
+cp ~/.config/rclone/rclone.conf /workspace/config/.rclone.conf
 
 # Verify it's saved
-cat /mnt/volume/config/.rclone.conf
+cat /workspace/config/.rclone.conf
 # Should show [gdrive] section with your auth token
 
 # Also save to a safe location (backup)
-cat /mnt/volume/config/.rclone.conf
+cat /workspace/config/.rclone.conf
 # Copy this content and save it locally on your Mac
 # Location: ~/Desktop/rclone_backup.conf (for safety)
 ```
@@ -517,10 +523,10 @@ cat /mnt/volume/config/.rclone.conf
 
 ```bash
 # Copy .env from project to volume config
-cp /mnt/volume/project/.env /mnt/volume/config/.env
+cp /workspace/project/.env /workspace/config/.env
 
 # Edit if needed
-nano /mnt/volume/config/.env
+nano /workspace/config/.env
 
 # Add any API keys here (e.g. OPENAI_API_KEY if needed later)
 # Note: We use project-relative paths for data/results, so no need to set
@@ -535,18 +541,18 @@ nano /mnt/volume/config/.env
 
 ```bash
 # Set HuggingFace cache to volume (so models don't re-download)
-export HF_HOME=/mnt/volume/cache/huggingface
-export TRANSFORMERS_CACHE=/mnt/volume/cache/huggingface
+export HF_HOME=/workspace/cache/huggingface
+export TRANSFORMERS_CACHE=/workspace/cache/huggingface
 
 # Add to volume config
-echo "export HF_HOME=/mnt/volume/cache/huggingface" >> /mnt/volume/config/.env
-echo "export TRANSFORMERS_CACHE=/mnt/volume/cache/huggingface" >> /mnt/volume/config/.env
+echo "export HF_HOME=/workspace/cache/huggingface" >> /workspace/config/.env
+echo "export TRANSFORMERS_CACHE=/workspace/cache/huggingface" >> /workspace/config/.env
 
 # Pre-download models to cache (optional, saves time later)
-cd /mnt/volume/project
-source /mnt/volume/env/bin/activate
+cd /workspace/project
+source /workspace/env/bin/activate
 python src/model_download.py
-# This downloads all 5 models to /mnt/volume/cache/
+# This downloads all 5 models to /workspace/cache/
 ```
 
 ---
@@ -555,10 +561,10 @@ python src/model_download.py
 
 ```bash
 # Check volume structure
-tree -L 2 /mnt/volume/
+tree -L 2 /workspace/
 
 # Expected output:
-# /mnt/volume/
+# /workspace/
 # ├── cache/
 # │   └── huggingface/
 # ├── config/
@@ -570,20 +576,19 @@ tree -L 2 /mnt/volume/
 # ├── env/
 # │   ├── bin/
 # │   └── lib/
-# ├── outputs/
 # └── project/
 #     ├── src/
 #     ├── experiments/
+#     │   └── results/  (training outputs, will grow)
 #     └── scripts/
 
 # Check sizes
-du -sh /mnt/volume/*
+du -sh /workspace/*
 # env/       ~5 GB    (Python + all packages)
 # data/      ~3 MB    (dataset)
 # cache/     ~10 GB   (if models pre-downloaded)
 # config/    ~1 KB    (rclone + .env)
-# project/   ~50 MB   (code)
-# outputs/   ~0       (empty initially)
+# project/   ~50 MB   (code, results will grow during training)
 ```
 
 ---
@@ -614,7 +619,7 @@ exit
 1. **Rent GPU instance:**
    - Go to https://vast.ai/console/create/
    - Search: RTX 4090, ≥24GB VRAM, >98% reliability
-   - **Attach storage volume:** `hebrew-idiom-volume` at `/mnt/volume`
+   - **Attach storage volume:** `hebrew-idiom-volume` at `/workspace`
    - Rent instance
 
 2. **Connect via SSH:**
@@ -625,7 +630,7 @@ exit
 3. **Run bootstrap script:**
    ```bash
    # This is the ONLY command you need!
-   bash /mnt/volume/project/scripts/instance_bootstrap.sh
+   bash /workspace/project/scripts/instance_bootstrap.sh
    ```
 
    **What the bootstrap script does** (see next section):
@@ -642,7 +647,7 @@ exit
 
 ```bash
 # Environment already activated by bootstrap
-cd /mnt/volume/project
+cd /workspace/project
 
 # Option 1: Single training run
 python src/idiom_experiment.py \
@@ -658,7 +663,7 @@ bash scripts/run_all_hpo.sh
 # Option 3: All experiments
 bash scripts/run_all_experiments.sh
 
-# Results automatically save to /mnt/volume/outputs/
+# Results automatically save to /workspace/project/experiments/results/
 ```
 
 ---
@@ -667,7 +672,7 @@ bash scripts/run_all_experiments.sh
 
 ```bash
 # After training completes
-cd /mnt/volume/project
+cd /workspace/project
 bash scripts/sync_to_gdrive.sh
 
 # This uploads:
@@ -770,7 +775,7 @@ NO! Because:
 
 ```bash
 # Check volume is attached
-df -h | grep /mnt/volume
+df -h | grep /workspace
 
 # If not, stop instance, attach volume in UI, restart
 ```
@@ -782,23 +787,23 @@ df -h | grep /mnt/volume
 rclone config reconnect gdrive:
 
 # Save new config to volume
-cp ~/.config/rclone/rclone.conf /mnt/volume/config/.rclone.conf
+cp ~/.config/rclone/rclone.conf /workspace/config/.rclone.conf
 ```
 
 ### Python environment issues
 
 ```bash
 # Re-create environment
-rm -rf /mnt/volume/env
-python3.10 -m venv /mnt/volume/env
-source /mnt/volume/env/bin/activate
-pip install -r /mnt/volume/project/requirements.txt
+rm -rf /workspace/env
+python3.10 -m venv /workspace/env
+source /workspace/env/bin/activate
+pip install -r /workspace/project/requirements.txt
 ```
 
 ### Git conflicts
 
 ```bash
-cd /mnt/volume/project
+cd /workspace/project
 git reset --hard origin/main
 git pull
 ```

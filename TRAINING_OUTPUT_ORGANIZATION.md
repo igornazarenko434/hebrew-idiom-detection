@@ -264,11 +264,11 @@ python src/idiom_experiment.py \
 
 ### 4. Hyperparameter Optimization (Mission 4.3-4.5)
 
-**Location:** `experiments/hpo_results/` and `experiments/results/`
+**Location:** `experiments/results/hpo/` (HPO trials) and `experiments/results/` (databases and best params)
 
 **Structure:**
 ```
-experiments/hpo_results/
+experiments/results/hpo/
 └── {model_name}/              # e.g., alephbert-base
     └── {task}/                # cls or span
         ├── trial_0/
@@ -296,7 +296,7 @@ experiments/results/best_hyperparameters/
 
 **Example:**
 ```
-experiments/hpo_results/
+experiments/results/hpo/
 ├── alephbert-base/
 │   ├── cls/
 │   │   ├── trial_0/
@@ -394,7 +394,7 @@ tensorboard --logdir experiments/results/full_finetune/ \
 tensorboard --logdir experiments/results/full_finetune/alephbert-base/
 
 # Compare all HPO trials for one model
-tensorboard --logdir experiments/hpo_results/alephbert-base/cls/
+tensorboard --logdir experiments/results/hpo/alephbert-base/cls/
 ```
 
 **Metrics Available in TensorBoard:**
@@ -512,7 +512,7 @@ scp -P {vast_port} root@{vast_ip}:~/hebrew-idiom-detection/experiments/results/*
 **All platforms save to the same folder structure:**
 - Local (CPU/MPS): `experiments/results/full_finetune/{model}/{task}/`
 - VAST.ai (CUDA): `experiments/results/full_finetune/{model}/{task}/`
-- Optuna HPO: `experiments/hpo_results/{model}/{task}/trial_{n}/`
+- Optuna HPO: `experiments/results/hpo/{model}/{task}/trial_{n}/`
 
 **No special handling needed** - the folder structure is platform-agnostic and determined only by:
 1. Training mode (zero_shot, full_finetune, frozen_backbone, hpo)
@@ -630,9 +630,9 @@ df.to_csv("experiments/results/model_comparison.csv", index=False)
 1. Zero-shot: `experiments/results/zero_shot/`
 2. Full fine-tuning: `experiments/results/full_finetune/{model}/{task}/`
 3. Frozen backbone: `experiments/results/frozen_backbone/{model}/{task}/`
-4. HPO trials: `experiments/hpo_results/{model}/{task}/trial_{n}/`
-5. HPO studies: `experiments/results/optuna_studies/{model}_{task}_hpo.db`
-6. Best params: `experiments/results/best_hyperparameters/best_params_{model}_{task}.json`
+4. HPO trials: `experiments/results/hpo/{model}/{task}/trial_{n}/`
+5. HPO databases: `experiments/results/optuna_studies/{model}_{task}_hpo.db`
+6. Best hyperparameters: `experiments/results/best_hyperparameters/best_params_{model}_{task}.json`
 
 **✅ Comprehensive logging enabled:**
 - TensorBoard logs in `{output_dir}/logs/`

@@ -1,0 +1,22 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/alephbert-base/span",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "span",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 0.20353522896766663,
+    "model_preparation_time": 0.0012,
+    "precision": 0.6987179487179487,
+    "recall": 0.68125,
+    "f1": 0.6898734177215189,
+    "accuracy": 0.9671731817654564,
+    "runtime": 7.2243,
+    "samples_per_second": 66.442,
+    "steps_per_second": 4.153
+  },
+  "config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cpu"
+  }
+}

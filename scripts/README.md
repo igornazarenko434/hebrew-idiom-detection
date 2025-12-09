@@ -1,6 +1,9 @@
 # Helper Scripts for VAST.ai Training
+## Hebrew Idiom Detection Project
 
-This directory contains automation scripts for running experiments on VAST.ai GPU instances.
+This directory contains automation scripts for managing persistent volume workflows and running experiments on VAST.ai GPU instances.
+
+**Last Updated:** 2025-12-08
 
 ---
 
@@ -8,432 +11,631 @@ This directory contains automation scripts for running experiments on VAST.ai GP
 
 | Script | Purpose | When to Use | Priority |
 |--------|---------|-------------|----------|
-| `setup_vast_instance.sh` | Automate VAST.ai instance setup | First thing after SSH into new instance | ⭐⭐⭐ Critical |
-| `download_from_gdrive.sh` | Download dataset from Google Drive | After cloning repo on VAST.ai | ⭐⭐⭐ Critical |
+| `setup_volume.sh` | Initialize persistent volume (ONE TIME) | First time setup on cheap instance | ⭐⭐⭐ Critical (once) |
+| `instance_bootstrap.sh` | Quick setup for new instances | Every time you rent a new instance | ⭐⭐⭐ Critical (every session) |
+| `run_all_hpo.sh` | Run all HPO studies (10 studies) | Mission 4.5 | ⭐⭐⭐ Recommended |
+| `run_all_experiments.sh` | Run final training (30 runs) | Mission 4.6 | ⭐⭐⭐ Recommended |
 | `sync_to_gdrive.sh` | Upload results to Google Drive | After training completes | ⭐⭐⭐ Critical |
+| `download_from_gdrive.sh` | Download dataset from Google Drive | Used by setup_volume.sh | ⭐⭐ Helper |
 
 ---
 
 ## 🚀 Quick Start Workflow
 
-### **On VAST.ai Instance (Fresh Setup)**
+### **Phase 1: One-Time Setup (30 minutes)**
+
+This creates a persistent volume that survives across all instances.
 
 ```bash
-# 1. SSH into VAST.ai instance
-ssh -p <port> root@<host>
+# 1. Create storage volume on Vast.ai website
+#    - Go to https://vast.ai/console/storage/
+#    - Click "Create Storage"
+#    - Name: hebrew-idiom-volume
+#    - Size: 100 GB
+#    - Click "Create"
 
-# 2. Clone repository
-git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git
-cd hebrew-idiom-detection
+# 2. Rent CHEAP instance for setup (ANY GPU, <$0.20/hour)
+#    - Attach volume at /workspace during rental
+#    - SSH in
 
-# 3. Run setup script (installs everything)
-bash scripts/setup_vast_instance.sh
+# 3. Download and run setup script
+cd /root
+git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git temp_repo
+cp temp_repo/scripts/setup_volume.sh .
+rm -rf temp_repo
 
-# 4. Train your model
+bash setup_volume.sh
+# This takes 20-30 minutes and installs:
+# - Python environment
+# - All dependencies
+# - Dataset
+# - Project code
+# - rclone authentication
+
+# 4. DESTROY setup instance (keep volume!)
+exit  # Exit SSH
+# In Vast.ai console: Destroy instance, KEEP volume
+```
+
+### **Phase 2: Every Training Session (1 minute)**
+
+Now you can rent instances and be training in under 2 minutes!
+
+```bash
+# 1. Rent GPU instance (RTX 4090, attach volume at /workspace)
+
+# 2. SSH in
+ssh -p <PORT> root@<IP>
+
+# 3. Bootstrap (ONLY command needed!)
+bash /workspace/project/scripts/instance_bootstrap.sh
+# Takes ~30 seconds, pulls latest code, activates environment
+
+# 4. Train
+cd /workspace/project
 python src/idiom_experiment.py --mode full_finetune --model_id onlplab/alephbert-base --task cls --device cuda
 
-# 5. Sync results to Google Drive (before terminating instance!)
+# OR run HPO
+bash scripts/run_all_hpo.sh
+
+# OR run all experiments
+bash scripts/run_all_experiments.sh
+
+# 5. Sync to Google Drive
 bash scripts/sync_to_gdrive.sh
+
+# 6. Destroy instance (volume stays safe!)
+exit
 ```
 
 ---
 
 ## 📋 Detailed Script Documentation
 
-### 1. `setup_vast_instance.sh`
+### 1. `setup_volume.sh` ⭐ RUN ONCE
 
-**Purpose:** One-command setup of a fresh VAST.ai GPU instance
+**Purpose:** Initialize persistent volume with complete training environment
 
 **What it does:**
-1. Updates system packages (apt-get)
-2. Installs essential tools (git, wget, curl, vim)
-3. Upgrades pip
-4. Clones your GitHub repository
-5. Installs Python dependencies from requirements.txt
-6. Downloads dataset from Google Drive
-7. Verifies GPU availability
-8. Shows quick start commands
+1. Creates directory structure on volume: `/workspace/{env,data,project,cache,config}`
+2. Installs system dependencies (Python 3.10, git, curl, etc.)
+3. Creates Python virtual environment on volume (persistent!)
+4. Installs PyTorch with CUDA support
+5. Clones GitHub repository to volume
+6. Installs all Python dependencies from requirements.txt
+7. Downloads dataset to volume
+8. Configures rclone for Google Drive sync
+9. Sets up environment variables
+10. Pre-downloads HuggingFace models (optional)
+11. Verifies everything is ready
 
 **Usage:**
 ```bash
-bash scripts/setup_vast_instance.sh
+# On temporary setup instance
+bash setup_volume.sh
 ```
 
-**Time:** ~5-10 minutes (depending on internet speed)
+**Time:** 20-30 minutes (one-time only!)
 
-**Configuration:**
-- Edit `GITHUB_REPO_URL` in the script if your repo URL changes
-- No other configuration needed
+**Requirements:**
+- Vast.ai instance with volume attached at `/workspace`
+- Internet connection
+- Will prompt for Google Drive authentication
 
 **Output:**
+- ✅ Volume fully configured and ready
 - ✅ All dependencies installed
 - ✅ Dataset downloaded
-- ✅ GPU verified
-- ✅ Ready to train
+- ✅ rclone authenticated
+- ✅ Can destroy setup instance
+
+**Important:**
+- Only run this ONCE when creating the volume
+- After completion, destroy the instance but KEEP the volume
+- Volume will be reused for all future training sessions
 
 ---
 
-### 2. `download_from_gdrive.sh`
+### 2. `instance_bootstrap.sh` ⭐ RUN EVERY SESSION
 
-**Purpose:** Download dataset splits from Google Drive
+**Purpose:** Quick setup for new instances using existing volume
 
-**What it downloads:**
-- `data/expressions_data_tagged.csv` (main dataset, 4800 rows)
-- Verifies split files exist in repo:
-  - `data/splits/train.csv` (3456 samples)
-  - `data/splits/validation.csv` (432 samples)
-  - `data/splits/test.csv` (432 samples, in-domain)
-  - `data/splits/unseen_idiom_test.csv` (480 samples, zero-shot)
+**What it does:**
+1. Verifies volume is mounted at `/workspace`
+2. Checks volume was initialized (setup_volume.sh completed)
+3. Checks GPU availability
+4. Symlinks rclone config from volume to instance
+5. Symlinks .env file from volume
+6. Activates Python environment from volume
+7. Pulls latest code from GitHub
+8. Verifies dataset exists
+9. Shows you're ready to train
+
+**Usage:**
+```bash
+# On any new instance with volume attached
+bash /workspace/project/scripts/instance_bootstrap.sh
+```
+
+**Time:** ~30 seconds
+
+**Requirements:**
+- Volume must be attached at `/workspace`
+- setup_volume.sh must have been run previously
+
+**Output:**
+- ✅ Environment activated
+- ✅ Latest code pulled
+- ✅ Ready to train immediately
+- Shows quick start commands
+
+**What it DOESN'T do:**
+- ❌ Doesn't install anything (uses volume)
+- ❌ Doesn't download dataset (already on volume)
+- ❌ Doesn't configure rclone (uses volume config)
+
+---
+
+### 3. `run_all_hpo.sh` ⭐ MISSION 4.5
+
+**Purpose:** Run hyperparameter optimization for all model-task combinations
+
+**What it does:**
+1. Runs HPO for 5 models × 2 tasks = 10 studies
+2. Each study runs 15 trials (configured in hpo_config.yaml)
+3. Saves best hyperparameters to `experiments/results/best_hyperparameters/`
+4. Saves Optuna databases to `experiments/results/optuna_studies/`
+5. Optionally syncs to Google Drive after each study
+
+**Usage:**
+```bash
+cd /workspace/project
+bash scripts/run_all_hpo.sh
+```
+
+**Time:** 50-75 GPU hours (depends on GPU speed)
+
+**Cost:** ~$20-30 on Vast.ai @ $0.40/hour
+
+**Models optimized:**
+- onlplab/alephbert-base
+- dicta-il/alephbertgimmel-base
+- dicta-il/dictabert
+- bert-base-multilingual-cased
+- xlm-roberta-base
+
+**Tasks:**
+- cls (sequence classification)
+- span (token classification)
+
+**Output:**
+- 10 best hyperparameter JSON files
+- 10 Optuna study databases
+- Complete logs in `experiments/logs/`
+
+**Recommendation:** Use screen/tmux for this:
+```bash
+screen -S hpo
+bash scripts/run_all_hpo.sh
+# Detach: Ctrl+A then D
+```
+
+---
+
+### 4. `run_all_experiments.sh` ⭐ MISSION 4.6
+
+**Purpose:** Run final training with best hyperparameters (cross-seed validation)
+
+**What it does:**
+1. Loads best hyperparameters from Mission 4.5
+2. Trains each model-task combination with 3 different seeds
+3. Total: 5 models × 2 tasks × 3 seeds = 30 training runs
+4. Saves results to `experiments/results/full_finetune/`
+5. Optionally syncs to Google Drive after each model
+
+**Usage:**
+```bash
+cd /workspace/project
+bash scripts/run_all_experiments.sh
+```
+
+**Time:** 10-15 GPU hours
+
+**Cost:** ~$4-6 on Vast.ai @ $0.40/hour
+
+**Seeds:** 42, 123, 456 (for statistical analysis)
+
+**Output:**
+- 30 trained models with checkpoints
+- 30 training_results.json files
+- Complete logs in `experiments/logs/`
+- Ready for statistical analysis (mean ± std across seeds)
+
+---
+
+### 5. `sync_to_gdrive.sh` ⭐ CRITICAL
+
+**Purpose:** Upload training results to Google Drive (automated backup)
+
+**What it syncs:**
+- `experiments/results/` → `gdrive:Hebrew_Idiom_Detection/results/`
+- `experiments/logs/` → `gdrive:Hebrew_Idiom_Detection/logs/`
+- `models/` → `gdrive:Hebrew_Idiom_Detection/models/` (optional with --with-models)
+
+**Usage:**
+
+Basic sync (results and logs only):
+```bash
+cd /workspace/project
+bash scripts/sync_to_gdrive.sh
+```
+
+With model checkpoints (large files):
+```bash
+bash scripts/sync_to_gdrive.sh --with-models
+```
+
+**Requirements:**
+- rclone must be configured (done by setup_volume.sh)
+- Volume must have `/workspace/config/.rclone.conf`
+
+**Sync behavior:**
+- Uses `--update` flag: Only uploads newer files
+- Uses 4 parallel transfers (fast)
+- Shows progress bars
+- Skips .DS_Store, __pycache__, etc.
+
+**When to use:**
+- ✅ After each training run
+- ✅ After HPO completes
+- ✅ **ALWAYS before destroying instance** (critical!)
+- ✅ Periodically during long runs
+
+**Verification:**
+```bash
+# Check what was uploaded
+rclone ls gdrive:Hebrew_Idiom_Detection/results/
+```
+
+---
+
+### 6. `download_from_gdrive.sh`
+
+**Purpose:** Download dataset from Google Drive
 
 **Usage:**
 ```bash
 bash scripts/download_from_gdrive.sh
 ```
 
-**Requirements:**
-- `gdown` installed (auto-installed by script if missing)
+**What it downloads:**
+- Main dataset CSV (4800 sentences)
+- Verifies split files exist in repo
 
-**Configuration:**
-- File IDs are hardcoded (from your .env file)
-- No changes needed
-
-**Output:**
-- Downloads dataset to `data/` directory
-- Verifies row counts (should be 4800 + header)
-- Checks split files exist
-
-**Troubleshooting:**
-- If download fails: Check Google Drive sharing settings (should be "Anyone with link")
-- If split files missing: Push them to GitHub repo first
+**Note:** This is automatically called by setup_volume.sh. You rarely need to run this manually.
 
 ---
 
-### 3. `sync_to_gdrive.sh`
+## 🎯 Complete Workflow Examples
 
-**Purpose:** Upload training results, logs, and model checkpoints to Google Drive (automated with rclone)
+### **Example 1: First Time Setup**
 
-**What it syncs:**
-- `experiments/results/` → `gdrive:Hebrew_Idiom_Detection/results/`
-- `experiments/logs/` → `gdrive:Hebrew_Idiom_Detection/logs/`
-- `models/` → `gdrive:Hebrew_Idiom_Detection/models/` (optional, use `--with-models` flag)
-
-**Usage:**
-
-Basic (sync results and logs only):
 ```bash
-bash scripts/sync_to_gdrive.sh
+# === ON YOUR MAC ===
+# 1. Commit latest code
+cd ~/PycharmProjects/Final_Project_NLP/
+git add .
+git commit -m "Update training scripts"
+git push origin main
+
+# === ON VAST.AI WEBSITE ===
+# 2. Create storage volume
+#    Name: hebrew-idiom-volume
+#    Size: 100 GB
+
+# 3. Rent cheap instance
+#    Any GPU, <$0.20/hour
+#    Attach volume at /workspace
+
+# === ON VAST.AI INSTANCE ===
+# 4. SSH and setup
+ssh -p <PORT> root@<IP>
+cd /root
+git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git temp_repo
+cp temp_repo/scripts/setup_volume.sh .
+rm -rf temp_repo
+bash setup_volume.sh
+# Wait 20-30 minutes...
+
+# 5. Exit and destroy instance (KEEP VOLUME!)
+exit
+
+# Volume is now ready for all future sessions!
 ```
 
-With model checkpoints (slower, larger files):
+### **Example 2: Quick Training Session**
+
 ```bash
-bash scripts/sync_to_gdrive.sh --with-models
+# === ON YOUR MAC ===
+# 1. Make code changes
+git add .
+git commit -m "Fix training bug"
+git push origin main
+
+# === ON VAST.AI WEBSITE ===
+# 2. Rent GPU instance
+#    RTX 4090, attach volume at /workspace
+
+# === ON VAST.AI INSTANCE ===
+# 3. SSH and bootstrap
+ssh -p <PORT> root@<IP>
+bash /workspace/project/scripts/instance_bootstrap.sh
+# Takes 30 seconds...
+
+# 4. Train
+cd /workspace/project
+python src/idiom_experiment.py --mode full_finetune --model_id onlplab/alephbert-base --task cls --device cuda
+
+# 5. Sync
+bash scripts/sync_to_gdrive.sh
+
+# 6. Destroy instance
+exit
+
+# Done! Volume persists for next session.
 ```
 
-**First-Time Setup (Required):**
-
-The script uses `rclone` which must be configured once per VAST.ai instance:
+### **Example 3: Run Full HPO (Mission 4.5)**
 
 ```bash
-# 1. Install rclone
-curl https://rclone.org/install.sh | sudo bash
+# === ON VAST.AI ===
+# 1. Rent instance, attach volume
+ssh -p <PORT> root@<IP>
+bash /workspace/project/scripts/instance_bootstrap.sh
 
-# 2. Configure Google Drive
-rclone config
+# 2. Start screen session (for long run)
+screen -S hpo
 
-# Follow prompts:
-# - Choose: n (new remote)
-# - Name: gdrive
-# - Storage: drive (Google Drive)
-# - client_id: (press Enter)
-# - client_secret: (press Enter)
-# - scope: 1 (Full access)
-# - root_folder_id: (press Enter)
-# - service_account_file: (press Enter)
-# - Edit advanced config: n
-# - Use auto config: n (you're on remote server)
-#
-# Then follow authentication steps:
-# - Open URL in browser on your LOCAL machine
-# - Login to Google
-# - Copy verification code
-# - Paste back in terminal
+# 3. Run HPO
+cd /workspace/project
+bash scripts/run_all_hpo.sh
+# This will take 50-75 hours
 
-# 3. Verify configuration
-rclone lsd gdrive:
-# Should list your Google Drive folders
+# 4. Detach screen
+# Press: Ctrl+A then D
 
-# 4. Create project folder (first time only)
-rclone mkdir gdrive:Hebrew_Idiom_Detection
-rclone mkdir gdrive:Hebrew_Idiom_Detection/results
-rclone mkdir gdrive:Hebrew_Idiom_Detection/logs
-rclone mkdir gdrive:Hebrew_Idiom_Detection/models
+# 5. Disconnect (training continues)
+exit
 
-# 5. Now you can use the sync script
-bash scripts/sync_to_gdrive.sh
-```
+# === LATER (CHECK PROGRESS) ===
+ssh -p <PORT> root@<IP>
+screen -r hpo  # Resume
+# Or check logs:
+tail -f /workspace/project/experiments/logs/hpo_batch_*.log
 
-**Configuration:**
-- Google Drive paths are hardcoded (match your .env structure)
-- No changes needed
+# === WHEN COMPLETE ===
+# Sync results
+bash /workspace/project/scripts/sync_to_gdrive.sh
 
-**Output:**
-- Shows sync progress with file names and sizes
-- Reports total data synced
-- Confirms upload to Google Drive
-
-**When to use:**
-- ✅ After each training run completes
-- ✅ After each HPO study completes
-- ✅ **ALWAYS before terminating VAST.ai instance** (otherwise you lose everything!)
-
-**Sync Options:**
-- `--update`: Only uploads files that are newer locally (faster)
-- `--verbose`: Shows detailed file list
-- `--progress`: Shows upload progress bars
-- `--transfers 4`: Uses 4 parallel uploads (faster)
-
-**Troubleshooting:**
-- **Error: rclone not found** → Run installation command above
-- **Error: gdrive remote not configured** → Run `rclone config` setup
-- **Files not syncing** → Check `rclone lsd gdrive:` to verify connection
-- **Slow uploads** → Increase `--transfers` (use 8 for faster upload)
-
----
-
-## 🎯 Typical Mission 4.4 Workflow
-
-### **First Time VAST.ai Setup:**
-
-```bash
-# 1. Rent VAST.ai instance (RTX 3090/4090, 24GB+ VRAM)
-# 2. SSH into instance
-ssh -p <port> root@<host>
-
-# 3. Run setup script
-git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git
-cd hebrew-idiom-detection
-bash scripts/setup_vast_instance.sh
-
-# 4. Configure rclone (one-time, 5 minutes)
-curl https://rclone.org/install.sh | sudo bash
-rclone config
-# Follow prompts to add Google Drive as 'gdrive'
-
-# 5. Test sync
-bash scripts/sync_to_gdrive.sh
-# Should upload any existing results
-
-# 6. Test training (small subset, 5 minutes)
-python src/idiom_experiment.py --mode full_finetune --model_id onlplab/alephbert-base --task cls --num_train_samples 100 --device cuda
-
-# 7. Sync test results
-bash scripts/sync_to_gdrive.sh
-
-# 8. Check Google Drive to verify files uploaded
-```
-
-### **Subsequent Training Sessions:**
-
-```bash
-# 1. SSH into same instance (or new instance)
-ssh -p <port> root@<host>
-
-# 2. If new instance, run setup
-cd hebrew-idiom-detection
-bash scripts/setup_vast_instance.sh
-
-# 3. If rclone not configured, configure it
-# (Skip if already configured on this instance)
-
-# 4. Run training
-python src/idiom_experiment.py --mode full_finetune --config experiments/configs/training_config.yaml --task cls --device cuda
-
-# 5. Sync results
-bash scripts/sync_to_gdrive.sh
-
-# 6. Terminate instance (done!)
+# Destroy instance
+exit
 ```
 
 ---
 
-## 📊 Mission 4.5 (HPO) Workflow
+## 📊 Volume Structure
 
-For Mission 4.5, you need to run 10 HPO studies (5 models × 2 tasks).
+After setup_volume.sh completes:
 
-**Option A: Manual (10 commands):**
-
-```bash
-# Connect to VAST.ai
-ssh -p <port> root@<host>
-cd hebrew-idiom-detection
-
-# Run each HPO study manually
-python src/idiom_experiment.py --mode hpo --model_id onlplab/alephbert-base --task cls --config experiments/configs/hpo_config.yaml --device cuda
-python src/idiom_experiment.py --mode hpo --model_id onlplab/alephbert-base --task span --config experiments/configs/hpo_config.yaml --device cuda
-# ... repeat for all 5 models × 2 tasks
-
-# Sync all results
-bash scripts/sync_to_gdrive.sh
 ```
-
-**Option B: Batch Script (Recommended for Mission 4.5+):**
-
-Create `scripts/run_all_hpo.sh` to automate all 10 runs (see PRD Section 10.1).
+/workspace/                                    # Volume root
+├── env/                                       # Python 3.10 + all packages (5 GB)
+├── data/                                      # Dataset (3 MB)
+│   └── splits/
+├── project/                                   # Git repository
+│   ├── experiments/
+│   │   ├── configs/
+│   │   └── results/                           # Training outputs (grows)
+│   │       ├── zero_shot/
+│   │       ├── full_finetune/
+│   │       ├── hpo/
+│   │       ├── optuna_studies/
+│   │       └── best_hyperparameters/
+│   ├── scripts/
+│   └── src/
+├── cache/huggingface/                         # Model cache (10 GB)
+└── config/                                    # Persistent configs
+    ├── .env
+    └── .rclone.conf
+```
 
 ---
 
-## ⚠️ Important Notes
+## ⚠️ Critical Reminders
 
-### **ALWAYS Sync Before Terminating:**
+### **1. ALWAYS Attach Volume at /workspace**
 
-**❌ WRONG (You will lose everything!):**
+When renting instances:
+- ✅ Click "Storage" → "Attach storage volume"
+- ✅ Select: `hebrew-idiom-volume`
+- ✅ Mount point: `/workspace`
+- ❌ DON'T use `/mnt/volume` or other paths
+
+### **2. ALWAYS Sync Before Destroying**
+
 ```bash
-# Train model
+# ❌ WRONG (You lose everything!)
 python src/idiom_experiment.py ...
-# Terminate instance immediately
-# ← Results lost forever!
-```
+exit  # ← Results lost!
 
-**✅ CORRECT:**
-```bash
-# Train model
+# ✅ CORRECT
 python src/idiom_experiment.py ...
-
-# Sync to Google Drive
-bash scripts/sync_to_gdrive.sh
-# Wait for upload to complete
-
-# Verify files uploaded
-rclone ls gdrive:Hebrew_Idiom_Detection/results/
-
-# NOW it's safe to terminate
+bash scripts/sync_to_gdrive.sh  # ← Backup to Google Drive
+# Wait for sync to complete
+exit  # ← Now safe
 ```
 
-### **Use screen/tmux for Long Training:**
-
-Training can take hours. Use `screen` to keep it running if SSH disconnects:
+### **3. Use screen/tmux for Long Runs**
 
 ```bash
-# Start screen session
+# Start screen
 screen -S training
 
-# Run training inside screen
-python src/idiom_experiment.py --mode hpo ...
+# Run training
+bash scripts/run_all_hpo.sh
 
-# Detach: Press Ctrl+A then D
-# Disconnect SSH (training keeps running)
+# Detach (training continues)
+# Press: Ctrl+A then D
+
+# Disconnect SSH (safe)
+exit
 
 # Reconnect later
-ssh -p <port> root@<host>
-screen -r training  # Resume session
+ssh -p <PORT> root@<IP>
+screen -r training
 ```
+
+### **4. Bootstrap Script is NOT Setup Script**
+
+- `setup_volume.sh` = Run ONCE to create volume (20-30 min)
+- `instance_bootstrap.sh` = Run EVERY session (30 seconds)
+
+Don't confuse them!
 
 ---
 
 ## 🐛 Troubleshooting
 
-### **Problem: Dataset download fails**
+### **Problem: Volume not mounted**
 
 ```bash
-# Check gdown is installed
-pip install gdown
+# Check if mounted
+df -h | grep /workspace
 
-# Try manual download
-gdown 140zJatqT4LBl7yG-afFSoUrYrisi9276 -O data/expressions_data_tagged.csv
-
-# If still fails, check Google Drive sharing permissions
+# If not mounted:
+# - Destroy instance
+# - When renting, attach volume BEFORE clicking "Rent"
+# - Mount point must be /workspace
 ```
 
-### **Problem: rclone authentication fails**
+### **Problem: bootstrap.sh fails "Volume not initialized"**
 
 ```bash
-# Remove old config
-rm ~/.config/rclone/rclone.conf
-
-# Reconfigure from scratch
-rclone config
-
-# Choose 'gdrive' as name, follow all prompts
+# You skipped setup_volume.sh!
+# Run it once:
+bash /workspace/project/scripts/setup_volume.sh
 ```
 
-### **Problem: GPU not detected**
+### **Problem: "Latest code not pulled"**
 
 ```bash
-# Check NVIDIA driver
-nvidia-smi
+# On your Mac:
+git push origin main
 
-# Check PyTorch sees GPU
-python -c "import torch; print(torch.cuda.is_available())"
+# On Vast.ai:
+cd /workspace/project
+git pull origin main
+```
 
-# If false, check VAST.ai instance has GPU allocated
+### **Problem: rclone sync fails**
+
+```bash
+# Check rclone config exists
+cat /workspace/config/.rclone.conf
+
+# Test connection
+rclone lsd gdrive:
+
+# If fails, re-authenticate:
+rclone config reconnect gdrive:
+# Save to volume:
+cp ~/.config/rclone/rclone.conf /workspace/config/.rclone.conf
 ```
 
 ### **Problem: Out of memory during training**
 
 ```bash
-# Reduce batch size in config
-# Edit experiments/configs/training_config.yaml
-# Change: batch_size: 16 → batch_size: 8
+# Reduce batch size
+# Edit: experiments/configs/training_config.yaml
+batch_size: 8  # Was 16
 
 # Or use gradient accumulation
-# Change: gradient_accumulation_steps: 1 → 2
+gradient_accumulation_steps: 2  # Effective batch = 16
+```
+
+### **Problem: GPU not detected**
+
+```bash
+# Check GPU
+nvidia-smi
+
+# Check PyTorch
+source /workspace/env/bin/activate
+python -c "import torch; print(torch.cuda.is_available())"
+
+# If False:
+# - Check Vast.ai instance has GPU
+# - Check CUDA version matches PyTorch
 ```
 
 ---
 
-## 📝 Script Maintenance
+## 📝 Script Modification Workflow
 
-If you need to modify these scripts:
+If you need to update these scripts:
 
-1. **Edit locally in PyCharm**
-2. **Commit and push to GitHub**
-   ```bash
-   git add scripts/
-   git commit -m "Update VAST.ai scripts"
-   git push
-   ```
-3. **Pull on VAST.ai instance**
-   ```bash
-   cd hebrew-idiom-detection
-   git pull
-   ```
+```bash
+# === ON YOUR MAC ===
+# 1. Edit scripts
+cd ~/PycharmProjects/Final_Project_NLP/scripts/
+# Edit instance_bootstrap.sh or other scripts
 
----
+# 2. Commit and push
+git add scripts/
+git commit -m "Update bootstrap script"
+git push origin main
 
-## 📚 Additional Resources
+# === ON VAST.AI ===
+# 3. Pull changes
+cd /workspace/project
+git pull origin main
 
-- **VAST.ai Documentation:** https://vast.ai/docs/
-- **rclone Documentation:** https://rclone.org/docs/
-- **gdown Documentation:** https://github.com/wkentaro/gdown
-- **Project PRD:** `../FINAL_PRD_Hebrew_Idiom_Detection.md`
-- **Missions Guide:** `../STEP_BY_STEP_MISSIONS.md`
+# 4. Updated scripts ready to use
+bash scripts/instance_bootstrap.sh
+```
 
 ---
 
-## ✅ Quick Reference
+## 📚 Related Documentation
 
-**Before starting Mission 4.4:**
-- [x] All 3 scripts created
-- [x] Scripts are executable (chmod +x)
-- [x] GitHub repository up to date
-- [x] VAST.ai account active with credit
-
-**Mission 4.4 Checklist:**
-- [ ] Rent VAST.ai instance
-- [ ] Run `setup_vast_instance.sh`
-- [ ] Configure rclone (one-time)
-- [ ] Test training on small subset
-- [ ] Test sync to Google Drive
-- [ ] Verify GPU works
-- [ ] Ready for Mission 4.5 (HPO)
-
-**After each training:**
-- [ ] Run `sync_to_gdrive.sh`
-- [ ] Verify files uploaded to Google Drive
-- [ ] Safe to terminate instance
+- **PATH_REFERENCE.md** - Complete path reference guide
+- **VAST_AI_PERSISTENT_VOLUME_GUIDE.md** - Detailed volume workflow
+- **VAST_AI_QUICK_START.md** - Quick reference guide
+- **TRAINING_OUTPUT_ORGANIZATION.md** - Output structure guide
 
 ---
 
-**Last Updated:** November 9, 2025
-**Mission:** 4.4 - VAST.ai Training Environment Setup
-**Status:** Ready to use ✅
+## ✅ Checklist
+
+**Before Mission 4.5 (HPO):**
+- [ ] Volume created and initialized (setup_volume.sh completed)
+- [ ] Tested instance_bootstrap.sh on new instance
+- [ ] Tested sync_to_gdrive.sh (files appear in Google Drive)
+- [ ] Tested quick training run (100 samples, 1 epoch)
+- [ ] Ready to run run_all_hpo.sh
+
+**During Training:**
+- [ ] Using screen/tmux for long runs
+- [ ] Monitoring logs periodically
+- [ ] Syncing results after each major milestone
+
+**After Training:**
+- [ ] Synced all results to Google Drive
+- [ ] Verified files uploaded
+- [ ] Destroyed instance (kept volume)
+
+---
+
+**Last Updated:** 2025-12-08
+**Workflow:** Persistent Volume Architecture
+**Status:** Production Ready ✅

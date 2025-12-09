@@ -3,8 +3,9 @@
 <div align="center">
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.6+-ee4c2c.svg)](https://pytorch.org/)
 [![Transformers](https://img.shields.io/badge/%F0%9F%A4%97%20Transformers-4.30+-yellow)](https://github.com/huggingface/transformers)
+[![Optuna](https://img.shields.io/badge/Optuna-3.0+-purple)](https://optuna.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 **The First Comprehensive Hebrew Idiom Dataset with Dual-Task Annotations**
@@ -29,7 +30,7 @@
 - [Project Structure](#project-structure)
 - [Experiments](#experiments)
   - [Zero-Shot Evaluation](#zero-shot-evaluation)
-  - [Full Fine-Tuning](#full-fine-tuning)
+  - [Full Fine-Tuning](#full_finetune)
   - [Hyperparameter Optimization](#hyperparameter-optimization)
   - [LLM Prompting](#llm-prompting)
 - [Models](#models)
@@ -89,8 +90,9 @@ Challenge: Models must use context to distinguish meaning.
 ### 🔬 Experimental Framework
 - ✅ **5 Transformer Models**: AlephBERT, AlephBERTGimmel, DictaBERT, mBERT, XLM-RoBERTa
 - ✅ **2 Tasks**: Sequence classification + Token classification (IOB2)
-- ✅ **3 Training Modes**: Zero-shot, full fine-tuning, frozen backbone
-- ✅ **HPO Integration**: Optuna-based hyperparameter optimization
+- ✅ **Multiple Training Modes**: Zero-shot, full fine-tuning, frozen backbone
+- ✅ **Standalone Evaluation**: Test trained models on any dataset
+- ✅ **HPO Integration**: Optuna-based hyperparameter optimization with dashboard
 - ✅ **LLM Evaluation**: Prompt-based evaluation framework
 - ✅ **Comprehensive Logging**: TensorBoard integration for all experiments
 
@@ -98,9 +100,11 @@ Challenge: Models must use context to distinguish meaning.
 - ✅ **5,236 lines** of production-quality Python code
 - ✅ **Modular architecture**: Separate modules for data, training, evaluation
 - ✅ **Configuration-driven**: YAML-based experiment management
-- ✅ **Docker support**: Containerized environment for reproducibility
-- ✅ **VAST.ai integration**: Cloud GPU training scripts
+- ✅ **Docker support**: Containerized environment with rclone integration
+- ✅ **VAST.ai integration**: Persistent volume workflow for cloud GPU training
+- ✅ **Google Drive sync**: Automated backup with rclone
 - ✅ **Automatic results organization**: Hierarchical output structure
+- ✅ **Comprehensive documentation**: 10+ guide documents covering all workflows
 
 ---
 
@@ -246,9 +250,10 @@ Challenge: Models must use context to distinguish meaning.
 ### Prerequisites
 
 - Python 3.10 or higher
-- CUDA 11.7+ (for GPU training)
+- CUDA 11.8+ (for GPU training)
 - 16GB+ RAM recommended
-- 50GB+ disk space for models and results
+- 100GB+ disk space for models, cache, and results
+- rclone (for Google Drive sync)
 
 ### Setup
 
@@ -264,50 +269,100 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
+# Install rclone (for Google Drive sync)
+# Mac:
+brew install rclone
+# Linux:
+curl https://rclone.org/install.sh | sudo bash
+
 # Verify installation
 python -c "import torch; print(f'PyTorch: {torch.__version__}')"
 python -c "import transformers; print(f'Transformers: {transformers.__version__}')"
+python -c "import optuna; print(f'Optuna: {optuna.__version__}')"
 
 # Download dataset (from Google Drive)
-python scripts/download_from_gdrive.sh
+bash scripts/download_from_gdrive.sh
+
+# Configure rclone for Google Drive (one-time setup)
+rclone config
+# Follow prompts to add Google Drive as 'gdrive'
 ```
 
 ### Docker Installation
 
 ```bash
-# Build Docker image
-docker build -t hebrew-idiom-detection -f docker/Dockerfile .
+# Build Docker image (includes rclone)
+docker-compose build
 
-# Run container
-docker run --gpus all -it -v $(pwd):/workspace hebrew-idiom-detection
+# Run container with GPU support
+docker-compose up -d
 
-# Inside container
-python src/idiom_experiment.py --mode zero_shot --model_id onlplab/alephbert-base --task cls
+# Access container
+docker-compose exec hebrew-idiom-detection bash
+
+# Inside container - run training
+python src/idiom_experiment.py --mode full_finetune --model_id onlplab/alephbert-base --task cls --device cuda
+
+# Start TensorBoard (separate service)
+docker-compose --profile tools up tensorboard
+# Access at http://localhost:6006
+
+# Start Optuna Dashboard (separate service)
+docker-compose --profile tools up optuna-dashboard
+# Access at http://localhost:8080
 ```
 
-### VAST.ai Setup (Cloud GPU)
+### VAST.ai Setup (Cloud GPU with Persistent Volume)
+
+**Recommended workflow for cloud training:**
 
 ```bash
-# 1. Rent VAST.ai instance (RTX 3090/4090 recommended)
-# 2. Connect via SSH
+# === PHASE 1: One-Time Volume Setup (30 minutes) ===
+# 1. Create storage volume on Vast.ai website (100GB)
+# 2. Rent cheap instance, attach volume at /workspace
+# 3. SSH to instance
 ssh -p {port} root@{ip}
 
-# 3. Clone and setup
-git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git
-cd hebrew-idiom-detection
-pip install -r requirements.txt
+# 4. Download and run setup script
+cd /root
+git clone https://github.com/igornazarenko434/hebrew-idiom-detection.git temp_repo
+cp temp_repo/scripts/setup_volume.sh .
+rm -rf temp_repo
+bash setup_volume.sh
+# This installs: Python env, dependencies, dataset, rclone, project code
 
-# 4. Download dataset
-bash scripts/download_from_gdrive.sh
+# 5. Destroy instance (KEEP VOLUME!)
+exit
 
-# 5. Run training
+# === PHASE 2: Every Training Session (1 minute) ===
+# 1. Rent GPU instance (RTX 4090), attach volume at /workspace
+# 2. SSH in
+ssh -p {port} root@{ip}
+
+# 3. Bootstrap environment
+bash /workspace/project/scripts/instance_bootstrap.sh
+# Takes ~30 seconds, pulls latest code, activates environment
+
+# 4. Run training
+cd /workspace/project
 python src/idiom_experiment.py \
     --mode full_finetune \
     --model_id onlplab/alephbert-base \
     --task cls \
     --config experiments/configs/training_config.yaml \
     --device cuda
+
+# OR run all HPO studies
+bash scripts/run_all_hpo.sh
+
+# 5. Sync results to Google Drive
+bash scripts/sync_to_gdrive.sh
+
+# 6. Destroy instance (volume stays!)
+exit
 ```
+
+**See [VAST_AI_PERSISTENT_VOLUME_GUIDE.md](VAST_AI_PERSISTENT_VOLUME_GUIDE.md) and [VAST_AI_QUICK_START.md](VAST_AI_QUICK_START.md) for detailed instructions.**
 
 ---
 
@@ -369,14 +424,37 @@ python src/idiom_experiment.py \
     --device cuda
 ```
 
-### 4. View Results
+### 4. Evaluate Trained Model (on unseen idioms or custom data)
+
+```bash
+# Evaluate on unseen idioms
+python src/idiom_experiment.py \
+    --mode evaluate \
+    --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+    --data data/splits/unseen_idiom_test.csv \
+    --task cls \
+    --device cuda
+
+# Evaluate on custom dataset
+python src/idiom_experiment.py \
+    --mode evaluate \
+    --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+    --data path/to/your/custom_data.csv \
+    --task cls \
+    --device cuda
+```
+
+### 5. View Results
 
 ```bash
 # View training summary
-cat experiments/results/full_fine-tuning/alephbert-base/cls/summary.txt
+cat experiments/results/full_finetune/alephbert-base/cls/summary.txt
+
+# View evaluation results
+cat experiments/results/evaluation/full_finetune/alephbert-base/cls/eval_results_unseen_idiom_test_*.json
 
 # Launch TensorBoard
-tensorboard --logdir experiments/results/full_fine-tuning/alephbert-base/cls/logs/
+tensorboard --logdir experiments/results/full_finetune/alephbert-base/cls/logs/
 
 # Open browser to http://localhost:6006
 ```
@@ -416,10 +494,12 @@ hebrew-idiom-detection/
 │   │   └── hpo_config.yaml         # HPO search space
 │   ├── results/                    # Organized by mode/model/task
 │   │   ├── zero_shot/              # Zero-shot results (JSON)
-│   │   ├── full_fine-tuning/       # Full fine-tuning results
+│   │   ├── full_finetune/          # Full fine-tuning results
 │   │   ├── frozen_backbone/        # Frozen backbone results
-│   │   ├── optuna_studies/         # HPO study databases
-│   │   └── best_hyperparameters/   # Best params per model/task
+│   │   ├── hpo/                    # HPO trial results
+│   │   ├── evaluation/             # Standalone evaluation results
+│   │   ├── optuna_studies/         # HPO study databases (.db files)
+│   │   └── best_hyperparameters/   # Best params per model/task (JSON)
 │   └── logs/                       # TensorBoard logs
 │
 ├── scripts/                        # Automation scripts
@@ -515,7 +595,7 @@ bash scripts/run_all_experiments.sh
 
 **Output Structure:**
 ```
-experiments/results/full_fine-tuning/{model_name}/{task}/
+experiments/results/full_finetune/{model_name}/{task}/
 ├── checkpoint-216/              # Best model (based on val F1)
 ├── checkpoint-432/              # Latest checkpoint
 ├── logs/                        # TensorBoard logs
@@ -571,9 +651,58 @@ optuna-dashboard sqlite:///experiments/results/optuna_studies/alephbert-base_cls
 ```
 
 **Output:**
-- HPO trials: `experiments/hpo_results/{model}/{task}/trial_{n}/`
+- HPO trials: `experiments/results/hpo/{model}/{task}/trial_{n}/`
 - Optuna database: `experiments/results/optuna_studies/{model}_{task}_hpo.db`
 - Best params: `experiments/results/best_hyperparameters/best_params_{model}_{task}.json`
+
+### Standalone Evaluation
+
+**Objective:** Evaluate trained models on any dataset (in-domain, unseen idioms, or custom data)
+
+**Use Cases:**
+- Test performance on unseen idioms
+- Validate on custom Hebrew idiom datasets
+- Cross-dataset evaluation
+- Production model testing
+
+**Command:**
+```bash
+# Evaluate on unseen idioms
+python src/idiom_experiment.py \
+    --mode evaluate \
+    --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+    --data data/splits/unseen_idiom_test.csv \
+    --task cls \
+    --device cuda
+
+# Evaluate with sample limit (quick test)
+python src/idiom_experiment.py \
+    --mode evaluate \
+    --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+    --data data/splits/test.csv \
+    --max_samples 100 \
+    --task cls \
+    --device cuda
+
+# Evaluate on specific split from full dataset
+python src/idiom_experiment.py \
+    --mode evaluate \
+    --model_checkpoint experiments/results/full_finetune/alephbert-base/cls/ \
+    --data data/expressions_data_tagged_v2.csv \
+    --split validation \
+    --task cls \
+    --device cuda
+```
+
+**Output Structure:**
+```
+experiments/results/evaluation/{mode}/{model}/{task}/
+└── eval_results_{dataset}_{timestamp}.json
+```
+
+**Metrics:**
+- Task 1 (cls): F1, accuracy, precision, recall, confusion matrix
+- Task 2 (span): Span F1, token F1, per-class metrics (O, B-IDIOM, I-IDIOM)
 
 ### LLM Prompting
 
@@ -731,14 +860,14 @@ python src/llm_evaluation.py \
 **Launch TensorBoard:**
 ```bash
 # Single run
-tensorboard --logdir experiments/results/full_fine-tuning/alephbert-base/cls/logs/
+tensorboard --logdir experiments/results/full_finetune/alephbert-base/cls/logs/
 
 # Compare all models for Task 1
-tensorboard --logdir experiments/results/full_fine-tuning/ \
+tensorboard --logdir experiments/results/full_finetune/ \
     --path_prefix alephbert-base/cls,dictabert/cls,xlm-roberta-base/cls
 
 # Compare all tasks for one model
-tensorboard --logdir experiments/results/full_fine-tuning/alephbert-base/
+tensorboard --logdir experiments/results/full_finetune/alephbert-base/
 ```
 
 **Metrics Visualized:**
@@ -765,7 +894,7 @@ experiments/results/{mode}/{model}/{task}/
 └── summary.txt                 # Quick reference
 ```
 
-**Modes:** `zero_shot`, `full_fine-tuning`, `frozen_backbone`, `hpo_results`
+**Modes:** `zero_shot`, `full_finetune`, `frozen_backbone`, `hpo`, `evaluation`
 
 ---
 
@@ -773,12 +902,24 @@ experiments/results/{mode}/{model}/{task}/
 
 ### Complete Documentation
 
+#### Core Documentation
 - **[FINAL_PRD_Hebrew_Idiom_Detection.md](FINAL_PRD_Hebrew_Idiom_Detection.md)**: Product Requirements Document (comprehensive research design)
 - **[data/README.md](data/README.md)**: Complete dataset documentation (statistics, validation, examples)
 - **[IMPLEMENTATION_GUIDE.md](IMPLEMENTATION_GUIDE.md)**: Step-by-step experiment execution guide
+
+#### Training & Evaluation
 - **[TRAINING_OUTPUT_ORGANIZATION.md](TRAINING_OUTPUT_ORGANIZATION.md)**: Results organization and analysis guide
+- **[TRAINING_ANALYSIS_AND_WORKFLOW.md](TRAINING_ANALYSIS_AND_WORKFLOW.md)**: Training workflow and results analysis
+- **[PATH_REFERENCE.md](PATH_REFERENCE.md)**: Canonical paths reference for all outputs
+
+#### VAST.ai Cloud Training
+- **[VAST_AI_PERSISTENT_VOLUME_GUIDE.md](VAST_AI_PERSISTENT_VOLUME_GUIDE.md)**: Complete guide to persistent volume workflow
+- **[VAST_AI_QUICK_START.md](VAST_AI_QUICK_START.md)**: Quick reference for cloud training
+- **[scripts/README.md](scripts/README.md)**: Helper scripts documentation
+
+#### Development
 - **[STEP_BY_STEP_MISSIONS.md](STEP_BY_STEP_MISSIONS.md)**: Development roadmap (47 missions)
-- **[MISSIONS_PROGRESS_TRACKER.md](MISSIONS_PROGRESS_TRACKER.md)**: Progress tracking (19/47 missions complete)
+- **[MISSIONS_PROGRESS_TRACKER.md](MISSIONS_PROGRESS_TRACKER.md)**: Progress tracking
 
 ### Jupyter Notebooks
 

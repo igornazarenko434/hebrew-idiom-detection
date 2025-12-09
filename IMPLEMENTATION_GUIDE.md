@@ -354,7 +354,7 @@ validation_data: "data/splits/validation.csv"
 test_data: "data/splits/test.csv"
 
 # Output
-output_dir: "experiments/results/full_fine-tuning"
+output_dir: "experiments/results/"  # Code appends mode/model/task structure
 save_strategy: "epoch"
 evaluation_strategy: "epoch"
 
@@ -365,8 +365,8 @@ device: "cuda"  # or "cpu" or "mps"
 ### Results Location
 
 Training results saved to:
-- **Checkpoints:** `experiments/results/full_fine-tuning/<model_name>/<task>/`
-- **Training metrics:** `experiments/results/full_fine-tuning/<model_name>/<task>/training_results.json`
+- **Checkpoints:** `experiments/results/full_finetune/<model_name>/<task>/`
+- **Training metrics:** `experiments/results/full_finetune/<model_name>/<task>/training_results.json`
 
 ---
 
@@ -752,10 +752,10 @@ exit  # Exit SSH
 
 ```bash
 # Task 1 results (Sequence Classification)
-cat experiments/results/full_fine-tuning/alephbert-base/cls/training_results.json
+cat experiments/results/full_finetune/alephbert-base/cls/training_results.json
 
 # Task 2 results (Token Classification)
-cat experiments/results/full_fine-tuning/alephbert-base/span/training_results.json
+cat experiments/results/full_finetune/alephbert-base/span/training_results.json
 ```
 
 ### Python Script for Analysis
@@ -765,7 +765,7 @@ import json
 import pandas as pd
 
 # Load results
-with open('experiments/results/full_fine-tuning/alephbert-base/cls/training_results.json') as f:
+with open('experiments/results/full_finetune/alephbert-base/cls/training_results.json') as f:
     results = json.load(f)
 
 # Print metrics
@@ -786,7 +786,7 @@ models = ['alephbert-base', 'dictabert', 'bert-base-multilingual-cased', 'xlm-ro
 results_list = []
 
 for model in models:
-    path = f'experiments/results/full_fine-tuning/{model}/cls/training_results.json'
+    path = f'experiments/results/full_finetune/{model}/cls/training_results.json'
     with open(path) as f:
         data = json.load(f)
         results_list.append({

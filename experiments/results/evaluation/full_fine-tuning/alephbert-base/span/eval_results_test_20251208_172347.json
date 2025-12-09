@@ -1,0 +1,22 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/alephbert-base/span",
+  "dataset": "data/splits/test.csv",
+  "task": "span",
+  "num_samples": 432,
+  "metrics": {
+    "loss": 0.008877958171069622,
+    "model_preparation_time": 0.0013,
+    "precision": 0.9908256880733946,
+    "recall": 1.0,
+    "f1": 0.9953917050691244,
+    "accuracy": 0.9987199180747568,
+    "runtime": 6.3349,
+    "samples_per_second": 68.193,
+    "steps_per_second": 4.262
+  },
+  "config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cpu"
+  }
+}

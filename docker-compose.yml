@@ -9,6 +9,7 @@ services:
     container_name: hebrew-idiom-detection
 
     # GPU support (uncomment if using NVIDIA GPU)
+    # For Docker Compose v2.3+, use deploy section:
     # deploy:
     #   resources:
     #     reservations:
@@ -19,27 +20,33 @@ services:
 
     # Mount local directories to container
     volumes:
-      - ./data:/workspace/data
-      - ./professor_review:/workspace/professor_review
-      - ./src:/workspace/src
-      - ./experiments:/workspace/experiments
-      - ./models:/workspace/models
-      - ./notebooks:/workspace/notebooks
-      - ./scripts:/workspace/scripts
-      - ./tests:/workspace/tests
-      - ./paper:/workspace/paper
+      - ./data:/workspace/data                          # Dataset files
+      - ./src:/workspace/src                            # Source code
+      - ./experiments:/workspace/experiments            # Training results, configs, logs
+      - ./models:/workspace/models                      # Model checkpoints (optional)
+      - ./notebooks:/workspace/notebooks                # Jupyter notebooks
+      - ./scripts:/workspace/scripts                    # Helper scripts
+      - ./tests:/workspace/tests                        # Test files
+      - ./cache:/workspace/cache                        # HuggingFace model cache
+      - ./config:/workspace/config                      # Configuration files (.env, rclone)
+      - ~/.config/rclone:/root/.config/rclone:ro        # rclone config (read-only)
 
     # Port mappings
     ports:
       - "8888:8888"  # Jupyter notebook
       - "6006:6006"  # TensorBoard
+      - "8080:8080"  # Optuna Dashboard
 
     # Environment variables
     env_file:
       - .env
     environment:
       - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
       - CUDA_VISIBLE_DEVICES=0
+      - HF_HOME=/workspace/cache/huggingface
+      - TRANSFORMERS_CACHE=/workspace/cache/huggingface
+      - TOKENIZERS_PARALLELISM=false
 
     # Keep container running
     stdin_open: true
@@ -48,5 +55,44 @@ services:
     # Command to run (can be overridden)
     command: /bin/bash
 
-    # Alternative: Start Jupyter automatically
+    # Alternative commands (uncomment as needed):
+    # Start Jupyter automatically:
     # command: jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    #
+    # Start TensorBoard:
+    # command: tensorboard --logdir=/workspace/experiments/results --host=0.0.0.0
+    #
+    # Run training:
+    # command: python /workspace/src/idiom_experiment.py --mode full_finetune --task cls --device cuda
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Network mode (optional)
+    # network_mode: host  # Use if you need host networking
+
+  # Optional: Separate TensorBoard service
+  tensorboard:
+    image: hebrew-idiom-detection:latest
+    container_name: hebrew-idiom-tensorboard
+    profiles:
+      - tools  # Only start when explicitly requested: docker-compose --profile tools up
+    volumes:
+      - ./experiments:/workspace/experiments
+    ports:
+      - "6006:6006"
+    command: tensorboard --logdir=/workspace/experiments/results --host=0.0.0.0 --port=6006
+    restart: unless-stopped
+
+  # Optional: Optuna Dashboard service
+  optuna-dashboard:
+    image: hebrew-idiom-detection:latest
+    container_name: hebrew-idiom-optuna
+    profiles:
+      - tools  # Only start when explicitly requested
+    volumes:
+      - ./experiments:/workspace/experiments
+    ports:
+      - "8080:8080"
+    command: optuna-dashboard sqlite:////workspace/experiments/results/optuna_studies/*.db --host=0.0.0.0 --port=8080
+    restart: unless-stopped

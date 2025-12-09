@@ -1,6 +1,7 @@
 # Python Dependencies for Hebrew Idiom Detection Project
 # Mission 1.2: Dependencies Installation
-# Updated: Mission 4.1-4.2 (Training Pipeline Dependencies)
+# Updated: Mission 4.1-4.6 (Complete Training Pipeline + Evaluation)
+# Last Updated: 2025-12-08
 
 # ============================================================================
 # Deep Learning Framework
@@ -14,71 +15,116 @@ torchaudio>=2.6.0
 # ============================================================================
 # HuggingFace Libraries
 # ============================================================================
-transformers>=4.30.0,<5.0.0
-datasets>=4.0.0
-evaluate>=0.4.0                    # NEW: Mission 4.2 - Metrics evaluation (F1, accuracy)
-seqeval>=1.2.0                     # NEW: Mission 4.2 - Token classification metrics (IOB2)
-accelerate>=0.20.0
-huggingface-hub>=0.16.0,<1.0.0
+transformers>=4.30.0,<5.0.0        # Core transformer models (AlephBERT, DictaBERT, etc.)
+datasets>=4.0.0                    # Dataset loading and processing
+evaluate>=0.4.0                    # Metrics evaluation (F1, accuracy, precision, recall)
+seqeval>=1.2.0                     # Token classification metrics (IOB2 for Task 2)
+accelerate>=0.20.0                 # Distributed training and mixed precision
+huggingface-hub>=0.16.0,<1.0.0     # Model hub integration
+safetensors>=0.3.0                 # Safe model weight serialization (used by transformers)
+tokenizers>=0.13.0                 # Fast tokenization backend
 
 # ============================================================================
 # Data Processing
 # ============================================================================
-pyarrow>=20.0.0                    # NEW: Mission 4.2 - Required by datasets library
-pandas>=2.0.0
-numpy>=1.24.0
-openpyxl>=3.1.0                   # Excel import/export for dataset tagging workflows
+pyarrow>=20.0.0                    # Required by datasets library for Arrow format
+pandas>=2.0.0                      # Data manipulation and CSV handling
+numpy>=1.24.0                      # Numerical computing
+openpyxl>=3.1.0                    # Excel import/export for dataset tagging workflows
 
 # ============================================================================
 # Configuration Management
 # ============================================================================
-PyYAML>=6.0                        # NEW: Mission 4.1 - YAML config file loading
+PyYAML>=6.0                        # YAML config file loading (training_config.yaml, hpo_config.yaml)
 
 # ============================================================================
-# Hyperparameter Optimization
+# Hyperparameter Optimization (Mission 4.5)
 # ============================================================================
-optuna>=3.0.0
-optuna-dashboard                   # Optional: For HPO visualization
+optuna>=3.0.0                      # HPO framework
+optuna-dashboard>=0.15.0           # Optional: Web UI for HPO visualization
 
 # ============================================================================
 # Machine Learning & Evaluation
 # ============================================================================
-scikit-learn>=1.2.0
+scikit-learn>=1.2.0                # Confusion matrix, metrics, validation
 
 # ============================================================================
-# Visualization
+# Visualization & Analysis
 # ============================================================================
-matplotlib>=3.7.0
-seaborn>=0.12.0
-python-bidi>=0.4.2
-wordcloud>=1.9.0                  # Optional: collocation word clouds for professor review
+matplotlib>=3.7.0                  # Plotting and visualization
+seaborn>=0.12.0                    # Statistical data visualization
+python-bidi>=0.4.2                 # Hebrew text display in plots
+wordcloud>=1.9.0                   # Optional: Word cloud generation
 
 # ============================================================================
 # Jupyter Notebooks & Development
 # ============================================================================
-jupyter>=1.0.0
-ipykernel>=6.20.0
-notebook>=6.5.0
+jupyter>=1.0.0                     # Jupyter notebook environment
+ipykernel>=6.20.0                  # IPython kernel for notebooks
+notebook>=6.5.0                    # Classic notebook interface
+ipywidgets>=8.0.0                  # Interactive widgets for notebooks
 
 # ============================================================================
-# Testing
+# Testing & Quality
 # ============================================================================
-pytest>=7.2.0
-pytest-cov>=4.0.0
+pytest>=7.2.0                      # Testing framework
+pytest-cov>=4.0.0                  # Code coverage reports
 
 # ============================================================================
-# Google Drive Integration
+# Google Drive Integration (Mission 4.4)
 # ============================================================================
-gdown>=4.7.0
+gdown>=4.7.0                       # Download files from Google Drive
+# Note: rclone is NOT a Python package - install via system package manager
+# See setup_volume.sh for rclone installation instructions
 
 # ============================================================================
 # Environment & Utilities
 # ============================================================================
-python-dotenv>=1.0.0
-tqdm>=4.65.0                       # Progress bars (used by transformers)
+python-dotenv>=1.0.0               # Load environment variables from .env file
+tqdm>=4.65.0                       # Progress bars (used throughout codebase)
 
 # ============================================================================
-# Experiment Tracking & Visualization
+# Experiment Tracking & Visualization (Mission 4.2)
 # ============================================================================
-tensorboard>=2.12.0                # For TensorBoard logging (Mission 4.2 - Training visualization)
-# wandb>=0.15.0                    # For Weights & Biases logging (if needed)
+tensorboard>=2.12.0                # Training visualization and monitoring
+# wandb>=0.15.0                    # Optional: Weights & Biases logging
+
+# ============================================================================
+# NOTES
+# ============================================================================
+#
+# System-level dependencies (NOT Python packages):
+# ------------------------------------------------
+# These must be installed via apt/brew/yum:
+#
+# 1. rclone - For Google Drive sync
+#    Install: curl https://rclone.org/install.sh | sudo bash
+#    Config:  rclone config (see sync_to_gdrive.sh)
+#
+# 2. git - For repository cloning
+#    Install: apt-get install git (Ubuntu/Debian)
+#
+# 3. CUDA toolkit - For GPU training
+#    Install: Via NVIDIA website or system package manager
+#    Version: 11.8 or 12.1+ (match PyTorch requirements)
+#
+# 4. System libraries:
+#    - build-essential (Ubuntu) or Xcode Command Line Tools (Mac)
+#    - curl, wget (for downloading scripts)
+#    - vim or nano (for editing config files)
+#
+# Installation on Vast.ai:
+# ------------------------
+# All system dependencies are handled by setup_volume.sh
+# which runs: apt-get install python3.10 python3.10-venv git curl wget vim
+#
+# Installation on Mac:
+# --------------------
+# brew install python@3.10 git rclone
+# pip install -r requirements.txt
+#
+# Installation on Ubuntu/Debian:
+# -------------------------------
+# apt-get install python3.10 python3.10-venv git curl
+# curl https://rclone.org/install.sh | sudo bash
+# pip install -r requirements.txt
