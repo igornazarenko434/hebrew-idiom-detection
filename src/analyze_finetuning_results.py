@@ -143,7 +143,7 @@ def analyze_performance(df):
         except (ValueError, TypeError):
             return str(x)
 
-    agg["lr"] = agg["lr"].apply(format_lr)
+    agg["lr"] = pd.to_numeric(agg["lr"], errors='coerce').apply(lambda x: f"{x:.1e}" if pd.notna(x) else x)
     
     # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
