@@ -137,7 +137,7 @@ def analyze_performance(df):
     agg.rename(columns={"learning_rate_first": "lr", "batch_size_first": "bs"}, inplace=True)
     
     # Format LR to scientific notation string for consistent display in markdown
-    agg["lr"] = agg["lr"].apply(lambda x: f"{x:.1e}" if isinstance(x, (float, np.float_)) else x)
+    agg["lr"] = agg["lr"].apply(lambda x: f"{x:.1e}" if isinstance(x, (float, np.float64)) else x)
     
     # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
