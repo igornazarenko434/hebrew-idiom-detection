@@ -2197,10 +2197,67 @@ def run_evaluation(args):
         compute_metrics=compute_metrics,
     )
 
-    eval_results = trainer.evaluate(tokenized_dataset)
+    # Use predict() to get both metrics and raw predictions
+    print("  Running prediction loop...")
+    predict_output = trainer.predict(tokenized_dataset)
+    eval_results = predict_output.metrics
 
     # -------------------------
-    # 6. Display and Save Results
+    # 6. Save Detailed Predictions (Mission 7 Enablement)
+    # -------------------------
+    print("  Processing detailed predictions...")
+    
+    predictions = predict_output.predictions
+    label_ids = predict_output.label_ids
+    
+    detailed_predictions = []
+    
+    if task == "cls":
+        # Task 1: Sentence Classification
+        probs = softmax(predictions, axis=1)
+        preds = np.argmax(predictions, axis=1)
+        
+        for i, (pred, label, prob) in enumerate(zip(preds, label_ids, probs)):
+            # Get original data
+            original_row = df.iloc[i]
+            
+            detailed_predictions.append({
+                "id": str(original_row.get("id", i)), # Use ID if available
+                "sentence": str(original_row.get("sentence", "")),
+                "expression": str(original_row.get("expression", "")),
+                "true_label": int(label),
+                "predicted_label": int(pred),
+                "confidence": float(prob[pred]),
+                "is_correct": bool(pred == label),
+                "all_probs": prob.tolist()
+            })
+            
+    else:  # task == "span"
+        # Task 2: Token Classification
+        preds = np.argmax(predictions, axis=2)
+        
+        for i, (pred_seq, label_seq) in enumerate(zip(preds, label_ids)):
+            # Convert IDs to IOB tags
+            # Filter out -100 (special tokens)
+            clean_preds = [id2label.get(p, "O") for p, l in zip(pred_seq, label_seq) if l != -100]
+            clean_labels = [id2label.get(l, "O") for l in label_seq if l != -100]
+            
+            original_row = df.iloc[i]
+            
+            # Simple correctness check (exact match of sequence)
+            is_correct = (clean_preds == clean_labels)
+            
+            detailed_predictions.append({
+                "id": str(original_row.get("id", i)),
+                "sentence": str(original_row.get("sentence", "")),
+                "expression": str(original_row.get("expression", "")),
+                "true_tags": clean_labels,
+                "predicted_tags": clean_preds,
+                "is_correct": bool(is_correct)
+            })
+
+    # -------------------------
+    # 7. Display and Save Results
     # -------------------------
     print(f"\n" + "=" * 80)
     print("EVALUATION RESULTS")
@@ -2310,8 +2367,14 @@ def run_evaluation(args):
 
     with open(output_path, 'w') as f:
         json.dump(output_data, f, indent=2)
+        
+    # Save Detailed Predictions
+    predictions_path = output_dir / "eval_predictions.json"
+    with open(predictions_path, 'w') as f:
+        json.dump(detailed_predictions, f, indent=2)
 
     print(f"\n💾 Results saved to: {output_path}")
+    print(f"💾 Predictions saved to: {predictions_path}")
     print(f"   Directory structure matches training outputs")
     print(f"   Will be synced to Google Drive via sync_to_gdrive.sh")
     print("=" * 80 + "\n")
