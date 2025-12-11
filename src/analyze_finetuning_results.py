@@ -151,14 +151,8 @@ def analyze_performance(df):
     agg = agg.sort_values(by=["task", "f1_mean"], ascending=[True, False])
     agg.rename(columns={"learning_rate_first": "lr", "batch_size_first": "bs"}, inplace=True)
     
-    # Format LR to scientific notation string for consistent display in markdown
-    def format_lr(x):
-        try:
-            return f"{float(x):.1e}"
-        except (ValueError, TypeError):
-            return str(x)
-
-    agg["lr"] = pd.to_numeric(agg["lr"], errors='coerce').apply(lambda x: f"{x:.1e}" if pd.notna(x) else x)
+    # Format LR to scientific notation string for consistent display in markdown BEFORE to_markdown
+    agg["lr"] = agg["lr"].apply(lambda x: f"{x:.1e}" if pd.notna(x) else x)
     
     # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
