@@ -106,7 +106,7 @@ def load_results():
                 "tn": tn, "fp": fp, "fn": fn, "tp": tp,
                 "history": history,
                 "train_runtime": train_runtime,
-                "learning_rate": lr, # Now this should be float
+                "learning_rate": f"{lr:.1e}" if pd.notna(lr) else lr, # Format to string here
                 "batch_size": batch_size,
                 "epochs": epochs
             })
