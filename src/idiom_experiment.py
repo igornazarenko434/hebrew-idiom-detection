@@ -2288,12 +2288,22 @@ def run_evaluation(args):
             print(f"\n  ⚠️  Could not load training_results.json: {e}")
 
     # Prepare output
+    # Robustly handle metric prefixes (eval_ or test_)
+    cleaned_metrics = {}
+    for k, v in eval_results.items():
+        if k.startswith('eval_'):
+            cleaned_metrics[k.replace('eval_', '')] = v
+        elif k.startswith('test_'):
+            cleaned_metrics[k.replace('test_', '')] = v
+        else:
+            cleaned_metrics[k] = v
+
     output_data = {
         'model_checkpoint': str(model_checkpoint),
         'dataset': args.data,
         'task': task,
         'num_samples': len(df),
-        'metrics': {k.replace('eval_', ''): v for k, v in eval_results.items() if k.startswith('eval_')},
+        'metrics': cleaned_metrics,
         'eval_config': {
             'batch_size': args.batch_size,
             'max_length': args.max_length,
