@@ -2209,6 +2209,16 @@ def run_evaluation(args):
     # Save results
     if args.output:
         output_path = Path(args.output)
+    elif args.output_dir:
+        # Use provided output directory
+        output_dir = Path(args.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Define filename
+        dataset_name = Path(args.data).stem
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_filename = f"eval_results_{dataset_name}_{timestamp}.json"
+        output_path = output_dir / output_filename
     else:
         # Auto-generate output path aligned with training structure
         # Structure: experiments/results/evaluation/{model_name}/{task}/eval_results_{dataset}_{timestamp}.json
