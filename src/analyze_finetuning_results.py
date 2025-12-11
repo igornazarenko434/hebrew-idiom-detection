@@ -151,6 +151,9 @@ def analyze_performance(df):
     agg = agg.sort_values(by=["task", "f1_mean"], ascending=[True, False])
     agg.rename(columns={"learning_rate_first": "lr", "batch_size_first": "bs"}, inplace=True)
     
+    # Debug print the LR column before final formatting
+    print(f"\nDEBUG: Raw LR column before final formatting:\n{agg['lr']}\n")
+
     # Format LR to scientific notation string for consistent display in markdown BEFORE to_markdown
     agg["lr"] = agg["lr"].apply(lambda x: f"{x:.1e}" if pd.notna(x) else x)
     
