@@ -51,8 +51,12 @@ def load_eval_data():
                 with open(f, 'r') as json_file:
                     res = json.load(json_file)
                 
-                # Extract F1 (handle metrics structure differences)
-                f1 = res.get("eval_f1", res.get("f1", 0))
+                # Extract metrics dictionary (it's nested)
+                metrics = res.get("metrics", {})
+                
+                # Extract F1 (handle possible key variations)
+                # 'f1' is standard, 'eval_f1' is sometimes used by Trainer
+                f1 = metrics.get("f1", metrics.get("eval_f1", 0))
                 
                 data.append({
                     "model": model,
