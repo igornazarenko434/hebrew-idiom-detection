@@ -60,18 +60,20 @@ def load_results():
 
             # 2. Extract Hyperparameters
             lr = config.get("learning_rate")
-            try:
-                lr = float(lr) # Convert to float immediately
-            except (ValueError, TypeError):
-                lr = np.nan # Use NaN if conversion fails
-
             batch_size = config.get("batch_size", "N/A")
-            
             epochs = config.get("num_epochs")
-            try:
-                epochs = float(epochs) # Convert to float immediately
-            except (ValueError, TypeError):
+            
+            # Ensure LR and Epochs are floats for consistency
+            if isinstance(lr, (int, float)):
+                lr = float(lr)
+            else:
+                lr = np.nan # Use NaN if not a valid number
+            
+            if isinstance(epochs, (int, float)):
+                epochs = float(epochs)
+            else:
                 epochs = np.nan
+
 
             
             # Get key metric based on task
