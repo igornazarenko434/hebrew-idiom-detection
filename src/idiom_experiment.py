@@ -2200,6 +2200,7 @@ def run_evaluation(args):
     # Use predict() to get both metrics and raw predictions
     print("  Running prediction loop...")
     predict_output = trainer.predict(tokenized_dataset)
+    print(f"DEBUG: Raw metrics keys from predict(): {list(predict_output.metrics.keys())}")
     eval_results = predict_output.metrics
 
     # -------------------------
