@@ -2154,7 +2154,11 @@ def run_evaluation(args):
 
         def compute_metrics(eval_pred):
             predictions, labels = eval_pred
-            predictions = predictions.argmax(axis=-1)
+            
+            # Handle CRF output (hard predictions) vs Standard output (logits)
+            if len(predictions.shape) == 3:
+                predictions = predictions.argmax(axis=-1)
+            # Else: predictions are already class IDs (2D)
 
             # Convert to label strings, removing special tokens
             true_labels = [[id2label.get(l, "O") for l in label if l != -100]
@@ -2235,7 +2239,11 @@ def run_evaluation(args):
             
     else:  # task == "span"
         # Task 2: Token Classification
-        preds = np.argmax(predictions, axis=2)
+        # Handle CRF output (hard predictions) vs Standard output (logits)
+        if len(predictions.shape) == 3:
+            preds = np.argmax(predictions, axis=2)
+        else:
+            preds = predictions
         
         for i, (pred_seq, label_seq) in enumerate(zip(preds, label_ids)):
             # Convert IDs to IOB tags
