@@ -104,13 +104,13 @@ def load_results():
                 "tn": tn, "fp": fp, "fn": fn, "tp": tp,
                 "history": history,
                 "train_runtime": train_runtime,
-                "learning_rate": float(str(lr)), # Ensure float
+                "learning_rate": lr, # Now this should be float
                 "batch_size": batch_size,
                 "epochs": epochs
             })
             
         except Exception as e:
-            print(f"Error reading {res_file}: {e}")
+            print(f"Error reading {res_file}: {e}. Extracted LR: {lr} (type: {type(lr)})")
             
     return pd.DataFrame(data)
 
