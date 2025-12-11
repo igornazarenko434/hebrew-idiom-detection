@@ -260,12 +260,13 @@ for model in "${MODELS[@]}"; do
             echo "Started: $(date)" >> "${LOG_FILE}"
 
             # Load best hyperparameters (read JSON)
-            LEARNING_RATE=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['learning_rate'])" 2>/dev/null || echo "2e-5")
-            BATCH_SIZE=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['batch_size'])" 2>/dev/null || echo "16")
-            NUM_EPOCHS=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['num_epochs'])" 2>/dev/null || echo "5")
-            WARMUP_RATIO=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['warmup_ratio'])" 2>/dev/null || echo "0.1")
-            WEIGHT_DECAY=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['weight_decay'])" 2>/dev/null || echo "0.01")
-            GRAD_ACCUM=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['gradient_accumulation_steps'])" 2>/dev/null || echo "1")
+            # Note: The JSON structure has hyperparameters nested under "best_hyperparameters"
+            LEARNING_RATE=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['best_hyperparameters']['learning_rate'])" 2>/dev/null || echo "2e-5")
+            BATCH_SIZE=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['best_hyperparameters']['batch_size'])" 2>/dev/null || echo "16")
+            NUM_EPOCHS=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['best_hyperparameters']['num_epochs'])" 2>/dev/null || echo "5")
+            WARMUP_RATIO=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['best_hyperparameters']['warmup_ratio'])" 2>/dev/null || echo "0.1")
+            WEIGHT_DECAY=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['best_hyperparameters']['weight_decay'])" 2>/dev/null || echo "0.01")
+            GRAD_ACCUM=$(python3 -c "import json; print(json.load(open('${BEST_PARAMS_FILE}'))['best_hyperparameters']['gradient_accumulation_steps'])" 2>/dev/null || echo "1")
 
             echo "Best hyperparameters:"
             echo "  learning_rate: ${LEARNING_RATE}"
