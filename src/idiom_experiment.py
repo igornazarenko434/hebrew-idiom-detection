@@ -2088,7 +2088,10 @@ def run_evaluation(args):
         id2label = {v: k for k, v in label2id.items()}
 
         def tokenize_and_align(examples):
-            from src.utils.tokenization import align_labels_with_tokens
+            try:
+                from utils.tokenization import align_labels_with_tokens
+            except ImportError:
+                from src.utils.tokenization import align_labels_with_tokens
 
             tokenized = tokenizer(
                 examples['tokens'],
