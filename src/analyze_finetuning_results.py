@@ -43,27 +43,37 @@ def load_results():
             
             # 1. Load Metrics
             with open(res_file, 'r') as f:
-                metrics = json.load(f)
+                data_json = json.load(f)
             
-            # 2. Load Training History (Loss Curves)
-            history = []
-            trainer_state_path = res_file.parent / "trainer_state.json"
-            if trainer_state_path.exists():
-                with open(trainer_state_path, 'r') as f:
-                    state = json.load(f)
-                    history = state.get("log_history", [])
+            # Extract nested dictionaries
+            test_metrics = data_json.get("test_metrics", {})
+            config = data_json.get("config", {})
+            history = data_json.get("training_history", [])
             
-            # 3. Load Hyperparameters
-            lr = metrics.get("learning_rate", "N/A")
-            batch_size = metrics.get("train_batch_size", "N/A")
-            epochs = metrics.get("epoch", "N/A")
+            # Fallback to trainer_state.json if history is missing in main file
+            if not history:
+                trainer_state_path = res_file.parent / "trainer_state.json"
+                if trainer_state_path.exists():
+                    with open(trainer_state_path, 'r') as f:
+                        state = json.load(f)
+                        history = state.get("log_history", [])
+
+            # 2. Extract Hyperparameters
+            lr = config.get("learning_rate", "N/A")
+            batch_size = config.get("batch_size", "N/A")
+            epochs = config.get("num_epochs", "N/A")
             
-            # Get key metric
-            f1 = metrics.get("eval_f1", 0)
-            precision = metrics.get("eval_precision", 0)
-            recall = metrics.get("eval_recall", 0)
-            accuracy = metrics.get("eval_accuracy", 0)
+            # 3. Extract Key Metrics (using keys from test_metrics)
+            # Note: keys are usually "f1", "accuracy" etc. without "eval_" prefix in this nested struct
+            f1 = test_metrics.get("f1", test_metrics.get("eval_f1", 0))
+            precision = test_metrics.get("precision", test_metrics.get("eval_precision", 0))
+            recall = test_metrics.get("recall", test_metrics.get("eval_recall", 0))
+            accuracy = test_metrics.get("accuracy", test_metrics.get("eval_accuracy", 0))
             
+            # Get runtime from train_metrics if available
+            train_metrics = data_json.get("train_metrics", {})
+            train_runtime = train_metrics.get("runtime", 0)
+
             data.append({
                 "model": model,
                 "task": task,
@@ -73,7 +83,7 @@ def load_results():
                 "recall": recall,
                 "accuracy": accuracy,
                 "history": history,
-                "train_runtime": metrics.get("train_runtime", 0),
+                "train_runtime": train_runtime,
                 "learning_rate": lr,
                 "batch_size": batch_size,
                 "epochs": epochs
