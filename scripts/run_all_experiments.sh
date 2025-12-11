@@ -32,6 +32,21 @@ echo "========================================"
 echo ""
 
 # ============================================================================
+# ENVIRONMENT SETUP
+# ============================================================================
+
+# Try to activate virtual environment
+if [ -f "/workspace/env/bin/activate" ]; then
+    source /workspace/env/bin/activate
+    echo -e "${GREEN}✓ Activated environment: /workspace/env${NC}"
+elif [ -f ".venv/bin/activate" ]; then
+    source .venv/bin/activate
+    echo -e "${GREEN}✓ Activated environment: .venv${NC}"
+else
+    echo -e "${YELLOW}⚠ Warning: No virtual environment found. Assuming system python has dependencies.${NC}"
+fi
+
+# ============================================================================
 # CONFIGURATION
 # ============================================================================
 
