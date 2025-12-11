@@ -277,8 +277,15 @@ for model in "${MODELS[@]}"; do
             echo ""
 
             # Run training
-            echo "Running training..."
             OUTPUT_DIR="experiments/results/full_fine-tuning/${MODEL_SHORT}/${task}/seed_${seed}"
+            
+            # Check if already done
+            if [ -f "${OUTPUT_DIR}/training_results.json" ]; then
+                echo -e "${GREEN}✓ Skipping completed run: ${MODEL_SHORT} | ${task} | seed=${seed}${NC}"
+                continue
+            fi
+
+            echo "Running training..."
             echo "Command: python src/idiom_experiment.py --mode full_finetune --model_id ${model} --task ${task} --config ${TRAIN_CONFIG} --device ${DEVICE} --seed ${seed} --learning_rate ${LEARNING_RATE} --batch_size ${BATCH_SIZE} --num_epochs ${NUM_EPOCHS} --warmup_ratio ${WARMUP_RATIO} --weight_decay ${WEIGHT_DECAY} --gradient_accumulation_steps ${GRAD_ACCUM} --output_dir ${OUTPUT_DIR}"
             echo ""
 
