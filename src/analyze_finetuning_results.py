@@ -59,9 +59,20 @@ def load_results():
                         history = state.get("log_history", [])
 
             # 2. Extract Hyperparameters
-            lr = config.get("learning_rate", "N/A")
+            lr = config.get("learning_rate")
+            try:
+                lr = float(lr) # Convert to float immediately
+            except (ValueError, TypeError):
+                lr = np.nan # Use NaN if conversion fails
+
             batch_size = config.get("batch_size", "N/A")
-            epochs = config.get("num_epochs", "N/A")
+            
+            epochs = config.get("num_epochs")
+            try:
+                epochs = float(epochs) # Convert to float immediately
+            except (ValueError, TypeError):
+                epochs = np.nan
+
             
             # Get key metric based on task
             f1 = test_metrics.get("f1", test_metrics.get("eval_f1", 0))
