@@ -69,14 +69,16 @@ def load_results():
             else:
                 lr = np.nan # Use NaN if not a valid number
             
+            # Ensure LR and Epochs are floats for consistency
             if isinstance(epochs, (int, float)):
                 epochs = float(epochs)
-                        else:
-                            epochs = np.nan
-                        
-                        print(f"DEBUG: Processing {res_file.name}. Extracted LR: {lr} (type: {type(lr)})")
+            else:
+                epochs = np.nan
             
-                        # Get key metric based on task
+            # Debug print to see the actual LR being extracted
+            print(f"DEBUG: Processing {res_file.name}. Extracted LR: {lr} (type: {type(lr)})")
+            
+            # Get key metric based on task
             f1 = test_metrics.get("f1", test_metrics.get("eval_f1", 0))
             precision = test_metrics.get("precision", test_metrics.get("eval_precision", 0))
             recall = test_metrics.get("recall", test_metrics.get("eval_recall", 0))
