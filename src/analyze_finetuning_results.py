@@ -64,16 +64,20 @@ def load_results():
             epochs = config.get("num_epochs", "N/A")
             
             # Get key metric based on task
-            f1 = metrics.get("eval_f1", 0)
-            precision = metrics.get("eval_precision", 0)
-            recall = metrics.get("eval_recall", 0)
-            accuracy = metrics.get("eval_accuracy", 0)
+            f1 = test_metrics.get("f1", test_metrics.get("eval_f1", 0))
+            precision = test_metrics.get("precision", test_metrics.get("eval_precision", 0))
+            recall = test_metrics.get("recall", test_metrics.get("eval_recall", 0))
+            accuracy = test_metrics.get("accuracy", test_metrics.get("eval_accuracy", 0))
             
             # Extract Confusion Matrix (if available)
             tn = test_metrics.get("confusion_matrix_tn", np.nan)
             fp = test_metrics.get("confusion_matrix_fp", np.nan)
             fn = test_metrics.get("confusion_matrix_fn", np.nan)
             tp = test_metrics.get("confusion_matrix_tp", np.nan)
+            
+            # Get runtime from train_metrics if available
+            train_metrics = data_json.get("train_metrics", {})
+            train_runtime = train_metrics.get("runtime", 0)
             
             # Append to list
             data.append({
@@ -86,7 +90,7 @@ def load_results():
                 "accuracy": accuracy,
                 "tn": tn, "fp": fp, "fn": fn, "tp": tp,
                 "history": history,
-                "train_runtime": metrics.get("train_runtime", 0),
+                "train_runtime": train_runtime,
                 "learning_rate": float(str(lr)), # Ensure float
                 "batch_size": batch_size,
                 "epochs": epochs
