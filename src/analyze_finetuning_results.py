@@ -53,12 +53,7 @@ def load_results():
                     state = json.load(f)
                     history = state.get("log_history", [])
             
-            # 3. Load Hyperparameters (from config.json if available)
-            # Note: config.json usually stores model config, not training args.
-            # Training args are often in training_args.bin (binary) or inside trainer_state.json/training_results.json
-            # training_results.json usually has some args like batch size
-            
-            # Try to find learning rate from history or results
+            # 3. Load Hyperparameters
             lr = metrics.get("learning_rate", "N/A")
             batch_size = metrics.get("train_batch_size", "N/A")
             epochs = metrics.get("epoch", "N/A")
@@ -93,40 +88,28 @@ def analyze_performance(df):
     """Calculate Mean +/- Std for each model/task and save summary."""
     print("\n📊 Aggregating Results...")
     
-    # Group by model and task
-    # We also include hyperparameters in the grouping (assuming they are same per model/task)
-    # If they vary by seed (which they shouldn't), this will split them.
-    # To be safe, we aggregate stats first.
-    
     agg = df.groupby(["model", "task"]).agg({
         "f1": ["mean", "std", "count"],
         "precision": ["mean", "std"],
         "recall": ["mean", "std"],
         "accuracy": ["mean", "std"],
         "train_runtime": ["mean"],
-        "learning_rate": ["first"], # Just take the first one found
+        "learning_rate": ["first"],
         "batch_size": ["first"]
     }).reset_index()
     
-    # Flatten columns
     agg.columns = ['_'.join(col).strip() if col[1] else col[0] for col in agg.columns.values]
     
-    # Calculate Coefficient of Variation (Stability)
-    # CV = (Std / Mean) * 100. Lower is better/more stable.
+    # CV
     agg["f1_cv"] = (agg["f1_std"] / agg["f1_mean"]) * 100
     
-    # Sort by Task then F1 Mean
     agg = agg.sort_values(by=["task", "f1_mean"], ascending=[True, False])
-    
-    # Clean up column names for display
     agg.rename(columns={"learning_rate_first": "lr", "batch_size_first": "bs"}, inplace=True)
     
-    # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
     agg.to_csv(csv_path, index=False)
     print(f"Saved summary table to {csv_path}")
     
-    # Create formatted Markdown Table
     md_path = OUTPUT_DIR / "finetuning_summary.md"
     with open(md_path, "w") as f:
         f.write("# Final Fine-Tuning Results Summary\n\n")
@@ -141,29 +124,22 @@ def plot_learning_curves(df):
     
     for task in df['task'].unique():
         task_df = df[df['task'] == task]
-        
-        # Create a figure with 2 subplots side-by-side
         fig, axes = plt.subplots(1, 2, figsize=(18, 6))
         
         # Plot 1: Training Loss
         for model in task_df['model'].unique():
             model_df = task_df[task_df['model'] == model]
-            
-            # Collect all loss points
             for _, row in model_df.iterrows():
                 history = row['history']
                 loss_steps = [x for x in history if 'loss' in x]
                 if not loss_steps: continue
-                
                 steps = [x['step'] for x in loss_steps]
                 losses = [x['loss'] for x in loss_steps]
-                
                 axes[0].plot(steps, losses, alpha=0.4, linewidth=1, label=model if _ == 0 else "")
         
         axes[0].set_title(f"Training Loss - Task: {task.upper()}")
         axes[0].set_xlabel("Steps")
         axes[0].set_ylabel("Loss")
-        # De-duplicate legend
         handles, labels = axes[0].get_legend_handles_labels()
         by_label = dict(zip(labels, handles))
         axes[0].legend(by_label.values(), by_label.keys())
@@ -171,21 +147,17 @@ def plot_learning_curves(df):
         # Plot 2: Validation F1
         for model in task_df['model'].unique():
             model_df = task_df[task_df['model'] == model]
-            
             for _, row in model_df.iterrows():
                 history = row['history']
                 eval_steps = [x for x in history if 'eval_f1' in x]
                 if not eval_steps: continue
-                
                 steps = [x['step'] for x in eval_steps]
                 f1s = [x['eval_f1'] for x in eval_steps]
-                
                 axes[1].plot(steps, f1s, alpha=0.4, linewidth=1, label=model if _ == 0 else "")
 
         axes[1].set_title(f"Validation F1 - Task: {task.upper()}")
         axes[1].set_xlabel("Steps")
         axes[1].set_ylabel("F1 Score")
-        # De-duplicate legend
         handles, labels = axes[1].get_legend_handles_labels()
         by_label = dict(zip(labels, handles))
         axes[1].legend(by_label.values(), by_label.keys())
@@ -201,9 +173,7 @@ def plot_performance_comparison(df, agg_df):
     for task in df['task'].unique():
         plt.figure(figsize=(10, 6))
         subset = df[df['task'] == task]
-        
         sns.barplot(data=subset, x="model", y="f1", capsize=.1, errorbar="sd", palette="viridis")
-        
         plt.title(f"Model Performance (F1 Score) - Task: {task.upper()}")
         plt.xticks(rotation=45, ha='right')
         plt.ylim(0.5, 1.0)
@@ -228,4 +198,42 @@ def check_significance(df):
             
             f.write(f"\nTask: {task}\n")
             f.write(f"Best Model: {best_model_name} (Mean F1: {means[best_model_name]:.4f})\n")
-            f.write("-
+            f.write("-" * 50 + "\n")
+            
+            for model in task_df['model'].unique():
+                if model == best_model_name:
+                    continue
+                
+                compare_scores = task_df[task_df["model"] == model]["f1"].values
+                
+                if len(best_scores) == len(compare_scores) and len(best_scores) > 1:
+                    t_stat, p_val = stats.ttest_rel(best_scores, compare_scores)
+                    is_sig = "SIGNIFICANT" if p_val < 0.05 else "Not Significant"
+                    f.write(f"vs {model}: p={p_val:.4f} ({is_sig})\n")
+                else:
+                    f.write(f"vs {model}: Cannot compute paired t-test (unequal samples)\n")
+
+def main():
+    print("Starting Deep Analysis of Fine-Tuning Results...")
+    df = load_results()
+    
+    if df.empty:
+        print("❌ No results found! Make sure you ran download_results_for_analysis.sh first.")
+        return
+
+    # Basic Analysis
+    agg_df = analyze_performance(df)
+    
+    # Visualizations
+    plot_performance_comparison(df, agg_df)
+    plot_learning_curves(df)
+    
+    # Statistics
+    check_significance(df)
+    
+    print("\n✅ Analysis Complete!")
+    print(f"Results: {OUTPUT_DIR}")
+    print(f"Figures: {FIGURES_DIR}")
+
+if __name__ == "__main__":
+    main()
