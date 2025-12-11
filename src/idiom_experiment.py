@@ -1243,6 +1243,11 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     # Output settings
     output_dir = Path(config.get('output_dir', 'experiments/results/'))
     output_dir = output_dir / mode_name.lower().replace(' ', '_') / Path(model_checkpoint).name / task
+    
+    # If output_dir is passed via CLI, use it directly (Mission 4.6 fix)
+    if args.output_dir:
+        output_dir = Path(args.output_dir)
+        
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Early stopping
@@ -1257,6 +1262,21 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     print(f"  Epochs: {num_epochs}")
     print(f"  Output: {output_dir}")
     print(f"  Freeze backbone: {freeze_backbone}")
+    
+    # SAFETY VERIFICATION: Check if CLI overrides worked
+    print(f"\n🛡️  Hyperparameter Verification:")
+    if args.learning_rate is not None:
+        if abs(learning_rate - args.learning_rate) > 1e-9:
+            print(f"  ❌ WARNING: CLI learning_rate ({args.learning_rate}) ignored! Using {learning_rate}")
+        else:
+            print(f"  ✅ Learning rate override active: {learning_rate}")
+    
+    if args.batch_size is not None:
+        if batch_size != args.batch_size:
+            print(f"  ❌ WARNING: CLI batch_size ({args.batch_size}) ignored! Using {batch_size}")
+        else:
+            print(f"  ✅ Batch size override active: {batch_size}")
+
 
     # -------------------------
     # 2. Load Tokenizer
