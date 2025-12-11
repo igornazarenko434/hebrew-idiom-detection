@@ -155,6 +155,8 @@ def analyze_performance(df):
     # Ensure it's numeric first, then format as string
     agg["lr"] = pd.to_numeric(agg["lr"], errors='coerce') # Convert to numeric, errors as NaN
     agg["lr"] = agg["lr"].apply(lambda x: f"{x:.1e}" if pd.notna(x) else 'N/A')
+    # Explicitly cast to string type for markdown output
+    agg["lr"] = agg["lr"].astype(str)
     
     # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
