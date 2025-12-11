@@ -31,19 +31,22 @@ def load_results():
     
     for res_file in result_files:
         try:
-            # Extract metadata from path
-            # Expected structure: .../model/task/seed_X/training_results.json
+            # Robustly find the seed part in the path
             parts = res_file.parts
-            seed_part = parts[-2]  # "seed_42"
-            task_part = parts[-3]  # "cls"
-            model_part = parts[-4] # "alephbert-base"
+            seed_part = next((p for p in reversed(parts) if p.startswith("seed_")), None)
             
-            if not seed_part.startswith("seed_"):
+            if not seed_part:
+                # Skip if no seed folder found (might be a root artifact)
                 continue
                 
+            # Find indices based on the seed folder location
+            # Structure: .../MODEL/TASK/SEED_XXX/.../training_results.json
+            seed_idx = parts.index(seed_part)
+            
+            # Extract metadata relative to seed folder
             seed = int(seed_part.split("_")[1])
-            model = model_part
-            task = task_part
+            task = parts[seed_idx - 1]
+            model = parts[seed_idx - 2]
             
             # Load Metrics
             with open(res_file, 'r') as f:
@@ -183,4 +186,4 @@ def check_significance(df):
             
             f.write(f"\nTask: {task}\n")
             f.write(f"Best Model: {best_model_name} (Mean F1: {means[best_model_name]:.4f})\n")
-            f.write("-
+            f.write("-" * 50 + "\n")
