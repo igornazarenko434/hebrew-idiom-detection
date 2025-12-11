@@ -69,34 +69,43 @@ for model_path in ${MODEL_FILES}; do
     # 1. Evaluate on SEEN Test Set
     # -----------------------------
     OUT_DIR_SEEN="${EVAL_BASE_DIR}/seen_test/${MODEL_NAME}/${TASK_TYPE}/${SEED_DIR_NAME}"
+    EVAL_PREDICTIONS_SEEN="${OUT_DIR_SEEN}/eval_predictions.json" # Check for this file
+    
     echo "  > Evaluating on SEEN test set..."
     
-    python src/idiom_experiment.py \
-        --mode evaluate \
-        --model_checkpoint "${MODEL_DIR}" \
-        --data "${SEEN_TEST_DATA}" \
-        --task "${TASK_TYPE}" \
-        --device "${DEVICE}" \
-        --output_dir "${OUT_DIR_SEEN}" > /dev/null
-        
-    echo "    Saved to: ${OUT_DIR_SEEN}"
+    if [ -f "${EVAL_PREDICTIONS_SEEN}" ]; then
+        echo -e "    ${GREEN}✓ Skipping completed evaluation for SEEN test set.${NC}"
+    else
+        python src/idiom_experiment.py \
+            --mode evaluate \
+            --model_checkpoint "${MODEL_DIR}" \
+            --data "${SEEN_TEST_DATA}" \
+            --task "${TASK_TYPE}" \
+            --device "${DEVICE}" \
+            --output_dir "${OUT_DIR_SEEN}" > /dev/null
+        echo "    Saved to: ${OUT_DIR_SEEN}"
+    fi
 
     # -----------------------------
     # 2. Evaluate on UNSEEN Test Set
     # -----------------------------
     OUT_DIR_UNSEEN="${EVAL_BASE_DIR}/unseen_test/${MODEL_NAME}/${TASK_TYPE}/${SEED_DIR_NAME}"
+    EVAL_PREDICTIONS_UNSEEN="${OUT_DIR_UNSEEN}/eval_predictions.json" # Check for this file
+    
     echo "  > Evaluating on UNSEEN test set..."
     
-    python src/idiom_experiment.py \
-        --mode evaluate \
-        --model_checkpoint "${MODEL_DIR}" \
-        --data "${UNSEEN_TEST_DATA}" \
-        --task "${TASK_TYPE}" \
-        --device "${DEVICE}" \
-        --output_dir "${OUT_DIR_UNSEEN}" > /dev/null
-
-    echo "    Saved to: ${OUT_DIR_UNSEEN}"
-    echo ""
+    if [ -f "${EVAL_PREDICTIONS_UNSEEN}" ]; then
+        echo -e "    ${GREEN}✓ Skipping completed evaluation for UNSEEN test set.${NC}"
+    else
+        python src/idiom_experiment.py \
+            --mode evaluate \
+            --model_checkpoint "${MODEL_DIR}" \
+            --data "${UNSEEN_TEST_DATA}" \
+            --task "${TASK_TYPE}" \
+            --device "${DEVICE}" \
+            --output_dir "${OUT_DIR_UNSEEN}" > /dev/null
+        echo "    Saved to: ${OUT_DIR_UNSEEN}"
+    fi
     
 done
 
