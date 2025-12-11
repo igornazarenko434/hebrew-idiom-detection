@@ -2010,8 +2010,44 @@ def run_evaluation(args):
         model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint)
         print(f"  ✓ Sequence classification model loaded")
     else:  # task == "span"
-        model = AutoModelForTokenClassification.from_pretrained(model_checkpoint)
-        print(f"  ✓ Token classification model loaded")
+        # Task 2 uses custom BertCRFForTokenClassification wrapper
+        # We must reconstruct it manually because AutoModel doesn't know about it
+        from transformers import AutoConfig, AutoModel
+        from safetensors.torch import load_file
+        
+        print("  ℹ️  Loading custom BertCRFForTokenClassification model...")
+        
+        # 1. Load Config
+        config = AutoConfig.from_pretrained(model_checkpoint)
+        
+        # 2. Instantiate Base Transformer
+        base_model = AutoModel.from_config(config)
+        
+        # 3. Instantiate Wrapper
+        # We need label maps from config
+        label2id = config.label2id
+        id2label = config.id2label
+        num_labels = len(label2id)
+        
+        model = BertCRFForTokenClassification(base_model, num_labels, label2id, id2label)
+        
+        # 4. Load Weights
+        weights_path = model_checkpoint / "model.safetensors"
+        if weights_path.exists():
+            state_dict = load_file(weights_path)
+            model.load_state_dict(state_dict)
+            print(f"  ✓ Loaded weights from {weights_path}")
+        else:
+            # Fallback for older pytorch_model.bin
+            weights_path_bin = model_checkpoint / "pytorch_model.bin"
+            if weights_path_bin.exists():
+                state_dict = torch.load(weights_path_bin, map_location=args.device)
+                model.load_state_dict(state_dict)
+                print(f"  ✓ Loaded weights from {weights_path_bin}")
+            else:
+                raise FileNotFoundError(f"No model weights found in {model_checkpoint}")
+
+        print(f"  ✓ Token classification model loaded (Custom CRF)")
 
     model.to(args.device)
     model.eval()
