@@ -173,7 +173,7 @@ def plot_performance_comparison(df, agg_df):
 
 def check_significance(df):
     """Perform Paired T-Tests between best model and others."""
-    print("\nhai Performing Statistical Significance Tests...")
+    print("\n✅ Performing Statistical Significance Tests...")
     
     with open(OUTPUT_DIR / "statistical_significance.txt", "w") as f:
         for task in df['task'].unique():
@@ -186,4 +186,4 @@ def check_significance(df):
             
             f.write(f"\nTask: {task}\n")
             f.write(f"Best Model: {best_model_name} (Mean F1: {means[best_model_name]:.4f})\n")
-            f.write("-" * 50 + "\n")
+            f.write("-
