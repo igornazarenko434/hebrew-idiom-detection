@@ -63,17 +63,19 @@ def load_results():
             batch_size = config.get("batch_size", "N/A")
             epochs = config.get("num_epochs", "N/A")
             
-            # 3. Extract Key Metrics (using keys from test_metrics)
-            # Note: keys are usually "f1", "accuracy" etc. without "eval_" prefix in this nested struct
-            f1 = test_metrics.get("f1", test_metrics.get("eval_f1", 0))
-            precision = test_metrics.get("precision", test_metrics.get("eval_precision", 0))
-            recall = test_metrics.get("recall", test_metrics.get("eval_recall", 0))
-            accuracy = test_metrics.get("accuracy", test_metrics.get("eval_accuracy", 0))
+            # Get key metric based on task
+            f1 = metrics.get("eval_f1", 0)
+            precision = metrics.get("eval_precision", 0)
+            recall = metrics.get("eval_recall", 0)
+            accuracy = metrics.get("eval_accuracy", 0)
             
-            # Get runtime from train_metrics if available
-            train_metrics = data_json.get("train_metrics", {})
-            train_runtime = train_metrics.get("runtime", 0)
-
+            # Extract Confusion Matrix (if available)
+            tn = test_metrics.get("confusion_matrix_tn", np.nan)
+            fp = test_metrics.get("confusion_matrix_fp", np.nan)
+            fn = test_metrics.get("confusion_matrix_fn", np.nan)
+            tp = test_metrics.get("confusion_matrix_tp", np.nan)
+            
+            # Append to list
             data.append({
                 "model": model,
                 "task": task,
@@ -82,9 +84,10 @@ def load_results():
                 "precision": precision,
                 "recall": recall,
                 "accuracy": accuracy,
+                "tn": tn, "fp": fp, "fn": fn, "tp": tp,
                 "history": history,
-                "train_runtime": train_runtime,
-                "learning_rate": lr,
+                "train_runtime": metrics.get("train_runtime", 0),
+                "learning_rate": float(str(lr)), # Ensure float
                 "batch_size": batch_size,
                 "epochs": epochs
             })
@@ -98,6 +101,14 @@ def analyze_performance(df):
     """Calculate Mean +/- Std for each model/task and save summary."""
     print("\n📊 Aggregating Results...")
     
+    # 1. Save Detailed (Per-Seed) CSV
+    detail_csv_path = OUTPUT_DIR / "finetuning_seeds_detail.csv"
+    # Drop history column for CSV readability
+    df_detail = df.drop(columns=["history"])
+    df_detail.to_csv(detail_csv_path, index=False)
+    print(f"Saved detailed seed report to {detail_csv_path}")
+
+    # 2. Aggregation
     agg = df.groupby(["model", "task"]).agg({
         "f1": ["mean", "std", "count"],
         "precision": ["mean", "std"],
@@ -105,26 +116,44 @@ def analyze_performance(df):
         "accuracy": ["mean", "std"],
         "train_runtime": ["mean"],
         "learning_rate": ["first"],
-        "batch_size": ["first"]
+        "batch_size": ["first"],
+        "tp": ["mean"], "tn": ["mean"], "fp": ["mean"], "fn": ["mean"]
     }).reset_index()
     
     agg.columns = ['_'.join(col).strip() if col[1] else col[0] for col in agg.columns.values]
     
-    # CV
+    # Derived Metrics
+    # Stability: CV = (Std / Mean) * 100
     agg["f1_cv"] = (agg["f1_std"] / agg["f1_mean"]) * 100
+    
+    # Efficiency: F1 per minute of training
+    agg["efficiency_score"] = agg["f1_mean"] / (agg["train_runtime_mean"] / 60)
     
     agg = agg.sort_values(by=["task", "f1_mean"], ascending=[True, False])
     agg.rename(columns={"learning_rate_first": "lr", "batch_size_first": "bs"}, inplace=True)
     
+    # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
     agg.to_csv(csv_path, index=False)
     print(f"Saved summary table to {csv_path}")
     
+    # Create formatted Markdown Table
+    # Define formatting for specific columns
+    formatters = {
+        "lr": "{:.1e}".format,  # Scientific notation for LR
+        "f1_mean": "{:.4f}".format,
+        "f1_std": "{:.4f}".format,
+        "efficiency_score": "{:.2f}".format
+    }
+    
     md_path = OUTPUT_DIR / "finetuning_summary.md"
     with open(md_path, "w") as f:
         f.write("# Final Fine-Tuning Results Summary\n\n")
-        f.write(agg.to_markdown(index=False, floatfmt=".4f"))
-        f.write("\n\n**Note:** `f1_cv` is Coefficient of Variation (%). Lower means more stable across seeds.")
+        f.write(agg.to_markdown(index=False, floatfmt=".4f", formatters=formatters))
+        f.write("\n\n**Notes:**\n")
+        f.write("- `f1_cv`: Coefficient of Variation (%). Lower is more stable.\n")
+        f.write("- `efficiency_score`: F1 score per minute of training time.\n")
+        f.write("- `tp_mean`, `fp_mean`, etc.: Average raw counts from Confusion Matrix.\n")
     
     return agg
 
