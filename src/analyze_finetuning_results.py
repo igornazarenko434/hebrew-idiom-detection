@@ -136,24 +136,19 @@ def analyze_performance(df):
     agg = agg.sort_values(by=["task", "f1_mean"], ascending=[True, False])
     agg.rename(columns={"learning_rate_first": "lr", "batch_size_first": "bs"}, inplace=True)
     
+    # Format LR to scientific notation string for consistent display in markdown
+    agg["lr"] = agg["lr"].apply(lambda x: f"{x:.1e}" if isinstance(x, (float, np.float_)) else x)
+    
     # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
     agg.to_csv(csv_path, index=False)
     print(f"Saved summary table to {csv_path}")
     
     # Create formatted Markdown Table
-    # Define formatting for specific columns
-    formatters = {
-        "lr": "{:.1e}".format,  # Scientific notation for LR
-        "f1_mean": "{:.4f}".format,
-        "f1_std": "{:.4f}".format,
-        "efficiency_score": "{:.2f}".format
-    }
-    
     md_path = OUTPUT_DIR / "finetuning_summary.md"
     with open(md_path, "w") as f:
         f.write("# Final Fine-Tuning Results Summary\n\n")
-        f.write(agg.to_markdown(index=False, floatfmt=".4f", formatters=formatters))
+        f.write(agg.to_markdown(index=False, floatfmt=".4f"))
         f.write("\n\n**Notes:**\n")
         f.write("- `f1_cv`: Coefficient of Variation (%). Lower is more stable.\n")
         f.write("- `efficiency_score`: F1 score per minute of training time.\n")
