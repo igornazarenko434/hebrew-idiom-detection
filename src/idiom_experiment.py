@@ -272,7 +272,8 @@ def merge_config_with_args(config: Dict[str, Any], args: argparse.Namespace) -> 
     override_params = [
         'model_id', 'model_checkpoint', 'task', 'device', 'batch_size',
         'learning_rate', 'num_epochs', 'max_length', 'seed',
-        'warmup_ratio', 'weight_decay', 'output_dir'
+        'warmup_ratio', 'weight_decay', 'output_dir',
+        'gradient_accumulation_steps'
     ]
 
     overrides = []
@@ -2614,6 +2615,7 @@ Examples:
     ap.add_argument("--learning_rate", type=float, default=None, help="Learning rate (overrides config)")
     ap.add_argument("--warmup_ratio", type=float, default=None, help="Warmup ratio (overrides config)")
     ap.add_argument("--weight_decay", type=float, default=None, help="Weight decay (overrides config)")
+    ap.add_argument("--gradient_accumulation_steps", type=int, default=None, help="Gradient accumulation steps (overrides config)")
     ap.add_argument("--seed", type=int, default=None, help="Random seed (overrides config)")
     ap.add_argument("--output_dir", type=str, default=None, help="Output directory (overrides config)")
 
