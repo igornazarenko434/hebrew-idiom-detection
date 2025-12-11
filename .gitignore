@@ -104,3 +104,10 @@ coverage.xml
 *.bak
 *.swp
 *~
+
+# Gemini-added ignore rules
+VAST_AI_CONNECTION.txt
+rclone_backup.conf
+experiments/results/hpo_analysis/
+experiments/results/optuna_studies/
+training_results/
