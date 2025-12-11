@@ -1228,12 +1228,13 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     max_length = config.get('max_length', 128)
 
     # Training hyperparameters (ensure proper type conversion from YAML)
-    learning_rate = float(config.get('learning_rate', 2e-5))
-    batch_size = int(config.get('batch_size', 16))
-    num_epochs = int(config.get('num_epochs', 5))
-    warmup_ratio = float(config.get('warmup_ratio', 0.1))
-    weight_decay = float(config.get('weight_decay', 0.01))
-    seed = int(config.get('seed', 42))
+    learning_rate = float(args.learning_rate) if args.learning_rate is not None else float(config.get('learning_rate', 2e-5))
+    batch_size = int(args.batch_size) if args.batch_size is not None else int(config.get('batch_size', 16))
+    num_epochs = int(args.num_epochs) if args.num_epochs is not None else int(config.get('num_epochs', 5))
+    warmup_ratio = float(args.warmup_ratio) if args.warmup_ratio is not None else float(config.get('warmup_ratio', 0.1))
+    weight_decay = float(args.weight_decay) if args.weight_decay is not None else float(config.get('weight_decay', 0.01))
+    seed = int(args.seed) if args.seed is not None else int(config.get('seed', 42))
+    gradient_accumulation_steps = int(args.gradient_accumulation_steps) if args.gradient_accumulation_steps is not None else int(config.get('gradient_accumulation_steps', 1))
 
     # Data paths
     train_file = config.get('train_file', 'data/splits/train.csv')
@@ -1241,7 +1242,7 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     test_file = config.get('test_file', 'data/splits/test.csv')
 
     # Output settings
-    output_dir = Path(config.get('output_dir', 'experiments/results/'))
+    output_dir = Path(args.output_dir) if args.output_dir is not None else Path(config.get('output_dir', 'experiments/results/'))
     output_dir = output_dir / mode_name.lower().replace(' ', '_') / Path(model_checkpoint).name / task
     
     # If output_dir is passed via CLI, use it directly (Mission 4.6 fix)
