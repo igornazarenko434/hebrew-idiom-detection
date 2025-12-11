@@ -18,10 +18,10 @@ FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 
 # Set plotting style
 sns.set_theme(style="whitegrid")
-plt.rcParams.update({'figure.dpi': 300})
+plt.rcParams.update({'figure.dpi': 300, 'font.family': 'serif'})
 
 def load_results():
-    """Recursively load all training_results.json and trainer_state.json files."""
+    """Recursively load results, logs, and configurations."""
     data = []
     
     # Find all training_results.json files
@@ -34,25 +34,18 @@ def load_results():
             # Robustly find the seed part in the path
             parts = res_file.parts
             seed_part = next((p for p in reversed(parts) if p.startswith("seed_")), None)
-            
-            if not seed_part:
-                # Skip if no seed folder found (might be a root artifact)
-                continue
+            if not seed_part: continue
                 
-            # Find indices based on the seed folder location
-            # Structure: .../MODEL/TASK/SEED_XXX/.../training_results.json
             seed_idx = parts.index(seed_part)
-            
-            # Extract metadata relative to seed folder
             seed = int(seed_part.split("_")[1])
             task = parts[seed_idx - 1]
             model = parts[seed_idx - 2]
             
-            # Load Metrics
+            # 1. Load Metrics
             with open(res_file, 'r') as f:
                 metrics = json.load(f)
             
-            # Load Training History (Loss Curves)
+            # 2. Load Training History (Loss Curves)
             history = []
             trainer_state_path = res_file.parent / "trainer_state.json"
             if trainer_state_path.exists():
@@ -60,13 +53,22 @@ def load_results():
                     state = json.load(f)
                     history = state.get("log_history", [])
             
-            # Get key metric based on task
+            # 3. Load Hyperparameters (from config.json if available)
+            # Note: config.json usually stores model config, not training args.
+            # Training args are often in training_args.bin (binary) or inside trainer_state.json/training_results.json
+            # training_results.json usually has some args like batch size
+            
+            # Try to find learning rate from history or results
+            lr = metrics.get("learning_rate", "N/A")
+            batch_size = metrics.get("train_batch_size", "N/A")
+            epochs = metrics.get("epoch", "N/A")
+            
+            # Get key metric
             f1 = metrics.get("eval_f1", 0)
             precision = metrics.get("eval_precision", 0)
             recall = metrics.get("eval_recall", 0)
             accuracy = metrics.get("eval_accuracy", 0)
             
-            # Append to list
             data.append({
                 "model": model,
                 "task": task,
@@ -77,7 +79,9 @@ def load_results():
                 "accuracy": accuracy,
                 "history": history,
                 "train_runtime": metrics.get("train_runtime", 0),
-                "samples_per_second": metrics.get("train_samples_per_second", 0)
+                "learning_rate": lr,
+                "batch_size": batch_size,
+                "epochs": epochs
             })
             
         except Exception as e:
@@ -86,22 +90,36 @@ def load_results():
     return pd.DataFrame(data)
 
 def analyze_performance(df):
-    """Calculate Mean +/- Std for each model/task."""
+    """Calculate Mean +/- Std for each model/task and save summary."""
     print("\n📊 Aggregating Results...")
     
     # Group by model and task
+    # We also include hyperparameters in the grouping (assuming they are same per model/task)
+    # If they vary by seed (which they shouldn't), this will split them.
+    # To be safe, we aggregate stats first.
+    
     agg = df.groupby(["model", "task"]).agg({
         "f1": ["mean", "std", "count"],
         "precision": ["mean", "std"],
         "recall": ["mean", "std"],
-        "accuracy": ["mean", "std"]
+        "accuracy": ["mean", "std"],
+        "train_runtime": ["mean"],
+        "learning_rate": ["first"], # Just take the first one found
+        "batch_size": ["first"]
     }).reset_index()
     
     # Flatten columns
     agg.columns = ['_'.join(col).strip() if col[1] else col[0] for col in agg.columns.values]
     
+    # Calculate Coefficient of Variation (Stability)
+    # CV = (Std / Mean) * 100. Lower is better/more stable.
+    agg["f1_cv"] = (agg["f1_std"] / agg["f1_mean"]) * 100
+    
     # Sort by Task then F1 Mean
     agg = agg.sort_values(by=["task", "f1_mean"], ascending=[True, False])
+    
+    # Clean up column names for display
+    agg.rename(columns={"learning_rate_first": "lr", "batch_size_first": "bs"}, inplace=True)
     
     # Save Summary Table
     csv_path = OUTPUT_DIR / "finetuning_summary.csv"
@@ -113,41 +131,67 @@ def analyze_performance(df):
     with open(md_path, "w") as f:
         f.write("# Final Fine-Tuning Results Summary\n\n")
         f.write(agg.to_markdown(index=False, floatfmt=".4f"))
+        f.write("\n\n**Note:** `f1_cv` is Coefficient of Variation (%). Lower means more stable across seeds.")
     
     return agg
 
 def plot_learning_curves(df):
-    """Plot Training Loss and Validation F1 over time."""
-    print("\n📈 Plotting Learning Curves...")
+    """Plot Training Loss AND Validation F1 over time."""
+    print("\n📈 Plotting Learning Curves (Loss & F1)...")
     
     for task in df['task'].unique():
         task_df = df[df['task'] == task]
         
-        # 1. Validation F1 over Steps
-        plt.figure(figsize=(12, 6))
+        # Create a figure with 2 subplots side-by-side
+        fig, axes = plt.subplots(1, 2, figsize=(18, 6))
+        
+        # Plot 1: Training Loss
         for model in task_df['model'].unique():
             model_df = task_df[task_df['model'] == model]
             
-            # Aggregate histories across seeds
-            all_steps = []
-            all_f1s = []
+            # Collect all loss points
+            for _, row in model_df.iterrows():
+                history = row['history']
+                loss_steps = [x for x in history if 'loss' in x]
+                if not loss_steps: continue
+                
+                steps = [x['step'] for x in loss_steps]
+                losses = [x['loss'] for x in loss_steps]
+                
+                axes[0].plot(steps, losses, alpha=0.4, linewidth=1, label=model if _ == 0 else "")
+        
+        axes[0].set_title(f"Training Loss - Task: {task.upper()}")
+        axes[0].set_xlabel("Steps")
+        axes[0].set_ylabel("Loss")
+        # De-duplicate legend
+        handles, labels = axes[0].get_legend_handles_labels()
+        by_label = dict(zip(labels, handles))
+        axes[0].legend(by_label.values(), by_label.keys())
+
+        # Plot 2: Validation F1
+        for model in task_df['model'].unique():
+            model_df = task_df[task_df['model'] == model]
             
             for _, row in model_df.iterrows():
                 history = row['history']
-                # Filter for eval steps
                 eval_steps = [x for x in history if 'eval_f1' in x]
+                if not eval_steps: continue
+                
                 steps = [x['step'] for x in eval_steps]
                 f1s = [x['eval_f1'] for x in eval_steps]
-                plt.plot(steps, f1s, alpha=0.3, linewidth=1) # Plot individual seeds faintly
                 
-                # Collect for mean line (simplified approach)
-                # In robust research we'd interpolate, but here we just plot all points
-            
-        plt.title(f"Validation F1 per Step - Task: {task.upper()}")
-        plt.xlabel("Training Steps")
-        plt.ylabel("F1 Score")
-        plt.legend(task_df['model'].unique())
-        plt.savefig(FIGURES_DIR / f"learning_curve_f1_{task}.png")
+                axes[1].plot(steps, f1s, alpha=0.4, linewidth=1, label=model if _ == 0 else "")
+
+        axes[1].set_title(f"Validation F1 - Task: {task.upper()}")
+        axes[1].set_xlabel("Steps")
+        axes[1].set_ylabel("F1 Score")
+        # De-duplicate legend
+        handles, labels = axes[1].get_legend_handles_labels()
+        by_label = dict(zip(labels, handles))
+        axes[1].legend(by_label.values(), by_label.keys())
+
+        plt.tight_layout()
+        plt.savefig(FIGURES_DIR / f"learning_curves_{task}.png")
         plt.close()
 
 def plot_performance_comparison(df, agg_df):
@@ -156,15 +200,13 @@ def plot_performance_comparison(df, agg_df):
     
     for task in df['task'].unique():
         plt.figure(figsize=(10, 6))
-        
         subset = df[df['task'] == task]
         
-        # Create bar plot with error bars (ci='sd' means standard deviation)
         sns.barplot(data=subset, x="model", y="f1", capsize=.1, errorbar="sd", palette="viridis")
         
         plt.title(f"Model Performance (F1 Score) - Task: {task.upper()}")
         plt.xticks(rotation=45, ha='right')
-        plt.ylim(0.5, 1.0) # Zoom in on the top half
+        plt.ylim(0.5, 1.0)
         plt.ylabel("F1 Score")
         plt.xlabel("Model")
         plt.tight_layout()
