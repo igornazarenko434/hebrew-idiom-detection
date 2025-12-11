@@ -216,7 +216,7 @@ for model in "${MODELS[@]}"; do
         MODEL_SHORT=$(echo "${model}" | sed 's/.*\///')
 
         # Look for best hyperparameters file
-        BEST_PARAMS_FILE="${BEST_PARAMS_DIR}/best_hyperparameters_${MODEL_SHORT}_${task}.json"
+        BEST_PARAMS_FILE="${BEST_PARAMS_DIR}/best_params_${MODEL_SHORT}_${task}.json"
 
         if [ ! -f "${BEST_PARAMS_FILE}" ]; then
             echo -e "${YELLOW}⚠ Warning: Best hyperparameters not found for ${MODEL_SHORT} | ${task}${NC}"
