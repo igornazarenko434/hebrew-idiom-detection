@@ -181,6 +181,18 @@ class BertCRFForTokenClassification(torch.nn.Module):
                 return logits
 
         # CRF forward
+        # Always compute Viterbi decoding for prediction/eval
+        mask = attention_mask.bool()
+        viterbi_predictions = self.crf.decode(logits, mask=mask)
+        
+        # Convert list of lists to padded tensor
+        max_len = logits.size(1)
+        predictions_padded = []
+        for pred in viterbi_predictions:
+            padded = pred + [-100] * (max_len - len(pred)) # Pad with -100
+            predictions_padded.append(padded)
+        predictions_tensor = torch.tensor(predictions_padded, device=logits.device)
+
         if labels is not None:
             # Training: compute CRF loss
             # Create mask for valid tokens (attention_mask=1 and labels!=-100)
@@ -201,25 +213,8 @@ class BertCRFForTokenClassification(torch.nn.Module):
             log_likelihood = self.crf(logits, labels_cleaned, mask=crf_mask, reduction='mean')
             loss = -log_likelihood  # Negative log-likelihood
 
-            return loss, logits
+            return loss, predictions_tensor # Return Viterbi predictions, not logits
         else:
-            # Inference: Viterbi decoding for best tag sequence
-            # Get mask from attention_mask
-            mask = attention_mask.bool()
-
-            # Viterbi decoding returns list of best sequences
-            predictions = self.crf.decode(logits, mask=mask)
-
-            # Convert to tensor [batch_size, seq_len]
-            # Pad sequences to max length
-            max_len = logits.size(1)
-            predictions_padded = []
-            for pred in predictions:
-                # Pad with -100 (will be ignored in eval)
-                padded = pred + [-100] * (max_len - len(pred))
-                predictions_padded.append(padded)
-
-            predictions_tensor = torch.tensor(predictions_padded, device=logits.device)
             return predictions_tensor
 
 # -------------------------
