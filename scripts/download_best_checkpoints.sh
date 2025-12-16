@@ -1,16 +1,12 @@
 #!/bin/bash
 # ============================================================================
-# Download Best Model Checkpoints Only
+# Download Best Model Checkpoints Only (STRICT MODE)
 # ============================================================================
 # Purpose: Efficiently download ONLY the final/best model weights.
-# Skips intermediate 'checkpoint-X' folders and logs to save time/space.
+#          Uses strict filtering to avoid "recursive folder" size explosions.
 #
-# Downloads structure:
-# experiments/results/full_fine-tuning/MODEL/TASK/SEED/
-#   ├── model.safetensors  (The best model)
-#   ├── config.json
-#   ├── tokenizer.json
-#   └── ...
+# Files included: .json, .txt, .bin, .safetensors (at root of seed folder)
+# Files excluded: checkpoint-X folders, logs, nested duplicate folders
 #
 # Usage: bash scripts/download_best_checkpoints.sh
 # ============================================================================
@@ -23,13 +19,12 @@ LOCAL_PATH="experiments/results/full_fine-tuning"
 
 echo "========================================"
 echo "  Download Best Model Checkpoints"
-echo "  (Optimized: Skips intermediate steps)"
+echo "  (STRICT MODE: Whitelist only)"
 echo "========================================"
 echo ""
 
 # Check rclone
-if ! command -v rclone &> /dev/null;
-    then
+if ! command -v rclone &> /dev/null; then
     echo "Error: rclone not found."
     exit 1
 fi
@@ -37,16 +32,21 @@ fi
 echo "Source: ${GDRIVE_PATH}"
 echo "Dest:   ${LOCAL_PATH}"
 echo ""
-echo "Downloading..."
+echo "Downloading ONLY essential model files [.json, .txt, .bin, .safetensors]..."
+echo "Ignoring logs, intermediate checkpoints, and nested folders."
 
-# We use 'rclone copy' with filters to:
-# 1. Exclude 'checkpoint-N' directories (intermediate saves)
-# 2. Exclude 'logs' directories (TensorBoard logs)
-# 3. Include everything else (the model files at the seed root)
+# Strict rclone copy
+# 1. Include only needed file extensions
+# 2. Exclude the known recursive folder 'full_fine-tuning'
+# 3. Exclude checkpoints and logs
 rclone copy "${GDRIVE_PATH}" "${LOCAL_PATH}" \
-    --exclude "checkpoint- નથી"
-    --exclude "logs/"
-    --exclude "full_fine-tuning/"
+    --include "*.json" \
+    --include "*.txt" \
+    --include "*.bin" \
+    --include "*.safetensors" \
+    --exclude "checkpoint-*/" \
+    --exclude "logs/" \
+    --exclude "full_fine-tuning/**" \
     --verbose \
     --transfers 16 \
     --update
