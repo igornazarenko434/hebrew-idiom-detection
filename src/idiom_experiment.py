@@ -130,10 +130,12 @@ class BertCRFForTokenClassification(torch.nn.Module):
             self.crf = CRF(num_labels, batch_first=True)
             self.use_crf = True
         except ImportError:
-            print("⚠️  pytorch-crf not installed. Install with: pip install pytorch-crf")
-            print("    Falling back to standard softmax (no CRF constraints)")
-            self.crf = None
-            self.use_crf = False
+            raise ImportError(
+                "❌ pytorch-crf is REQUIRED for BertCRFForTokenClassification.\n"
+                "   This model was designed to use CRF for enforcing IOB2 constraints.\n"
+                "   Install with: pip install pytorch-crf\n"
+                "   Without CRF, the model will produce invalid IOB2 sequences (I-IDIOM after O)."
+            )
 
     def forward(self, input_ids, attention_mask, token_type_ids=None, labels=None):
         """
@@ -1598,7 +1600,13 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
 
         def compute_metrics(eval_pred):
             predictions, labels = eval_pred
-            predictions = np.argmax(predictions, axis=2)
+
+            # Handle CRF output (hard predictions) vs Standard output (logits)
+            # CRF model returns 2D tensor of class IDs, standard model returns 3D logits
+            if len(predictions.shape) == 3:
+                # Standard model: apply argmax to convert logits to class IDs
+                predictions = np.argmax(predictions, axis=2)
+            # Else: CRF already returned hard predictions (2D), use them directly
 
             # Convert to word-level labels (remove -100 and special tokens)
             true_labels = []
@@ -2043,6 +2051,16 @@ def run_evaluation(args):
                 raise FileNotFoundError(f"No model weights found in {model_checkpoint}")
 
         print(f"  ✓ Token classification model loaded (Custom CRF)")
+
+        # Verify CRF is active
+        if not model.use_crf:
+            raise RuntimeError(
+                "❌ ERROR: CRF layer not initialized!\n"
+                "   The model was trained with CRF but CRF is not active.\n"
+                "   This usually means pytorch-crf is not installed.\n"
+                "   Install with: pip install pytorch-crf"
+            )
+        print(f"  ✓ CRF layer verified and active")
 
     model.to(args.device)
     model.eval()
