@@ -45,6 +45,11 @@ echo ""
 CURRENT=0
 
 for model_path in ${MODEL_FILES}; do
+    # Skip intermediate checkpoints (folders named checkpoint-XXX)
+    if [[ "${model_path}" == *"checkpoint-"* ]]; then
+        continue
+    fi
+
     CURRENT=$((CURRENT + 1))
     
     # Extract metadata from path
@@ -54,6 +59,13 @@ for model_path in ${MODEL_FILES}; do
     
     # Extract parts
     SEED_DIR_NAME=$(basename "${MODEL_DIR}") # seed_42
+    
+    # Strict check: Ensure we are inside a seed folder
+    if [[ "${SEED_DIR_NAME}" != "seed_"* ]]; then
+        echo "Skipping non-seed directory: ${SEED_DIR_NAME}"
+        continue
+    fi
+
     TASK_DIR_NAME=$(basename $(dirname "${MODEL_DIR}")) # cls or span
     MODEL_NAME=$(basename $(dirname $(dirname "${MODEL_DIR}"))) # alephbert-base
     
