@@ -1,0 +1,37 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/dictabert/span/seed_42",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "span",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 4.1965460777282715,
+    "model_preparation_time": 0.0052,
+    "precision": 0.6415929203539823,
+    "recall": 0.6041666666666666,
+    "f1": 0.6223175965665235,
+    "accuracy": 0.9610254030854889,
+    "runtime": 2.0128,
+    "samples_per_second": 238.473,
+    "steps_per_second": 14.905
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 5e-05,
+    "batch_size": 32,
+    "num_epochs": 5,
+    "warmup_ratio": 0.2,
+    "weight_decay": 0.05,
+    "seed": 42,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 4,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": true
+  }
+}

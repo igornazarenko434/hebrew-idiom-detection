@@ -1675,6 +1675,161 @@ c) **First-N-Tokens Heuristic:**
 
 ---
 
+### Mission 4.8: NeoDictaBERT Training & Evaluation ⭐ **NEW**
+
+**Objective:** Train and evaluate NeoDictaBERT, the latest state-of-the-art Hebrew BERT model (Sept 2025)
+
+**Model:** `dicta-il/neodictabert`
+- **Training Data:** 285B Hebrew tokens
+- **Context Window:** 4,096 tokens (~3,200 words)
+- **Release:** September 2025
+- **Paper:** [NeoDictaBERT: Pushing the Frontier of BERT models for Hebrew](https://arxiv.org/abs/2510.20386)
+- **Expected:** Outperform DictaBERT due to larger training data and longer context
+
+**Tasks:**
+
+1. **Zero-Shot Baseline (Task 1 + Task 2)**
+   ```bash
+   # Task 1: Sentence Classification
+   python src/idiom_experiment.py \
+       --mode zero_shot \
+       --model_id dicta-il/neodictabert \
+       --task cls \
+       --data data/splits/test.csv \
+       --device cuda
+
+   # Task 2: Token Classification
+   python src/idiom_experiment.py \
+       --mode zero_shot \
+       --model_id dicta-il/neodictabert \
+       --task span \
+       --data data/splits/test.csv \
+       --device cuda
+   ```
+   **Time:** ~30 minutes (both tasks)
+
+2. **Hyperparameter Optimization with Optuna**
+   ```bash
+   # Task 1: Classification HPO
+   python src/idiom_experiment.py \
+       --mode hpo \
+       --model_id dicta-il/neodictabert \
+       --task cls \
+       --config experiments/configs/hpo_config.yaml \
+       --device cuda
+
+   # Task 2: Span Detection HPO
+   python src/idiom_experiment.py \
+       --mode hpo \
+       --model_id dicta-il/neodictabert \
+       --task span \
+       --config experiments/configs/hpo_config.yaml \
+       --device cuda
+   ```
+   **Time:** ~3-4 hours per task on VAST.ai (15 trials each)
+   **Output:**
+   - `experiments/results/optuna_studies/neodictabert_cls_hpo.db`
+   - `experiments/results/optuna_studies/neodictabert_span_hpo.db`
+   - `experiments/results/best_hyperparameters/best_params_neodictabert_cls.json`
+   - `experiments/results/best_hyperparameters/best_params_neodictabert_span.json`
+
+3. **Full Fine-Tuning (3 seeds × 2 tasks = 6 runs)**
+   ```bash
+   # Batch script: Add NeoDictaBERT to run_all_experiments.sh
+   # Add to MODELS array: "dicta-il/neodictabert"
+
+   MODELS=("onlplab/alephbert-base" "bert-base-multilingual-cased" \
+           "xlm-roberta-base" "dicta-il/dictabert" "alephbert-gimmel" \
+           "dicta-il/neodictabert")  # <- Add this
+
+   # Run the batch script
+   bash scripts/run_all_experiments.sh
+   ```
+   **Time:** ~2-3 hours total on VAST.ai
+   **Output:** 6 trained models (3 seeds × 2 tasks)
+
+4. **Evaluation on Both Test Sets**
+   ```bash
+   # Evaluate on seen test set
+   python src/idiom_experiment.py \
+       --mode evaluate \
+       --model_checkpoint experiments/results/full_finetune/neodictabert/cls/ \
+       --data data/splits/test.csv \
+       --task cls \
+       --device cuda
+
+   python src/idiom_experiment.py \
+       --mode evaluate \
+       --model_checkpoint experiments/results/full_finetune/neodictabert/span/ \
+       --data data/splits/test.csv \
+       --task span \
+       --device cuda
+
+   # Evaluate on unseen idioms test set
+   python src/idiom_experiment.py \
+       --mode evaluate \
+       --model_checkpoint experiments/results/full_finetune/neodictabert/cls/ \
+       --data data/splits/unseen_idiom_test.csv \
+       --task cls \
+       --device cuda
+
+   python src/idiom_experiment.py \
+       --mode evaluate \
+       --model_checkpoint experiments/results/full_finetune/neodictabert/span/ \
+       --data data/splits/unseen_idiom_test.csv \
+       --task span \
+       --device cuda
+   ```
+   **Time:** ~1 hour
+   **Output:**
+   - `experiments/results/evaluation/seen_test/neodictabert/`
+   - `experiments/results/evaluation/unseen_test/neodictabert/`
+
+5. **Results Integration and Analysis**
+   - Update `src/analyze_finetuning_results.py` to include NeoDictaBERT
+   - Update `src/analyze_generalization.py` to include NeoDictaBERT
+   - Regenerate all comparison tables and figures
+   - Compare NeoDictaBERT vs DictaBERT (same architecture, more training data)
+   - Statistical significance testing
+   - Document findings in `experiments/results/analysis/neodictabert_comparison.md`
+
+**Expected Results:**
+- **Hypothesis:** NeoDictaBERT will outperform DictaBERT by 1-3% due to:
+  - 285B tokens vs DictaBERT's training data
+  - 4,096 context window vs 512
+  - More recent training (Sept 2025)
+- **Comparison Focus:**
+  - NeoDictaBERT vs DictaBERT (same model family)
+  - NeoDictaBERT vs AlephBERTGimmel (both recent Hebrew models)
+  - Performance on long sentences (benefit from 4K context?)
+
+**Time & Cost Estimates:**
+- Zero-shot: 30 minutes (local or VAST.ai)
+- HPO: 6-8 hours on VAST.ai ($2.40-3.20 @ $0.40/hr)
+- Training: 2-3 hours on VAST.ai ($0.80-1.20)
+- Evaluation: 1 hour (local or VAST.ai)
+- **Total:** 8-10 hours, ~$4-5 on VAST.ai
+
+**Validation:**
+- ✅ Zero-shot results match expected baseline
+- ✅ HPO completes successfully (30 trials total)
+- ✅ All 6 training runs complete without errors
+- ✅ Evaluation on both test sets successful
+- ✅ Results integrated into analysis reports
+- ✅ Comparison with other models documented
+
+**Success Criteria:**
+✅ NeoDictaBERT trained on both tasks with 3 seeds
+✅ Performance compared to all 5 existing models
+✅ Statistical significance tested
+✅ Outperforms or matches DictaBERT (validates model upgrade)
+✅ Results documented and added to all analysis reports
+✅ Ready for paper inclusion as 6th model
+
+**Note:** This mission can be run in parallel with Mission 5 (LLM Evaluation) since they use different resources (GPU training vs API calls).
+
+---
+
 ## PHASE 5: LLM EVALUATION (Week 7)
 
 ### Mission 5.1: LLM Selection and Environment Setup
@@ -1699,13 +1854,19 @@ c) **First-N-Tokens Heuristic:**
      - Multilingual baseline
      - 8B parameters, requires 24GB GPU (or quantization)
      - Open-weight, no API costs
+   - **Qwen 2.5-7B-Instruct** (`Qwen/Qwen2.5-7B-Instruct`) ⭐ **NEW**
+     - Advanced multilingual LLM (Sept 2024)
+     - 7B parameters, 29+ languages including Hebrew
+     - 128K context window
+     - Strong instruction following
+     - Open-weight, no API costs
 
    **Tier 2: Optional Model (API Inference - ~$30 cost)**
    - **Llama-3.1-70B-Instruct** (via Together AI or Azure)
      - Larger model for performance comparison
      - Only if budget allows and want SOTA comparison
 
-   **Research Design:** Compare Hebrew-native (DictaLM) vs Multilingual (Llama)
+   **Research Design:** Compare Hebrew-native (DictaLM) vs Multilingual (Llama vs Qwen 2.5)
 
 2. **Setup local inference environment:**
    - Install required packages:
@@ -1774,6 +1935,11 @@ c) **First-N-Tokens Heuristic:**
          device_map: "auto"
        llama_8b:
          model_id: "meta-llama/Llama-3.1-8B-Instruct"
+         type: "local"
+         device_map: "auto"
+         torch_dtype: "auto"
+       qwen_7b:  # NEW
+         model_id: "Qwen/Qwen2.5-7B-Instruct"
          type: "local"
          device_map: "auto"
          torch_dtype: "auto"

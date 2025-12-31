@@ -1,0 +1,41 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/alephbert-base/cls/seed_42",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "cls",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 0.26419904828071594,
+    "model_preparation_time": 0.005,
+    "accuracy": 0.9104166666666667,
+    "f1": 0.9104131671810096,
+    "precision": 0.9104808042923374,
+    "recall": 0.9104166666666667,
+    "confusion_matrix_tn": 217.0,
+    "confusion_matrix_fp": 23.0,
+    "confusion_matrix_fn": 20.0,
+    "confusion_matrix_tp": 220.0,
+    "runtime": 0.7507,
+    "samples_per_second": 639.412,
+    "steps_per_second": 39.963
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 5e-05,
+    "batch_size": 32,
+    "num_epochs": 3,
+    "warmup_ratio": 0.2,
+    "weight_decay": 0.01,
+    "seed": 42,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 4,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": null
+  }
+}

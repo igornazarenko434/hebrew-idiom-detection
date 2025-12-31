@@ -1,0 +1,50 @@
+% Fine-Tuning Results Tables
+% Generated automatically by analyze_finetuning_results.py
+
+% Table 1: In-Domain Performance (Seen Test)
+\begin{table}[htbp]
+\centering
+\caption{In-Domain Performance on Seen Idioms}
+\label{tab:seen_performance}
+\begin{tabular}{llrr}
+\toprule
+Task & Model & Mean F1 & Std \\
+\midrule
+Classification & dictabert & 0.9483 & 0.0027 \\
+ & alephbertgimmel-base & 0.9468 & 0.0101 \\
+ & alephbert-base & 0.9421 & 0.0106 \\
+ & xlm-roberta-base & 0.9174 & 0.0142 \\
+ & bert-base-multilingual-cased & 0.8758 & 0.0071 \\
+\midrule
+Span Detection & alephbert-base & 0.9965 & 0.0011 \\
+ & bert-base-multilingual-cased & 0.9931 & 0.0020 \\
+ & xlm-roberta-base & 0.9927 & 0.0024 \\
+ & alephbertgimmel-base & 0.9912 & 0.0013 \\
+ & dictabert & 0.9912 & 0.0007 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Table 2: Generalization Performance (Unseen Test)
+\begin{table}[htbp]
+\centering
+\caption{Zero-Shot Generalization on Unseen Idioms}
+\label{tab:unseen_performance}
+\begin{tabular}{llrr}
+\toprule
+Task & Model & Mean F1 & Std \\
+\midrule
+Classification & alephbertgimmel-base & 0.9138 & 0.0048 \\
+ & dictabert & 0.9108 & 0.0136 \\
+ & alephbert-base & 0.9062 & 0.0112 \\
+ & bert-base-multilingual-cased & 0.9014 & 0.0048 \\
+ & xlm-roberta-base & 0.8986 & 0.0087 \\
+\midrule
+Span Detection & alephbertgimmel-base & 0.7559 & 0.0140 \\
+ & dictabert & 0.7258 & 0.0897 \\
+ & alephbert-base & 0.7248 & 0.0311 \\
+ & xlm-roberta-base & 0.6318 & 0.0813 \\
+ & bert-base-multilingual-cased & 0.5799 & 0.0427 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,58 @@
+
+## Statistical Significance - Seen Test Set
+
+### Task: CLS (Seen)
+**Best Model:** dictabert (Mean F1: 0.9483)
+**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+
+| Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
+|------------|--------|---------|------------|-----------|-------------|--------------|
+| dictabert vs alephbertgimmel-base | 0.357 | 0.7551 | 0.0125 | 0.208 | Small | ❌ NO |
+| dictabert vs alephbert-base | 0.836 | 0.4910 | 0.0125 | 0.797 | Medium | ❌ NO |
+| dictabert vs xlm-roberta-base | 4.586 | 0.0444 | 0.0125 | 3.030 | Large | ⚠️ YES* |
+| dictabert vs bert-base-multilingual-cased | 23.613 | 0.0018 | 0.0125 | 13.554 | Large | ✅ YES** |
+
+### Task: SPAN (Seen)
+**Best Model:** alephbert-base (Mean F1: 0.9965)
+**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+
+| Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
+|------------|--------|---------|------------|-----------|-------------|--------------|
+| alephbert-base vs bert-base-multilingual-cased | 2.592 | 0.1221 | 0.0125 | 2.122 | Large | ❌ NO |
+| alephbert-base vs xlm-roberta-base | 2.301 | 0.1480 | 0.0125 | 2.046 | Large | ❌ NO |
+| alephbert-base vs alephbertgimmel-base | 3.880 | 0.0605 | 0.0125 | 4.317 | Large | ❌ NO |
+| alephbert-base vs dictabert | 5.294 | 0.0339 | 0.0125 | 5.725 | Large | ⚠️ YES* |
+
+**Legend:**
+- ✅ YES**: Significant after Bonferroni correction (conservative)
+- ⚠️ YES*: Significant without correction (p < 0.05), but NOT after Bonferroni
+- ❌ NO: Not significant
+
+## Statistical Significance - Unseen Test Set
+
+### Task: CLS (Unseen)
+**Best Model:** alephbertgimmel-base (Mean F1: 0.9138)
+**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+
+| Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
+|------------|--------|---------|------------|-----------|-------------|--------------|
+| alephbertgimmel-base vs dictabert | 0.301 | 0.7917 | 0.0125 | 0.291 | Small | ❌ NO |
+| alephbertgimmel-base vs alephbert-base | 2.043 | 0.1778 | 0.0125 | 0.885 | Large | ❌ NO |
+| alephbertgimmel-base vs bert-base-multilingual-cased | 2.564 | 0.1244 | 0.0125 | 2.564 | Large | ❌ NO |
+| alephbertgimmel-base vs xlm-roberta-base | 3.015 | 0.0947 | 0.0125 | 2.156 | Large | ❌ NO |
+
+### Task: SPAN (Unseen)
+**Best Model:** alephbertgimmel-base (Mean F1: 0.7559)
+**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+
+| Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
+|------------|--------|---------|------------|-----------|-------------|--------------|
+| alephbertgimmel-base vs dictabert | 0.678 | 0.5676 | 0.0125 | 0.469 | Small | ❌ NO |
+| alephbertgimmel-base vs alephbert-base | 1.197 | 0.3540 | 0.0125 | 1.289 | Large | ❌ NO |
+| alephbertgimmel-base vs xlm-roberta-base | 2.494 | 0.1301 | 0.0125 | 2.127 | Large | ❌ NO |
+| alephbertgimmel-base vs bert-base-multilingual-cased | 8.896 | 0.0124 | 0.0125 | 5.537 | Large | ✅ YES** |
+
+**Legend:**
+- ✅ YES**: Significant after Bonferroni correction (conservative)
+- ⚠️ YES*: Significant without correction (p < 0.05), but NOT after Bonferroni
+- ❌ NO: Not significant

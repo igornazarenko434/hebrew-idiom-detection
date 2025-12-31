@@ -1,0 +1,37 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/bert-base-multilingual-cased/span/seed_456",
+  "dataset": "data/splits/test.csv",
+  "task": "span",
+  "num_samples": 432,
+  "metrics": {
+    "loss": 0.16256554424762726,
+    "model_preparation_time": 0.0052,
+    "precision": 0.9908256880733946,
+    "recall": 1.0,
+    "f1": 0.9953917050691244,
+    "accuracy": 0.9987199180747568,
+    "runtime": 2.4333,
+    "samples_per_second": 177.538,
+    "steps_per_second": 11.096
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 2e-05,
+    "batch_size": 16,
+    "num_epochs": 3,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.05,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 1,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": true
+  }
+}

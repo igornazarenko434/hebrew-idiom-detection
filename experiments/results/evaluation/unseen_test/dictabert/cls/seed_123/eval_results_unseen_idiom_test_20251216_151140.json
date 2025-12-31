@@ -1,0 +1,41 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/dictabert/cls/seed_123",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "cls",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 0.2678370177745819,
+    "model_preparation_time": 0.0022,
+    "accuracy": 0.9208333333333333,
+    "f1": 0.9206666782651055,
+    "precision": 0.9243994677498424,
+    "recall": 0.9208333333333334,
+    "confusion_matrix_tn": 210.0,
+    "confusion_matrix_fp": 30.0,
+    "confusion_matrix_fn": 8.0,
+    "confusion_matrix_tp": 232.0,
+    "runtime": 0.7092,
+    "samples_per_second": 676.802,
+    "steps_per_second": 42.3
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 5e-06,
+    "batch_size": 16,
+    "num_epochs": 8,
+    "warmup_ratio": 0.2,
+    "weight_decay": 0.0,
+    "seed": 123,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 1,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": null
+  }
+}

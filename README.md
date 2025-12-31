@@ -88,7 +88,7 @@ Challenge: Models must use context to distinguish meaning.
 - ✅ **Rich morphology**: Up to 35 morphological variants per idiom
 
 ### 🔬 Experimental Framework
-- ✅ **5 Transformer Models**: AlephBERT, AlephBERTGimmel, DictaBERT, mBERT, XLM-RoBERTa
+- ✅ **6 Transformer Models**: AlephBERT, AlephBERTGimmel, DictaBERT, NeoDictaBERT, mBERT, XLM-RoBERTa
 - ✅ **2 Tasks**: Sequence classification + Token classification (IOB2)
 - ✅ **Multiple Training Modes**: Zero-shot, full fine-tuning, frozen backbone
 - ✅ **Standalone Evaluation**: Test trained models on any dataset
@@ -368,6 +368,18 @@ exit
 
 ## Quick Start
 
+### 0. Activate Virtual Environment
+
+```bash
+# Activate analysis environment (creates if needed)
+source activate_env.sh
+
+# Verify activation
+which python  # Should show: ./venv/bin/python
+```
+
+**See:** `VENV_USAGE.md` for detailed virtual environment guide
+
 ### 1. Verify Data
 
 ```bash
@@ -550,6 +562,7 @@ hebrew-idiom-detection/
 - AlephBERT (`onlplab/alephbert-base`)
 - AlephBERT-Gimmel (`dicta-il/alephbertgimmel-base`)
 - DictaBERT (`dicta-il/dictabert`)
+- NeoDictaBERT (`dicta-il/neodictabert`) ⭐ **NEW**
 - mBERT (`bert-base-multilingual-cased`)
 - XLM-RoBERTa (`xlm-roberta-base`)
 
@@ -715,8 +728,9 @@ experiments/results/evaluation/{mode}/{model}/{task}/
 - Chain-of-thought: Step-by-step reasoning
 
 **LLMs Evaluated:**
-- GPT-4 Turbo
-- Claude 3.5 Sonnet
+- DictaLM-3.0-1.7B-Instruct (Hebrew-native)
+- Llama-3.1-8B-Instruct (Multilingual baseline)
+- Qwen 2.5-7B-Instruct (Advanced multilingual)
 
 **Command:**
 ```bash
@@ -735,11 +749,12 @@ python src/llm_evaluation.py \
 
 ### Hebrew-Specific Models
 
-| Model | Parameters | Vocab Size | Pre-training Data |
-|-------|------------|------------|-------------------|
-| **AlephBERT** | 110M | 52K | OSCAR Hebrew corpus |
-| **AlephBERTGimmel** | 110M | 128K | Extended Hebrew corpus |
-| **DictaBERT** | 110M | 50K | Contemporary Hebrew texts |
+| Model | Parameters | Vocab Size | Pre-training Data | Context |
+|-------|------------|------------|-------------------|---------|
+| **AlephBERT** | 110M | 52K | OSCAR Hebrew corpus | 512 |
+| **AlephBERTGimmel** | 110M | 128K | Extended Hebrew corpus | 512 |
+| **DictaBERT** | 110M | 50K | Contemporary Hebrew texts | 512 |
+| **NeoDictaBERT** ⭐ **NEW** | 110M | - | 285B Hebrew tokens | 4,096 |
 
 ### Multilingual Models
 
@@ -750,12 +765,13 @@ python src/llm_evaluation.py \
 
 ### Model Selection Rationale
 
-**Why these 5 models?**
-1. **Hebrew-specific coverage:** AlephBERT family + DictaBERT represent state-of-the-art Hebrew NLP
+**Why these 6 models?**
+1. **Hebrew-specific coverage:** AlephBERT family + DictaBERT + **NeoDictaBERT (latest SOTA)** represent state-of-the-art Hebrew NLP
 2. **Multilingual baselines:** mBERT and XLM-RoBERTa enable cross-lingual comparison
 3. **Architecture diversity:** BERT vs. RoBERTa variants
 4. **Vocabulary strategies:** Different tokenization approaches (52K-250K vocab)
 5. **Established benchmarks:** All models have published Hebrew NLP results
+6. **Latest innovation:** NeoDictaBERT (Sept 2025) with 285B tokens and 4K context window
 
 ---
 
@@ -1020,7 +1036,8 @@ The Hebrew-Idioms-4800 dataset is released under **CC BY 4.0** (Creative Commons
 - [x] Complete documentation
 
 ### In Progress 🔄
-- [ ] LLM prompting evaluation (GPT-4, Claude)
+- [ ] NeoDictaBERT training and evaluation (HPO + full fine-tuning)
+- [ ] LLM prompting evaluation (DictaLM-3.0, Llama-3.1, Qwen 2.5)
 - [ ] Ablation studies (training size, architecture variants)
 - [ ] Error analysis and failure case categorization
 - [ ] Cross-lingual transfer experiments

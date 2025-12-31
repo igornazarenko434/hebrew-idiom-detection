@@ -1,0 +1,6050 @@
+[
+  {
+    "id": "1_lit_26",
+    "sentence": "הם איבדו את הצפון בסירה בלב הים",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9501797556877136,
+    "is_correct": true,
+    "all_probs": [
+      0.9501797556877136,
+      0.04982024058699608
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "1_lit_28",
+    "sentence": "הם איבדו את הצפון כשהמדריך נעלם",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.9487759470939636,
+    "is_correct": false,
+    "all_probs": [
+      0.05122405290603638,
+      0.9487759470939636
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "1_lit_32",
+    "sentence": "כשהמכשיר איתור קרס באמצע תרגיל לילי, החיילים איבדו את הצפון והסמל צעק “למה אף אחד לא קרא את המפה כמו שצריך?” בזמן שכולם הסתובבו במעגלים בתוך השטח הפתוח.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9550415277481079,
+    "is_correct": true,
+    "all_probs": [
+      0.9550415277481079,
+      0.044958505779504776
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "1_lit_37",
+    "sentence": "כשסופה פתאומית פגעה באזור והגשם כיסה את העקבות, היא איבדה את הצפון וכל ניסיון למצוא קליטה הסתיים במכשיר כבוי; “אם נשרוד את זה, אני לא מטיילת שוב בלי מפה אמיתית,” אמרה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9578759074211121,
+    "is_correct": true,
+    "all_probs": [
+      0.9578759074211121,
+      0.042124055325984955
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "1_fig_6",
+    "sentence": "באמצע השיעור, הוא איבד את הצפון, התחיל לבכות בלי סיבה ברורה, והמורה עצרה הכול; לפעמים, כשמישהו נשבר, זה לא סימן לחולשה אלא לנפש שצעקה סוף סוף להישמע.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.7882920503616333,
+    "is_correct": true,
+    "all_probs": [
+      0.21170802414417267,
+      0.7882920503616333
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "1_fig_10",
+    "sentence": "הוא איבד את הצפון אחרי שהחבר הכי טוב בגד בו",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9571062922477722,
+    "is_correct": true,
+    "all_probs": [
+      0.042893726378679276,
+      0.9571062922477722
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "1_fig_34",
+    "sentence": "כשהשחקנים ראו את השופט מוציא את הכרטיס האדום, הם איבדו את הצפון לחלוטין, צרחו עליו מכל עבר, והמאמן נאלץ להיכנס למגרש כדי לעצור את הבלאגן.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9618163108825684,
+    "is_correct": true,
+    "all_probs": [
+      0.03818368539214134,
+      0.9618163108825684
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "1_fig_39",
+    "sentence": "מרוב התרגשות בטקס, היא איבדה את הצפון ולא הצליחה להשתלט על פרץ הבכי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.94368577003479,
+    "is_correct": true,
+    "all_probs": [
+      0.05631416663527489,
+      0.94368577003479
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_lit_1",
+    "sentence": "איך תגיע לקו הזינוק בזמן אם תדרוך במקום יותר מדי זמן במקום להתקדם? שאל המאמן את הנער שהתמהמה באימונים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9545086622238159,
+    "is_correct": true,
+    "all_probs": [
+      0.9545086622238159,
+      0.04549126699566841
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_lit_18",
+    "sentence": "החברים התגלגלו מצחוק כשהוא דרך במקום באמצע הרחוב, רק כדי לבדוק אם הצמיד החדש שלו סופר צעדים, מבלי לשים לב שכל העוברים נועצים בו מבטים מבולבלים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9390932321548462,
+    "is_correct": true,
+    "all_probs": [
+      0.9390932321548462,
+      0.06090676039457321
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_lit_31",
+    "sentence": "הנערים דרכו במקום בזמן שהמורה ספר עד עשר.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9507941007614136,
+    "is_correct": true,
+    "all_probs": [
+      0.9507941007614136,
+      0.04920591413974762
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_lit_32",
+    "sentence": "כדי להיראות עסוק הוא דרך במקום.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9366261959075928,
+    "is_correct": true,
+    "all_probs": [
+      0.9366261959075928,
+      0.06337377429008484
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_fig_5",
+    "sentence": "בכל ישיבה עסקית היה ברור שהם דורכים במקום מול התוכניות הגדולות, מדברים גבוהה־גבוהה על חדשנות, אבל בפועל לא מעיזים לשנות אפילו סעיף אחד קטן.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9584612250328064,
+    "is_correct": true,
+    "all_probs": [
+      0.0415387786924839,
+      0.9584612250328064
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_fig_7",
+    "sentence": "הוא דרך במקום ולא הצליח להתפתח מקצועית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9527049660682678,
+    "is_correct": true,
+    "all_probs": [
+      0.04729502275586128,
+      0.9527049660682678
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_fig_16",
+    "sentence": "החבר הכי טוב שלי לא הצליח להתקדם ודרך במקום מול המתחרים האחרים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9578998684883118,
+    "is_correct": true,
+    "all_probs": [
+      0.042100101709365845,
+      0.9578998684883118
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "3_fig_34",
+    "sentence": "הקואוצ’ר אמר לה בשקט: ״אם לא תעשי שינוי עכשיו, גם בעוד שנה תספרי לי על אותן בעיות בדיוק, אז תפסיקי לדרוך במקום ולספר לי עוד תירוצים״.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9362258315086365,
+    "is_correct": true,
+    "all_probs": [
+      0.06377414613962173,
+      0.9362258315086365
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_lit_7",
+    "sentence": "אם הילדה לא הייתה מורידה את הכפפות הצמריות לפני שנכנסה הביתה, אולי הייתה מונעת מהריח הרטוב של גשם להתפשט בכל הבית, לתסכולה של אמא.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9599618315696716,
+    "is_correct": true,
+    "all_probs": [
+      0.9599618315696716,
+      0.040038205683231354
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_lit_9",
+    "sentence": "בדיוק כמוני אתה עלול לשכוח אותן שם ולגלות רק כעבור שעתיים שבמקום עבודה מסודר, שום דבר לא באמת נשאר שלך לכן אל תוריד כפפות במעלית כשאתה שקוע במחשבות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9524045586585999,
+    "is_correct": true,
+    "all_probs": [
+      0.9524045586585999,
+      0.047595422714948654
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_lit_25",
+    "sentence": "היא הורידה את הכפפות על שולחן המטבח לפני הבישול, אבל ברגע שהתחילה לקצוץ ירקות חריפים בלי לשטוף ידיים, היא הבינה עד כמה החלטות קטנות יכולות לעלות ביוקר.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9520785808563232,
+    "is_correct": true,
+    "all_probs": [
+      0.9520785808563232,
+      0.04792143031954765
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_lit_30",
+    "sentence": "הנער הוריד את הכפפות לפני שנכנס לשיעור ספורט.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9545620083808899,
+    "is_correct": true,
+    "all_probs": [
+      0.9545620083808899,
+      0.045438025146722794
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_fig_18",
+    "sentence": "היא הורידה את הכפפות ופרסמה פוסט חריף נגד החברה ברשת החברתית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9571753144264221,
+    "is_correct": true,
+    "all_probs": [
+      0.04282469302415848,
+      0.9571753144264221
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_fig_19",
+    "sentence": "היא הורידה את הכפפות מול בעלה אחרי שבועות של שתיקה מתוחה, ובפעם הראשונה מזה שנים הוא שמע ממנה את האמת הלא מסוננת – גם אם זה כאב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9584406614303589,
+    "is_correct": true,
+    "all_probs": [
+      0.0415593720972538,
+      0.9584406614303589
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_fig_29",
+    "sentence": "הקמפיין התחיל רגוע, אבל מהר מאוד כולם הורידו את הכפפות והתחיל קרב אמיתי בין המועמדים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.955960214138031,
+    "is_correct": true,
+    "all_probs": [
+      0.04403984546661377,
+      0.955960214138031
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "4_fig_36",
+    "sentence": "מאיה רצתה להיות יותר ישירה ומאוד ברורה, אז היא הורידה את הכפפות והציבה לו גבולות ברורים לגבי המשך הקשר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9555989503860474,
+    "is_correct": true,
+    "all_probs": [
+      0.044401075690984726,
+      0.9555989503860474
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "5_lit_1",
+    "sentence": "אחרי האבחון של בעיות גב כרוניות, היא הורידה פרופיל.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9582232236862183,
+    "is_correct": true,
+    "all_probs": [
+      0.9582232236862183,
+      0.04177683964371681
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "5_lit_4",
+    "sentence": "אחרי שעברה ניתוח מורכב, היא הורידה פרופיל צבאי והתאכזבה נורא מעצמה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.939359724521637,
+    "is_correct": false,
+    "all_probs": [
+      0.06064024940133095,
+      0.939359724521637
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "5_lit_17",
+    "sentence": "בעקבות בעיות נפשיות,הרופאים בקשו להוריד לו את הפרופיל.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9652777314186096,
+    "is_correct": true,
+    "all_probs": [
+      0.9652777314186096,
+      0.034722331911325455
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "5_lit_23",
+    "sentence": "הבן שלי סיפר שהורידו לו פרופיל זמני עד לסיום הבדיקות, ואני שאלתי את עצמי אם זה לא בעצם מנגנון הגנה חשוב של הצבא שמונע הידרדרות רפואית.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9609618782997131,
+    "is_correct": true,
+    "all_probs": [
+      0.9609618782997131,
+      0.03903814032673836
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "5_fig_12",
+    "sentence": "בתקופה הקשה,אחרי שהייתי מותש לחלוטין הורדתי פרופיל ונחתי כדי להירגע.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.7218843102455139,
+    "is_correct": true,
+    "all_probs": [
+      0.27811571955680847,
+      0.7218843102455139
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "5_fig_13",
+    "sentence": "האם הוא יוריד פרופיל גם אחרי שיסיים את הפרויקט?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9516206979751587,
+    "is_correct": true,
+    "all_probs": [
+      0.048379264771938324,
+      0.9516206979751587
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "5_fig_17",
+    "sentence": "הוא הוריד פרופיל אחרי שחבריו לעבודה העירו לו על הסגנון התקיף.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9538634419441223,
+    "is_correct": true,
+    "all_probs": [
+      0.046136531978845596,
+      0.9538634419441223
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "5_fig_38",
+    "sentence": "מאז הפרידה, הוא הוריד פרופיל ולא מדבר עם אף אחד מהחברים שלו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9558363556861877,
+    "is_correct": true,
+    "all_probs": [
+      0.04416371136903763,
+      0.9558363556861877
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_lit_9",
+    "sentence": "הוא החזיק אצבעות בחוזקה כשקיווה להפתעה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.6974917650222778,
+    "is_correct": true,
+    "all_probs": [
+      0.6974917650222778,
+      0.30250826478004456
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_lit_27",
+    "sentence": "הילדה, שבקושי הצליחה להסתיר את ההתרגשות, החזיקה אצבעות לילד שחיבבה בזמן שעלה לשיר על הבמה, ולחשה לחברתה “אם הוא יצליח, אני אומרת לו שאני אוהבת אותו”.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9338452816009521,
+    "is_correct": true,
+    "all_probs": [
+      0.9338452816009521,
+      0.06615474820137024
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_lit_37",
+    "sentence": "כשהביט בשעון, הוא החזיק אצבעות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9173614382743835,
+    "is_correct": true,
+    "all_probs": [
+      0.9173614382743835,
+      0.08263854682445526
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_lit_38",
+    "sentence": "לפני שבתי טעמה את העוגה לכבוד היום הולדת שלה, היא החזיקה אצבעות בהתרגשות רבה כי לא ידעה למה לצפות שתקבל במתנה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9403707981109619,
+    "is_correct": true,
+    "all_probs": [
+      0.9403707981109619,
+      0.059629227966070175
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_fig_1",
+    "sentence": "אלכס חשב שעבד והשקיע המון בחודש האחרון אז הוא החזיק אצבעות שהמעסיק שלו שם לב לזה ויתגמל אותו על כך.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9588147401809692,
+    "is_correct": true,
+    "all_probs": [
+      0.04118521511554718,
+      0.9588147401809692
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_fig_3",
+    "sentence": "אם הוא לא יחזיק אצבעות שהמחשב יעבוד בזמן המצגת, כנראה שגם כישרון לא יציל אותו; אבל הפעם, אולי בזכות הלחץ או הנס, השקופיות הופיעו בדיוק בזמן.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9435098171234131,
+    "is_correct": true,
+    "all_probs": [
+      0.056490182876586914,
+      0.9435098171234131
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_fig_17",
+    "sentence": "היא החזיקה אצבעות שהשופט יפסוק לטובתה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9420539736747742,
+    "is_correct": true,
+    "all_probs": [
+      0.05794605240225792,
+      0.9420539736747742
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "6_fig_22",
+    "sentence": "הם החזיקו אצבעות בזמן השקת המוצר החדש, עקבו אחרי הגרף של המכירות בזמן אמת, וכל עלייה קטנה נראתה להם כמו ניצחון – “נו, כבר, תראה סימן של חיים!” לחש אחד מהם למסך.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.5500160455703735,
+    "is_correct": true,
+    "all_probs": [
+      0.4499839246273041,
+      0.5500160455703735
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_lit_10",
+    "sentence": "הבלון שvתנדנד ברוח כמו צעצוע קטן, היה בעננים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9561932682991028,
+    "is_correct": true,
+    "all_probs": [
+      0.9561932682991028,
+      0.04380669817328453
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_lit_14",
+    "sentence": "החד-קרן הלבן היה בעננים וריחף מעל יערות קסומים ונהנה לו",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9535629749298096,
+    "is_correct": true,
+    "all_probs": [
+      0.9535629749298096,
+      0.046437039971351624
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_lit_30",
+    "sentence": "הצוללן לשעבר הביט לשמיים וצחק כשאמר: “אני לא רגיל לראות את העולם מלמעלה, אבל לראות את המטוס הזה שהיה בעננים גורם לי להבין כמה אנחנו קטנים למטה.”",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9498719573020935,
+    "is_correct": true,
+    "all_probs": [
+      0.9498719573020935,
+      0.05012808367609978
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_lit_35",
+    "sentence": "הרחפן החדש שפותח באוניברסיטה היה בעננים שעות ארוכות לצורכי ניסוי, אבל החוקרים הודו שאם תנאי מזג האוויר ימשיכו כך, יהיה קשה לבדוק את הדיוק של המצלמות התרמיות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9588514566421509,
+    "is_correct": true,
+    "all_probs": [
+      0.9588514566421509,
+      0.04114856570959091
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_fig_5",
+    "sentence": "אם תאמין בעצמך כמו שהוא האמין בפרויקט החדש שלו, גם אתה תהיה בעננים כשתראה איך החלום הופך למציאות עסקית אמיתית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9579874873161316,
+    "is_correct": true,
+    "all_probs": [
+      0.04201250895857811,
+      0.9579874873161316
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_fig_36",
+    "sentence": "לא הפסקתי לחייך והייתי בעננים אחרי השיחה איתך.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9619598388671875,
+    "is_correct": true,
+    "all_probs": [
+      0.03804018720984459,
+      0.9619598388671875
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_fig_37",
+    "sentence": "לאחר הניצחון במשחק אליפות הכדורסל הארצית, גל הקבוצה הייתה בעננים מרוב אושר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9528213739395142,
+    "is_correct": true,
+    "all_probs": [
+      0.04717866703867912,
+      0.9528213739395142
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "7_fig_40",
+    "sentence": "צלם העיתונות היה בעננים כשהתמונה שלו הוצגה בתערוכה בינלאומית, ואמר בצחוק שאם יזכה בעוד פרס, יצטרך חבל כדי לרדת חזרה לקרקע.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9295271635055542,
+    "is_correct": true,
+    "all_probs": [
+      0.07047286629676819,
+      0.9295271635055542
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_lit_1",
+    "sentence": "אחרי הפציעה, הוא הלך בין הטיפות של הדם במסדרון.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9661656618118286,
+    "is_correct": true,
+    "all_probs": [
+      0.9661656618118286,
+      0.033834315836429596
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_lit_12",
+    "sentence": "בנעליים פתוחות, היא הלכה בין הטיפות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9461754560470581,
+    "is_correct": true,
+    "all_probs": [
+      0.9461754560470581,
+      0.053824517875909805
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_lit_32",
+    "sentence": "העובד החרוץ שנשאר כל הזמן לעבוד עד השעות הקטנות של הלילה הלך בין הטיפות של צבע שטפטף מהתקרה בזמן השיפוץ.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9623686671257019,
+    "is_correct": true,
+    "all_probs": [
+      0.9623686671257019,
+      0.03763129189610481
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_lit_34",
+    "sentence": "כדי להצליח לא להחליק על הרצפה הזאת, ניסיתי ללכת בין הטיפות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9550313949584961,
+    "is_correct": true,
+    "all_probs": [
+      0.9550313949584961,
+      0.044968653470277786
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_fig_7",
+    "sentence": "אם היא לא הייתה הולכת בין הטיפות מול העיתונות, אולי הייתה סופגת ביקורת חריפה יותר, אבל גם זוכה להערכה ציבורית על אומץ לב נדיר בזירה התקשורתית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.961304783821106,
+    "is_correct": true,
+    "all_probs": [
+      0.03869523108005524,
+      0.961304783821106
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_fig_11",
+    "sentence": "בקמפיין בחירות הזה, הלכתי בין הטיפות כדי לא לאבד קולות של מצביעים שונים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9469705820083618,
+    "is_correct": true,
+    "all_probs": [
+      0.05302942171692848,
+      0.9469705820083618
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_fig_13",
+    "sentence": "בשיחה עם הילדים, ליזה הלכה בין הטיפות כי לא רצתה לפגוע באביהם בנושא רגיש.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.946077287197113,
+    "is_correct": true,
+    "all_probs": [
+      0.05392272025346756,
+      0.946077287197113
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "8_fig_30",
+    "sentence": "המנכ”ל הלך בין הטיפות בתקשורת והתחמק משאלות קשות בלי לענות באמת.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9591072201728821,
+    "is_correct": true,
+    "all_probs": [
+      0.04089277610182762,
+      0.9591072201728821
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "9_lit_8",
+    "sentence": "בתחרות הספורט הלא שגרתית במתנ״ס, המתמודדים הלכו על ביצים כחלק ממשחק שיווי משקל, ואם היית רואה כמה רציניים הם נראו – היית חושב שמדובר באולימפיאדה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.947736382484436,
+    "is_correct": true,
+    "all_probs": [
+      0.947736382484436,
+      0.05226357653737068
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "9_lit_18",
+    "sentence": "היא הלכה על ביצים באתגר שראו בטלוויזיה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.9208630323410034,
+    "is_correct": false,
+    "all_probs": [
+      0.07913703471422195,
+      0.9208630323410034
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "9_lit_23",
+    "sentence": "הילדה הלכה על ביצים במגרש המשחקים",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9562757015228271,
+    "is_correct": true,
+    "all_probs": [
+      0.9562757015228271,
+      0.043724291026592255
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "9_lit_32",
+    "sentence": "המשתתף בתחרות ניסה לא לשבור אף אחת כאשר הלך על הביצים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9364998936653137,
+    "is_correct": true,
+    "all_probs": [
+      0.9364998936653137,
+      0.06350012868642807
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "9_fig_8",
+    "sentence": "הוא הלך על ביצים בניסיון לשמור על אווירה טובה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9482292532920837,
+    "is_correct": true,
+    "all_probs": [
+      0.05177076905965805,
+      0.9482292532920837
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "9_fig_20",
+    "sentence": "היא הלכה על ביצים מול בן זוגה אחרי ויכוח קשה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.951788604259491,
+    "is_correct": true,
+    "all_probs": [
+      0.048211418092250824,
+      0.951788604259491
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "9_fig_37",
+    "sentence": "כדי לשמור על היחסים מול אחותה, היא הלכה על ביצים בשיחות על נושאים רגישים מולה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9581755995750427,
+    "is_correct": true,
+    "all_probs": [
+      0.04182438552379608,
+      0.9581755995750427
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "9_fig_39",
+    "sentence": "כשעלה לשיחה הנושא של הכסף, היא נזהרה והלכה על ביצים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9299451112747192,
+    "is_correct": true,
+    "all_probs": [
+      0.07005488872528076,
+      0.9299451112747192
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_lit_21",
+    "sentence": "הילדה הכינה והניפה דגל לבן ונופפה לחבר שלה לשלום כאשר הוא עזב אותה באמצע היום.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9533351063728333,
+    "is_correct": true,
+    "all_probs": [
+      0.9533351063728333,
+      0.046664875000715256
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_lit_25",
+    "sentence": "הם הניפו דגל לבן כדי להכריז על סיום המשחק.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8945453763008118,
+    "is_correct": true,
+    "all_probs": [
+      0.8945453763008118,
+      0.10545467585325241
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_lit_37",
+    "sentence": "כשלין עמדה על הגג אחרי ההצפה, היא הניפה דגל לבן.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9486613273620605,
+    "is_correct": true,
+    "all_probs": [
+      0.9486613273620605,
+      0.05133865773677826
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_lit_40",
+    "sentence": "קבוצת הילדים הניפה דגל לבן עשוי סדין כשהפסידו בטורניר השכונתי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8618016242980957,
+    "is_correct": true,
+    "all_probs": [
+      0.8618016242980957,
+      0.1381983458995819
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_fig_1",
+    "sentence": "אחרי חודשים של תקוות שווא היא הניפה דגל לבן והחליטה לעבור הלאה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9485546946525574,
+    "is_correct": true,
+    "all_probs": [
+      0.05144533887505531,
+      0.9485546946525574
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_fig_16",
+    "sentence": "האם הסטודנטים עשו נכון כשהניפו דגל לבן במאבק על תנאי הבחינות, או שהיו צריכים להמשיך להילחם על עקרון שוויון גם אם הסיכוי לשינוי היה אפסי?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9522328972816467,
+    "is_correct": true,
+    "all_probs": [
+      0.047767072916030884,
+      0.9522328972816467
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_fig_30",
+    "sentence": "היא הניפה דגל לבן בפני המציאות הקשה שלא תוכל לגדל יותר מ 5 ילדים במדינה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9541371464729309,
+    "is_correct": true,
+    "all_probs": [
+      0.04586285352706909,
+      0.9541371464729309
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "10_fig_37",
+    "sentence": "כשראה את הציון המזעזע במבחן, התלמיד הניף דגל לבן והחליט לוותר על המועד הבא – כי לפעמים עדיף להפסיד קרב קטן כדי לנצח במלחמה גדולה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.961463212966919,
+    "is_correct": true,
+    "all_probs": [
+      0.03853675723075867,
+      0.961463212966919
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "11_lit_7",
+    "sentence": "אם היא לא הייתה מרימה את הראש מהספר באותו רגע, לא הייתה שמה לב שחברתה הטובה בוכה בשקט מולה, מה שגרם לה לסגור את הספר ולתפוס לה את היד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9604265093803406,
+    "is_correct": true,
+    "all_probs": [
+      0.9604265093803406,
+      0.0395735539495945
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "11_lit_14",
+    "sentence": "הוא הרים את הראש בזמן השיחה כדי לשמור על קשר עין.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.5967919826507568,
+    "is_correct": false,
+    "all_probs": [
+      0.40320801734924316,
+      0.5967919826507568
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "11_lit_24",
+    "sentence": "החתול הרים את הראש מהכרית כשהכלב נבח מהמרפסת.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9558812379837036,
+    "is_correct": true,
+    "all_probs": [
+      0.9558812379837036,
+      0.04411880671977997
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "11_lit_34",
+    "sentence": "הכלב הרים את הראש מהשמיכה מיד כששמע את הדלת נפתחת, כאילו היה יודע שהבעלים שלו סוף־סוף חזר אחרי שבוע ארוך של עבודה בחו״ל.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9625884294509888,
+    "is_correct": true,
+    "all_probs": [
+      0.9625884294509888,
+      0.037411510944366455
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "11_fig_12",
+    "sentence": "אל תרים ידיים כשקשה בעבודה – הרם את הראש, למד מהטעויות, ותוכיח שאפילו חברה במשבר יכולה לצמוח אם יש לה אנשים שמאמינים בעצמם.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9511615037918091,
+    "is_correct": true,
+    "all_probs": [
+      0.04883851483464241,
+      0.9511615037918091
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "11_fig_33",
+    "sentence": "היא לא הורידה את הראש גם כשהביקורת הייתה קשה וחדה, אלא הרימה את הראש בגאווה והוכיחה שכלכלית ונפשית היא מסוגלת לנצח בשוק תחרותי שבו רבים נעלמים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9597307443618774,
+    "is_correct": true,
+    "all_probs": [
+      0.04026930406689644,
+      0.9597307443618774
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "11_fig_35",
+    "sentence": "זה לא סוף העולם, כולם טועים לפעמים, אז תרים את הראש.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9591922163963318,
+    "is_correct": true,
+    "all_probs": [
+      0.04080773517489433,
+      0.9591922163963318
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "11_fig_39",
+    "sentence": "מחר יהיה יום טוב יותר מהיום, אז הרם את הראש.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.7497845888137817,
+    "is_correct": true,
+    "all_probs": [
+      0.25021544098854065,
+      0.7497845888137817
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "12_lit_15",
+    "sentence": "הוא הרים גבה כשניסה לבדוק את התוצאה של ניתוח קוסמטי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.7768787741661072,
+    "is_correct": false,
+    "all_probs": [
+      0.22312122583389282,
+      0.7768787741661072
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "12_lit_18",
+    "sentence": "הוא הרים גבה מתוך הרגל בזמן שצייר פורטרט עצמי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9539493322372437,
+    "is_correct": true,
+    "all_probs": [
+      0.9539493322372437,
+      0.04605065658688545
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "12_lit_29",
+    "sentence": "הרופא ביקש ממנו להרים גבה במהלך הבדיקה כדי לבדוק את עצב הפנים, והוא תהה אם זו בדיקה רפואית רצינית או סצנה ממחזמר רפואי סוריאליסטי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9662309885025024,
+    "is_correct": true,
+    "all_probs": [
+      0.9662309885025024,
+      0.03376903012394905
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "12_lit_37",
+    "sentence": "תוך כדי הרכבת משקפיים ריקי הרימה גבה כי ככה היא רגילה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9573933482170105,
+    "is_correct": true,
+    "all_probs": [
+      0.9573933482170105,
+      0.042606621980667114
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "12_fig_14",
+    "sentence": "הוא הרים גבה ולא הבין אם מדובר בבדיחה או ברצינות.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9096939563751221,
+    "is_correct": true,
+    "all_probs": [
+      0.09030607342720032,
+      0.9096939563751221
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "12_fig_16",
+    "sentence": "הוא הרים גבה כשהבחין בלבוש הבלתי צפוי והמוגזם שלה להלוויה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9484650492668152,
+    "is_correct": true,
+    "all_probs": [
+      0.05153492093086243,
+      0.9484650492668152
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "12_fig_26",
+    "sentence": "חברי הקבוצה הרימו גבה כשבחרו דווקא אותו להוביל את המצגת.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9514836072921753,
+    "is_correct": true,
+    "all_probs": [
+      0.04851638153195381,
+      0.9514836072921753
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "12_fig_35",
+    "sentence": "כשנודע לו שהתרגיל יבוטל בשל מזג האוויר החייל הרים גבה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9427423477172852,
+    "is_correct": true,
+    "all_probs": [
+      0.057257670909166336,
+      0.9427423477172852
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "13_lit_13",
+    "sentence": "הוא הרים ידיים בכניעה מוחלטת מול האקדח שכיוון אליה הגנב.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.950370728969574,
+    "is_correct": true,
+    "all_probs": [
+      0.950370728969574,
+      0.04962921887636185
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "13_lit_14",
+    "sentence": "הוא הרים ידיים כדי להשתתף בחידון בכיתה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9520934820175171,
+    "is_correct": true,
+    "all_probs": [
+      0.9520934820175171,
+      0.04790651053190231
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "13_lit_15",
+    "sentence": "הוא הרים ידיים כדי לעצור מונית ברחוב הראשי",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9590932130813599,
+    "is_correct": true,
+    "all_probs": [
+      0.9590932130813599,
+      0.04090676084160805
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "13_lit_37",
+    "sentence": "כשצינור הביוב התפוצץ בפעם העשירית בחודשיים, העובד הרים ידיים מלהתאמן בחדר כושר הזה, אבל המאמן קרא לו לא לוותר כי למרות התקלות, המאמנים מכפרים בהשקעתם.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8417218327522278,
+    "is_correct": true,
+    "all_probs": [
+      0.8417218327522278,
+      0.1582781821489334
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "13_fig_18",
+    "sentence": "האם אתה היית מרים ידיים אם היית מגלה שהחברה המתחרה עקפה אותך טכנולוגית, או שהיית מחפש דרך יצירתית להמציא את עצמך מחדש?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9572111368179321,
+    "is_correct": true,
+    "all_probs": [
+      0.042788904160261154,
+      0.9572111368179321
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "13_fig_23",
+    "sentence": "הוא הרים ידיים מול המציאות הלא הוגנת של גידול ילד כהורה יחיד.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9536193609237671,
+    "is_correct": true,
+    "all_probs": [
+      0.046380650252103806,
+      0.9536193609237671
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "13_fig_31",
+    "sentence": "המורה הרימה ידיים מהכיתה הרועשת, הפסיקה לנסות ללמד ויצאה מהכיתה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 0,
+    "confidence": 0.8907211422920227,
+    "is_correct": false,
+    "all_probs": [
+      0.8907211422920227,
+      0.1092788428068161
+    ],
+    "error_category": "FALSE_NEGATIVE"
+  },
+  {
+    "id": "13_fig_35",
+    "sentence": "כשהקבלנים ראו שהפרויקט נכשל בפעם השלישית, הם הרימו ידיים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9518724083900452,
+    "is_correct": true,
+    "all_probs": [
+      0.04812760651111603,
+      0.9518724083900452
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_lit_1",
+    "sentence": "אל תתקרב למכונת הלייזר החדשה אם אינך מאומן לכך, היא חותכת כמו סכין, ובמקרה של טעות קטנה – גם כפפה עבה לא תציל אותך מפציעה רצינית.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9592284560203552,
+    "is_correct": true,
+    "all_probs": [
+      0.9592284560203552,
+      0.04077157378196716
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_lit_23",
+    "sentence": "המקדח החדש שזה עתה קניתי והבאתי לכאן מחוץ לארץ, חותך כמו סכין את האבן הקשה שהפריע לי זמן רב בחצר.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9572292566299438,
+    "is_correct": true,
+    "all_probs": [
+      0.9572292566299438,
+      0.04277070239186287
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_lit_34",
+    "sentence": "הקרן האולטרה סגולה חותכת כמו סכין דרך המתכת הדקה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9510272145271301,
+    "is_correct": true,
+    "all_probs": [
+      0.9510272145271301,
+      0.048972781747579575
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_lit_36",
+    "sentence": "כשהולכים יחפים ככה, הקרח חותך כמו סכין את כף הרגל.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9540491700172424,
+    "is_correct": true,
+    "all_probs": [
+      0.9540491700172424,
+      0.045950789004564285
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_fig_29",
+    "sentence": "הסירוב שלו חותך כמו סכין – חד, קר, ומכאיב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9580671787261963,
+    "is_correct": true,
+    "all_probs": [
+      0.041932862251996994,
+      0.9580671787261963
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_fig_30",
+    "sentence": "הספק שמכרסם באמון הוא גם חותך כמו סכין",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9578938484191895,
+    "is_correct": true,
+    "all_probs": [
+      0.04210614040493965,
+      0.9578938484191895
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_fig_36",
+    "sentence": "התגובה של החברה שלו חותכת כמו סכין, לא כי היא צעקה, אלא כי שתקה בזמן הנכון, והשתיקה לפעמים כואבת יותר ממילים עצמן.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9573686718940735,
+    "is_correct": true,
+    "all_probs": [
+      0.0426313579082489,
+      0.9573686718940735
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "14_fig_40",
+    "sentence": "כשראיתי אותו עם מישהי אחרת, זה חתך כמו סכין בלב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9653204679489136,
+    "is_correct": true,
+    "all_probs": [
+      0.034679561853408813,
+      0.9653204679489136
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_lit_15",
+    "sentence": "האוטובוס חזר למסלול התחבורה העירוני אחרי שבועות של שיבושים, אבל הנוסעים תהו אם בכלל כדאי לסמוך שוב על מערכת שמאחרת כרונית.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.960225522518158,
+    "is_correct": true,
+    "all_probs": [
+      0.960225522518158,
+      0.039774492383003235
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_lit_19",
+    "sentence": "הוא חזר למסלול ההחלקה על הקרח אחרי נפילה כואבת.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.956547737121582,
+    "is_correct": true,
+    "all_probs": [
+      0.956547737121582,
+      0.043452296406030655
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_lit_25",
+    "sentence": "הטיס חזר למסלול הקצר ביותר בדרכו מסין לאירופה אחרי העיקוף שביצע לענן הסערה, וזאת כדי לשמור על בטיחות הנוסעים על אף העיכוב בזמנים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.957813024520874,
+    "is_correct": true,
+    "all_probs": [
+      0.957813024520874,
+      0.042186930775642395
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_lit_28",
+    "sentence": "היא חזרה למסלול הטיול היומי אחרי שסטתה לנחל סמוך.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9554928541183472,
+    "is_correct": true,
+    "all_probs": [
+      0.9554928541183472,
+      0.04450714588165283
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_fig_3",
+    "sentence": "אחרי שהתפטרה מעבודה רעילה ואמרה שחופש אמיתי הוא לא רק לעזוב – אלא גם לדעת מתי לחזור עם ביטחון עצמי חדש, היא ישר חזרה למסלול מקצועי משל עצמה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9588404297828674,
+    "is_correct": true,
+    "all_probs": [
+      0.04115964472293854,
+      0.9588404297828674
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_fig_12",
+    "sentence": "הוא חזר למסלול יציבות מנטלית באמצעות מדיטציה יומית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.6321122646331787,
+    "is_correct": true,
+    "all_probs": [
+      0.3678877651691437,
+      0.6321122646331787
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_fig_20",
+    "sentence": "היא חזרה למסלול מקצועי במפתיע, עם הצעה שלא חלמה עליה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9492283463478088,
+    "is_correct": true,
+    "all_probs": [
+      0.05077171325683594,
+      0.9492283463478088
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "15_fig_23",
+    "sentence": "היא חזרה למסלול תזונתי קפדני אחרי חודשים של הזנחה, והחליטה שהפעם זה לא יהיה עוד \"ניסיון זמני\", אלא שינוי אמיתי של אורח חיים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.8917988538742065,
+    "is_correct": true,
+    "all_probs": [
+      0.10820110142230988,
+      0.8917988538742065
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "16_lit_4",
+    "sentence": "אחרי שעמדו שעות בתור בשדה התעופה בלי מזגן והעובדים במקום טענו שאם משרד הבריאות לא יבדוק את התנאים, זה רק יחמיר בקיץ, אך למרות התלונה הם עדיין חטפו חום.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8920924067497253,
+    "is_correct": true,
+    "all_probs": [
+      0.8920924067497253,
+      0.10790757089853287
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "16_lit_6",
+    "sentence": "אם העובדים ימשיכו לעבוד ללא מיזוג, כמה זמן יעבור עד שכולם יחטפו חום? שאל העיתונאי בכתבה שחשפה את תנאי העבודה הקשים במפעל הישן בדרום.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.9090295433998108,
+    "is_correct": false,
+    "all_probs": [
+      0.09097043424844742,
+      0.9090295433998108
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "16_lit_10",
+    "sentence": "במהלך הלילה הוא חטף חום ורטט מקור בחדר ממוזג.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9499678015708923,
+    "is_correct": true,
+    "all_probs": [
+      0.9499678015708923,
+      0.05003216862678528
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "16_lit_15",
+    "sentence": "הבת שלי חטפה חום מהחיסון ביום למחרת.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9576390981674194,
+    "is_correct": true,
+    "all_probs": [
+      0.9576390981674194,
+      0.042360980063676834
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "16_fig_4",
+    "sentence": "בזמן הניתוח כשראתה שהמדדים של המטופל משתנים בפתאומיות, היא חטפה חום אבל שלטה בעצמה והחזירה את כל הצוות לריכוז מלא.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9545321464538574,
+    "is_correct": true,
+    "all_probs": [
+      0.045467812567949295,
+      0.9545321464538574
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "16_fig_30",
+    "sentence": "יוסף חטף חום כשהשכן צעק עליו ליד כולם בלי סיבה ברורה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9603967070579529,
+    "is_correct": true,
+    "all_probs": [
+      0.03960325941443443,
+      0.9603967070579529
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "16_fig_35",
+    "sentence": "כשהמאמן הבין ששחקן ההגנה שלו הורחק לשני משחקים בדיוק לפני הדרבי, הוא חטף חום והעיתונאים כבר שאלו איך הוא מתכוון להתמודד עם המשבר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9651271104812622,
+    "is_correct": true,
+    "all_probs": [
+      0.03487281873822212,
+      0.9651271104812622
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "16_fig_39",
+    "sentence": "כשחשבתי שאיבדתי את הטלפון באמצע הקניון, חטפתי חום.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9640184640884399,
+    "is_correct": true,
+    "all_probs": [
+      0.03598150238394737,
+      0.9640184640884399
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_lit_19",
+    "sentence": "הוא חטף מכה ברגל מחפץ שנזרק לעברו בזמן תחרות ריצה, אבל במקום לעצור, הוא המשיך לסיים את המסלול כשהוא מדדה – והפך לגיבור של היום.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9579603672027588,
+    "is_correct": true,
+    "all_probs": [
+      0.9579603672027588,
+      0.04203960672020912
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_lit_21",
+    "sentence": "החייל חטף מכה ביד בזמן האימון הקשה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9458918571472168,
+    "is_correct": true,
+    "all_probs": [
+      0.9458918571472168,
+      0.05410818010568619
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_lit_30",
+    "sentence": "הכלב קפץ עליה מרוב התלהבות וגרם לה לחטוף מכה בצלעות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.95383620262146,
+    "is_correct": true,
+    "all_probs": [
+      0.95383620262146,
+      0.04616380110383034
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_lit_35",
+    "sentence": "כשנפלו מהאופניים, הם חטפו מכה קלה בברכיים ושפשוף בידיים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9585225582122803,
+    "is_correct": true,
+    "all_probs": [
+      0.9585225582122803,
+      0.041477467864751816
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_fig_11",
+    "sentence": "אם היא לא הייתה שומעת את האמת מאחותה, אולי מערכת היחסים שלה לא הייתה חוטפת מכה כזו עמוקה – אבל גם לא הייתה נחשפת לשקרים שהסתירו ממנה כל השנים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9650633931159973,
+    "is_correct": true,
+    "all_probs": [
+      0.03493664786219597,
+      0.9650633931159973
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_fig_35",
+    "sentence": "כשגילו טעות חמורה בדו”ח שהכנתי, חטפתי מכה מקצועית כי ממש בדקתי את עצמי כמה פעמים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9571094512939453,
+    "is_correct": true,
+    "all_probs": [
+      0.042890481650829315,
+      0.9571094512939453
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_fig_39",
+    "sentence": "כששמעתי את הביקורת החריפה ממנהל שהערכתי, חטפתי מכה מנטלית, אבל דווקא ברגע ההשפלה ההוא נולדה בי הנחישות להוכיח לו שהוא טעה לגביי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9580199122428894,
+    "is_correct": true,
+    "all_probs": [
+      0.04198014736175537,
+      0.9580199122428894
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "17_fig_40",
+    "sentence": "לא ציפיתי שתגיב בעוצמה כזאת למה שאמרתי ולכן חטפתי מכה מהתגובה שלך כלפיי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9569809436798096,
+    "is_correct": true,
+    "all_probs": [
+      0.04301898181438446,
+      0.9569809436798096
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "18_lit_11",
+    "sentence": "הוא יצר דמות של דרקון לאחר שחיבר נקודות בשקט בשקט.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9554777145385742,
+    "is_correct": true,
+    "all_probs": [
+      0.9554777145385742,
+      0.044522300362586975
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "18_lit_13",
+    "sentence": "החייל חיבר נקודות במפה ושרטט מסלול יציאה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.953606367111206,
+    "is_correct": true,
+    "all_probs": [
+      0.953606367111206,
+      0.04639364406466484
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "18_lit_20",
+    "sentence": "היא חיברה נקודות שהקבצוצה השיגה במספר תחרויות שונות בתחרות הארצית, ושאלו את עצמם האם יש להם סיכוי לנצח את זה הפעם?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.9478319883346558,
+    "is_correct": false,
+    "all_probs": [
+      0.05216800794005394,
+      0.9478319883346558
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "18_lit_32",
+    "sentence": "הם חיברו נקודות על הדף וקיבלו ציור של פיל",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9548408389091492,
+    "is_correct": true,
+    "all_probs": [
+      0.9548408389091492,
+      0.04515920206904411
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "18_fig_20",
+    "sentence": "היא חיברה נקודות והרגישה שמישהו קרוב בגד בה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9656089544296265,
+    "is_correct": true,
+    "all_probs": [
+      0.03439105302095413,
+      0.9656089544296265
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "18_fig_23",
+    "sentence": "הם חיברו נקודות והבינו שהחבר סובל מדיכאון",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9648077487945557,
+    "is_correct": true,
+    "all_probs": [
+      0.035192202776670456,
+      0.9648077487945557
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "18_fig_24",
+    "sentence": "הם חיברו נקודות וידעו שהגיע הזמן לפעול",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9466115832328796,
+    "is_correct": true,
+    "all_probs": [
+      0.05338840186595917,
+      0.9466115832328796
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "18_fig_40",
+    "sentence": "פתאום התלמיד הבין איך המשוואה עובדת, כאילו התחברו לו הנקודות מכל השיעורים שלמד עד כה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9246382117271423,
+    "is_correct": true,
+    "all_probs": [
+      0.07536183297634125,
+      0.9246382117271423
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_lit_10",
+    "sentence": "האם המשחק יצא מהקופסה שלם או שחסר בו משהו?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.955181360244751,
+    "is_correct": true,
+    "all_probs": [
+      0.955181360244751,
+      0.044818609952926636
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_lit_11",
+    "sentence": "הבגד יצא מהקופסה עם תווית נוצצת ומרשימה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9537992477416992,
+    "is_correct": true,
+    "all_probs": [
+      0.9537992477416992,
+      0.046200722455978394
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_lit_19",
+    "sentence": "הכובע יצא מהקופסה מקומט לגמרי, אבל היא לא התלוננה; “לפעמים גם דברים לא מושלמים נראים הכי אמיתיים”, היא אמרה וצחקה מול המראה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9547138810157776,
+    "is_correct": true,
+    "all_probs": [
+      0.9547138810157776,
+      0.04528610408306122
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_lit_29",
+    "sentence": "המנורה האירה את החדר לאחר שיצאה מהקופסה ואוטומטית האירה את כל החדר.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.947100043296814,
+    "is_correct": true,
+    "all_probs": [
+      0.947100043296814,
+      0.052899960428476334
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_fig_2",
+    "sentence": "אומן החושים שהזמנו גרם לכולם להרגיש השראה באולם לאחר שהוא יצא מהקופסה ועשה משהו מטורף ויצירתי במופע.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.5818676352500916,
+    "is_correct": true,
+    "all_probs": [
+      0.41813230514526367,
+      0.5818676352500916
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_fig_6",
+    "sentence": "אם אתה באמת רוצה להשפיע, אל תשאר צופה מהצד – תצא מהקופסה, תאתגר את עצמך, ותזכור שהעולם שייך לאלה שמפסיקים לפחד מטעות.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9507488012313843,
+    "is_correct": true,
+    "all_probs": [
+      0.04925119876861572,
+      0.9507488012313843
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_fig_18",
+    "sentence": "היא תמיד יוצאת מהקופסה ולכן מצטיינת בצוות שלה וקיבלה מצטיינת שנתית",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9627116322517395,
+    "is_correct": true,
+    "all_probs": [
+      0.03728833422064781,
+      0.9627116322517395
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "21_fig_20",
+    "sentence": "הם יצאו מהקופסה והצליחו לפתח טכנולוגיה מהפכנית ברפואה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9611373543739319,
+    "is_correct": true,
+    "all_probs": [
+      0.03886265307664871,
+      0.9611373543739319
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_lit_12",
+    "sentence": "הוא התכופף והרים את האסימון אחרי שירד לו האסימון לרצפה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9602892994880676,
+    "is_correct": true,
+    "all_probs": [
+      0.9602892994880676,
+      0.03971071168780327
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_lit_15",
+    "sentence": "היא ניסתה שוב ושוב, עד שירד לה האסימון בטלפון הציבורי הישן, ואז חייכה חיוך נוסטלגי – “מדהים איך פעם כל שיחה התחילה בצליל מתכתי קטן כזה”.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9541236162185669,
+    "is_correct": true,
+    "all_probs": [
+      0.9541236162185669,
+      0.0458763912320137
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_lit_25",
+    "sentence": "ירד לו האסימון ונתקע לרגע באמצע החריץ הצר",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9556670188903809,
+    "is_correct": true,
+    "all_probs": [
+      0.9556670188903809,
+      0.044333044439554214
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_lit_27",
+    "sentence": "ירד לו האסימון לאט, נתקע לשנייה ואז שחרר את המנגנון",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9230113625526428,
+    "is_correct": true,
+    "all_probs": [
+      0.9230113625526428,
+      0.07698865979909897
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_fig_12",
+    "sentence": "הוא הביט במסך הניתוח שפרס הרופא לפניו, וירד לו האסימון כמה מזל היה לו שהגיע לבדיקה בזמן – לפעמים חיים שלמים תלויים ברגע אחד של הקשבה לעצמך.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.5497391819953918,
+    "is_correct": true,
+    "all_probs": [
+      0.45026081800460815,
+      0.5497391819953918
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_fig_24",
+    "sentence": "ירד לי האסימון כשהבנתי למה היא בכתה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9656646251678467,
+    "is_correct": true,
+    "all_probs": [
+      0.03433533012866974,
+      0.9656646251678467
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_fig_27",
+    "sentence": "כשהמורה חייכה בלי לומר מילה, לתלמיד ירד האסימון מה הטעות שלו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9693127274513245,
+    "is_correct": true,
+    "all_probs": [
+      0.030687233433127403,
+      0.9693127274513245
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "22_fig_36",
+    "sentence": "למה רק עכשיו ירד לו האסימון לגבי הבעיה?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9482661485671997,
+    "is_correct": true,
+    "all_probs": [
+      0.05173379182815552,
+      0.9482661485671997
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_lit_5",
+    "sentence": "אתמול היא ירדה מהעץ והחזיקה שלושה תפוחים בידה, ואמרה לאמא שלה שהטעם שלהם מזכיר לה ילדות – אולי הפירות הכי טעימים גדלים בצמרות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9608480334281921,
+    "is_correct": true,
+    "all_probs": [
+      0.9608480334281921,
+      0.03915192559361458
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_lit_7",
+    "sentence": "הוא ירד מהעץ בדיוק כשקרני השקיעה הראשונות צבעו את השמיים, ועמד שם דומם, מסתכל – לפעמים כדי לראות את היופי באמת, צריך קודם לרדת חזרה לקרקע.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9569348692893982,
+    "is_correct": true,
+    "all_probs": [
+      0.9569348692893982,
+      0.04306510090827942
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_lit_28",
+    "sentence": "הם ירדו מהעץ ברגע שנשמעה אזעקה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9441091418266296,
+    "is_correct": true,
+    "all_probs": [
+      0.9441091418266296,
+      0.05589091405272484
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_lit_38",
+    "sentence": "כשהידיים שלו רועדות מהמאמץ – “אין גבורה בלי רגש הפחד” אמר לעצמו ונשם לרווחה כשהרגליים סוף סוף נגעו בקרקע, כל זה קרה לאחר שהוא בזהירות רבה, שלב אחר שלב ירד מהעץ.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.962998628616333,
+    "is_correct": true,
+    "all_probs": [
+      0.962998628616333,
+      0.037001390010118484
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_fig_18",
+    "sentence": "הוא ירד מהעץ והסכים להקשיב לרופאים",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9456662535667419,
+    "is_correct": true,
+    "all_probs": [
+      0.05433373898267746,
+      0.9456662535667419
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_fig_20",
+    "sentence": "החייל ירד מהעץ והבין שעליו לבצע את הפקודה שנתן מפקדו, גם אם לא הסכים איתה בלב, כי אחריות צבאית לפעמים חזקה מדעה אישית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.8932036757469177,
+    "is_correct": true,
+    "all_probs": [
+      0.10679637640714645,
+      0.8932036757469177
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_fig_23",
+    "sentence": "היא ירדה מהעץ והחליטה לבקש סליחה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9440625905990601,
+    "is_correct": true,
+    "all_probs": [
+      0.05593738704919815,
+      0.9440625905990601
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "23_fig_32",
+    "sentence": "המורה החליטה שהיא מקשיבה לרעיונות של תלמידיה הצעירים, שהפתיעו אותה ביצירתיות; “אולי הגיע הזמן שגם אני אלמד משהו מכם״, היא אמרה אחרי שירדה מהעץ והתעלמה מהאגו הגדול שלה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9638614058494568,
+    "is_correct": true,
+    "all_probs": [
+      0.0361386314034462,
+      0.9638614058494568
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_lit_17",
+    "sentence": "המסילה נשברה והרכבת ירדה מהפסים מייד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9592319130897522,
+    "is_correct": true,
+    "all_probs": [
+      0.9592319130897522,
+      0.040768101811409
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_lit_23",
+    "sentence": "העגלה במחסן ירדה מהפסים שלה באמצע ההובלה, וכל הסחורה היקרה נשפכה על הרצפה – זה מה שקורה כשמזלזלים בתחזוקה ומחכים לרגע האחרון לתקן.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9623571038246155,
+    "is_correct": true,
+    "all_probs": [
+      0.9623571038246155,
+      0.037642911076545715
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_lit_28",
+    "sentence": "הקרון נעצר באמצע הדרך כי הדלת האחורית ירדה מהפסים, ודווקא כשהיינו צריכים למהר לשדה התעופה – האם יש גבול לכמה תקלות יכולות לקרות ביום אחד?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.959159791469574,
+    "is_correct": true,
+    "all_probs": [
+      0.959159791469574,
+      0.040840182453393936
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_lit_29",
+    "sentence": "הרכבת הקלה ירדה מהפסים ונחסמה בתוך העיר למשך שעות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9608884453773499,
+    "is_correct": true,
+    "all_probs": [
+      0.9608884453773499,
+      0.03911156579852104
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_fig_19",
+    "sentence": "היא ירדה מהפסים בגלל הבחינה והציון שקיבלה למרות שחשבה שהצליחה ובגדול.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9688760042190552,
+    "is_correct": true,
+    "all_probs": [
+      0.031124012544751167,
+      0.9688760042190552
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_fig_21",
+    "sentence": "היא ירדה מהפסים ונכנסה לוויכוח מיותר עם הלקוחות מול כולם.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9691702127456665,
+    "is_correct": true,
+    "all_probs": [
+      0.03082975558936596,
+      0.9691702127456665
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_fig_25",
+    "sentence": "הם הרסו לעצמם את הסיכוי לנצח כשהם ירדו מהפסים והתנהגו בצורה לא ספורטיבית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9675458669662476,
+    "is_correct": true,
+    "all_probs": [
+      0.03245414420962334,
+      0.9675458669662476
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "24_fig_35",
+    "sentence": "למרות שהכול נבע מפחד לאבד שליטה, היא ירדה מהפסים לגמרי והעובדה שאף אחד לא העז לומר לה את האמת בפנים מאוד כואבת.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9606035947799683,
+    "is_correct": true,
+    "all_probs": [
+      0.039396461099386215,
+      0.9606035947799683
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "25_lit_20",
+    "sentence": "היא ירתה לכל הכיוונים במשחק פיינטבול.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9451948404312134,
+    "is_correct": true,
+    "all_probs": [
+      0.9451948404312134,
+      0.05480519309639931
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "25_lit_27",
+    "sentence": "הם ירו לכל הכיוונים בזיקוקים באירוע וזה יצא מכלל שליטה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.6818046569824219,
+    "is_correct": true,
+    "all_probs": [
+      0.6818046569824219,
+      0.3181953430175781
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "25_lit_29",
+    "sentence": "הם ירו לכל הכיוונים בלילה החשוך, ללא פקודה וללא תיאום, והכאוס שנוצר כמעט גרם לאבדות מיותרות – “מי נתן אישור לירי כזה?” שאל המפקד בזעם כשהבוקר עלה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9454430341720581,
+    "is_correct": true,
+    "all_probs": [
+      0.9454430341720581,
+      0.05455698445439339
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "25_lit_36",
+    "sentence": "למרות האזהרות, היא ירתה לכל הכיוונים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8096690773963928,
+    "is_correct": true,
+    "all_probs": [
+      0.8096690773963928,
+      0.19033095240592957
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "25_fig_10",
+    "sentence": "הוא בלבל את חבריו בעד מי הוא משחק לאחר שירה לכל הכיוונים באמצע תחרות פינג פונג.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.5953802466392517,
+    "is_correct": true,
+    "all_probs": [
+      0.4046197235584259,
+      0.5953802466392517
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "25_fig_17",
+    "sentence": "הוא ירה לכל הכיוונים, אבל לא פגע בשום מטרה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 0,
+    "confidence": 0.9424198269844055,
+    "is_correct": false,
+    "all_probs": [
+      0.9424198269844055,
+      0.05758022516965866
+    ],
+    "error_category": "FALSE_NEGATIVE"
+  },
+  {
+    "id": "25_fig_20",
+    "sentence": "היא ירתה לכל הכיוונים במקום לחשוב רגע בשקט.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9218320250511169,
+    "is_correct": true,
+    "all_probs": [
+      0.07816794514656067,
+      0.9218320250511169
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "25_fig_22",
+    "sentence": "היא ירתה לכל הכיוונים כי לא מצאה פתרון אחר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9398242235183716,
+    "is_correct": true,
+    "all_probs": [
+      0.06017576903104782,
+      0.9398242235183716
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_lit_1",
+    "sentence": "אחרי טיפול שיניים כואב במיוחד, היא ירקה דם ונבהלה מאוד מהכמויות שיוצאות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9540107846260071,
+    "is_correct": true,
+    "all_probs": [
+      0.9540107846260071,
+      0.04598928242921829
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_lit_7",
+    "sentence": "אם הכלב ההוא לא היה יורק דם אחרי המריבה, הבעלים אפילו לא היו יודעים שהוא נפצע מבפנים; כמה פעמים אנחנו מתעלמים ממי שסובל עד שהוא קורס?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9532771110534668,
+    "is_correct": true,
+    "all_probs": [
+      0.9532771110534668,
+      0.04672285169363022
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_lit_27",
+    "sentence": "המחזה היה מצמרר כאשר האדם ירק דם על השלג באחת הסצנות המחרידות ביותר שיצא לי לראות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8807753324508667,
+    "is_correct": true,
+    "all_probs": [
+      0.8807753324508667,
+      0.11922470480203629
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_lit_37",
+    "sentence": "התינוק ירק דם אחרי שחתך את חניכיו בצעצוע.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9566494226455688,
+    "is_correct": true,
+    "all_probs": [
+      0.9566494226455688,
+      0.04335061088204384
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_fig_3",
+    "sentence": "אם הוא לא היה יורק דם כדי להחזיר לעצמו את שמו הטוב, כנראה אף אחד לא היה מאמין לו שוב; בעולם ציני כמו שלנו, מי שמנסה לנקות את עברו נחשב כמעט נאיבי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9625882506370544,
+    "is_correct": true,
+    "all_probs": [
+      0.03741181269288063,
+      0.9625882506370544
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_fig_9",
+    "sentence": "הוא ירק דם במשך עשור שלם עד שבנה לעצמו שם בעולם האמנות, לא בזכות קשרים או מזל, אלא בזכות עקשנות שגבלה בשיגעון – האם זה היה שווה את הנפש שנשחקה בדרך?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.963192343711853,
+    "is_correct": true,
+    "all_probs": [
+      0.036807581782341,
+      0.963192343711853
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_fig_14",
+    "sentence": "הוא ירק דם שנים כדי להגיע לתפקיד הזה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9451795220375061,
+    "is_correct": true,
+    "all_probs": [
+      0.05482053384184837,
+      0.9451795220375061
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "26_fig_17",
+    "sentence": "היא ירקה דם כדי לאזן בין קריירה מצליחה לחיי משפחה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.965430498123169,
+    "is_correct": true,
+    "all_probs": [
+      0.03456956520676613,
+      0.965430498123169
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "27_lit_3",
+    "sentence": "אם הפסל לא היה עשוי ממתכת טהורה, אלא מלב זהב אמיתי, ייתכן שהמוזיאון היה צריך לשכור שמירה צמודה; כך או כך, הוא כבר הפך לסמל של עוצמה ואנושיות גם יחד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9605830907821655,
+    "is_correct": true,
+    "all_probs": [
+      0.9605830907821655,
+      0.03941692039370537
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "27_lit_4",
+    "sentence": "אם נבחן את מדיניות הסמלים החדשה של העירייה, נראה שגם הלוגו החדש כולל לב זהב קטן בפינה, כביטוי למחויבות החברתית – או שמא רק לסיסמה יפה?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9286545515060425,
+    "is_correct": true,
+    "all_probs": [
+      0.9286545515060425,
+      0.07134545594453812
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "27_lit_7",
+    "sentence": "בחלון הראווה של חנות התכשיטים הוצב פסל בגודל אדם עם לב זהב ענק במרכזו, ולקוחות רבים עצרו לצלם – האם מדובר באמנות או בפרסום סמוי?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9564387798309326,
+    "is_correct": true,
+    "all_probs": [
+      0.9564387798309326,
+      0.0435611829161644
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "27_lit_30",
+    "sentence": "המורה ביקשה לעודד מצוינות ולא רק ציונים, ולכן הדביקה מדבקה בצורת לב זהב על המחברת של התלמיד שהראה שיתוף פעולה ועזרה לחבריו בכיתה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.5781968832015991,
+    "is_correct": false,
+    "all_probs": [
+      0.4218031167984009,
+      0.5781968832015991
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "27_fig_12",
+    "sentence": "האם ייתכן שלפוליטיקאי יש לב זהב אמיתי, או שכל מעשה טוב נובע מאינטרס? הציבור כבר מתקשה להבחין בין נדיבות אמיתית לבין יחסי ציבור מחושבים היטב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9616208076477051,
+    "is_correct": true,
+    "all_probs": [
+      0.038379207253456116,
+      0.9616208076477051
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "27_fig_17",
+    "sentence": "הוא תמיד אומר שלב זהב מנצח כל קושי פוליטי",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9548148512840271,
+    "is_correct": true,
+    "all_probs": [
+      0.04518510773777962,
+      0.9548148512840271
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "27_fig_24",
+    "sentence": "הילד עם לב זהב אימץ את החתול הפצוע מהרחוב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 0,
+    "confidence": 0.7409349083900452,
+    "is_correct": false,
+    "all_probs": [
+      0.7409349083900452,
+      0.25906509160995483
+    ],
+    "error_category": "FALSE_NEGATIVE"
+  },
+  {
+    "id": "27_fig_29",
+    "sentence": "חבר עם לב זהב תמיד נמצא כשצריך כתף",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9609692096710205,
+    "is_correct": true,
+    "all_probs": [
+      0.03903072699904442,
+      0.9609692096710205
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_lit_7",
+    "sentence": "הוא לקח צעד אחורה כדי לא לדרוך על השטיח הרטוב",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9573494791984558,
+    "is_correct": true,
+    "all_probs": [
+      0.9573494791984558,
+      0.042650602757930756
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_lit_16",
+    "sentence": "הילד לקח צעד אחורה מהציור כי רצה לבחון אותו",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.958426296710968,
+    "is_correct": true,
+    "all_probs": [
+      0.958426296710968,
+      0.041573718190193176
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_lit_23",
+    "sentence": "המבקר לקח צעד אחורה מהציור הענק בגלריה, הביט בו בדממה, ותהה בקול אם האמנות נועדה לרגש או לבלבל אותנו בכוונה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9548372626304626,
+    "is_correct": true,
+    "all_probs": [
+      0.9548372626304626,
+      0.045162733644247055
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_lit_39",
+    "sentence": "עמדתי קרוב מדי לחלון ופחדתי להיפגע אז לקחתי צעד אחורה ממנו.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9116077423095703,
+    "is_correct": true,
+    "all_probs": [
+      0.9116077423095703,
+      0.08839225023984909
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_fig_9",
+    "sentence": "הוא לקח צעד אחורה מהשיחה כדי להקשיב לאחרים",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9263613820075989,
+    "is_correct": true,
+    "all_probs": [
+      0.0736386775970459,
+      0.9263613820075989
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_fig_12",
+    "sentence": "החיילת לקחה צעד אחורה מהמשימה הקשה כדי לאסוף כוחות",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.5519512891769409,
+    "is_correct": true,
+    "all_probs": [
+      0.4480487108230591,
+      0.5519512891769409
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_fig_28",
+    "sentence": "זה לא בהכרח נסיגה כשאתה לוקח צעד אחורה ברפואה, לפעמים זו הדרך היחידה להבין שהטיפול הנכון הוא דווקא זה שלא ניסית עד עכשיו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9520905613899231,
+    "is_correct": true,
+    "all_probs": [
+      0.04790949076414108,
+      0.9520905613899231
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "28_fig_34",
+    "sentence": "כשהתוצאות הראשוניות העלו חשד לתופעות לוואי קשות, הם לקחו צעד אחורה מהניסוי הקליני וההחלטה הזאת הצילה את המוניטין שלהם וגם כמה חיים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9613458514213562,
+    "is_correct": true,
+    "all_probs": [
+      0.03865407034754753,
+      0.9613458514213562
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_lit_4",
+    "sentence": "אם הוא לא היה מושך בחוטים של המכונית הקטנה בצורה מדוייקת, היא לא הייתה נוסעת ישר אלא נתקעת, אבל מי בכלל צריך שלמות כשיש צחוק אמיתי באמצע המשחק?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9534243941307068,
+    "is_correct": true,
+    "all_probs": [
+      0.9534243941307068,
+      0.046575650572776794
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_lit_15",
+    "sentence": "הוא משך בחוטים של החבל כדי לשחרר את החבילה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9498850703239441,
+    "is_correct": true,
+    "all_probs": [
+      0.9498850703239441,
+      0.050114911049604416
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_lit_29",
+    "sentence": "הכלב קפץ על הספה ומשך בחוטים שבלטו מהכרית עד שהתפרקה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9553183317184448,
+    "is_correct": true,
+    "all_probs": [
+      0.9553183317184448,
+      0.04468167573213577
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_lit_37",
+    "sentence": "מתחת לסוודר בלטו מספר שרוכים, אז הוא משך בחוטים והם נקרעו מסוודר בטעות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9527777433395386,
+    "is_correct": true,
+    "all_probs": [
+      0.9527777433395386,
+      0.04722218960523605
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_fig_4",
+    "sentence": "אם האישה הזו לא הייתה מושכת בחוטים בפרויקט כדי להבליט את עצמה, כנראה שאף אחד לא היה שם לב למאמץ שלה – השאלה אם זה הישג או זיוף תדמיתי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9640655517578125,
+    "is_correct": true,
+    "all_probs": [
+      0.035934433341026306,
+      0.9640655517578125
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_fig_8",
+    "sentence": "אם היא לא הייתה מושכת בחוטים מאחורי ההנהלה, אף אחד לא היה מיישם את הרעיון שלה – ובסוף כולם חשבו שזה מהלך טבעי של המנכ\"ל, לא שלה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.955860435962677,
+    "is_correct": true,
+    "all_probs": [
+      0.0441395528614521,
+      0.955860435962677
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_fig_13",
+    "sentence": "ההחלטה התקבלה במהירות כי הם משכו בחוטים מאחורי הגב של חברי הישיבה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9523443579673767,
+    "is_correct": true,
+    "all_probs": [
+      0.04765566810965538,
+      0.9523443579673767
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "29_fig_29",
+    "sentence": "יש לו קשרים בכל מקום הוא פשוט יודע בדיוק איפה למשוך בחוט.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9557140469551086,
+    "is_correct": true,
+    "all_probs": [
+      0.04428592696785927,
+      0.9557140469551086
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_lit_17",
+    "sentence": "היא נכנסה מתחת לאלונקה בשקט מוחלט למרות המשקל העצום שהיה על כתפיה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9547230005264282,
+    "is_correct": true,
+    "all_probs": [
+      0.9547230005264282,
+      0.04527699574828148
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_lit_24",
+    "sentence": "היא שמעה את הפקודה בקול רם וברור, וכשהפקודה נשמעה היא נכנסה מתחת לאלונקה בלי לחשוב פעמיים – הרי בחיים, כמו באימון, מי שמחכה לאות מושלם עלול לאחר את הרגע.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9433354735374451,
+    "is_correct": true,
+    "all_probs": [
+      0.9433354735374451,
+      0.056664492934942245
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_lit_32",
+    "sentence": "כשהוא נכנס מתחת לאלונקה ועמד זקוף למרות כאב חד בכתף ימין, החברים הסתכלו עליו בהערכה – הם ידעו שהוא לא עושה זאת בשביל תהילה אלא כדי לא לאכזב אף אחד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9534171223640442,
+    "is_correct": true,
+    "all_probs": [
+      0.9534171223640442,
+      0.04658292979001999
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_lit_40",
+    "sentence": "תפסיקו לדבר ותיכנסו מתחת לאלונקה, צעק המפקד על החיילים שעמדו בהיסוס, “כי בשדה הקרב אין מקום לספקות – יש רק פעולה ונאמנות לחבר לצוות.”",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.5410071611404419,
+    "is_correct": true,
+    "all_probs": [
+      0.5410071611404419,
+      0.4589928090572357
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_fig_14",
+    "sentence": "החברים נכנסו מתחת לאלונקה ולא השאירו אף אחד מאחור בפרוייקט.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9520280957221985,
+    "is_correct": true,
+    "all_probs": [
+      0.047971926629543304,
+      0.9520280957221985
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_fig_17",
+    "sentence": "היא נכנסה מתחת לאלונקה והעניקה השראה לכולם.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9557539224624634,
+    "is_correct": true,
+    "all_probs": [
+      0.0442461334168911,
+      0.9557539224624634
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_fig_24",
+    "sentence": "הם נכנסו מתחת לאלונקה והצליחו לשנות מציאות.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9488049745559692,
+    "is_correct": true,
+    "all_probs": [
+      0.05119499936699867,
+      0.9488049745559692
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "30_fig_36",
+    "sentence": "למרות שהיו מותשים פיזית ונפשית, הם נכנסו מתחת לאלונקה, לקחו על עצמם שעות נוספות, ובסוף הצליחו להשיק את המוצר בזמן – כי ידעו שזה הצעד היחיד שיכול לשקם את אמון ההנהלה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9587256908416748,
+    "is_correct": true,
+    "all_probs": [
+      0.04127436876296997,
+      0.9587256908416748
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_lit_1",
+    "sentence": "אם הארנק שלך נפל בין הכיסאות בבית הקפה, למה שלא תבדוק מתחת למושב שבו ישבת במקום להאשים את המלצר? לפעמים הפתרון הפשוט נמצא ממש מתחת לאף.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9623647332191467,
+    "is_correct": true,
+    "all_probs": [
+      0.9623647332191467,
+      0.037635330110788345
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_lit_10",
+    "sentence": "החולצה נפל בין הכיסאות בארון ולא מצאו אותה חודשים",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9573089480400085,
+    "is_correct": true,
+    "all_probs": [
+      0.9573089480400085,
+      0.04269104823470116
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_lit_17",
+    "sentence": "הכדור של משחק ההוקי נפל בין הכיסאות ביציע, והקהל התחיל להריע כשהמאבטח הצליח לשלוף אותו משם – כאילו היה מדובר בשער אמיתי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9588730931282043,
+    "is_correct": true,
+    "all_probs": [
+      0.9588730931282043,
+      0.04112691432237625
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_lit_23",
+    "sentence": "המשחק הקטן נפל בין הכיסאות והלך לאיבוד",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9570801258087158,
+    "is_correct": true,
+    "all_probs": [
+      0.9570801258087158,
+      0.042919885367155075
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_fig_7",
+    "sentence": "דו\"ח פנימי חשף שמאות תלונות של אזרחים נפלו בין הכיסאות במחלקת הפניות הממשלתית, כי המערכת האוטומטית לא סיווגה אותן נכון – ואף אחד לא הבחין בזה חודשים שלמים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9535139799118042,
+    "is_correct": true,
+    "all_probs": [
+      0.046486008912324905,
+      0.9535139799118042
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_fig_18",
+    "sentence": "הטיפול הרפואי בילדה חולה בסרטן נדיר נפל בין הכיסאות כי משרד הבריאות והביטוח הפרטי לא הצליחו להגיע להסכמה, והאם חיי אדם באמת שווים פחות ממסמך חתום?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.948784589767456,
+    "is_correct": true,
+    "all_probs": [
+      0.05121538043022156,
+      0.948784589767456
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_fig_21",
+    "sentence": "המאמן טען שהקבוצה שלו נפלה בין הכיסאות כשהאיגוד לא סיפק להם מגרש אימונים, למרות שהובטח תקציב ייעודי – ועכשיו השחקנים מתאמנים בחניון ישן מאחורי האצטדיון.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9433795213699341,
+    "is_correct": true,
+    "all_probs": [
+      0.0566205158829689,
+      0.9433795213699341
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "31_fig_25",
+    "sentence": "המיזם החדש לחדשנות עסקית נפל בין הכיסאות כי לא היה ברור אם הוא שייך למשרד הכלכלה או למשרד החדשנות, ובינתיים היזמים נאלצו להקפיא את פעילותם לשנה שלמה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9543957710266113,
+    "is_correct": true,
+    "all_probs": [
+      0.04560428857803345,
+      0.9543957710266113
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "32_lit_12",
+    "sentence": "במהלך הצילום, הדוגמן נפל מהכיסא ונחבל קלות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9586802124977112,
+    "is_correct": true,
+    "all_probs": [
+      0.9586802124977112,
+      0.04131978377699852
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "32_lit_17",
+    "sentence": "הוא נפל מהכיסא כשניסה להגיע למשהו גבוה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.9196763634681702,
+    "is_correct": false,
+    "all_probs": [
+      0.08032364398241043,
+      0.9196763634681702
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "32_lit_19",
+    "sentence": "החתול קפץ על הילדה היא נבהלה ונפלה מהכיסא",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.958031952381134,
+    "is_correct": true,
+    "all_probs": [
+      0.958031952381134,
+      0.04196803644299507
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "32_lit_22",
+    "sentence": "היא נבהלה מצלצול הטלפון ונפלה מהכיסא בסלון",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9571578502655029,
+    "is_correct": true,
+    "all_probs": [
+      0.9571578502655029,
+      0.04284219816327095
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "32_fig_7",
+    "sentence": "אם הם לא היו כל כך בטוחים בעצמם, הם לא היו נופלים מהכיסא כשגילו שהמתמודד הלא צפוי, זה שכולם זלזלו בו, דווקא ניצח בתחרות הגדולה בשידור חי מול מיליונים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9649725556373596,
+    "is_correct": true,
+    "all_probs": [
+      0.03502747043967247,
+      0.9649725556373596
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "32_fig_8",
+    "sentence": "אם חברי הקבוצה היו מתכוננים קצת יותר ברצינות לפרויקט הגמר, אולי הם לא היו נופלים מהכיסא מרוב תדהמה כשראו את הציונים הנמוכים במערכת.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9646056294441223,
+    "is_correct": true,
+    "all_probs": [
+      0.035394348204135895,
+      0.9646056294441223
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "32_fig_23",
+    "sentence": "הם נפלו מהכיסא כשראו את ההופעה המדהימה בסיום הטקס",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9642789959907532,
+    "is_correct": true,
+    "all_probs": [
+      0.03572108596563339,
+      0.9642789959907532
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "32_fig_39",
+    "sentence": "כשראיתי את התגובה שלה בתקשורת, נפלתי מהכיסא עקב ההודעה המפתיעה שהיא הוציאה לציבור.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.959080696105957,
+    "is_correct": true,
+    "all_probs": [
+      0.04091925173997879,
+      0.959080696105957
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_lit_8",
+    "sentence": "הבקבוק נשבר מבפנים והתחיל לנזול לאט תוך כדי האימון.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9593859910964966,
+    "is_correct": true,
+    "all_probs": [
+      0.9593859910964966,
+      0.0406140461564064
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_lit_18",
+    "sentence": "המכונה נשברה מבפנים באמצע משמרת במפעל, והייצור נעצר לחלוטין – אף אחד לא חשב לבדוק אותה בזמן כי “היא תמיד עובדת מצוין”.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9622501134872437,
+    "is_correct": true,
+    "all_probs": [
+      0.9622501134872437,
+      0.03774987533688545
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_lit_22",
+    "sentence": "הנורה נשברה מבפנים למרות שלא נשמע קול פיצוץ.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9535412192344666,
+    "is_correct": true,
+    "all_probs": [
+      0.9535412192344666,
+      0.04645879939198494
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_lit_30",
+    "sentence": "הקנקן נראה שלם, אבל נשבר מבפנים לגמרי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9571901559829712,
+    "is_correct": true,
+    "all_probs": [
+      0.9571901559829712,
+      0.04280976206064224
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_fig_3",
+    "sentence": "אם הוא לא היה נשבר מבפנים כשראה את חלום ילדותו מתרסק מול עיניו, אולי היה מנסה שוב, אבל יש רגעים שבהם הלב עוצר לפני השכל.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9586853384971619,
+    "is_correct": true,
+    "all_probs": [
+      0.041314613074064255,
+      0.9586853384971619
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_fig_4",
+    "sentence": "אם הם לא היו נשברים מבפנים אחרי כל כישלון בטיפולי הפוריות, אולי היו מצליחים להאמין שוב, אבל גם כוח הרצון נשחק כשהחלום מתרחק בכל פעם מחדש.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9632221460342407,
+    "is_correct": true,
+    "all_probs": [
+      0.03677792847156525,
+      0.9632221460342407
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_fig_27",
+    "sentence": "הילד נשבר מבפנים כשאבא הבטיח לו משחק ולא קיים שוב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9604883193969727,
+    "is_correct": true,
+    "all_probs": [
+      0.039511751383543015,
+      0.9604883193969727
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "34_fig_30",
+    "sentence": "הם ידעו שהמאבק לא יסתיים לטובתם, אז החברה נשברו מבפנים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9610827565193176,
+    "is_correct": true,
+    "all_probs": [
+      0.038917217403650284,
+      0.9610827565193176
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_lit_8",
+    "sentence": "בזמן שחיקתה לרופא השיניים, היא נשכה שפתיים מרוב פחד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.961151659488678,
+    "is_correct": true,
+    "all_probs": [
+      0.961151659488678,
+      0.03884829953312874
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_lit_11",
+    "sentence": "בלי לשים לב, במהלך ריצה ארוכה במיוחד, הוא נשך שפתיים כשהתאמץ להגיע לקו הסיום, ורק אחר כך גילה שיש לו סימן אדום קטן שהעיד כמה היה חדור מטרה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9563149213790894,
+    "is_correct": true,
+    "all_probs": [
+      0.9563149213790894,
+      0.043685127049684525
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_lit_22",
+    "sentence": "היא גרמה לה שריטה בתוך הפה לאחר שנשכה שפתיים בחוזקה כחלק מהרגל ישן מטופש.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9560818672180176,
+    "is_correct": true,
+    "all_probs": [
+      0.9560818672180176,
+      0.043918151408433914
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_lit_25",
+    "sentence": "היא נשכה שפתיים והתחיל לצאת דם.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9481104016304016,
+    "is_correct": true,
+    "all_probs": [
+      0.9481104016304016,
+      0.05188955366611481
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_fig_2",
+    "sentence": "אל תנסה להעמיד פנים שהכול בסדר – הוא נשך שפתיים מול המנהל ששבר לו את החלום, ויצא מהמשרד עם חיוך מזויף, רק כדי שלא יראו את האכזבה שצרבה לו בלב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9571384191513062,
+    "is_correct": true,
+    "all_probs": [
+      0.04286159202456474,
+      0.9571384191513062
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_fig_9",
+    "sentence": "בזמן המשחק הכוכב העולה לא רצה להראות חולשה מול כולם, אז הוא נשך שפתיים במקום.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.7965789437294006,
+    "is_correct": true,
+    "all_probs": [
+      0.20342107117176056,
+      0.7965789437294006
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_fig_25",
+    "sentence": "היא נשכה שפתיים כדי להסתיר את האכזבה מהמבחן, אבל בלב הרגישה שהכישלון הזה אולי דווקא מהלך שיכריח אותה לבחור כיוון חדש וטוב יותר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9611352682113647,
+    "is_correct": true,
+    "all_probs": [
+      0.03886474668979645,
+      0.9611352682113647
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "35_fig_37",
+    "sentence": "כשהיא שמעה את חברתה מתפארת בהישגיה החדשים, אשלי נשכה שפתיים וחייכה חיוך קטן של מישהי שיודעת שלפעמים שקט אחד אומר יותר מאלף מחמאות מזויפות.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9571494460105896,
+    "is_correct": true,
+    "all_probs": [
+      0.04285053163766861,
+      0.9571494460105896
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_lit_16",
+    "sentence": "היא נתנה גז והכינה סיבוב חד עם הקורקינט",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.952106773853302,
+    "is_correct": true,
+    "all_probs": [
+      0.952106773853302,
+      0.04789329320192337
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_lit_28",
+    "sentence": "הנהג הצעיר נתן גז בעיקול בלי לשים לב לשלט האזהרה, ולמרות שלא קרה אסון, המדריך במבחן הנהיגה רשם לעצמו הערה חמורה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9590923190116882,
+    "is_correct": true,
+    "all_probs": [
+      0.9590923190116882,
+      0.04090769216418266
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_lit_31",
+    "sentence": "הנהג נתן גז והאוטו רעד כולו",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9576135873794556,
+    "is_correct": true,
+    "all_probs": [
+      0.9576135873794556,
+      0.04238642379641533
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_lit_39",
+    "sentence": "לפני שהיא טסה ורקדה על המים, הם נתנו גז על הסירה עם המנוע החדשני שהם רק קנו.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9547311663627625,
+    "is_correct": true,
+    "all_probs": [
+      0.9547311663627625,
+      0.045268770307302475
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_fig_1",
+    "sentence": "אולי עוד תספיק להגיש בזמן אם תיתן גז עכשיו על פרויקט התואר, אבל אם תמשיך לדחות, תמצא את עצמך שורף לילות בלי מנוחה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9486492872238159,
+    "is_correct": true,
+    "all_probs": [
+      0.05135072395205498,
+      0.9486492872238159
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_fig_2",
+    "sentence": "אם המחלקה לא תיתן גז עכשיו בפיתוח התרופה, היא תאבד את הפטנט לחברה מתחרה, מה שיוביל לנזק של מיליוני שקלים ולהפסד תדמיתי כבד בתחום הרפואה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9226709604263306,
+    "is_correct": true,
+    "all_probs": [
+      0.07732897996902466,
+      0.9226709604263306
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_fig_7",
+    "sentence": "החברה נתנה גז בהשקת הקמפיין החדש שלה, השקיעה בפרסום דיגיטלי אגרסיבי, ואם לא תמשיך בקצב הזה – היא תאבד את יתרון הראשוניות מול המתחרות.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9658348560333252,
+    "is_correct": true,
+    "all_probs": [
+      0.0341651551425457,
+      0.9658348560333252
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "36_fig_32",
+    "sentence": "העיתונאית נתנה גז בתחקיר החברתי שחשף שחיתות במערכת הבריאות, אף אחד לא האמין שתצליח לפרסם בזמן, אבל היא סיימה ימים לפני הדדליין והפילה פצצה ציבורית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.959867537021637,
+    "is_correct": true,
+    "all_probs": [
+      0.04013248533010483,
+      0.959867537021637
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_lit_7",
+    "sentence": "באמצע השביל התלול הילד אמר בקול רועד שהוא פוחד ליפול ואז הוא נתן יד למורה והיא חייכה ואמרה: “לפעמים האומץ מתחיל בזה שאתה מודה בזה שמפחיד”.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9623264074325562,
+    "is_correct": true,
+    "all_probs": [
+      0.9623264074325562,
+      0.03767355531454086
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_lit_8",
+    "sentence": "בדרך לגן המשחקים, האמא נתנה יד לילדה הקטנה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9572958946228027,
+    "is_correct": true,
+    "all_probs": [
+      0.9572958946228027,
+      0.042704083025455475
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_lit_30",
+    "sentence": "המדריך נתן יד לחניך שנתקע באמצע קיר הטיפוס.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9534885287284851,
+    "is_correct": true,
+    "all_probs": [
+      0.9534885287284851,
+      0.0465114563703537
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_lit_34",
+    "sentence": "כדי לעזור לו לקום, הם נתנו יד לחבר שנפל במשחק הכדורגל.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9572267532348633,
+    "is_correct": true,
+    "all_probs": [
+      0.9572267532348633,
+      0.04277319833636284
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_fig_5",
+    "sentence": "אם הם לא היו נותנים יד לארגון שקם למען שינוי חברתי, אולי המחאה הייתה נעלמת מהכותרות, אבל הם בחרו לקחת סיכון ולעמוד לצד מה שהאמינו בו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.950509250164032,
+    "is_correct": true,
+    "all_probs": [
+      0.04949072003364563,
+      0.950509250164032
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_fig_28",
+    "sentence": "המורה יודעת שזה עלול לא להצליח אז אל תיתן יד לפתרון שלא נבדק לעומק, אבל הלחץ לסיים את המטלה גבר על הזהירות, והתוצאה לא איחרה לבוא.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.949821412563324,
+    "is_correct": true,
+    "all_probs": [
+      0.05017857626080513,
+      0.949821412563324
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_fig_33",
+    "sentence": "הקמפיין החברתי ניסה לשנות הרגלי בריאות, אז הם נתנו יד לקמפיין הזה כי הבינו שזה חשוב להם.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9409878849983215,
+    "is_correct": true,
+    "all_probs": [
+      0.05901206657290459,
+      0.9409878849983215
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "37_fig_40",
+    "sentence": "על אף שהארגון ידע שהציבור לא יקבל זאת בקלות, הוא נתן יד להסכם מדיני שנוי במחלוקת מתוך אמונה ששלום אמיתי נבנה רק עם פשרות אמיצות הארגון.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9370301961898804,
+    "is_correct": true,
+    "all_probs": [
+      0.06296981871128082,
+      0.9370301961898804
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_lit_9",
+    "sentence": "אם האב לא היה סוגר את החשבון של בנו הקטן בזמן, הריבית שהצטברה הייתה אוכלת את החיסכון, וכך למדו השניים שיעור חשוב באחריות כלכלית משפחתית.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9579119086265564,
+    "is_correct": true,
+    "all_probs": [
+      0.9579119086265564,
+      0.04208813235163689
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_lit_10",
+    "sentence": "אם האבא לא היה יוזם פגישה עם הנהלת הבנק כדי לסגור את החשבון ולפתוח חיסכון ייעודי לילד, הם לא היו מצליחים לממן לו את טיול החלומות לאירופה בקיץ לבר מצווה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9583826065063477,
+    "is_correct": true,
+    "all_probs": [
+      0.9583826065063477,
+      0.04161738231778145
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_lit_27",
+    "sentence": "הלקוח רצה להשקיע בנדל\"ן וסגר חשבון פיקדון שהיה פתוח מזמן.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9407503604888916,
+    "is_correct": true,
+    "all_probs": [
+      0.9407503604888916,
+      0.05924965441226959
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_lit_32",
+    "sentence": "כשעבר לעבוד כשכיר, הוא סגר את החשבון העסקי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9381877779960632,
+    "is_correct": true,
+    "all_probs": [
+      0.9381877779960632,
+      0.061812255531549454
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_fig_2",
+    "sentence": "אל תזלזל בסליחה עצמית – כשסגרתי חשבון עם עצמי, הרגשתי כאילו השבתי לעצמי חופש נפשי שאף ניצחון חיצוני לא היה יכול להעניק לי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9614840745925903,
+    "is_correct": true,
+    "all_probs": [
+      0.03851590305566788,
+      0.9614840745925903
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_fig_13",
+    "sentence": "הוא סגר חשבון עם ההורים הביקורתיים כשהצליח בגדול בתחום שלו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9633798599243164,
+    "is_correct": true,
+    "all_probs": [
+      0.0366201288998127,
+      0.9633798599243164
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_fig_21",
+    "sentence": "היא סגרה חשבון עם השכנה שהאשימה אותה בגניבה, כשהשמיעה הקלטה שהוכיחה את חפותה – והפכה לגיבורה מקומית בקבוצת הפייסבוק של השכונה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9492285251617432,
+    "is_correct": true,
+    "all_probs": [
+      0.05077148601412773,
+      0.9492285251617432
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "38_fig_30",
+    "sentence": "השיר החדש שלו הוא לא רק יצירה מוזיקלית, אלא גם דרך אלגנטית לסגור חשבון עם כל המבקרים ששכחו כמה כוח יש ביצירה חופשית ולא ממוסחרת.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.952028751373291,
+    "is_correct": true,
+    "all_probs": [
+      0.04797125607728958,
+      0.952028751373291
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_lit_2",
+    "sentence": "אם הם לא היו עושים סלט ירקות מאודים עם ברוקולי וגזר, אולי היו נכנעים לפיצה שוב; אבל באותו ערב, כשהגישו את הסלט, אפילו הילד הקטן ביקש תוספת – נס תזונתי אמיתי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9627969264984131,
+    "is_correct": true,
+    "all_probs": [
+      0.9627969264984131,
+      0.037203021347522736
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_lit_19",
+    "sentence": "היא כתבה פוסט שלם באינסטגרם: ״זה לא רק אוכל, זה מצב רוח ואופי״ לאחר שעשתה סלט פסטה קר עם ירקות צבעוניים וקיבלה מאות לייקים תוך שעה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.7608098983764648,
+    "is_correct": true,
+    "all_probs": [
+      0.7608098983764648,
+      0.23919008672237396
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_lit_34",
+    "sentence": "הם עשו סלט קצוץ עם פלפל חריף",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9623291492462158,
+    "is_correct": true,
+    "all_probs": [
+      0.9623291492462158,
+      0.03767088055610657
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_lit_38",
+    "sentence": "מי היה מאמין שזה יהפוך למוקד הערב במקום העוגה היקרה אחרי החלטה פשוטה לעשות סלט ענק לכל האורחים במסיבה שבו הוסיפו רימונים, גבינה מלוחה וירקות מהגינה?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9617554545402527,
+    "is_correct": true,
+    "all_probs": [
+      0.9617554545402527,
+      0.03824460506439209
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_fig_3",
+    "sentence": "אם העובדים לא היו עושים סלט כזה בלוח הזמנים, האם בכלל היה צורך להתחיל הכל מחדש? בסוף כולם הודו שהלחץ הוא זה שגרם לטעויות.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9617817997932434,
+    "is_correct": true,
+    "all_probs": [
+      0.038218218833208084,
+      0.9617817997932434
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_fig_22",
+    "sentence": "היא עשתה סלט מכל ההודעות בקבוצה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9673567414283752,
+    "is_correct": true,
+    "all_probs": [
+      0.032643258571624756,
+      0.9673567414283752
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_fig_25",
+    "sentence": "הם עשו סלט כשניסו לארגן את הטיול",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9660739898681641,
+    "is_correct": true,
+    "all_probs": [
+      0.033925995230674744,
+      0.9660739898681641
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "39_fig_30",
+    "sentence": "הם עשו סלט מהפרויקט כי לא תיאמו ביניהם",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9634132981300354,
+    "is_correct": true,
+    "all_probs": [
+      0.036586690694093704,
+      0.9634132981300354
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "40_lit_5",
+    "sentence": "בסדרה טלוויזיונית אהובה, שחקנית הקולנוע המיתולוגית עשתה סצנה מרגשת במיוחד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9563950300216675,
+    "is_correct": true,
+    "all_probs": [
+      0.9563950300216675,
+      0.043604977428913116
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "40_lit_7",
+    "sentence": "הבמאי לאחר תכנונים של כשנה, עשה סצנה סופית קצרה אך משאירה טעם של עוד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8706768751144409,
+    "is_correct": true,
+    "all_probs": [
+      0.8706768751144409,
+      0.1293230801820755
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "40_lit_11",
+    "sentence": "הוא עשה סצנה מצולמת בעיר העתיקה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9509372115135193,
+    "is_correct": true,
+    "all_probs": [
+      0.9509372115135193,
+      0.04906280338764191
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "40_lit_16",
+    "sentence": "היא עשתה סצנה מלאת רגש מול הקהל באולם סגור, והשתיקה שאחרי הסצנה הייתה מרגשת יותר מההצגה עצמה – לפעמים הרגעים הכי עוצמתיים הם אלה שלא כתובים בתסריט.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9333643913269043,
+    "is_correct": true,
+    "all_probs": [
+      0.9333643913269043,
+      0.0666356235742569
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "40_fig_3",
+    "sentence": "אם הם לא היו עושים סצנה מתוכננת היטב מול המצלמות, האם בכלל מישהו היה מדבר עליהם למחרת? לפעמים פרובוקציה היא הדרך הקלה ביותר לעלות לכותרות בעולם של רעש אינסופי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.8498257398605347,
+    "is_correct": true,
+    "all_probs": [
+      0.15017427504062653,
+      0.8498257398605347
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "40_fig_24",
+    "sentence": "היא עשתה סצנה מתמשכת בחנות בגדים, הפילה קולבים, צרחה ובכתה עד שהזמינו משטרה – כל זה רק בגלל שלא מצאה את המידה שלה, והלקוחות הביטו בה בהלם.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9482601284980774,
+    "is_correct": true,
+    "all_probs": [
+      0.051739826798439026,
+      0.9482601284980774
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "40_fig_32",
+    "sentence": "הם צעקו על הקופאי ודרשו החזר ועשו סצנה שלמה ורועשת בתחנת הרכבת, בזמן שכל האנשים מסביב בתור הביטו בהם במבוכה – כאילו סרט קומדיה רץ מול עיניהם באמצע יום רגיל.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 0,
+    "confidence": 0.8396131992340088,
+    "is_correct": false,
+    "all_probs": [
+      0.8396131992340088,
+      0.1603868305683136
+    ],
+    "error_category": "FALSE_NEGATIVE"
+  },
+  {
+    "id": "40_fig_36",
+    "sentence": "התלמידים התחילו להתווכח בקול על ספרות מודרנית בספרייה ועשו סצנה שלמה ומפתיעה עד שהספרנית קמה ואמרה בתקיפות: “אם אתם רוצים תיאטרון – לכו למוזיאון, פה לומדים בשקט״.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 0,
+    "confidence": 0.8601415753364563,
+    "is_correct": false,
+    "all_probs": [
+      0.8601415753364563,
+      0.1398584246635437
+    ],
+    "error_category": "FALSE_NEGATIVE"
+  },
+  {
+    "id": "41_lit_12",
+    "sentence": "הילד הקטן פתח את דלת המכונית לבד בפעם הראשונה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9545132517814636,
+    "is_correct": true,
+    "all_probs": [
+      0.9545132517814636,
+      0.045486774295568466
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "41_lit_13",
+    "sentence": "הילד הקטן, סקרן מטבעו, פתח דלתות ומגירות בלי סוף, אבל אמו קראה לו: “אל תיגע בכל דבר, לפעמים יש דלתות שעדיף להשאיר סגורות, לפחות עד שתגדל.”",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9537059664726257,
+    "is_correct": true,
+    "all_probs": [
+      0.9537059664726257,
+      0.04629398509860039
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "41_lit_15",
+    "sentence": "הילדה שחזרה מוקדם מהגן פתחה את דלת המטבח כדי לבדוק אם יש עוגה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9557960629463196,
+    "is_correct": true,
+    "all_probs": [
+      0.9557960629463196,
+      0.044203996658325195
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "41_lit_28",
+    "sentence": "כדי להכניס אוויר בחדרי המשרדים, המנקה פתחה דלתות בודדות ולא את כולם יחד, אך דווקא מאחת מהן נשמע רחש חשוד; “אולי מישהו נשאר כאן בלילה?” חשבה בלבה בחשש הולך וגובר.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9506090879440308,
+    "is_correct": true,
+    "all_probs": [
+      0.9506090879440308,
+      0.04939086735248566
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "41_fig_2",
+    "sentence": "אם המאמן הקודם לא היה פותח דלתות לשחקנים צעירים, האם מישהו בכלל היה מגלה את הכישרון החדש שהפך לסמל של נבחרת שלמה?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9610716104507446,
+    "is_correct": true,
+    "all_probs": [
+      0.038928404450416565,
+      0.9610716104507446
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "41_fig_8",
+    "sentence": "ההצלחה בתחרות הלאומית פתחה דלתות לתלמידים לחוגי מחוננים ולמפגשים עם מדענים בכירים, אך היא גם העלתה שאלה קשה – האם מערכת החינוך באמת יודעת לזהות גאונות בזמן אמת?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9700024127960205,
+    "is_correct": true,
+    "all_probs": [
+      0.029997633770108223,
+      0.9700024127960205
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "41_fig_28",
+    "sentence": "העבודה עם הארגון הבינלאומי פתח דלתות לקריירה גלובלית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9597123861312866,
+    "is_correct": true,
+    "all_probs": [
+      0.04028763622045517,
+      0.9597123861312866
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "41_fig_32",
+    "sentence": "הקורס המאתגר הזה באמת פתח לי דלתות לחשוב אחרת על הקריירה שלי, לא דרך נוסחאות או תעודות, אלא דרך ההבנה הפשוטה שידע בלי אומץ הוא כמו מפתח בלי דלת.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9639036655426025,
+    "is_correct": true,
+    "all_probs": [
+      0.03609626740217209,
+      0.9639036655426025
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_lit_5",
+    "sentence": "במקום להמשיך בעצלנות הרגילה, היא פתחה דף חדש במחברת התרגול והחליטה לעשות כל יום שני תרגילים יותר מהתכנון – “אם לא עכשיו, אז מתי?” לחשה לעצמה בחיוך קטן.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9595016241073608,
+    "is_correct": true,
+    "all_probs": [
+      0.9595016241073608,
+      0.040498342365026474
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_lit_6",
+    "sentence": "בסוף השבוע האחרון, כשישבה במטבח עם קפה ועוגיות, היא פתחה דף חדש בספר המתכונים הישן של סבתה וכתבה מתכון חדש משלה, כמו המשך טבעי לדור של טעם וזיכרון.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.961605966091156,
+    "is_correct": true,
+    "all_probs": [
+      0.961605966091156,
+      0.0383940264582634
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_lit_15",
+    "sentence": "הוא פתח דף חדש בספר ההיסטוריה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9612698554992676,
+    "is_correct": true,
+    "all_probs": [
+      0.9612698554992676,
+      0.038730088621377945
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_lit_36",
+    "sentence": "המתמטיקאי הגאון פתח דף חדש כדי לכתוב נוסחאות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.5305163860321045,
+    "is_correct": true,
+    "all_probs": [
+      0.5305163860321045,
+      0.4694835841655731
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_fig_23",
+    "sentence": "היא פתחה דף חדש והבטיחה לעצמה לא לחזור לאחור.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9530870318412781,
+    "is_correct": true,
+    "all_probs": [
+      0.04691299796104431,
+      0.9530870318412781
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_fig_28",
+    "sentence": "היא פתחה דף חדש עם חברות ישנות.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9569476842880249,
+    "is_correct": true,
+    "all_probs": [
+      0.04305232688784599,
+      0.9569476842880249
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_fig_30",
+    "sentence": "הם לא שכחו את הדרך הארוכה שעשו, את הלקחים מהכישלונות, ואת הצוות שעמד מאחוריהם גם כשהכול קרס, ופתחו דף חדש בפרויקט העסקי.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9625992774963379,
+    "is_correct": true,
+    "all_probs": [
+      0.037400707602500916,
+      0.9625992774963379
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "42_fig_32",
+    "sentence": "הם פתחו דף חדש אחרי שנים של שתיקה בין אחים, ובמפגש המשפחתי הראשון, כשהחיבוק הגיע סוף סוף – אף מילה לא הייתה נחוצה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9663236141204834,
+    "is_correct": true,
+    "all_probs": [
+      0.03367633745074272,
+      0.9663236141204834
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "43_lit_1",
+    "sentence": "אחרי ניתוח קשה המטופל פתח עיניים ושמח שהכל עבר בשלום.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.735807478427887,
+    "is_correct": false,
+    "all_probs": [
+      0.26419249176979065,
+      0.735807478427887
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "43_lit_7",
+    "sentence": "האם הילדה בכלל רצתה לקום לבית הספר? היא פתחה עיניים רק אחרי שאביה העיר אותה בפעם השלישית, והבינה שאין דרך להתחמק מהבוקר הזה – גם אם הראש עוד בחלום.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.960542619228363,
+    "is_correct": true,
+    "all_probs": [
+      0.960542619228363,
+      0.039457377046346664
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "43_lit_27",
+    "sentence": "הילד פתח עיניים באמצע הצגה בגלל רעש מהקהל והתחיל לצחוק.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9576519727706909,
+    "is_correct": true,
+    "all_probs": [
+      0.9576519727706909,
+      0.04234806448221207
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "43_lit_35",
+    "sentence": "התינוק פתח עיניים לאט ושוב נרדם בחיבוק של אביו.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9614047408103943,
+    "is_correct": true,
+    "all_probs": [
+      0.9614047408103943,
+      0.03859527036547661
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "43_fig_5",
+    "sentence": "אם הציבור לא יפתח עיניים בקרוב ויבין שההבטחות הפוליטיות נעלמות ברוח אחרי הבחירות, מי יישאר להחזיר את האמון במערכת? לפעמים המציאות כואבת, אבל רק דרכה אפשר באמת להתפכח.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9529080986976624,
+    "is_correct": true,
+    "all_probs": [
+      0.04709186404943466,
+      0.9529080986976624
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "43_fig_13",
+    "sentence": "הוא פתח עיניים כי לא רצה ליפול שוב בפח.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.5675609707832336,
+    "is_correct": true,
+    "all_probs": [
+      0.43243899941444397,
+      0.5675609707832336
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "43_fig_16",
+    "sentence": "החברה שלי, רק אחרי שעזבה את מקום העבודה הרעיל ההוא, פתחה עיניים וראתה את הניצול השקט שחוותה כל השנים – \"לא ידעתי כמה שתקתי\", היא אמרה, \"עד שהתחלתי לדבר\".",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9642089009284973,
+    "is_correct": true,
+    "all_probs": [
+      0.035791050642728806,
+      0.9642089009284973
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "43_fig_26",
+    "sentence": "הילד שלי התבגר מהר מהצפוי, ופתח עיניים כשגילה שמי שחייך אליו כל יום בבית הספר לא תמיד היה חבר אמיתי – אולי רק שותף לרגעים נוחים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9217377305030823,
+    "is_correct": true,
+    "all_probs": [
+      0.07826226949691772,
+      0.9217377305030823
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "44_lit_2",
+    "sentence": "אם הוא היה יודע כמה מסוכן זה, אולי לא היה קובר את עצמו עד הראש בחול כשההורים לא מסתכלים – המשחק התמים בחוף הפך לשיעור חשוב על גבולות ומודעות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.7578158378601074,
+    "is_correct": true,
+    "all_probs": [
+      0.7578158378601074,
+      0.24218416213989258
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "44_lit_7",
+    "sentence": "במהלך מחבואים, הוא קבר את עצמו בקופסה קרטון בארון.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9498223662376404,
+    "is_correct": true,
+    "all_probs": [
+      0.9498223662376404,
+      0.050177671015262604
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "44_lit_23",
+    "sentence": "הוא שכב ודמיין שהוא קובר את עצמו מרוב דיכאון ותחושת כשלון.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.9563701748847961,
+    "is_correct": false,
+    "all_probs": [
+      0.04362976923584938,
+      0.9563701748847961
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "44_lit_29",
+    "sentence": "הילד קבר את עצמו במגירת צעצועים ישנה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9534356594085693,
+    "is_correct": true,
+    "all_probs": [
+      0.9534356594085693,
+      0.04656439647078514
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "44_fig_13",
+    "sentence": "הוא חשב שירגש את הקהל עם ביצוע נועז, אך כשהקול נשבר והשיר נעצר, קבר את עצמו מול כולם, והמבוכה הורגשה באוויר עד סוף הערב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9506463408470154,
+    "is_correct": true,
+    "all_probs": [
+      0.04935367405414581,
+      0.9506463408470154
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "44_fig_15",
+    "sentence": "הוא קבר את עצמו במסיבת העיתונאים כשניסה להתחכם עם כתבים מנוסים, וענה בזלזול על שאלה רגישה – מאותו רגע, לא היה עורך אחד בארץ שהסכים להגן עליו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9595587253570557,
+    "is_correct": true,
+    "all_probs": [
+      0.040441256016492844,
+      0.9595587253570557
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "44_fig_18",
+    "sentence": "הוא קבר את עצמו כשהגיב בזלזול ללקוח חשוב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9623724222183228,
+    "is_correct": true,
+    "all_probs": [
+      0.037627555429935455,
+      0.9623724222183228
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "44_fig_37",
+    "sentence": "כשצחק על מנהל התאטרון הוא קבר את עצמו בקריירת המשחק",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9574781656265259,
+    "is_correct": true,
+    "all_probs": [
+      0.04252186045050621,
+      0.9574781656265259
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_lit_6",
+    "sentence": "באמצע סערת רגשות וגשם בחוץ, בעלי קיבל סטירה מצלצלת ממני – לא כי רציתי לפגוע, אלא כי לפעמים גם אהבה עזה מתפרצת מתוך כאב שלא נשלט.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9491003155708313,
+    "is_correct": true,
+    "all_probs": [
+      0.9491003155708313,
+      0.05089963972568512
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_lit_25",
+    "sentence": "החייל קיבל סטירה ביד מהחבר שלו בצחוק, אבל זה כאב ממש.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.953655481338501,
+    "is_correct": true,
+    "all_probs": [
+      0.953655481338501,
+      0.046344559639692307
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_lit_34",
+    "sentence": "הנער קיבל סטירה מזנב החתול שקפץ לידו הצידה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9512864947319031,
+    "is_correct": true,
+    "all_probs": [
+      0.9512864947319031,
+      0.04871349409222603
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_lit_40",
+    "sentence": "מול כל החברים הנער קיבל סטירה מצלצלת מחברתו.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9480761289596558,
+    "is_correct": true,
+    "all_probs": [
+      0.9480761289596558,
+      0.05192385986447334
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_fig_7",
+    "sentence": "אם הסטודנט לא היה תולה את כל עתידו רק בקבלה לרפואה, אולי הקבלת סטירה הזאת מהוועדה לא הייתה כל כך כואבת, אבל הוא האמין שזה החלום היחיד שיש לו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9474868774414062,
+    "is_correct": true,
+    "all_probs": [
+      0.05251310393214226,
+      0.9474868774414062
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_fig_8",
+    "sentence": "אם התלמיד לא ילמד לקחת אחריות, הוא ימשיך לקבל סטירה אחרי סטירה מהמורה, לא על הציונים, אלא על חוסר המאמץ שמורגש בכל שורה שהוא כותב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.719454288482666,
+    "is_correct": true,
+    "all_probs": [
+      0.28054574131965637,
+      0.719454288482666
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_fig_34",
+    "sentence": "כשחשבה שתוכל לנהל הכול לבד היא קיבלה סטירה חזרה למציאות היומיומית הקשה והמאתגרת של ניהול חנות בישראל.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9667208194732666,
+    "is_correct": true,
+    "all_probs": [
+      0.0332791730761528,
+      0.9667208194732666
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "45_fig_38",
+    "sentence": "כשקיבלתי את תוצאות המבחן, הרגשתי מיד שקיבלתי סטירה מצלצלת ישר לאגו שלי; חשבתי שאני מוכן לגמרי, אבל מסתבר שהביטחון העצמי שלי היה האשליה הגדולה ביותר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9605373740196228,
+    "is_correct": true,
+    "all_probs": [
+      0.03946267068386078,
+      0.9605373740196228
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "46_lit_13",
+    "sentence": "האם גם הכלבה שלך מקפלת את הזנב בכל פעם שהיא מבינה שעשתה משהו שאסור? כי שלי כבר למדה לזהות את המבט שלי עוד לפני שאני אומר מילה אחת.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.5724485516548157,
+    "is_correct": true,
+    "all_probs": [
+      0.5724485516548157,
+      0.4275514483451843
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "46_lit_23",
+    "sentence": "הטיגריס קיפל את הזנב לאחר שהפסיד בקרב מול יריבו.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.9343240261077881,
+    "is_correct": false,
+    "all_probs": [
+      0.06567589938640594,
+      0.9343240261077881
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "46_lit_33",
+    "sentence": "חתולי הרחוב קיפלו את הזנב וברחו אל הפחים כשעבר לידם אוטובוס רועש, והעוברים והשבים לא שמו לב בכלל כמה פחד קטן יכול לגרום לבריחה כזו מהירה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9553544521331787,
+    "is_correct": true,
+    "all_probs": [
+      0.9553544521331787,
+      0.04464556649327278
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "46_lit_34",
+    "sentence": "כלב הרחוב קיפל את הזנב והתקרב בזהירות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9534325003623962,
+    "is_correct": true,
+    "all_probs": [
+      0.9534325003623962,
+      0.04656752943992615
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "46_fig_7",
+    "sentence": "אם הבן שלי שוב יקפל את הזנב ויחזור מושפל הביתה אחרי שחבריו יצחקו עליו, אני בעצמי אלך לדבר איתם; הגיע הזמן שילמד לעמוד על שלו בלי לפחד.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9531404376029968,
+    "is_correct": true,
+    "all_probs": [
+      0.046859610825777054,
+      0.9531404376029968
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "46_fig_24",
+    "sentence": "היא איימה בתביעה משפטית נוקבת, אבל קיפלה את הזנב מיד כשנאמר לה שבית המשפט עלול לחשוף גם את החלק שלה בפרשה – לפעמים שתיקה היא לא פחד, אלא חכמה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9610145688056946,
+    "is_correct": true,
+    "all_probs": [
+      0.03898541256785393,
+      0.9610145688056946
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "46_fig_33",
+    "sentence": "למרות שבלב היא ידעה שהיא צודקת, היא קיפלה את הזנב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9588557481765747,
+    "is_correct": true,
+    "all_probs": [
+      0.0411442331969738,
+      0.9588557481765747
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "46_fig_39",
+    "sentence": "ראיתי איך הוא קיפל את הזנב, ובמקום להילחם בחר לברוח.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9595189690589905,
+    "is_correct": true,
+    "all_probs": [
+      0.0404810793697834,
+      0.9595189690589905
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_lit_9",
+    "sentence": "בגדי החורף לא הספיקו, והוא קפא במקום בשטח הפתוח.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9527835845947266,
+    "is_correct": true,
+    "all_probs": [
+      0.9527835845947266,
+      0.047216396778821945
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_lit_22",
+    "sentence": "היא קפאה במקום בתוך המקפיא בחנות המזון",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9575148820877075,
+    "is_correct": true,
+    "all_probs": [
+      0.9575148820877075,
+      0.042485058307647705
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_lit_33",
+    "sentence": "המטייל בפסגת ההר, קיבל היפותרמיה לאחר שעות ארוכות בפסגה ולכן הוא קפא במקום ללא יכולת לזוז.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9608981013298035,
+    "is_correct": true,
+    "all_probs": [
+      0.9608981013298035,
+      0.03910188376903534
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_lit_36",
+    "sentence": "כשבגדיו נרטבו מהשלג הילד קפא במקום על הנדנדה בגינה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9535183310508728,
+    "is_correct": true,
+    "all_probs": [
+      0.9535183310508728,
+      0.04648162052035332
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_fig_17",
+    "sentence": "היא קפאה במקום כשהשמיעו את שמה בהגרלה הגדולה של תוכנית הריאליטי, וההפתעה הפכה לשיא הצפייה של הערב, כשלא הצליחה להוציא מילה מהפה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9627368450164795,
+    "is_correct": true,
+    "all_probs": [
+      0.0372631810605526,
+      0.9627368450164795
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_fig_21",
+    "sentence": "הילד קפא במקום כשחבריו צחקו עליו בכיתה על החולצה החדשה שקנה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9507454633712769,
+    "is_correct": true,
+    "all_probs": [
+      0.04925454780459404,
+      0.9507454633712769
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_fig_25",
+    "sentence": "המאמן קפא במקום כשהבין שקבוצתו מפסידה ללא קרב, והבין שהעתיד שלו במועדון עומד על הכף, בעוד העיתונאים כבר חיכו לו במסיבת העיתונאים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9646613001823425,
+    "is_correct": true,
+    "all_probs": [
+      0.03533872589468956,
+      0.9646613001823425
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "47_fig_32",
+    "sentence": "כשהבוס הרים את קולו במהלך ישיבת ההנהלה, העובד קפא במקום, ולא העז לענות, למרות שידע שהנתונים הכלכליים שהציג לו היו כן נכונים והוא פשוט לא יכל להגיב.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9545722603797913,
+    "is_correct": true,
+    "all_probs": [
+      0.04542781040072441,
+      0.9545722603797913
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_lit_9",
+    "sentence": "הבת שלי קפצה למים עם המצוף הצבעוני החדש שקנינו לה, צעקה בקול “תראו אותי!” ונראתה כאילו העולם כולו שייך לה – רגע של ילדות שאפילו הזמן קפא להסתכל עליו.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9578647613525391,
+    "is_correct": true,
+    "all_probs": [
+      0.9578647613525391,
+      0.04213524982333183
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_lit_20",
+    "sentence": "הוא רצה לחפש דגים מתחת לפני השטח באגם, אז גדי קפץ למים עם המשקפת החדשה שקנה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9575799107551575,
+    "is_correct": true,
+    "all_probs": [
+      0.9575799107551575,
+      0.042420025914907455
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_lit_29",
+    "sentence": "הילדה חיכתה שסבתה תספור בקול רך “אחת, שתיים, שלוש” ואז קפצה למים בהתלהבות כל כך גדולה, שהרוח עצמה נראתה כאילו מחאה לה כפיים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9601459503173828,
+    "is_correct": true,
+    "all_probs": [
+      0.9601459503173828,
+      0.03985406458377838
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_lit_30",
+    "sentence": "הילדים שלמדו שחיה קפצו למים בזה אחר זה בתחרות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9527618885040283,
+    "is_correct": true,
+    "all_probs": [
+      0.9527618885040283,
+      0.04723808914422989
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_fig_1",
+    "sentence": "אבא שלי קפץ למים ונאם מול מאות אנשים, למרות שתמיד פחד מהמיקרופון – והוא הוכיח שעם לב אמיץ גם קול רועד מצליח לגעת באנשים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9480144381523132,
+    "is_correct": true,
+    "all_probs": [
+      0.05198560655117035,
+      0.9480144381523132
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_fig_12",
+    "sentence": "הוא לא היסס לרגע, קפץ למים ופתח דוכן קטן בשוק, גם כשאמרו לו שהמצב הכלכלי גרוע – היום אנשים עומדים בתור אצלו כל בוקר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.7918563485145569,
+    "is_correct": true,
+    "all_probs": [
+      0.20814359188079834,
+      0.7918563485145569
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_fig_26",
+    "sentence": "היא קפצה למים כששיתפה סוד אישי מול כל הכיתה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9654945731163025,
+    "is_correct": true,
+    "all_probs": [
+      0.034505393356084824,
+      0.9654945731163025
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "48_fig_37",
+    "sentence": "כשהתחילו פרויקט טכנולוגי מסובך במיוחד, הם קפצו למים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9610946178436279,
+    "is_correct": true,
+    "all_probs": [
+      0.03890540823340416,
+      0.9610946178436279
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_lit_10",
+    "sentence": "אם הם לא היו שוברים את הכלים בסלון בזמן ששיחקו תופסת, אולי היו מבינים שספורט בתוך הבית נגמר כמעט תמיד בקריאה לחברת הביטוח.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9611166715621948,
+    "is_correct": true,
+    "all_probs": [
+      0.9611166715621948,
+      0.03888338804244995
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_lit_11",
+    "sentence": "בזמן ההובלה נפל אחד הארגזים ושבר את הכלים שהכינו לחתונה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9558855891227722,
+    "is_correct": true,
+    "all_probs": [
+      0.9558855891227722,
+      0.04411442577838898
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_lit_21",
+    "sentence": "החבילה נפלה מהמדרגות ושברה את כל הכלים החדשים, והלקוח צילם סרטון זועם שהפך לוויכוח ציבורי ברשתות על שירות הלקוחות והאחריות של חברות השילוח.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9308796525001526,
+    "is_correct": true,
+    "all_probs": [
+      0.9308796525001526,
+      0.06912032514810562
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_lit_29",
+    "sentence": "הילד ששיחק במגרש שבר את הכלים כשזרק את הכדור דרך החלון.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9492883682250977,
+    "is_correct": true,
+    "all_probs": [
+      0.9492883682250977,
+      0.050711628049612045
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_fig_1",
+    "sentence": "אחים שלי עברו לעבוד עצמאית אחרי שלא קיבלו העלאה שהובטחה להם, הם שברו את הכלים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9567632079124451,
+    "is_correct": true,
+    "all_probs": [
+      0.043236829340457916,
+      0.9567632079124451
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_fig_7",
+    "sentence": "אם הילדה לא הייתה שוברת את הכלים ומודיעה שהיא עוזבת את הבית, לא בטוח שההורים היוו מבינים עד כמה חנוקה היא הרגישה תחת הפיקוח הצמוד שלהם.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.8638600707054138,
+    "is_correct": true,
+    "all_probs": [
+      0.1361398994922638,
+      0.8638600707054138
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_fig_27",
+    "sentence": "המפלגה שברה את הכלים ופרשה מהקואליציה בלי להתריע מראש.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9394662976264954,
+    "is_correct": true,
+    "all_probs": [
+      0.06053370237350464,
+      0.9394662976264954
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "50_fig_38",
+    "sentence": "לפעמים דווקא אחרי הקריסה מגיע השלב שבו נבנה משהו חדש וחזק הרבה יותר, אל תבטלי הכול בגלל רגע אחד של אכזבה ותשברי את הכלים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9510813355445862,
+    "is_correct": true,
+    "all_probs": [
+      0.04891861602663994,
+      0.9510813355445862
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_lit_19",
+    "sentence": "החום הקיצוני שבר את הלב מהקרח שבנינו",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9389318823814392,
+    "is_correct": true,
+    "all_probs": [
+      0.9389318823814392,
+      0.061068128794431686
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_lit_21",
+    "sentence": "היא שברה את הלב המיוחד שקנתה לבעלה כשהתנגשה בקיר.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9474043250083923,
+    "is_correct": true,
+    "all_probs": [
+      0.9474043250083923,
+      0.052595704793930054
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_lit_27",
+    "sentence": "העובד שבר את הלב בזמן עבודה מסביבו מבלי כוונת תחילה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9229180812835693,
+    "is_correct": true,
+    "all_probs": [
+      0.9229180812835693,
+      0.07708198577165604
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_lit_38",
+    "sentence": "לפי תוצאות הבדיקה הבליסטית, הלחץ שיצר הקליע על בובת הניסוי, שבר את הלב שלה לחלטוין מבלי להשאיר סיכוי לאדם לשרוד בסיטואציה דומה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9539289474487305,
+    "is_correct": true,
+    "all_probs": [
+      0.9539289474487305,
+      0.04607105255126953
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_fig_3",
+    "sentence": "אם התגובה האדישה שלה למכתב הארוך שלי הייתה נובעת מבושה ולא מאדישות אמיתית, אולי לא היה נשבר לי הלב וגורם לי לעצב כה משמעותי עד כדי דיכאון.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9569370746612549,
+    "is_correct": true,
+    "all_probs": [
+      0.04306287318468094,
+      0.9569370746612549
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_fig_5",
+    "sentence": "אתה משחק איתה ושוב ושוב שובר לה את הלב",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9636543393135071,
+    "is_correct": true,
+    "all_probs": [
+      0.03634564206004143,
+      0.9636543393135071
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_fig_13",
+    "sentence": "הילדים בכיתה שברו את הלב של הילד החדש כשבחרו להתעלם ממנו שבועות שלמים, מה שגרם להורים שלו להתלונן למנהל הראשי ולאחר שזה לא עזר פנו במכתב רשמי לשר החינוך על המקרה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9500532150268555,
+    "is_correct": true,
+    "all_probs": [
+      0.04994677007198334,
+      0.9500532150268555
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "51_fig_40",
+    "sentence": "שיחקנו יחד שנים, והעזיבה שלך שברה לי את הלב",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9665412902832031,
+    "is_correct": true,
+    "all_probs": [
+      0.03345875442028046,
+      0.9665412902832031
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_lit_5",
+    "sentence": "אם צוות החילוץ לא היה שובר את הקרח במהירות, הלכודים היו קופאים מתחת לפני השטח, והמבצע כולו היה מסתיים באסון אנושי קשה במיוחד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9558340311050415,
+    "is_correct": true,
+    "all_probs": [
+      0.9558340311050415,
+      0.04416592791676521
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_lit_8",
+    "sentence": "במהלך תחרות הספורט החורפית, שחקן אחד החליט לשבור את הקרח במגלשה כדי להאיץ את המהירות שלו – המהלך אמיץ, אבל גם מסוכן במיוחד.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9520993828773499,
+    "is_correct": true,
+    "all_probs": [
+      0.9520993828773499,
+      0.04790063574910164
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_lit_20",
+    "sentence": "הטכנאי שבר את הקרח על גג הבניין כדי לבדוק את מערכות הניקוז, ובאותו רגע הבין כמה קל לשכוח כמה כוח יש לטבע כשהוא מתעורר באמת.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9614285230636597,
+    "is_correct": true,
+    "all_probs": [
+      0.9614285230636597,
+      0.03857147693634033
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_lit_37",
+    "sentence": "לפני הנסיעה ברכב, היא שברה את הקרח שהיה על הגג והשמשה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9565314054489136,
+    "is_correct": true,
+    "all_probs": [
+      0.9565314054489136,
+      0.043468620628118515
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_fig_3",
+    "sentence": "אם המרואיין לא היה שובר את הקרח בריאיון עם חיוך, האם הכתבת הייתה מצליחה לגרום לו לדבר בפתיחות כזו על נושאים אישיים וכואבים כל כך?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9625207781791687,
+    "is_correct": true,
+    "all_probs": [
+      0.037479277700185776,
+      0.9625207781791687
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_fig_7",
+    "sentence": "בפגישה עסקית מותחת, פעם ראשונה עם לקוח חשוב הוא שבר את הקרח עם הערה צינית ומצחיקה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9653894901275635,
+    "is_correct": true,
+    "all_probs": [
+      0.03461047261953354,
+      0.9653894901275635
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_fig_27",
+    "sentence": "המדריך שבר את הקרח בטיול כשהודיע בצחוק שאם מישהו הולך לאיבוד, לפחות שיצלם נוף יפה – כל הקבוצה צחקה והמשיכה בהליכה קלה יותר באווירה טובה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.6771889925003052,
+    "is_correct": true,
+    "all_probs": [
+      0.32281097769737244,
+      0.6771889925003052
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "52_fig_40",
+    "sentence": "שבר את הקרח מול החברים החדשים במשחק כדורגל.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9708812236785889,
+    "is_correct": true,
+    "all_probs": [
+      0.029118727892637253,
+      0.9708812236785889
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "53_lit_11",
+    "sentence": "הוא החליק על הקרח ברחוב ושבר את הראש באבן.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9572180509567261,
+    "is_correct": true,
+    "all_probs": [
+      0.9572180509567261,
+      0.042781975120306015
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "53_lit_15",
+    "sentence": "הוא שבר את הראש לאחר התנגשות חזיתית בתאונה בין 2 אופנוע למכונית.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9538379311561584,
+    "is_correct": true,
+    "all_probs": [
+      0.9538379311561584,
+      0.046162012964487076
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "53_lit_27",
+    "sentence": "הנער שבר את הראש בריצה אל תוך דלת זכוכית סגורה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9487558603286743,
+    "is_correct": true,
+    "all_probs": [
+      0.9487558603286743,
+      0.05124415084719658
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "53_lit_32",
+    "sentence": "כל הבנים שנסעו ברכב ההסעות שברו את הראש בתאונה הקשה על כביש החוף",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9051099419593811,
+    "is_correct": true,
+    "all_probs": [
+      0.9051099419593811,
+      0.09488999098539352
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "53_fig_6",
+    "sentence": "אין אדם בעולם שלא שובר את הראש כל פעם מחדש עם הטפסים האלה!",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9637895226478577,
+    "is_correct": true,
+    "all_probs": [
+      0.036210499703884125,
+      0.9637895226478577
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "53_fig_22",
+    "sentence": "הם רצו לכתוב הזמנה מקורית לבר מצווה, שתשדר גם יוקרה וגם קלילות, ובסוף אחרי ששברו את הראש בחרו בעיצוב עם הדמיית כדורגל כדי לשלב את אהבתו של הילד לספורט.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 0,
+    "confidence": 0.8658230304718018,
+    "is_correct": false,
+    "all_probs": [
+      0.8658230304718018,
+      0.13417692482471466
+    ],
+    "error_category": "FALSE_NEGATIVE"
+  },
+  {
+    "id": "53_fig_35",
+    "sentence": "להודות לצוות או לשלב סיפור אישי קצר, היא ממש שוברת את הראש מה לומר בנאום החשוב שלה שירגש את הקהל באירוע העסקי הגדול.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9613304734230042,
+    "is_correct": true,
+    "all_probs": [
+      0.03866955265402794,
+      0.9613304734230042
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "53_fig_40",
+    "sentence": "שברתי את הראש בניסיון לפענח את הסוד מאחורי החיוך המיוחד שלה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9685588479042053,
+    "is_correct": true,
+    "all_probs": [
+      0.0314410999417305,
+      0.9685588479042053
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_lit_6",
+    "sentence": "אתמול הם שברו את תקרת הזכוכית כששיחקו כדורגל בתוך המבנה הסגור, למרות שלכולם נאמר במפורש לא להביא כדורים פנימה – למה אנחנו תמיד לומדים בדרך הקשה?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9257531762123108,
+    "is_correct": true,
+    "all_probs": [
+      0.9257531762123108,
+      0.074246846139431
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_lit_10",
+    "sentence": "בעזרת מוט מתכת הם שברו את תקרת הזכוכית.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9510694742202759,
+    "is_correct": true,
+    "all_probs": [
+      0.9510694742202759,
+      0.048930440098047256
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_lit_12",
+    "sentence": "האורח שבר את תקרת הזכוכית בטעות במסיבה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9467977285385132,
+    "is_correct": true,
+    "all_probs": [
+      0.9467977285385132,
+      0.05320223793387413
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_lit_28",
+    "sentence": "הם שברו את תקרת הזכוכית כשטיפסו לעליית הגג",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9524905681610107,
+    "is_correct": true,
+    "all_probs": [
+      0.9524905681610107,
+      0.047509413212537766
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_fig_8",
+    "sentence": "הוא שבר את תקרת הזכוכית האישית שלו כשעזב עבודה בטוחה לטובת הקמת מיזם סביבתי, ואמר שכל שינוי אמיתי מתחיל בצעד שמפחיד אותך.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9500534534454346,
+    "is_correct": true,
+    "all_probs": [
+      0.049946509301662445,
+      0.9500534534454346
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_fig_30",
+    "sentence": "הספורטאי שבר את תקרת הזכוכית וקבע שיא עולמי חדש",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9444270730018616,
+    "is_correct": true,
+    "all_probs": [
+      0.05557292327284813,
+      0.9444270730018616
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_fig_36",
+    "sentence": "למה אתה לא שובר את תקרת הזכוכית ומתקדם הלאה?",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9533259868621826,
+    "is_correct": true,
+    "all_probs": [
+      0.046674054116010666,
+      0.9533259868621826
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "54_fig_40",
+    "sentence": "תעז ותוכיח שכולם טעו לגביך, תשבור את תקרת הזכוכית שהציבו לך שלא באשמתך",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9626984596252441,
+    "is_correct": true,
+    "all_probs": [
+      0.03730155527591705,
+      0.9626984596252441
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_lit_6",
+    "sentence": "הדוד הישן שחרר קיטור בחדר המדרגות",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9501140117645264,
+    "is_correct": true,
+    "all_probs": [
+      0.9501140117645264,
+      0.04988594725728035
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_lit_14",
+    "sentence": "המדיח שחרר קיטור כשהדלת נפתחה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.8791524171829224,
+    "is_correct": true,
+    "all_probs": [
+      0.8791524171829224,
+      0.12084753066301346
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_lit_29",
+    "sentence": "הקומקום החשמלי שחרר קיטור על השיש",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9494538307189941,
+    "is_correct": true,
+    "all_probs": [
+      0.9494538307189941,
+      0.05054610222578049
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_lit_32",
+    "sentence": "הקטר הישן שחרר קיטור ברעש אדיר בתחנת הרכבת החוזרת לפעילות, והקהל מחא כפיים – כאילו כל המדינה חיכתה לנשיפה הזאת כדי להיזכר בעבר.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9620581269264221,
+    "is_correct": true,
+    "all_probs": [
+      0.9620581269264221,
+      0.03794192522764206
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_fig_13",
+    "sentence": "הוא שחרר קיטור בשיחת טלפון ארוכה עם חברו מהצבא, סיפר לו הכול בלי פילטרים, והרגיש שסוף סוף מישהו באמת מקשיב לו בלי לשפוט.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9638491868972778,
+    "is_correct": true,
+    "all_probs": [
+      0.036150772124528885,
+      0.9638491868972778
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_fig_30",
+    "sentence": "הנערים שסיימו את לימודי התיכון שחררו קיטור במסיבת ריקודים שנמשכה עד הבוקר",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9706783294677734,
+    "is_correct": true,
+    "all_probs": [
+      0.029321614652872086,
+      0.9706783294677734
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_fig_33",
+    "sentence": "העובד שחרר קיטור על הבוס במטבחון",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.956585705280304,
+    "is_correct": true,
+    "all_probs": [
+      0.043414294719696045,
+      0.956585705280304
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "56_fig_34",
+    "sentence": "העובדים שחררו קיטור בארוחה משותפת אחרי הלחץ",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9649873375892639,
+    "is_correct": true,
+    "all_probs": [
+      0.03501260280609131,
+      0.9649873375892639
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_lit_25",
+    "sentence": "הילד שוב שיחק באש ליד המיטה בזמן שהוריו ישנו",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9501670598983765,
+    "is_correct": true,
+    "all_probs": [
+      0.9501670598983765,
+      0.04983295872807503
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_lit_29",
+    "sentence": "הילד שיחק באש עם נר של עוגה במסיבה והבהיל את כולם.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.7708995342254639,
+    "is_correct": true,
+    "all_probs": [
+      0.7708995342254639,
+      0.22910049557685852
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_lit_32",
+    "sentence": "השכן הקרח מהקומה העליונה שיחק באש בגינה, ונשרפו כמה ענפי עץ.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9511544704437256,
+    "is_correct": true,
+    "all_probs": [
+      0.9511544704437256,
+      0.04884551465511322
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_lit_33",
+    "sentence": "טעות קטנה כמו שמן שנשפך יכולה להדליק אש שתתפשט במהירות לכל הבית, אל תשחקי באש במטבח בזמן שאת מבשלת.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9555729627609253,
+    "is_correct": true,
+    "all_probs": [
+      0.9555729627609253,
+      0.04442708194255829
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_fig_9",
+    "sentence": "האבא שיחק באש כשהחליט להשאיר את הילדים לבד עם כלב מסוכן בבית.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9542174935340881,
+    "is_correct": true,
+    "all_probs": [
+      0.04578253999352455,
+      0.9542174935340881
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_fig_15",
+    "sentence": "הזלזול שלה באמון החברים חצה גבולות, היא שיחקה באש ואז ביום שבו ביקשה עזרה – גילתה שהאמון שנשרף לא נבנה מחדש כל כך מהר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9673342108726501,
+    "is_correct": true,
+    "all_probs": [
+      0.03266575559973717,
+      0.9673342108726501
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_fig_21",
+    "sentence": "הם שיחקו באש כשגנבו רעיון לפרויקט מגורים מהחברה המתחרה, והסתבכו בחקירה כלכלית גדולה שהובילה לדיון בכנסת ולסיקור תקשורתי נרחב על שחיתות בענף הבנייה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9653400182723999,
+    "is_correct": true,
+    "all_probs": [
+      0.034659963101148605,
+      0.9653400182723999
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "57_fig_40",
+    "sentence": "שיחקתי באש כשניסיתי להסתיר מהמשפחה את החובות שלי",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9693605899810791,
+    "is_correct": true,
+    "all_probs": [
+      0.030639469623565674,
+      0.9693605899810791
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_lit_6",
+    "sentence": "הבן שלי רצה לקשט את שלט היומולדת שלו עוד ולכן שם עליו פס אדום כי זה הצבע שהוא אוהב, וביקש לדעת אם זה “נוצץ מספיק”; עניתי לו שאם זה משמח אותך, אז כן – זה בהחלט מספיק.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9610036015510559,
+    "is_correct": true,
+    "all_probs": [
+      0.9610036015510559,
+      0.038996364921331406
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_lit_8",
+    "sentence": "הוא שם פס אזהרה ליד המדרגות כדי למנוע נפילה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9562377333641052,
+    "is_correct": true,
+    "all_probs": [
+      0.9562377333641052,
+      0.043762218207120895
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_lit_13",
+    "sentence": "הטכנאי שם פס כסף מבריק על הכבל הפתוח, כדי להגן עליו מהתחשמלות – אבל האם זה באמת יעמוד בפני תנאי מזג האוויר הסוערים?",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9574116468429565,
+    "is_correct": true,
+    "all_probs": [
+      0.9574116468429565,
+      0.04258836433291435
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_lit_21",
+    "sentence": "הנהג שם פס לבן על חלון השמשה.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9543972611427307,
+    "is_correct": true,
+    "all_probs": [
+      0.9543972611427307,
+      0.04560268670320511
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_fig_2",
+    "sentence": "אחרי שהתאכזב מהחברים שהבטיחו לעזור ונעלמו, הוא שם עליהם פס ולא טרח להשיב להודעות, כי לפעמים גם שתיקה היא תשובה רועמת יותר מכל מילה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9601614475250244,
+    "is_correct": true,
+    "all_probs": [
+      0.03983859717845917,
+      0.9601614475250244
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_fig_9",
+    "sentence": "בעלי מתנהג איך שבא לו, הוא שם פס על המשמעת והחוקים בחברה שלו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.962257981300354,
+    "is_correct": true,
+    "all_probs": [
+      0.03774208202958107,
+      0.962257981300354
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_fig_27",
+    "sentence": "המורה להיסטוריה של כיתה ח' שמה עליו פס והמשיכה ללמד בלי להתייחס לקריאותיו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9643220901489258,
+    "is_correct": true,
+    "all_probs": [
+      0.0356779582798481,
+      0.9643220901489258
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "58_fig_29",
+    "sentence": "המנהל שם עליו פס ונתן את הקידום לאחר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9605845212936401,
+    "is_correct": true,
+    "all_probs": [
+      0.03941546753048897,
+      0.9605845212936401
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "59_lit_1",
+    "sentence": "אחרי שהילדה קפצה בבוץ בגינה, אמא שלה אמרה לה והיא שמה את רגליה במקלחת אבל כשניסתה לנקות אותן לבד, הבינה שלפעמים גם לכלוך מביא איתו קצת אושר ילדותי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9578321576118469,
+    "is_correct": true,
+    "all_probs": [
+      0.9578321576118469,
+      0.042167872190475464
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "59_lit_3",
+    "sentence": "אל תתני לעצמך לשים רגליים על הברכיים של חברה שלך באמצע השיחה – זו לא רק חוסר נימוס, אלא גם עלולה להתפרש לא נכון כשמדובר באירוע רשמי.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.5385590195655823,
+    "is_correct": false,
+    "all_probs": [
+      0.46144095063209534,
+      0.5385590195655823
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "59_lit_13",
+    "sentence": "הוא שכב על הדשא ושם רגליים על התיק בתור כרית.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9548704028129578,
+    "is_correct": true,
+    "all_probs": [
+      0.9548704028129578,
+      0.04512963071465492
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "59_lit_30",
+    "sentence": "הילד שם רגליים על הקיר והשאיר סימני נעליים.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9525994658470154,
+    "is_correct": true,
+    "all_probs": [
+      0.9525994658470154,
+      0.047400571405887604
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "59_fig_2",
+    "sentence": "אל תיתן להם לשים לך רגליים בבית או בעבודה – תקום, תבנה לעצמך מסלול חדש, ותוכיח שאף מכשול לא גדול מדי למי שלא מפסיק ללכת קדימה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9272708892822266,
+    "is_correct": true,
+    "all_probs": [
+      0.07272915542125702,
+      0.9272708892822266
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "59_fig_6",
+    "sentence": "אם הוא ממשיך להאמין שכולם שמים לו רגליים גם כשזה לא נכון, אולי הבעיה לא בסביבה אלא בפרשנות שלו למציאות ובחוסר האמון שהוא מפתח בכל אדם סביבו.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9596397280693054,
+    "is_correct": true,
+    "all_probs": [
+      0.04036032035946846,
+      0.9596397280693054
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "59_fig_9",
+    "sentence": "ברגע שהבינה שהיא לא בתמונה, היא שמה רגליים לצוות ונטשה.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.94919353723526,
+    "is_correct": true,
+    "all_probs": [
+      0.0508064441382885,
+      0.94919353723526
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "59_fig_37",
+    "sentence": "נמאס לי ששמים לי רגליים בכל ניסיון לשנות משהו בבית הספר.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.957378089427948,
+    "is_correct": true,
+    "all_probs": [
+      0.042621929198503494,
+      0.957378089427948
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "60_lit_10",
+    "sentence": "האור ממגדל הפיקוח בשדה התעופה שפך אור רחב על המסלול, ואם הבקר לא היה מבחין בטייס המאחר – ייתכן שהמטוס היה ממריא בלי אישור בכלל.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9559109210968018,
+    "is_correct": true,
+    "all_probs": [
+      0.9559109210968018,
+      0.044089045375585556
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "60_lit_19",
+    "sentence": "הלהבות באירוע המחאה שפכו אור כתום על פני המפגינים, אך אף אחד לא ידע האם מדובר בסמל של תקווה – או באזהרה למה שעוד עלול לקרות.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 1,
+    "confidence": 0.8635757565498352,
+    "is_correct": false,
+    "all_probs": [
+      0.13642427325248718,
+      0.8635757565498352
+    ],
+    "error_category": "FALSE_POSITIVE"
+  },
+  {
+    "id": "60_lit_20",
+    "sentence": "הלפיד שבידו שפך אור על שביל המערה",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9504293203353882,
+    "is_correct": true,
+    "all_probs": [
+      0.9504293203353882,
+      0.0495707131922245
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "60_lit_35",
+    "sentence": "נר יחיד שפך אור חלש בתוך החדר החשוך.",
+    "expression": "",
+    "true_label": 0,
+    "predicted_label": 0,
+    "confidence": 0.9506831169128418,
+    "is_correct": true,
+    "all_probs": [
+      0.9506831169128418,
+      0.04931693151593208
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "60_fig_25",
+    "sentence": "העדות בבית המשפט שפכה אור על הצדדים האפלים של הפרשה, אך עורכי הדין ניסו בכל דרך למנוע מהציבור לדעת את כל הפרטים.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9657554626464844,
+    "is_correct": true,
+    "all_probs": [
+      0.03424458205699921,
+      0.9657554626464844
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "60_fig_35",
+    "sentence": "התצפיות בשטח שפכו אור על דפוסי ההתנהגות של בעלי החיים",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9682208299636841,
+    "is_correct": true,
+    "all_probs": [
+      0.031779222190380096,
+      0.9682208299636841
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "60_fig_37",
+    "sentence": "מכתב ישן שמצאה שפך אור על חייה של סבתה בצעירותה",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9611100554466248,
+    "is_correct": true,
+    "all_probs": [
+      0.03888997808098793,
+      0.9611100554466248
+    ],
+    "error_category": "CORRECT"
+  },
+  {
+    "id": "60_fig_40",
+    "sentence": "תשובתו של הילד הקטן שפכה אור על מה שקרה באותו היום.",
+    "expression": "",
+    "true_label": 1,
+    "predicted_label": 1,
+    "confidence": 0.9600359797477722,
+    "is_correct": true,
+    "all_probs": [
+      0.039964091032743454,
+      0.9600359797477722
+    ],
+    "error_category": "CORRECT"
+  }
+]

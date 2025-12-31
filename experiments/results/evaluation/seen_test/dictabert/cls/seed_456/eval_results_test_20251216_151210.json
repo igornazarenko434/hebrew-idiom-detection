@@ -1,0 +1,41 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/dictabert/cls/seed_456",
+  "dataset": "data/splits/test.csv",
+  "task": "cls",
+  "num_samples": 432,
+  "metrics": {
+    "loss": 0.16553041338920593,
+    "model_preparation_time": 0.0052,
+    "accuracy": 0.9513888888888888,
+    "f1": 0.9513865444899927,
+    "precision": 0.951475979162647,
+    "recall": 0.9513888888888888,
+    "confusion_matrix_tn": 207.0,
+    "confusion_matrix_fp": 9.0,
+    "confusion_matrix_fn": 12.0,
+    "confusion_matrix_tp": 204.0,
+    "runtime": 0.6987,
+    "samples_per_second": 618.259,
+    "steps_per_second": 38.641
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 5e-06,
+    "batch_size": 16,
+    "num_epochs": 8,
+    "warmup_ratio": 0.2,
+    "weight_decay": 0.0,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 1,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": null
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/xlm-roberta-base/cls/seed_456",
+  "dataset": "data/splits/test.csv",
+  "task": "cls",
+  "num_samples": 432,
+  "metrics": {
+    "loss": 0.23240981996059418,
+    "model_preparation_time": 0.0052,
+    "accuracy": 0.9328703703703703,
+    "f1": 0.9328527401849123,
+    "precision": 0.933325466131697,
+    "recall": 0.9328703703703703,
+    "confusion_matrix_tn": 205.0,
+    "confusion_matrix_fp": 11.0,
+    "confusion_matrix_fn": 18.0,
+    "confusion_matrix_tp": 198.0,
+    "runtime": 0.6676,
+    "samples_per_second": 647.119,
+    "steps_per_second": 40.445
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 2e-05,
+    "batch_size": 8,
+    "num_epochs": 8,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.05,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 2,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": null
+  }
+}

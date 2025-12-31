@@ -1,0 +1,37 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/alephbert-base/span/seed_456",
+  "dataset": "data/splits/test.csv",
+  "task": "span",
+  "num_samples": 432,
+  "metrics": {
+    "loss": 0.11476202309131622,
+    "model_preparation_time": 0.0051,
+    "precision": 0.993103448275862,
+    "recall": 1.0,
+    "f1": 0.9965397923875432,
+    "accuracy": 0.9989759344598055,
+    "runtime": 1.8636,
+    "samples_per_second": 231.805,
+    "steps_per_second": 14.488
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 5e-05,
+    "batch_size": 32,
+    "num_epochs": 8,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 2,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": true
+  }
+}

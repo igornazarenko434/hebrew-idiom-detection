@@ -1,0 +1,41 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/alephbert-base/cls/seed_456",
+  "dataset": "data/splits/test.csv",
+  "task": "cls",
+  "num_samples": 432,
+  "metrics": {
+    "loss": 0.1897246092557907,
+    "model_preparation_time": 0.0051,
+    "accuracy": 0.9328703703703703,
+    "f1": 0.9328700106632086,
+    "precision": 0.9328796484835494,
+    "recall": 0.9328703703703705,
+    "confusion_matrix_tn": 202.0,
+    "confusion_matrix_fp": 14.0,
+    "confusion_matrix_fn": 15.0,
+    "confusion_matrix_tp": 201.0,
+    "runtime": 0.7019,
+    "samples_per_second": 615.437,
+    "steps_per_second": 38.465
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 5e-05,
+    "batch_size": 32,
+    "num_epochs": 3,
+    "warmup_ratio": 0.2,
+    "weight_decay": 0.01,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 4,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": null
+  }
+}

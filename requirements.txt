@@ -46,6 +46,7 @@ optuna-dashboard>=0.15.0           # Optional: Web UI for HPO visualization
 # ============================================================================
 # Machine Learning & Evaluation
 # ============================================================================
+scipy>=1.10.0                      # Scientific computing, statistical tests (t-test, effect sizes)
 scikit-learn>=1.2.0                # Confusion matrix, metrics, validation
 pytorch-crf>=0.7.2                 # Conditional Random Fields for sequence tagging (IOB2)
                                    # Enforces valid IOB2 transitions, improves span F1 by 1-2%

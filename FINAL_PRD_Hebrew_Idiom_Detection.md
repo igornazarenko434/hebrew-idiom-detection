@@ -3,8 +3,8 @@
 
 ---
 
-**Document Version:** 3.0 (UPDATED - Fully Aligned with Implementation)
-**Last Updated:** December 5, 2025
+**Document Version:** 3.1 (UPDATED - Added NeoDictaBERT & Qwen 2.5)
+**Last Updated:** December 30, 2025
 **Project Type:** Master's Thesis Research
 **Primary Researchers:** Igor Nazarenko & Yuval Amit
 **Institution:** Reichman University
@@ -20,7 +20,7 @@ This research project presents **the first comprehensive Hebrew idiom dataset** 
 1. Sentence-level classification (literal vs. figurative)
 2. Token-level span identification (IOB2 tagging)
 
-**Research Goals:** Systematically compare 5 fine-tuned transformer models against LLM prompting approaches to determine optimal strategies for Hebrew figurative language understanding.
+**Research Goals:** Systematically compare 6 fine-tuned transformer models (including latest NeoDictaBERT) against LLM prompting approaches to determine optimal strategies for Hebrew figurative language understanding.
 
 **Expected Impact:** First systematic benchmark for Hebrew idiom detection with implications for low-resource language NLP and cross-lingual transfer.
 
@@ -75,7 +75,8 @@ Challenge: Models must use context to distinguish meaning.
 **Minimum Viable Product (MVP):**
 - ✅ Dataset validated and splits created
 - ✅ 5 encoder models trained and evaluated on both tasks
-- ⏳ 1 LLM evaluated via prompting
+- ⏳ NeoDictaBERT (6th model) training and evaluation
+- ⏳ 3 LLMs evaluated via prompting (DictaLM, Llama, Qwen 2.5)
 - ⏳ Comprehensive results comparison
 - ⏳ Academic paper draft complete
 
@@ -481,23 +482,25 @@ iob_tags: ['O', 'B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'O', 'O', 'O']
 
 ### 4.1 Encoder Models (Fine-Tuning)
 
-**Models to Evaluate (5 total):**
+**Models to Evaluate (6 total):**
 
-| Model | HuggingFace ID | Params | Vocab Size | Type | Priority |
-|-------|----------------|--------|------------|------|----------|
-| **AlephBERT-base** | `onlplab/alephbert-base` | 110M | 52K | Hebrew | ⭐⭐⭐ |
-| **AlephBERTGimmel-base** | `dicta-il/alephbertgimmel-base` | 110M | 128K | Hebrew | ⭐⭐⭐ |
-| **DictaBERT** | `dicta-il/dictabert` | 110M | 50K | Hebrew | ⭐⭐⭐ |
-| **mBERT** | `bert-base-multilingual-cased` | 110M | 119K | Multilingual | ⭐⭐⭐ |
-| **XLM-RoBERTa-base** | `xlm-roberta-base` | 125M | 250K | Multilingual | ⭐⭐⭐ |
+| Model | HuggingFace ID | Params | Vocab Size | Context | Type | Priority |
+|-------|----------------|--------|------------|---------|------|----------|
+| **AlephBERT-base** | `onlplab/alephbert-base` | 110M | 52K | 512 | Hebrew | ⭐⭐⭐ |
+| **AlephBERTGimmel-base** | `dicta-il/alephbertgimmel-base` | 110M | 128K | 512 | Hebrew | ⭐⭐⭐ |
+| **DictaBERT** | `dicta-il/dictabert` | 110M | 50K | 512 | Hebrew | ⭐⭐⭐ |
+| **NeoDictaBERT** ⭐ **NEW** | `dicta-il/neodictabert` | 110M | - | 4,096 | Hebrew | ⭐⭐⭐⭐ |
+| **mBERT** | `bert-base-multilingual-cased` | 110M | 119K | 512 | Multilingual | ⭐⭐⭐ |
+| **XLM-RoBERTa-base** | `xlm-roberta-base` | 125M | 250K | 512 | Multilingual | ⭐⭐⭐ |
 
 **Note:** Currently using `imvladikon/alephbertgimmel-base-512` in code. **Recommendation:** Switch to official `dicta-il/alephbertgimmel-base` for consistency.
 
 **Selection Rationale:**
-- **Hebrew-specific models (3):** AlephBERT, AlephBERTGimmel, DictaBERT
+- **Hebrew-specific models (4):** AlephBERT, AlephBERTGimmel, DictaBERT, NeoDictaBERT
   - AlephBERT-base: Original Hebrew BERT (52K vocab)
   - AlephBERTGimmel: Enhanced Hebrew BERT with **128K vocabulary** (SOTA on Hebrew benchmarks)
   - DictaBERT: Dicta's Hebrew BERT (50K vocab)
+  - **NeoDictaBERT**: Latest Hebrew BERT (Sept 2025) with **285B tokens** and **4K context** 📊 [Paper: arXiv 2510.20386](https://arxiv.org/abs/2510.20386)
 - **Multilingual models (2):** mBERT, XLM-RoBERTa
   - For cross-lingual transfer comparison
 - **Similar sizes:** 110-125M params for fair comparison
@@ -514,21 +517,23 @@ iob_tags: ['O', 'B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'O', 'O', 'O']
 
 ### 4.2 LLM Models (Prompting Evaluation)
 
-**Primary LLMs for Prompting (2 models):**
+**Primary LLMs for Prompting (3 models):**
 
 | Model | HuggingFace ID | Params | Type | API/Local | Priority |
 |-------|----------------|--------|------|-----------|----------|
 | **DictaLM-3.0-1.7B-Instruct** | `dicta-il/DictaLM-3.0-1.7B-Instruct` | 1.7B | Hebrew-native | Local | ⭐⭐⭐ |
 | **DictaLM-3.0-1.7B-Instruct-W4A16** | `dicta-il/DictaLM-3.0-1.7B-Instruct-W4A16` | 1.7B (quantized) | Hebrew-native | Local | ⭐⭐⭐ |
 | **Llama-3.1-8B-Instruct** | `meta-llama/Llama-3.1-8B-Instruct` | 8B | Multilingual | Local/API | ⭐⭐⭐ |
+| **Qwen 2.5-7B-Instruct** ⭐ **NEW** | `Qwen/Qwen2.5-7B-Instruct` | 7B | Multilingual | Local/API | ⭐⭐⭐ |
 
 **Optional Additional Models:**
 - Llama-3.1-70B (via API - better accuracy, higher cost)
 - DictaLM-3.0-12B-Nemotron-Instruct (larger Hebrew model)
+- Qwen 2.5-72B-Instruct (larger variant)
 
 **Selection Rationale:**
 - **DictaLM-3.0:** Hebrew-native LLM (SOTA 2025)
-  - Matches Hebrew-specific encoder approach (AlephBERT/DictaBERT)
+  - Matches Hebrew-specific encoder approach (AlephBERT/DictaBERT/NeoDictaBERT)
   - Open-weight (free, no API costs)
   - Runs locally (1.7B fits on Mac/24GB GPU)
   - Quantized version (W4A16) for faster inference
@@ -536,11 +541,18 @@ iob_tags: ['O', 'B-IDIOM', 'I-IDIOM', 'I-IDIOM', 'O', 'O', 'O']
   - Compare Hebrew-native vs multilingual LLM
   - Strong multilingual capabilities
   - Open-weight, runs locally
+- **Qwen 2.5-7B:** Advanced multilingual LLM (Sept 2024) ⭐ **NEW**
+  - 29+ languages including Hebrew
+  - 128K context window
+  - Strong instruction following and structured output
+  - Comparable size to Llama (7B vs 8B)
+  - Recent SOTA on multiple benchmarks
 
 **Research Questions:**
-1. **Hebrew-native vs Multilingual:** Does DictaLM-3.0 (Hebrew) outperform Llama (multilingual)?
-2. **Architecture Comparison:** Do encoders (fine-tuned) or decoders (prompted) perform better?
-3. **Cost-Performance:** Fine-tuning vs prompting tradeoff for Hebrew idioms?
+1. **Hebrew-native vs Multilingual:** Does DictaLM-3.0 (Hebrew) outperform Llama/Qwen (multilingual)?
+2. **Multilingual LLM Comparison:** Qwen 2.5 vs Llama-3.1 on Hebrew idioms
+3. **Architecture Comparison:** Do encoders (fine-tuned) or decoders (prompted) perform better?
+4. **Cost-Performance:** Fine-tuning vs prompting tradeoff for Hebrew idioms?
 
 **Evaluation Approach:**
 - **Zero-shot prompting** (no examples)
@@ -642,13 +654,15 @@ python src/idiom_experiment.py --mode hpo --model_id onlplab/alephbert-base --ta
 
 ### 6.1 Model Comparison Design
 
-**Two-Model Comparison:**
+**Three-Model Comparison:**
 1. **DictaLM-3.0-1.7B-Instruct** (Hebrew-native)
 2. **Llama-3.1-8B-Instruct** (Multilingual)
+3. **Qwen 2.5-7B-Instruct** (Advanced multilingual) ⭐ **NEW**
 
 **Research Questions:**
-- Does Hebrew-native LLM outperform multilingual LLM?
-- How much does model size matter (1.7B vs 8B)?
+- Does Hebrew-native LLM outperform multilingual LLMs?
+- How much does model size matter (1.7B vs 7B vs 8B)?
+- Qwen 2.5 vs Llama-3.1: Which multilingual model is better for Hebrew?
 - Which prompting method works best for Hebrew idioms?
 
 ### 6.2 Two-Method Comparison
