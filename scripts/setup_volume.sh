@@ -22,7 +22,8 @@ NC='\033[0m' # No Color
 # Configuration
 VOLUME_PATH="/workspace"
 GITHUB_REPO_URL="https://github.com/igornazarenko434/hebrew-idiom-detection.git"
-PYTHON_VERSION="3.10"
+PYTHON_VERSION="${PYTHON_VERSION:-3.10}"
+PYTHON_BIN="python${PYTHON_VERSION}"
 # Google Drive File ID for dataset
 DATASET_FILE_ID="140zJatqT4LBl7yG-afFSoUrYrisi9276"
 
@@ -107,8 +108,8 @@ apt-get update -qq
 
 # Install essential tools
 apt-get install -y -qq \
-    python${PYTHON_VERSION} \
-    python${PYTHON_VERSION}-venv \
+    python3 \
+    python3-venv \
     python3-pip \
     git \
     curl \
@@ -119,8 +120,17 @@ apt-get install -y -qq \
     tree \
     build-essential
 
+# Detect available python binary (prefer requested version)
+if ! command -v "${PYTHON_BIN}" &> /dev/null; then
+    PYTHON_VERSION=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+    PYTHON_BIN="python${PYTHON_VERSION}"
+fi
+if ! command -v "${PYTHON_BIN}" &> /dev/null; then
+    PYTHON_BIN="python3"
+fi
+
 echo -e "${GREEN}✓ System dependencies installed${NC}"
-echo "  Python: $(python3 --version)"
+echo "  Python: $(${PYTHON_BIN} --version)"
 echo "  Git: $(git --version | head -1)"
 echo ""
 
@@ -134,7 +144,7 @@ echo -e "${YELLOW}This may take 2-3 minutes...${NC}"
 echo ""
 
 # Create venv on VOLUME (not on instance)
-python${PYTHON_VERSION} -m venv "$VOLUME_PATH/env"
+${PYTHON_BIN} -m venv "$VOLUME_PATH/env"
 
 # Activate environment
 source "$VOLUME_PATH/env/bin/activate"
