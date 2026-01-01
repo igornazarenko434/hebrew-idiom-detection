@@ -88,6 +88,18 @@ def pool_cls(hidden_states: torch.Tensor, attention_mask: torch.Tensor) -> torch
     """Extract [CLS] token representation (first token for BERT-like models)"""
     return hidden_states[:, 0, :]
 
+def load_tokenizer_safe(model_name_or_path: str, trust_remote_code: bool, fix_mistral_regex: bool = False):
+    """Load tokenizer with optional mistral regex fix and safe fallback."""
+    tokenizer_kwargs = {"trust_remote_code": trust_remote_code}
+    if fix_mistral_regex:
+        tokenizer_kwargs["fix_mistral_regex"] = True
+    try:
+        return AutoTokenizer.from_pretrained(model_name_or_path, **tokenizer_kwargs)
+    except TypeError:
+        # Fallback for tokenizers that don't support mistral regex patching
+        tokenizer_kwargs.pop("fix_mistral_regex", None)
+        return AutoTokenizer.from_pretrained(model_name_or_path, **tokenizer_kwargs)
+
 # -------------------------
 # Token Classification Model with CRF Layer
 # -------------------------
@@ -986,10 +998,11 @@ def evaluate_model_task2_untrained(args, df: pd.DataFrame, label2id: Dict[str, i
 
     # Load tokenizer
     trust_remote_code = "neodictabert" in args.model_id
-    tokenizer_kwargs = {"trust_remote_code": trust_remote_code}
-    if "neodictabert" in args.model_id:
-        tokenizer_kwargs["fix_mistral_regex"] = True
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id, **tokenizer_kwargs)
+    tokenizer = load_tokenizer_safe(
+        args.model_id,
+        trust_remote_code=trust_remote_code,
+        fix_mistral_regex="neodictabert" in args.model_id
+    )
 
     # Load model with classification head (randomly initialized)
     model = AutoModelForTokenClassification.from_pretrained(
@@ -1287,11 +1300,12 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     # 2. Load Tokenizer
     # -------------------------
     trust_remote_code = config.get('trust_remote_code', False) or "neodictabert" in model_checkpoint
-    tokenizer_kwargs = {"trust_remote_code": trust_remote_code}
-    if "neodictabert" in model_checkpoint:
-        tokenizer_kwargs["fix_mistral_regex"] = True
     print(f"\n📦 Loading tokenizer: {model_checkpoint}")
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, **tokenizer_kwargs)
+    tokenizer = load_tokenizer_safe(
+        model_checkpoint,
+        trust_remote_code=trust_remote_code,
+        fix_mistral_regex="neodictabert" in model_checkpoint
+    )
     print(f"✓ Tokenizer loaded")
 
     # -------------------------
@@ -2059,11 +2073,12 @@ def run_evaluation(args):
     # 2. Load Model and Tokenizer
     # -------------------------
     trust_remote_code = "neodictabert" in str(model_checkpoint)
-    tokenizer_kwargs = {"trust_remote_code": trust_remote_code}
-    if "neodictabert" in str(model_checkpoint):
-        tokenizer_kwargs["fix_mistral_regex"] = True
     print(f"\n📦 Loading model from checkpoint...")
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, **tokenizer_kwargs)
+    tokenizer = load_tokenizer_safe(
+        model_checkpoint,
+        trust_remote_code=trust_remote_code,
+        fix_mistral_regex="neodictabert" in str(model_checkpoint)
+    )
     print(f"  ✓ Tokenizer loaded")
 
     if task == "cls":
