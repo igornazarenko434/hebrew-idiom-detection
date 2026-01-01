@@ -124,5 +124,11 @@ done
 echo "========================================"
 echo "All evaluations complete!"
 echo "Results saved in: ${EVAL_BASE_DIR}"
-echo "Don't forget to run: bash scripts/sync_to_gdrive.sh"
+# Sync to Google Drive if available
+if command -v rclone &> /dev/null && rclone listremotes | grep -q "gdrive:"; then
+    echo "Syncing results to Google Drive..."
+    bash scripts/sync_to_gdrive.sh
+else
+    echo "Don't forget to run: bash scripts/sync_to_gdrive.sh"
+fi
 echo "========================================"
