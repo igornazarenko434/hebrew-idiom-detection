@@ -738,8 +738,9 @@ class ZeroShotEvaluator:
     def __init__(self, cfg: ZeroShotConfig):
         self.cfg = cfg
         print(f"Loading model: {cfg.model_id}")
-        self.tokenizer = AutoTokenizer.from_pretrained(cfg.model_id)
-        self.model = AutoModel.from_pretrained(cfg.model_id)
+        trust_remote_code = "neodictabert" in cfg.model_id
+        self.tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, trust_remote_code=trust_remote_code)
+        self.model = AutoModel.from_pretrained(cfg.model_id, trust_remote_code=trust_remote_code)
         self.model.eval()
         self.device = torch.device(cfg.device)
         self.model.to(self.device)
@@ -984,14 +985,16 @@ def evaluate_model_task2_untrained(args, df: pd.DataFrame, label2id: Dict[str, i
     print("  Evaluating model architecture (pretrained backbone + random classification head)...")
 
     # Load tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+    trust_remote_code = "neodictabert" in args.model_id
+    tokenizer = AutoTokenizer.from_pretrained(args.model_id, trust_remote_code=trust_remote_code)
 
     # Load model with classification head (randomly initialized)
     model = AutoModelForTokenClassification.from_pretrained(
         args.model_id,
         num_labels=len(label2id),
         id2label={v: k for k, v in label2id.items()},
-        label2id=label2id
+        label2id=label2id,
+        trust_remote_code=trust_remote_code
     )
 
     # Prepare dataset
@@ -1280,8 +1283,9 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     # -------------------------
     # 2. Load Tokenizer
     # -------------------------
+    trust_remote_code = config.get('trust_remote_code', False) or "neodictabert" in model_checkpoint
     print(f"\n📦 Loading tokenizer: {model_checkpoint}")
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, trust_remote_code=trust_remote_code)
     print(f"✓ Tokenizer loaded")
 
     # -------------------------
@@ -1326,7 +1330,8 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         print(f"  Loading model: {model_checkpoint}")
         model = AutoModelForSequenceClassification.from_pretrained(
             model_checkpoint,
-            num_labels=num_labels
+            num_labels=num_labels,
+            trust_remote_code=trust_remote_code
         )
 
         # Tokenize data
@@ -1450,7 +1455,7 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         if use_crf:
             print(f"  Using CRF layer for IOB2 constraint enforcement (improves span F1 by 1-2%)")
             # Load base transformer model (no classification head)
-            base_model = AutoModel.from_pretrained(model_checkpoint)
+            base_model = AutoModel.from_pretrained(model_checkpoint, trust_remote_code=trust_remote_code)
 
             # Wrap with CRF-enhanced model
             model = BertCRFForTokenClassification(
@@ -1468,7 +1473,8 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
                 model_checkpoint,
                 num_labels=num_labels,
                 id2label=id2label,
-                label2id=label2id
+                label2id=label2id,
+                trust_remote_code=trust_remote_code
             )
 
         # Create custom Trainer with weighted loss
@@ -1811,7 +1817,10 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     if task in ['span', 'both'] and config.get('use_crf', True):
         config_path = output_dir / "config.json"
         if not config_path.exists():
-            base_config = AutoConfig.from_pretrained(model_checkpoint)
+            base_config = AutoConfig.from_pretrained(
+                model_checkpoint,
+                trust_remote_code=trust_remote_code
+            )
             base_config.id2label = {0: "O", 1: "B-IDIOM", 2: "I-IDIOM"}
             base_config.label2id = {"O": 0, "B-IDIOM": 1, "I-IDIOM": 2}
             base_config.num_labels = 3
@@ -2043,12 +2052,16 @@ def run_evaluation(args):
     # -------------------------
     # 2. Load Model and Tokenizer
     # -------------------------
+    trust_remote_code = "neodictabert" in str(model_checkpoint)
     print(f"\n📦 Loading model from checkpoint...")
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, trust_remote_code=trust_remote_code)
     print(f"  ✓ Tokenizer loaded")
 
     if task == "cls":
-        model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint)
+        model = AutoModelForSequenceClassification.from_pretrained(
+            model_checkpoint,
+            trust_remote_code=trust_remote_code
+        )
         print(f"  ✓ Sequence classification model loaded")
     else:  # task == "span"
         # Task 2 uses custom BertCRFForTokenClassification wrapper
@@ -2059,7 +2072,7 @@ def run_evaluation(args):
         print("  ℹ️  Loading custom BertCRFForTokenClassification model...")
         
         # 1. Load Config
-        config = AutoConfig.from_pretrained(model_checkpoint)
+        config = AutoConfig.from_pretrained(model_checkpoint, trust_remote_code=trust_remote_code)
         
         # 2. Instantiate Base Transformer
         base_model = AutoModel.from_config(config)
