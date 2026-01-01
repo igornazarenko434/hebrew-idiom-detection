@@ -519,7 +519,7 @@ fi
 if [ -f "$VOLUME_PATH/config/.env" ]; then
     echo -e "  ${GREEN}✓${NC} Environment variables"
 else
-    echo -e "  ${RED}✗${NC} Environment variables
+    echo -e "  ${RED}✗${NC} Environment variables"
 fi
 
 echo ""
