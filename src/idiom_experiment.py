@@ -986,7 +986,10 @@ def evaluate_model_task2_untrained(args, df: pd.DataFrame, label2id: Dict[str, i
 
     # Load tokenizer
     trust_remote_code = "neodictabert" in args.model_id
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id, trust_remote_code=trust_remote_code)
+    tokenizer_kwargs = {"trust_remote_code": trust_remote_code}
+    if "neodictabert" in args.model_id:
+        tokenizer_kwargs["fix_mistral_regex"] = True
+    tokenizer = AutoTokenizer.from_pretrained(args.model_id, **tokenizer_kwargs)
 
     # Load model with classification head (randomly initialized)
     model = AutoModelForTokenClassification.from_pretrained(
@@ -1284,8 +1287,11 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     # 2. Load Tokenizer
     # -------------------------
     trust_remote_code = config.get('trust_remote_code', False) or "neodictabert" in model_checkpoint
+    tokenizer_kwargs = {"trust_remote_code": trust_remote_code}
+    if "neodictabert" in model_checkpoint:
+        tokenizer_kwargs["fix_mistral_regex"] = True
     print(f"\n📦 Loading tokenizer: {model_checkpoint}")
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, trust_remote_code=trust_remote_code)
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, **tokenizer_kwargs)
     print(f"✓ Tokenizer loaded")
 
     # -------------------------
@@ -2053,8 +2059,11 @@ def run_evaluation(args):
     # 2. Load Model and Tokenizer
     # -------------------------
     trust_remote_code = "neodictabert" in str(model_checkpoint)
+    tokenizer_kwargs = {"trust_remote_code": trust_remote_code}
+    if "neodictabert" in str(model_checkpoint):
+        tokenizer_kwargs["fix_mistral_regex"] = True
     print(f"\n📦 Loading model from checkpoint...")
-    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, trust_remote_code=trust_remote_code)
+    tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, **tokenizer_kwargs)
     print(f"  ✓ Tokenizer loaded")
 
     if task == "cls":
@@ -2075,7 +2084,10 @@ def run_evaluation(args):
         config = AutoConfig.from_pretrained(model_checkpoint, trust_remote_code=trust_remote_code)
         
         # 2. Instantiate Base Transformer
-        base_model = AutoModel.from_config(config)
+        base_model = AutoModel.from_pretrained(
+            model_checkpoint,
+            trust_remote_code=trust_remote_code
+        )
         
         # 3. Instantiate Wrapper
         # We need label maps from config
