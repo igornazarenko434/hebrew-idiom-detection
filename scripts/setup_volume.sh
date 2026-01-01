@@ -298,8 +298,25 @@ fi
 echo -e "${GREEN}✓ rclone installed: $(rclone --version | head -1)${NC}"
 echo ""
 
-# Check if already configured
-if [ -f "$VOLUME_PATH/config/.rclone.conf" ]; then
+# Check if a backup config was uploaded to the instance
+if [ -f "/tmp/rclone.conf" ]; then
+    echo -e "${GREEN}✓ Found /tmp/rclone.conf (uploaded backup)${NC}"
+    mkdir -p "$VOLUME_PATH/config/"
+    cp /tmp/rclone.conf "$VOLUME_PATH/config/.rclone.conf"
+    mkdir -p ~/.config/rclone/
+    ln -sf "$VOLUME_PATH/config/.rclone.conf" ~/.config/rclone/rclone.conf
+
+    # Test connection
+    if rclone lsd gdrive: &>/dev/null; then
+        echo -e "${GREEN}✓ rclone authentication valid (from backup)${NC}"
+    else
+        echo -e "${YELLOW}⚠️  rclone backup invalid, re-authenticating...${NC}"
+        rclone config reconnect gdrive:
+        cp ~/.config/rclone/rclone.conf "$VOLUME_PATH/config/.rclone.conf"
+    fi
+
+# Check if already configured on volume
+elif [ -f "$VOLUME_PATH/config/.rclone.conf" ]; then
     echo -e "${YELLOW}rclone config already exists on volume${NC}"
     echo "Using existing configuration"
     mkdir -p ~/.config/rclone/
