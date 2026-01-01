@@ -2609,6 +2609,15 @@ def run_hpo(args, config: Optional[Dict[str, Any]] = None):
                     self.device = device
                     self.split = None
                     self.max_samples = getattr(args, 'max_samples', None)
+                    # Ensure run_training can safely check CLI overrides
+                    self.learning_rate = None
+                    self.batch_size = None
+                    self.num_epochs = None
+                    self.warmup_ratio = None
+                    self.weight_decay = None
+                    self.gradient_accumulation_steps = None
+                    self.seed = None
+                    self.output_dir = None
 
             trial_args = TrialArgs()
 
