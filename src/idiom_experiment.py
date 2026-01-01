@@ -1678,6 +1678,13 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     # -------------------------
     # Get learning rate scheduler type from config (default: cosine for smooth decay)
     lr_scheduler_type = config.get('lr_scheduler_type', 'cosine')
+    eval_strategy = config.get('evaluation_strategy', config.get('eval_strategy', 'epoch'))
+    save_strategy = config.get('save_strategy', 'epoch')
+    eval_steps = config.get('eval_steps') if eval_strategy == 'steps' else None
+    save_steps = config.get('save_steps') if save_strategy == 'steps' else None
+    load_best_model_at_end = config.get('load_best_model_at_end', True)
+    metric_for_best_model = config.get('metric_for_best_model', 'f1')
+    greater_is_better = config.get('greater_is_better', True)
 
     # Smart mixed precision detection
     # fp16 requires CUDA GPU with compute capability >= 7.0 (Volta, Turing, Ampere, etc.)
@@ -1709,8 +1716,10 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
 
     training_args = TrainingArguments(
         output_dir=str(output_dir),
-        eval_strategy="epoch",  # Fixed: was evaluation_strategy in older transformers
-        save_strategy="epoch",
+        eval_strategy=eval_strategy,  # Fixed: was evaluation_strategy in older transformers
+        save_strategy=save_strategy,
+        eval_steps=eval_steps,
+        save_steps=save_steps,
         learning_rate=learning_rate,
         per_device_train_batch_size=batch_size,
         per_device_eval_batch_size=batch_size,
@@ -1721,10 +1730,11 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
         logging_dir=str(output_dir / "logs"),
         logging_steps=config.get('logging_steps', 100),
         save_total_limit=config.get('save_total_limit', 2),
-        load_best_model_at_end=True,
-        metric_for_best_model="f1",
-        greater_is_better=True,
+        load_best_model_at_end=load_best_model_at_end,
+        metric_for_best_model=metric_for_best_model,
+        greater_is_better=greater_is_better,
         seed=seed,
+        gradient_accumulation_steps=gradient_accumulation_steps,
         fp16=use_fp16,  # Mixed precision training for 2-3x speedup on GPU
         bf16=use_bf16,  # bfloat16 (alternative to fp16, better numerical stability)
         report_to=config.get('report_to', 'tensorboard'),  # Enable TensorBoard by default
@@ -1796,25 +1806,51 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
     print(f"\n💾 Saving best model to: {output_dir}")
     trainer.save_model(str(output_dir))
     tokenizer.save_pretrained(str(output_dir))
+    # Ensure config.json exists for CRF-based span models (custom torch.nn.Module)
+    if task in ['span', 'both'] and config.get('use_crf', True):
+        config_path = output_dir / "config.json"
+        if not config_path.exists():
+            base_config = AutoConfig.from_pretrained(model_checkpoint)
+            base_config.id2label = {0: "O", 1: "B-IDIOM", 2: "I-IDIOM"}
+            base_config.label2id = {"O": 0, "B-IDIOM": 1, "I-IDIOM": 2}
+            base_config.num_labels = 3
+            base_config.save_pretrained(str(output_dir))
+    # Remove intermediate checkpoints to save disk space (best model already saved above)
+    for checkpoint_dir in output_dir.glob("checkpoint-*"):
+        if checkpoint_dir.is_dir():
+            shutil.rmtree(checkpoint_dir, ignore_errors=True)
 
     # -------------------------
-    # 10. Evaluate on Test Set
+    # 10. Evaluate on Dev Set (for HPO / reporting)
     # -------------------------
-    print(f"\n📊 Evaluating on test set...")
-    test_results = trainer.evaluate(test_dataset)
-
-    print(f"\n🎯 Test Results:")
-    print(f"  F1: {test_results['eval_f1']:.4f}")
-    if 'eval_precision' in test_results:
-        print(f"  Precision: {test_results['eval_precision']:.4f}")
-        print(f"  Recall: {test_results['eval_recall']:.4f}")
+    print(f"\n📊 Evaluating on dev set...")
+    dev_results = trainer.evaluate(dev_dataset)
 
     # -------------------------
-    # 11. Save Comprehensive Results
+    # 11. Evaluate on Test Set (optional)
+    # -------------------------
+    skip_test_eval = config.get('skip_test_eval', False)
+    if skip_test_eval:
+        print(f"\n⏭️  Skipping test evaluation (HPO mode)")
+        test_results = {}
+    else:
+        print(f"\n📊 Evaluating on test set...")
+        test_results = trainer.evaluate(test_dataset)
+
+        print(f"\n🎯 Test Results:")
+        print(f"  F1: {test_results['eval_f1']:.4f}")
+        if 'eval_precision' in test_results:
+            print(f"  Precision: {test_results['eval_precision']:.4f}")
+            print(f"  Recall: {test_results['eval_recall']:.4f}")
+
+    # -------------------------
+    # 12. Save Comprehensive Results
     # -------------------------
     results_file = output_dir / "training_results.json"
 
-    # Extract ALL test metrics (not just F1, precision, recall)
+    # Extract ALL metrics (not just F1, precision, recall)
+    dev_metrics_full = {k.replace('eval_', ''): float(v) for k, v in dev_results.items()
+                        if isinstance(v, (int, float))}
     test_metrics_full = {k.replace('eval_', ''): float(v) for k, v in test_results.items()
                         if isinstance(v, (int, float))}
 
@@ -1835,7 +1871,7 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
             # Advanced training techniques (added for label smoothing, LR scheduler, CRF, fp16)
             "label_smoothing": config.get('label_smoothing', 0.0),
             "lr_scheduler_type": config.get('lr_scheduler_type', 'linear'),
-            "gradient_accumulation_steps": config.get('gradient_accumulation_steps', 1),
+            "gradient_accumulation_steps": gradient_accumulation_steps,
             "fp16": use_fp16,  # Mixed precision training (auto-enabled on CUDA)
             "bf16": use_bf16,  # bfloat16 precision (alternative to fp16)
             # CRF is only relevant for token classification (Task 2)
@@ -1856,7 +1892,8 @@ def run_training(args, config: Optional[Dict[str, Any]] = None, freeze_backbone:
             "final_loss": float(train_result.metrics['train_loss']),
             "epochs_completed": float(train_result.metrics.get('epoch', num_epochs))
         },
-        "test_metrics": test_metrics_full,  # All metrics from compute_metrics
+        "dev_metrics": dev_metrics_full,  # All metrics from compute_metrics on dev set
+        "test_metrics": test_metrics_full,  # All metrics from compute_metrics on test set
         "training_history": []  # Will be populated below
     }
 
@@ -2551,6 +2588,11 @@ def run_hpo(args, config: Optional[Dict[str, Any]] = None):
         trial_config['model_checkpoint'] = model_checkpoint
         trial_config['task'] = task
         trial_config['device'] = device
+        # HPO should not save intermediate checkpoints or evaluate on test set
+        trial_config['save_strategy'] = "no"
+        trial_config['save_total_limit'] = 0
+        trial_config['load_best_model_at_end'] = False
+        trial_config['skip_test_eval'] = True
 
         # Create trial-specific output directory
         trial_output_dir = Path(fixed_params.get('output_dir', 'experiments/hpo_results/'))
@@ -2574,9 +2616,9 @@ def run_hpo(args, config: Optional[Dict[str, Any]] = None):
             results = run_training(trial_args, config=trial_config, freeze_backbone=False)
 
             # Extract validation F1 score
-            # The run_training function returns test_metrics, but we want validation metrics
-            # For HPO, we use the best validation F1 from training (stored in eval_f1)
-            val_f1 = results['test_metrics']['f1']  # This is actually the best dev F1
+            val_f1 = results.get('dev_metrics', {}).get('f1')
+            if val_f1 is None:
+                val_f1 = results['test_metrics']['f1']
 
             print(f"\n✅ Trial {trial.number + 1} completed:")
             print(f"  Validation F1: {val_f1:.4f}")

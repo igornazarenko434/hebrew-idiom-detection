@@ -46,6 +46,9 @@ ls experiments/results/analysis/
 **If you want to train a new model:**
 See [Section 4: Hyperparameter Optimization](#4-phase-1-hyperparameter-optimization-vastai)
 
+**If you want a full end-to-end re-run:**
+Use `FULL_RERUN_CHECKLIST.md` (one-page, step-by-step).
+
 ### 1.2 Common Operations Quick Reference
 
 | Task | Command | Output Location |
@@ -120,8 +123,9 @@ Final_Project_NLP/
 │       └── ...
 │
 ├── scripts/
-│   ├── run_hpo_batch.sh                     # Batch HPO on VAST.ai
-│   ├── run_training_batch.sh                # Batch training on VAST.ai
+│   ├── run_all_hpo.sh                       # Batch HPO on VAST.ai
+│   ├── run_all_experiments.sh               # Batch training on VAST.ai
+│   ├── run_evaluation_batch.sh              # Batch evaluation on seen + unseen
 │   ├── download_checkpoints.sh              # Download from VAST.ai
 │   ├── download_evaluation_results.sh       # Download eval results
 │   └── categorize_all_errors.py             # Categorize all predictions (Task 1.3)
@@ -145,8 +149,7 @@ Final_Project_NLP/
 
 | File | Purpose | When to Use |
 |------|---------|-------------|
-| `src/train.py` | Train models with specific hyperparameters | Training on VAST.ai or locally |
-| `src/evaluate.py` | Evaluate trained models on test sets | After training completes |
+| `src/idiom_experiment.py` | Unified entrypoint for HPO, training, and evaluation | All experiment modes |
 | `src/analyze_finetuning_results.py` | Aggregate multi-seed results, compute Mean ± Std | After evaluating all seeds |
 | `src/analyze_generalization.py` | Compute generalization gap | After evaluating seen + unseen |
 | `src/analyze_error_distribution.py` | Visualize error distributions across models | After error categorization |
@@ -167,7 +170,7 @@ Final_Project_NLP/
 │ 2. Upload data + code to VAST.ai                            │
 │ 3. Run HPO (Optuna) with 30-50 trials                       │
 │ 4. Download best hyperparameters                            │
-│ 5. Save to configs/best_hyperparameters/                    │
+│ 5. Save to experiments/results/best_hyperparameters/        │
 └─────────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────────┐
@@ -235,57 +238,14 @@ Final_Project_NLP/
 
 ### 4.2 Step-by-Step HPO Workflow
 
-#### Step 1: Create HPO Configuration
+#### Step 1: HPO Configuration
 
-**File:** `configs/hpo/dictabert_span_hpo.yaml`
+**File:** `experiments/configs/hpo_config.yaml`
 
-```yaml
-# HPO Configuration for DictaBERT on SPAN Task
-model_name: "dicta-il/dictabert"
-task: "span"  # or "cls"
-output_dir: "experiments/hpo/dictabert_span"
-
-# Data paths
-train_file: "data/splits/train.csv"
-validation_file: "data/splits/validation.csv"
-
-# HPO settings
-hpo:
-  n_trials: 50
-  timeout: 28800  # 8 hours
-  study_name: "dictabert_span_hpo"
-
-  # Hyperparameter search space
-  search_space:
-    learning_rate:
-      type: "loguniform"
-      low: 1e-5
-      high: 5e-5
-
-    batch_size:
-      type: "categorical"
-      choices: [8, 16, 32]
-
-    num_epochs:
-      type: "int"
-      low: 5
-      high: 15
-
-    warmup_ratio:
-      type: "uniform"
-      low: 0.0
-      high: 0.2
-
-    weight_decay:
-      type: "loguniform"
-      low: 1e-3
-      high: 1e-1
-
-# Fixed settings
-seed: 42
-max_length: 128
-early_stopping_patience: 3
-```
+This is a single, model-agnostic HPO config used by all models/tasks. It defines:
+- Search space (learning rate, batch size, epochs, warmup, weight decay, grad accumulation)
+- Fixed settings (max_length, data paths, CRF usage, logging)
+- Output locations (Optuna DB + trial outputs + best hyperparameters)
 
 #### Step 2: Start VAST.ai Instance
 
@@ -315,10 +275,10 @@ rsync -avz -e "ssh -p $VAST_PORT" \
   --exclude 'experiments/logs/' \
   --exclude '.git/' \
   --exclude '__pycache__/' \
-  ./ $VAST_HOST:/workspace/idiom_detection/
+  ./ $VAST_HOST:/workspace/project/
 
 # Verify upload
-ssh -p $VAST_PORT $VAST_HOST "ls -lh /workspace/idiom_detection/"
+ssh -p $VAST_PORT $VAST_HOST "ls -lh /workspace/project/"
 ```
 
 #### Step 4: Run HPO on VAST.ai
@@ -328,7 +288,7 @@ ssh -p $VAST_PORT $VAST_HOST "ls -lh /workspace/idiom_detection/"
 ssh -p $VAST_PORT $VAST_HOST
 
 # Navigate to project directory
-cd /workspace/idiom_detection
+cd /workspace/project
 
 # Install dependencies (first time only)
 pip install -r requirements.txt
@@ -336,11 +296,14 @@ pip install -r requirements.txt
 # Start tmux session (recommended for long-running jobs)
 tmux new -s hpo_dictabert_span
 
-# Run HPO
-python src/hpo.py \
-  --config configs/hpo/dictabert_span_hpo.yaml \
-  --output_dir experiments/hpo/dictabert_span \
-  2>&1 | tee experiments/hpo/dictabert_span/hpo.log
+# Run HPO for a single model/task
+python src/idiom_experiment.py \
+  --mode hpo \
+  --model_id dicta-il/dictabert \
+  --task span \
+  --config experiments/configs/hpo_config.yaml \
+  --device cuda \
+  2>&1 | tee experiments/results/hpo/dictabert/span/hpo.log
 
 # Detach from tmux: Ctrl+B, then D
 # Reattach later: tmux attach -t hpo_dictabert_span
@@ -351,30 +314,28 @@ python src/hpo.py \
 **Option A: Check log file**
 ```bash
 # From local machine
-ssh -p $VAST_PORT $VAST_HOST "tail -f /workspace/idiom_detection/experiments/hpo/dictabert_span/hpo.log"
+ssh -p $VAST_PORT $VAST_HOST "tail -f /workspace/project/experiments/results/hpo/dictabert/span/hpo.log"
 ```
 
 **Option B: Use Optuna Dashboard (optional)**
 ```bash
 # On VAST.ai instance
 pip install optuna-dashboard
-optuna-dashboard sqlite:///experiments/hpo/dictabert_span/study.db
+optuna-dashboard sqlite:///experiments/results/optuna_studies/dictabert_span_hpo.db
 
 # Access via browser: http://VAST_IP:8080
 ```
 
 #### Step 6: Download Best Hyperparameters
 
+HPO writes best params to:
+`experiments/results/best_hyperparameters/best_params_{model}_{task}.json`
+
+After syncing to Google Drive (`bash scripts/sync_to_gdrive.sh`), download them locally:
 ```bash
-# After HPO completes (check for "Best trial:" in logs)
-
-# Download best params JSON
-scp -P $VAST_PORT \
-  $VAST_HOST:/workspace/idiom_detection/experiments/hpo/dictabert_span/best_params.json \
-  configs/best_hyperparameters/best_params_dictabert_span.json
-
-# Verify contents
-cat configs/best_hyperparameters/best_params_dictabert_span.json
+rclone copy gdrive:Hebrew_Idiom_Detection/results/best_hyperparameters \
+  experiments/results/best_hyperparameters \
+  --include "*.json" --verbose
 ```
 
 **Expected output:**
@@ -391,130 +352,51 @@ cat configs/best_hyperparameters/best_params_dictabert_span.json
 
 ### 4.3 Batch HPO for All Models
 
-**File:** `scripts/run_hpo_batch.sh`
+**File:** `scripts/run_all_hpo.sh`
 
 ```bash
-#!/bin/bash
-
-# Batch HPO script for all models and tasks
-# Usage: ./scripts/run_hpo_batch.sh
-
-MODELS=("dicta-il/dictabert" "onlplab/alephbert-base" "dicta-il/alephbertgimmel-base" \
-        "dicta-il/neodictabert" "bert-base-multilingual-cased" "xlm-roberta-base")
-TASKS=("cls" "span")
-
-for model in "${MODELS[@]}"; do
-  for task in "${TASKS[@]}"; do
-    model_short=$(echo $model | cut -d'/' -f2 | sed 's/-base//')
-
-    echo "Running HPO for $model_short on task $task"
-
-    python src/hpo.py \
-      --model_name "$model" \
-      --task "$task" \
-      --config "configs/hpo/${model_short}_${task}_hpo.yaml" \
-      --output_dir "experiments/hpo/${model_short}_${task}" \
-      2>&1 | tee "experiments/hpo/${model_short}_${task}/hpo.log"
-
-    echo "Completed HPO for $model_short $task"
-    echo "----------------------------------------"
-  done
-done
-
-echo "All HPO jobs completed!"
+cd /workspace/project
+bash scripts/run_all_hpo.sh
 ```
 
 ---
 
 ## 5. Phase 2: Full Fine-Tuning (VAST.ai)
 
-### 5.1 Create Training Configuration
+### 5.1 Training Configuration
 
-**Using best hyperparameters from HPO:**
+**File:** `experiments/configs/training_config.yaml`
 
-**File:** `configs/training/dictabert_span_train.yaml`
-
-```yaml
-# Full Fine-Tuning Configuration for DictaBERT on SPAN Task
-model_name: "dicta-il/dictabert"
-task: "span"
-
-# Data
-train_file: "data/splits/train.csv"
-validation_file: "data/splits/validation.csv"
-test_file: "data/splits/test.csv"
-unseen_test_file: "data/splits/unseen_idiom_test.csv"
-
-# Best hyperparameters from HPO
-learning_rate: 2.3e-05
-batch_size: 16
-num_epochs: 10
-warmup_ratio: 0.1
-weight_decay: 0.01
-
-# Seeds for reproducibility
-seeds: [42, 123, 456]
-
-# Paths
-output_dir: "experiments/checkpoints/dictabert/span"
-logging_dir: "experiments/logs/dictabert/span"
-
-# Training settings
-evaluation_strategy: "epoch"
-save_strategy: "epoch"
-load_best_model_at_end: true
-metric_for_best_model: "eval_f1"
-greater_is_better: true
-save_total_limit: 1  # Only keep best checkpoint
-
-# Logging
-logging_steps: 50
-report_to: "tensorboard"
-
-# Hardware
-fp16: true  # Use mixed precision on GPU
-dataloader_num_workers: 4
-```
+This is a single, model-agnostic training config used for all models/tasks.
+Best hyperparameters are injected via CLI by `scripts/run_all_experiments.sh`.
 
 ### 5.2 Run Full Fine-Tuning
 
-#### Single Seed Training
+#### Single Seed Training (Manual)
 
 ```bash
 # SSH into VAST.ai
 ssh -p $VAST_PORT $VAST_HOST
-cd /workspace/idiom_detection
+cd /workspace/project
 
-# Start tmux session
-tmux new -s train_dictabert_span_seed42
-
-# Run training for seed 42
-python src/train.py \
-  --config configs/training/dictabert_span_train.yaml \
+# Example: DictaBERT span, seed 42
+python src/idiom_experiment.py \
+  --mode full_finetune \
+  --model_id dicta-il/dictabert \
+  --task span \
+  --config experiments/configs/training_config.yaml \
   --seed 42 \
-  --output_dir experiments/checkpoints/dictabert/span/seed_42 \
-  --logging_dir experiments/logs/dictabert/span/seed_42 \
-  2>&1 | tee experiments/logs/dictabert/span/seed_42/training.log
-
-# Detach: Ctrl+B, then D
+  --output_dir experiments/results/full_fine-tuning/dictabert/span/seed_42
 ```
 
-#### Multi-Seed Training (Parallel)
+#### Multi-Seed Training (Batch)
 
 **If you have multiple GPUs on VAST.ai:**
 
 ```bash
-# Terminal 1: Seed 42 on GPU 0
-CUDA_VISIBLE_DEVICES=0 python src/train.py --config configs/training/dictabert_span_train.yaml --seed 42 &
-
-# Terminal 2: Seed 123 on GPU 1
-CUDA_VISIBLE_DEVICES=1 python src/train.py --config configs/training/dictabert_span_train.yaml --seed 123 &
-
-# Terminal 3: Seed 456 on GPU 2
-CUDA_VISIBLE_DEVICES=2 python src/train.py --config configs/training/dictabert_span_train.yaml --seed 456 &
-
-# Wait for all to complete
-wait
+# Run full batch (all models × tasks × seeds)
+cd /workspace/project
+bash scripts/run_all_experiments.sh
 ```
 
 ### 5.3 Monitor Training with TensorBoard
@@ -537,68 +419,37 @@ tensorboard --logdir experiments/logs/ --port 6006 --bind_all
 
 ### 5.4 Batch Training Script
 
-**File:** `scripts/run_training_batch.sh`
+**File:** `scripts/run_all_experiments.sh`
 
 ```bash
-#!/bin/bash
-
-# Batch training script for all models, tasks, and seeds
-# Usage: ./scripts/run_training_batch.sh
-
-MODELS=("dictabert" "alephbert" "alephbertgimmel" "neodictabert" "mbert" "xlm-r")
-TASKS=("cls" "span")
-SEEDS=(42 123 456)
-
-for model in "${MODELS[@]}"; do
-  for task in "${TASKS[@]}"; do
-    for seed in "${SEEDS[@]}"; do
-      echo "Training $model on $task with seed $seed"
-
-      python src/train.py \
-        --config "configs/training/${model}_${task}_train.yaml" \
-        --seed "$seed" \
-        --output_dir "experiments/checkpoints/$model/$task/seed_$seed" \
-        --logging_dir "experiments/logs/$model/$task/seed_$seed" \
-        2>&1 | tee "experiments/logs/$model/$task/seed_$seed/training.log"
-
-      echo "Completed training $model $task seed $seed"
-      echo "========================================"
-    done
-  done
-done
-
-echo "All training jobs completed!"
+cd /workspace/project
+bash scripts/run_all_experiments.sh
 ```
+
+**Outputs:**
+- `experiments/results/full_fine-tuning/<model>/<task>/seed_<seed>/`
+- `experiments/logs/`
 
 ---
 
 ## 6. Phase 3: Download Results
 
-### 6.1 Download Best Checkpoints
+### 6.1 Download Results (Google Drive)
 
-**File:** `scripts/download_checkpoints.sh`
-
+**Best model weights only:**
 ```bash
-#!/bin/bash
+bash scripts/download_best_checkpoints.sh
+```
 
-# Download best checkpoints from VAST.ai
-# Usage: ./scripts/download_checkpoints.sh
+**Training metrics only (lightweight):**
+```bash
+bash scripts/download_results_for_analysis.sh
+```
 
-VAST_HOST="root@123.456.789.0"
-VAST_PORT="12345"
-REMOTE_DIR="/workspace/idiom_detection/experiments/checkpoints"
-LOCAL_DIR="experiments/checkpoints"
-
-MODELS=("dictabert" "alephbert" "alephbertgimmel" "neodictabert" "mbert" "xlm-r")
-TASKS=("cls" "span")
-SEEDS=(42 123 456)
-
-for model in "${MODELS[@]}"; do
-  for task in "${TASKS[@]}"; do
-    for seed in "${SEEDS[@]}"; do
-      echo "Downloading checkpoint: $model / $task / seed_$seed"
-
-      # Download only best_model directory
+**Evaluation JSONs:**
+```bash
+bash scripts/download_evaluation_results.sh
+```
       rsync -avz -e "ssh -p $VAST_PORT" \
         "$VAST_HOST:$REMOTE_DIR/$model/$task/seed_$seed/best_model/" \
         "$LOCAL_DIR/$model/$task/seed_$seed/best_model/"
@@ -623,31 +474,20 @@ echo "All checkpoints downloaded!"
 
 # Download TensorBoard logs for learning curve analysis
 
-VAST_HOST="root@123.456.789.0"
-VAST_PORT="12345"
-REMOTE_DIR="/workspace/idiom_detection/experiments/logs"
+GDRIVE_LOGS="gdrive:Hebrew_Idiom_Detection/logs"
 LOCAL_DIR="experiments/logs"
 
-rsync -avz -e "ssh -p $VAST_PORT" \
-  --include='*/' \
-  --include='events.out.tfevents.*' \
-  --exclude='*' \
-  "$VAST_HOST:$REMOTE_DIR/" \
-  "$LOCAL_DIR/"
+rclone copy "${GDRIVE_LOGS}" "${LOCAL_DIR}" \
+  --include "events.out.tfevents.*" \
+  --verbose \
+  --transfers 8
 ```
 
 ### 6.3 Verify Download Integrity
 
 ```bash
-# Check all checkpoints are present
-python scripts/verify_checkpoints.py
-
-# Expected output:
-# ✓ dictabert/cls/seed_42: OK
-# ✓ dictabert/cls/seed_123: OK
-# ✓ dictabert/cls/seed_456: OK
-# ...
-# Total: 36/36 checkpoints verified
+# Check trained outputs are present
+python src/audit_results.py
 ```
 
 ---
@@ -658,20 +498,20 @@ python scripts/verify_checkpoints.py
 
 ```bash
 # Evaluate DictaBERT SPAN task seed 42 on SEEN test
-python src/evaluate.py \
-  --checkpoint experiments/checkpoints/dictabert/span/seed_42/best_model \
-  --test_file data/splits/test.csv \
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_fine-tuning/dictabert/span/seed_42 \
+  --data data/splits/test.csv \
   --task span \
-  --output_dir experiments/results/evaluation/seen_test/dictabert/span/seed_42 \
-  --save_predictions
+  --output_dir experiments/results/evaluation/seen_test/dictabert/span/seed_42
 
 # Evaluate same model on UNSEEN test
-python src/evaluate.py \
-  --checkpoint experiments/checkpoints/dictabert/span/seed_42/best_model \
-  --test_file data/splits/unseen_idiom_test.csv \
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_fine-tuning/dictabert/span/seed_42 \
+  --data data/splits/unseen_idiom_test.csv \
   --task span \
-  --output_dir experiments/results/evaluation/unseen_test/dictabert/span/seed_42 \
-  --save_predictions
+  --output_dir experiments/results/evaluation/unseen_test/dictabert/span/seed_42
 ```
 
 **Output files created:**
@@ -715,12 +555,12 @@ for model in "${MODELS[@]}"; do
 
         echo "Evaluating: $model / $task / seed_$seed / $split"
 
-        python src/evaluate.py \
-          --checkpoint "$checkpoint" \
-          --test_file "$test_file" \
+        python src/idiom_experiment.py \
+          --mode evaluate \
+          --model_checkpoint "$checkpoint" \
+          --data "$test_file" \
           --task "$task" \
-          --output_dir "$output_dir" \
-          --save_predictions
+          --output_dir "$output_dir"
 
         echo "✓ Completed: $model $task seed_$seed $split"
       done
@@ -734,16 +574,8 @@ echo "All evaluations completed!"
 ### 7.3 Verify Evaluation Completeness
 
 ```bash
-# Check all evaluation results are present
-python scripts/verify_evaluations.py
-
-# Expected output:
-# Checking evaluation completeness...
-# ✓ dictabert/cls: 6/6 evaluations (3 seeds × 2 splits)
-# ✓ dictabert/span: 6/6 evaluations
-# ✓ alephbert/cls: 6/6 evaluations
-# ...
-# Total: 72/72 evaluations completed
+# Quick counts (see Section 12.2 for snippets)
+find experiments/results/evaluation -name "eval_results*.json" | wc -l
 ```
 
 ---
@@ -1292,159 +1124,39 @@ FINE_TUNING_MODELS = {
 }
 ```
 
-#### 2. Create HPO configuration
+#### 2. Add model to batch scripts
 
-**File:** `configs/hpo/yourbert_cls_hpo.yaml`
+Update both:
+- `scripts/run_all_hpo.sh`
+- `scripts/run_all_experiments.sh`
 
-```yaml
-model_name: "your-org/your-hebrew-bert"
-task: "cls"
-output_dir: "experiments/hpo/yourbert_cls"
-
-# Use same search space as other models
-search_space:
-  learning_rate:
-    type: "loguniform"
-    low: 1e-5
-    high: 5e-5
-  batch_size:
-    type: "categorical"
-    choices: [8, 16, 32]
-  num_epochs:
-    type: "int"
-    low: 5
-    high: 15
-  warmup_ratio:
-    type: "uniform"
-    low: 0.0
-    high: 0.2
-  weight_decay:
-    type: "loguniform"
-    low: 1e-3
-    high: 1e-1
-```
-
-**Duplicate for SPAN task:** `configs/hpo/yourbert_span_hpo.yaml`
+Add the new model ID to their `MODELS=(...)` arrays.
 
 #### 3. Run HPO
 
 ```bash
-# On VAST.ai
-python src/hpo.py \
-  --config configs/hpo/yourbert_cls_hpo.yaml \
-  --output_dir experiments/hpo/yourbert_cls
-
-python src/hpo.py \
-  --config configs/hpo/yourbert_span_hpo.yaml \
-  --output_dir experiments/hpo/yourbert_span
-
-# Download best params
-scp -P $VAST_PORT \
-  $VAST_HOST:/workspace/idiom_detection/experiments/hpo/yourbert_cls/best_params.json \
-  configs/best_hyperparameters/best_params_yourbert_cls.json
-
-scp -P $VAST_PORT \
-  $VAST_HOST:/workspace/idiom_detection/experiments/hpo/yourbert_span/best_params.json \
-  configs/best_hyperparameters/best_params_yourbert_span.json
+cd /workspace/project
+bash scripts/run_all_hpo.sh
 ```
 
-#### 4. Create training configuration
+Best params are saved to:
+`experiments/results/best_hyperparameters/best_params_{model}_{task}.json`
 
-**File:** `configs/training/yourbert_cls_train.yaml`
-
-```yaml
-model_name: "your-org/your-hebrew-bert"
-task: "cls"
-
-# Load best hyperparameters
-learning_rate: 2.1e-05  # From best_params.json
-batch_size: 16
-num_epochs: 10
-warmup_ratio: 0.1
-weight_decay: 0.01
-
-seeds: [42, 123, 456]
-
-output_dir: "experiments/checkpoints/yourbert/cls"
-logging_dir: "experiments/logs/yourbert/cls"
-
-# Standard settings
-evaluation_strategy: "epoch"
-save_strategy: "epoch"
-load_best_model_at_end: true
-metric_for_best_model: "eval_f1"
-fp16: true
-```
-
-**Duplicate for SPAN task:** `configs/training/yourbert_span_train.yaml`
-
-#### 5. Run training
+#### 4. Run training (3 seeds)
 
 ```bash
-# On VAST.ai - all 3 seeds for CLS
-for seed in 42 123 456; do
-  python src/train.py \
-    --config configs/training/yourbert_cls_train.yaml \
-    --seed $seed \
-    --output_dir experiments/checkpoints/yourbert/cls/seed_$seed \
-    --logging_dir experiments/logs/yourbert/cls/seed_$seed
-done
-
-# All 3 seeds for SPAN
-for seed in 42 123 456; do
-  python src/train.py \
-    --config configs/training/yourbert_span_train.yaml \
-    --seed $seed \
-    --output_dir experiments/checkpoints/yourbert/span/seed_$seed \
-    --logging_dir experiments/logs/yourbert/span/seed_$seed
-done
+cd /workspace/project
+bash scripts/run_all_experiments.sh
 ```
 
-#### 6. Download checkpoints
+Outputs:
+`experiments/results/full_fine-tuning/<model>/<task>/seed_<seed>/`
+
+#### 5. Run evaluations
 
 ```bash
-# Local machine
-rsync -avz -e "ssh -p $VAST_PORT" \
-  "$VAST_HOST:/workspace/idiom_detection/experiments/checkpoints/yourbert/" \
-  "experiments/checkpoints/yourbert/"
-```
-
-#### 7. Run evaluations
-
-```bash
-# Evaluate on both splits for all seeds (CLS)
-for seed in 42 123 456; do
-  python src/evaluate.py \
-    --checkpoint experiments/checkpoints/yourbert/cls/seed_$seed/best_model \
-    --test_file data/splits/test.csv \
-    --task cls \
-    --output_dir experiments/results/evaluation/seen_test/yourbert/cls/seed_$seed \
-    --save_predictions
-
-  python src/evaluate.py \
-    --checkpoint experiments/checkpoints/yourbert/cls/seed_$seed/best_model \
-    --test_file data/splits/unseen_idiom_test.csv \
-    --task cls \
-    --output_dir experiments/results/evaluation/unseen_test/yourbert/cls/seed_$seed \
-    --save_predictions
-done
-
-# Repeat for SPAN task
-for seed in 42 123 456; do
-  python src/evaluate.py \
-    --checkpoint experiments/checkpoints/yourbert/span/seed_$seed/best_model \
-    --test_file data/splits/test.csv \
-    --task span \
-    --output_dir experiments/results/evaluation/seen_test/yourbert/span/seed_$seed \
-    --save_predictions
-
-  python src/evaluate.py \
-    --checkpoint experiments/checkpoints/yourbert/span/seed_$seed/best_model \
-    --test_file data/splits/unseen_idiom_test.csv \
-    --task span \
-    --output_dir experiments/results/evaluation/unseen_test/yourbert/span/seed_$seed \
-    --save_predictions
-done
+cd /workspace/project
+bash scripts/run_evaluation_batch.sh
 ```
 
 #### 8. Run analysis (automatically includes new model)
@@ -1510,12 +1222,12 @@ FileNotFoundError: No evaluation results found for model X
 ls experiments/results/evaluation/seen_test/MODEL/TASK/seed_42/
 
 # If empty, run evaluation
-python src/evaluate.py \
-  --checkpoint experiments/checkpoints/MODEL/TASK/seed_42/best_model \
-  --test_file data/splits/test.csv \
+python src/idiom_experiment.py \
+  --mode evaluate \
+  --model_checkpoint experiments/results/full_fine-tuning/MODEL/TASK/seed_42 \
+  --data data/splits/test.csv \
   --task TASK \
-  --output_dir experiments/results/evaluation/seen_test/MODEL/TASK/seed_42 \
-  --save_predictions
+  --output_dir experiments/results/evaluation/seen_test/MODEL/TASK/seed_42
 
 # Verify file creation
 ls experiments/results/evaluation/seen_test/MODEL/TASK/seed_42/
@@ -1532,23 +1244,14 @@ Warning: Model X task Y only has 2/3 seeds. Skipping aggregation.
 **Solutions:**
 ```bash
 # Find which seed is missing
-ls experiments/checkpoints/MODEL/TASK/
+ls experiments/results/full_fine-tuning/MODEL/TASK/
 # Expected: seed_42, seed_123, seed_456
 
-# If seed_456 is missing, train it
-python src/train.py \
-  --config configs/training/MODEL_TASK_train.yaml \
-  --seed 456 \
-  --output_dir experiments/checkpoints/MODEL/TASK/seed_456 \
-  --logging_dir experiments/logs/MODEL/TASK/seed_456
+# Re-run batch training (will skip completed runs)
+bash scripts/run_all_experiments.sh
 
-# Then evaluate
-python src/evaluate.py \
-  --checkpoint experiments/checkpoints/MODEL/TASK/seed_456/best_model \
-  --test_file data/splits/test.csv \
-  --task TASK \
-  --output_dir experiments/results/evaluation/seen_test/MODEL/TASK/seed_456 \
-  --save_predictions
+# Then evaluate (batch)
+bash scripts/run_evaluation_batch.sh
 ```
 
 #### Issue 4: VAST.ai Connection Lost
@@ -1565,15 +1268,11 @@ ssh: connect to host X.X.X.X port XXXXX: Connection refused
 # If instance stopped, restart it
 # Note: Your files in /workspace/ should persist
 
-# Re-upload code if needed
-rsync -avz -e "ssh -p $VAST_PORT" ./ $VAST_HOST:/workspace/idiom_detection/
+# Re-bootstrap and resume with batch scripts
+bash /workspace/project/scripts/instance_bootstrap.sh
 
-# Resume training from checkpoint (if interrupted)
-python src/train.py \
-  --config configs/training/MODEL_TASK_train.yaml \
-  --seed SEED \
-  --resume_from_checkpoint experiments/checkpoints/MODEL/TASK/seed_SEED/checkpoint-XXXX \
-  --output_dir experiments/checkpoints/MODEL/TASK/seed_SEED
+# Re-run training (skips completed runs)
+bash /workspace/project/scripts/run_all_experiments.sh
 ```
 
 #### Issue 5: Incorrect Metric Values
@@ -1611,10 +1310,10 @@ print(f'Recall: {metrics[\"recall\"]:.4f}')
 
 ```bash
 # For training
-python src/train.py --config CONFIG --logging_level DEBUG
+python src/idiom_experiment.py --mode full_finetune --config CONFIG --logging_level DEBUG
 
 # For evaluation
-python src/evaluate.py --checkpoint CHECKPOINT --test_file TEST_FILE --task TASK --output_dir OUTPUT --logging_level DEBUG
+python src/idiom_experiment.py --mode evaluate --model_checkpoint CHECKPOINT --data TEST_FILE --task TASK --output_dir OUTPUT --logging_level DEBUG
 
 # For analysis
 python src/analyze_finetuning_results.py --verbose
@@ -1622,9 +1321,9 @@ python src/analyze_finetuning_results.py --verbose
 
 ### 11.3 Validation Scripts
 
-**Check data integrity:**
+**Check tokenization alignment:**
 ```bash
-python scripts/validate_data.py
+python src/test_tokenization_alignment.py
 
 # Expected output:
 # ✓ Training set: 3360 samples
@@ -1636,15 +1335,9 @@ python scripts/validate_data.py
 # ✓ IOB tags aligned with tokens
 ```
 
-**Check checkpoint integrity:**
+**Check training outputs:**
 ```bash
-python scripts/verify_checkpoints.py
-
-# Expected output:
-# ✓ dictabert/cls/seed_42: 110M parameters
-# ✓ dictabert/cls/seed_123: 110M parameters
-# ✓ dictabert/cls/seed_456: 110M parameters
-# ...
+python src/audit_results.py
 ```
 
 ---
@@ -1703,42 +1396,19 @@ if __name__ == "__main__":
     main()
 ```
 
-### 12.2 Quick Analysis Script
-
-**File:** `scripts/quick_stats.sh`
+### 12.2 Quick Evaluation Sanity Checks
 
 ```bash
-#!/bin/bash
-
-# Quick statistics from evaluation results
-# Usage: ./scripts/quick_stats.sh
-
-echo "=== Quick Statistics ==="
-echo ""
-
 # Count total evaluations
-total=$(find experiments/results/evaluation -name "eval_results*.json" | wc -l)
-echo "Total evaluations: $total"
+find experiments/results/evaluation -name "eval_results*.json" | wc -l
 
 # Count by split
-seen=$(find experiments/results/evaluation/seen_test -name "eval_results*.json" | wc -l)
-unseen=$(find experiments/results/evaluation/unseen_test -name "eval_results*.json" | wc -l)
-echo "Seen test: $seen"
-echo "Unseen test: $unseen"
+find experiments/results/evaluation/seen_test -name "eval_results*.json" | wc -l
+find experiments/results/evaluation/unseen_test -name "eval_results*.json" | wc -l
 
 # Count by task
-cls=$(find experiments/results/evaluation -path "*/cls/*" -name "eval_results*.json" | wc -l)
-span=$(find experiments/results/evaluation -path "*/span/*" -name "eval_results*.json" | wc -l)
-echo "CLS task: $cls"
-echo "SPAN task: $span"
-
-# Check for complete models (6 evals each: 2 tasks × 3 seeds)
-echo ""
-echo "=== Model Completeness ==="
-for model in dictabert alephbert alephbertgimmel neodictabert mbert xlm-r; do
-  count=$(find experiments/results/evaluation/seen_test/$model -name "eval_results*.json" 2>/dev/null | wc -l)
-  echo "$model: $count/6 seen test evaluations"
-done
+find experiments/results/evaluation -path "*/cls/*" -name "eval_results*.json" | wc -l
+find experiments/results/evaluation -path "*/span/*" -name "eval_results*.json" | wc -l
 ```
 
 ### 12.3 Batch Download Script
@@ -1754,23 +1424,11 @@ done
 VAST_HOST="root@123.456.789.0"
 VAST_PORT="12345"
 
-echo "Downloading evaluation results from VAST.ai..."
+echo "Downloading evaluation results from Google Drive..."
 
-# Download all evaluation results
-rsync -avz -e "ssh -p $VAST_PORT" \
-  --include='*/' \
-  --include='eval_results*.json' \
-  --include='eval_predictions.json' \
-  --exclude='*' \
-  "$VAST_HOST:/workspace/idiom_detection/experiments/results/evaluation/" \
-  "experiments/results/evaluation/"
+bash scripts/download_evaluation_results.sh
 
 echo "Download complete!"
-
-# Verify
-echo ""
-echo "=== Verification ==="
-python scripts/quick_stats.sh
 ```
 
 ---
@@ -1782,13 +1440,13 @@ python scripts/quick_stats.sh
 | Need to... | Use this command |
 |------------|------------------|
 | Activate environment | `source activate_env.sh` |
-| Train a new model | `python src/train.py --config configs/training/MODEL_TASK_train.yaml --seed 42` |
-| Evaluate a model | `python src/evaluate.py --checkpoint PATH --test_file data/splits/test.csv --task TASK` |
+| Train a new model | `python src/idiom_experiment.py --mode full_finetune --model_id MODEL_ID --task TASK --config experiments/configs/training_config.yaml --seed 42` |
+| Evaluate a model | `python src/idiom_experiment.py --mode evaluate --model_checkpoint PATH --data data/splits/test.csv --task TASK` |
 | Aggregate results | `python src/analyze_finetuning_results.py` |
 | Analyze generalization | `python src/analyze_generalization.py` |
 | Categorize errors | `python scripts/categorize_all_errors.py` |
 | Error visualization | `python src/analyze_error_distribution.py` |
-| Check completeness | `python scripts/verify_evaluations.py` |
+| Check completeness | `find experiments/results/evaluation -name "eval_results*.json" | wc -l` |
 
 **For detailed metric definitions and standards, see:** `EVALUATION_STANDARDIZATION_GUIDE.md`
 

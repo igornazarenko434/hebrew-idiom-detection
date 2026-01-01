@@ -37,9 +37,10 @@ echo ""
 
 # Model IDs (HuggingFace model identifiers)
 MODELS=(
-    #"onlplab/alephbert-base"
-    #"dicta-il/alephbertgimmel-base"
+    "onlplab/alephbert-base"
+    "dicta-il/alephbertgimmel-base"
     "dicta-il/dictabert"
+    "dicta-il/neodictabert"
     "bert-base-multilingual-cased"
     "xlm-roberta-base"
 )

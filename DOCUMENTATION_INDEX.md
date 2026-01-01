@@ -74,6 +74,18 @@
 
 ---
 
+## ✅ Full Re-Run Checklist (New)
+
+### **FULL_RERUN_CHECKLIST.md**
+**When to use:** When you want to re-run the entire pipeline end-to-end  
+**Contains:**
+- VAST.ai volume + instance setup
+- Batch HPO + full training + evaluation
+- Google Drive sync + local downloads
+- Analysis scripts and outputs
+
+---
+
 ## 📋 Supporting Documents
 
 ### 4. **STEP_BY_STEP_MISSIONS.md**

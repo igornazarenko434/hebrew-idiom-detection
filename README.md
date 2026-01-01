@@ -916,6 +916,9 @@ experiments/results/{mode}/{model}/{task}/
 
 ## Documentation
 
+**Start here for a full end-to-end rerun:**
+- `FULL_RERUN_CHECKLIST.md`
+
 ### Complete Documentation
 
 #### Core Documentation
