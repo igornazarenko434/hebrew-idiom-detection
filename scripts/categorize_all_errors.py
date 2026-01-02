@@ -66,6 +66,7 @@ def main():
         'alephbert-base',
         'alephbertgimmel-base',
         'dictabert',
+        'neodictabert',
         'bert-base-multilingual-cased',
         'xlm-roberta-base'
     ]

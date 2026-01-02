@@ -68,7 +68,7 @@ def load_all_categorized_predictions():
 
     data = []
     models = ['alephbert-base', 'alephbertgimmel-base', 'dictabert',
-              'bert-base-multilingual-cased', 'xlm-roberta-base']
+              'neodictabert', 'bert-base-multilingual-cased', 'xlm-roberta-base']
     tasks = ['cls', 'span']
     seeds = [42, 123, 456]
     splits = ['seen_test', 'unseen_test']
