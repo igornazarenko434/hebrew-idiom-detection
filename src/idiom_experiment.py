@@ -98,8 +98,13 @@ def load_tokenizer_safe(model_name_or_path: str, trust_remote_code: bool, fix_mi
         return AutoTokenizer.from_pretrained(model_name_or_path, **tokenizer_kwargs)
     except TypeError:
         # Fallback for tokenizers that don't support mistral regex patching
-        tokenizer_kwargs.pop("fix_mistral_regex", None)
-        return AutoTokenizer.from_pretrained(model_name_or_path, **tokenizer_kwargs)
+        tokenizer_kwargs["fix_mistral_regex"] = False
+        try:
+            return AutoTokenizer.from_pretrained(model_name_or_path, **tokenizer_kwargs)
+        except TypeError:
+            # Final fallback: disable fast tokenizers to avoid backend patching issues
+            tokenizer_kwargs["use_fast"] = False
+            return AutoTokenizer.from_pretrained(model_name_or_path, **tokenizer_kwargs)
 
 # -------------------------
 # Token Classification Model with CRF Layer
