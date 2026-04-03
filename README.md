@@ -14,7 +14,7 @@
 
 **Igor Nazarenko & Yuval Amit** | Reichman University | Supervised by Dr. Kfir Bar
 
-[Paper (PDF)](paper/report/Hebrew_Idiom_Detection_Report.pdf) &bull; [Presentation](presentation/) &bull; [Dataset](data/) &bull; [Results](#-key-results) &bull; [Reproduce](docs/REPRODUCING.md)
+[Paper (PDF)](paper/report/Hebrew_Idiom_Detection_Report.pdf) &bull; [Presentation](presentation/) &bull; [Dataset](data/) &bull; [Results](#key-results) &bull; [Reproduce](docs/REPRODUCING.md)
 
 </div>
 
@@ -26,14 +26,14 @@
 
 ## Table of Contents
 
-- [Key Results](#-key-results)
-- [Dataset](#-dataset-hebrew-idioms-4800)
-- [Models](#-models)
-- [Getting Started](#-getting-started)
-- [Repository Structure](#-repository-structure)
-- [Paper & Presentation](#-paper--presentation)
-- [Citation](#-citation)
-- [Authors](#-authors--acknowledgments)
+- [Key Results](#key-results)
+- [Dataset](#dataset-hebrew-idioms-4800)
+- [Models](#models)
+- [Getting Started](#getting-started)
+- [Repository Structure](#repository-structure)
+- [Paper & Presentation](#paper--presentation)
+- [Citation](#citation)
+- [Authors](#authors--acknowledgments)
 
 ---
 
