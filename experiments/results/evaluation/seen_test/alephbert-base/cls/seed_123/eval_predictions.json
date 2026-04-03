@@ -5,11 +5,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9501797556877136,
+    "confidence": 0.9531320929527283,
     "is_correct": true,
     "all_probs": [
-      0.9501797556877136,
-      0.04982024058699608
+      0.9531320929527283,
+      0.04686785861849785
     ],
     "error_category": "CORRECT"
   },
@@ -19,11 +19,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.9487759470939636,
+    "confidence": 0.9252065420150757,
     "is_correct": false,
     "all_probs": [
-      0.05122405290603638,
-      0.9487759470939636
+      0.07479345053434372,
+      0.9252065420150757
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -33,11 +33,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9550415277481079,
+    "confidence": 0.9552085399627686,
     "is_correct": true,
     "all_probs": [
-      0.9550415277481079,
-      0.044958505779504776
+      0.9552085399627686,
+      0.04479142650961876
     ],
     "error_category": "CORRECT"
   },
@@ -47,11 +47,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9578759074211121,
+    "confidence": 0.9548227787017822,
     "is_correct": true,
     "all_probs": [
-      0.9578759074211121,
-      0.042124055325984955
+      0.9548227787017822,
+      0.045177169144153595
     ],
     "error_category": "CORRECT"
   },
@@ -61,11 +61,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.7882920503616333,
+    "confidence": 0.8075491189956665,
     "is_correct": true,
     "all_probs": [
-      0.21170802414417267,
-      0.7882920503616333
+      0.1924508661031723,
+      0.8075491189956665
     ],
     "error_category": "CORRECT"
   },
@@ -75,11 +75,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9571062922477722,
+    "confidence": 0.9581495523452759,
     "is_correct": true,
     "all_probs": [
-      0.042893726378679276,
-      0.9571062922477722
+      0.041850391775369644,
+      0.9581495523452759
     ],
     "error_category": "CORRECT"
   },
@@ -89,11 +89,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9618163108825684,
+    "confidence": 0.9592538475990295,
     "is_correct": true,
     "all_probs": [
-      0.03818368539214134,
-      0.9618163108825684
+      0.040746141225099564,
+      0.9592538475990295
     ],
     "error_category": "CORRECT"
   },
@@ -103,11 +103,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.94368577003479,
+    "confidence": 0.9502488970756531,
     "is_correct": true,
     "all_probs": [
-      0.05631416663527489,
-      0.94368577003479
+      0.049751102924346924,
+      0.9502488970756531
     ],
     "error_category": "CORRECT"
   },
@@ -117,11 +117,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9545086622238159,
+    "confidence": 0.9532631635665894,
     "is_correct": true,
     "all_probs": [
-      0.9545086622238159,
-      0.04549126699566841
+      0.9532631635665894,
+      0.046736832708120346
     ],
     "error_category": "CORRECT"
   },
@@ -131,11 +131,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9390932321548462,
+    "confidence": 0.9561014175415039,
     "is_correct": true,
     "all_probs": [
-      0.9390932321548462,
-      0.06090676039457321
+      0.9561014175415039,
+      0.0438985601067543
     ],
     "error_category": "CORRECT"
   },
@@ -145,11 +145,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9507941007614136,
+    "confidence": 0.9542603492736816,
     "is_correct": true,
     "all_probs": [
-      0.9507941007614136,
-      0.04920591413974762
+      0.9542603492736816,
+      0.04573960602283478
     ],
     "error_category": "CORRECT"
   },
@@ -159,11 +159,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9366261959075928,
+    "confidence": 0.9567617774009705,
     "is_correct": true,
     "all_probs": [
-      0.9366261959075928,
-      0.06337377429008484
+      0.9567617774009705,
+      0.04323821887373924
     ],
     "error_category": "CORRECT"
   },
@@ -173,11 +173,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9584612250328064,
+    "confidence": 0.9539121389389038,
     "is_correct": true,
     "all_probs": [
-      0.0415387786924839,
-      0.9584612250328064
+      0.04608780890703201,
+      0.9539121389389038
     ],
     "error_category": "CORRECT"
   },
@@ -187,11 +187,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9527049660682678,
+    "confidence": 0.9502552151679993,
     "is_correct": true,
     "all_probs": [
-      0.04729502275586128,
-      0.9527049660682678
+      0.04974476620554924,
+      0.9502552151679993
     ],
     "error_category": "CORRECT"
   },
@@ -201,11 +201,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9578998684883118,
+    "confidence": 0.9546000361442566,
     "is_correct": true,
     "all_probs": [
-      0.042100101709365845,
-      0.9578998684883118
+      0.04539993032813072,
+      0.9546000361442566
     ],
     "error_category": "CORRECT"
   },
@@ -215,11 +215,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9362258315086365,
+    "confidence": 0.9506652355194092,
     "is_correct": true,
     "all_probs": [
-      0.06377414613962173,
-      0.9362258315086365
+      0.049334749579429626,
+      0.9506652355194092
     ],
     "error_category": "CORRECT"
   },
@@ -229,11 +229,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9599618315696716,
+    "confidence": 0.9536482691764832,
     "is_correct": true,
     "all_probs": [
-      0.9599618315696716,
-      0.040038205683231354
+      0.9536482691764832,
+      0.04635167866945267
     ],
     "error_category": "CORRECT"
   },
@@ -243,11 +243,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9524045586585999,
+    "confidence": 0.9318735003471375,
     "is_correct": true,
     "all_probs": [
-      0.9524045586585999,
-      0.047595422714948654
+      0.9318735003471375,
+      0.06812652200460434
     ],
     "error_category": "CORRECT"
   },
@@ -257,11 +257,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9520785808563232,
+    "confidence": 0.9541857838630676,
     "is_correct": true,
     "all_probs": [
-      0.9520785808563232,
-      0.04792143031954765
+      0.9541857838630676,
+      0.04581423103809357
     ],
     "error_category": "CORRECT"
   },
@@ -271,11 +271,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9545620083808899,
+    "confidence": 0.9543352723121643,
     "is_correct": true,
     "all_probs": [
-      0.9545620083808899,
-      0.045438025146722794
+      0.9543352723121643,
+      0.04566474258899689
     ],
     "error_category": "CORRECT"
   },
@@ -285,11 +285,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9571753144264221,
+    "confidence": 0.9515658617019653,
     "is_correct": true,
     "all_probs": [
-      0.04282469302415848,
-      0.9571753144264221
+      0.04843412712216377,
+      0.9515658617019653
     ],
     "error_category": "CORRECT"
   },
@@ -299,11 +299,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9584406614303589,
+    "confidence": 0.9554802179336548,
     "is_correct": true,
     "all_probs": [
-      0.0415593720972538,
-      0.9584406614303589
+      0.044519826769828796,
+      0.9554802179336548
     ],
     "error_category": "CORRECT"
   },
@@ -313,11 +313,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.955960214138031,
+    "confidence": 0.9557746052742004,
     "is_correct": true,
     "all_probs": [
-      0.04403984546661377,
-      0.955960214138031
+      0.04422544687986374,
+      0.9557746052742004
     ],
     "error_category": "CORRECT"
   },
@@ -327,11 +327,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9555989503860474,
+    "confidence": 0.9533042311668396,
     "is_correct": true,
     "all_probs": [
-      0.044401075690984726,
-      0.9555989503860474
+      0.04669583961367607,
+      0.9533042311668396
     ],
     "error_category": "CORRECT"
   },
@@ -341,11 +341,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9582232236862183,
+    "confidence": 0.7044932246208191,
     "is_correct": true,
     "all_probs": [
-      0.9582232236862183,
-      0.04177683964371681
+      0.7044932246208191,
+      0.29550671577453613
     ],
     "error_category": "CORRECT"
   },
@@ -355,11 +355,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.939359724521637,
+    "confidence": 0.9280001521110535,
     "is_correct": false,
     "all_probs": [
-      0.06064024940133095,
-      0.939359724521637
+      0.07199984788894653,
+      0.9280001521110535
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -369,11 +369,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9652777314186096,
+    "confidence": 0.9598965644836426,
     "is_correct": true,
     "all_probs": [
-      0.9652777314186096,
-      0.034722331911325455
+      0.9598965644836426,
+      0.0401034839451313
     ],
     "error_category": "CORRECT"
   },
@@ -383,11 +383,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9609618782997131,
+    "confidence": 0.9559454917907715,
     "is_correct": true,
     "all_probs": [
-      0.9609618782997131,
-      0.03903814032673836
+      0.9559454917907715,
+      0.0440545417368412
     ],
     "error_category": "CORRECT"
   },
@@ -397,11 +397,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.7218843102455139,
+    "confidence": 0.678239107131958,
     "is_correct": true,
     "all_probs": [
-      0.27811571955680847,
-      0.7218843102455139
+      0.3217608630657196,
+      0.678239107131958
     ],
     "error_category": "CORRECT"
   },
@@ -411,11 +411,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9516206979751587,
+    "confidence": 0.9501630067825317,
     "is_correct": true,
     "all_probs": [
-      0.048379264771938324,
-      0.9516206979751587
+      0.04983701556921005,
+      0.9501630067825317
     ],
     "error_category": "CORRECT"
   },
@@ -425,11 +425,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9538634419441223,
+    "confidence": 0.9536020159721375,
     "is_correct": true,
     "all_probs": [
-      0.046136531978845596,
-      0.9538634419441223
+      0.046397965401411057,
+      0.9536020159721375
     ],
     "error_category": "CORRECT"
   },
@@ -439,11 +439,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9558363556861877,
+    "confidence": 0.9554892778396606,
     "is_correct": true,
     "all_probs": [
-      0.04416371136903763,
-      0.9558363556861877
+      0.04451078176498413,
+      0.9554892778396606
     ],
     "error_category": "CORRECT"
   },
@@ -453,11 +453,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.6974917650222778,
+    "confidence": 0.9560708999633789,
     "is_correct": true,
     "all_probs": [
-      0.6974917650222778,
-      0.30250826478004456
+      0.9560708999633789,
+      0.0439290814101696
     ],
     "error_category": "CORRECT"
   },
@@ -467,11 +467,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9338452816009521,
+    "confidence": 0.9540442824363708,
     "is_correct": true,
     "all_probs": [
-      0.9338452816009521,
-      0.06615474820137024
+      0.9540442824363708,
+      0.04595566913485527
     ],
     "error_category": "CORRECT"
   },
@@ -481,11 +481,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9173614382743835,
+    "confidence": 0.9545968770980835,
     "is_correct": true,
     "all_probs": [
-      0.9173614382743835,
-      0.08263854682445526
+      0.9545968770980835,
+      0.045403145253658295
     ],
     "error_category": "CORRECT"
   },
@@ -495,11 +495,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9403707981109619,
+    "confidence": 0.9574289917945862,
     "is_correct": true,
     "all_probs": [
-      0.9403707981109619,
-      0.059629227966070175
+      0.9574289917945862,
+      0.04257095605134964
     ],
     "error_category": "CORRECT"
   },
@@ -509,11 +509,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9588147401809692,
+    "confidence": 0.959052324295044,
     "is_correct": true,
     "all_probs": [
-      0.04118521511554718,
-      0.9588147401809692
+      0.04094764590263367,
+      0.959052324295044
     ],
     "error_category": "CORRECT"
   },
@@ -523,11 +523,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9435098171234131,
+    "confidence": 0.958462119102478,
     "is_correct": true,
     "all_probs": [
-      0.056490182876586914,
-      0.9435098171234131
+      0.041537899523973465,
+      0.958462119102478
     ],
     "error_category": "CORRECT"
   },
@@ -537,11 +537,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9420539736747742,
+    "confidence": 0.9482752680778503,
     "is_correct": true,
     "all_probs": [
-      0.05794605240225792,
-      0.9420539736747742
+      0.051724717020988464,
+      0.9482752680778503
     ],
     "error_category": "CORRECT"
   },
@@ -550,14 +550,14 @@
     "sentence": "הם החזיקו אצבעות בזמן השקת המוצר החדש, עקבו אחרי הגרף של המכירות בזמן אמת, וכל עלייה קטנה נראתה להם כמו ניצחון – “נו, כבר, תראה סימן של חיים!” לחש אחד מהם למסך.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.5500160455703735,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.9556575417518616,
+    "is_correct": false,
     "all_probs": [
-      0.4499839246273041,
-      0.5500160455703735
+      0.9556575417518616,
+      0.04434247687458992
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "7_lit_10",
@@ -565,11 +565,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9561932682991028,
+    "confidence": 0.9522116184234619,
     "is_correct": true,
     "all_probs": [
-      0.9561932682991028,
-      0.04380669817328453
+      0.9522116184234619,
+      0.04778844118118286
     ],
     "error_category": "CORRECT"
   },
@@ -579,11 +579,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9535629749298096,
+    "confidence": 0.9527144432067871,
     "is_correct": true,
     "all_probs": [
-      0.9535629749298096,
-      0.046437039971351624
+      0.9527144432067871,
+      0.04728548601269722
     ],
     "error_category": "CORRECT"
   },
@@ -593,11 +593,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9498719573020935,
+    "confidence": 0.9532380104064941,
     "is_correct": true,
     "all_probs": [
-      0.9498719573020935,
-      0.05012808367609978
+      0.9532380104064941,
+      0.046761948615312576
     ],
     "error_category": "CORRECT"
   },
@@ -607,11 +607,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9588514566421509,
+    "confidence": 0.9548607468605042,
     "is_correct": true,
     "all_probs": [
-      0.9588514566421509,
-      0.04114856570959091
+      0.9548607468605042,
+      0.045139264315366745
     ],
     "error_category": "CORRECT"
   },
@@ -621,11 +621,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9579874873161316,
+    "confidence": 0.953732430934906,
     "is_correct": true,
     "all_probs": [
-      0.04201250895857811,
-      0.9579874873161316
+      0.046267613768577576,
+      0.953732430934906
     ],
     "error_category": "CORRECT"
   },
@@ -635,11 +635,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9619598388671875,
+    "confidence": 0.9593728184700012,
     "is_correct": true,
     "all_probs": [
-      0.03804018720984459,
-      0.9619598388671875
+      0.04062720760703087,
+      0.9593728184700012
     ],
     "error_category": "CORRECT"
   },
@@ -649,11 +649,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9528213739395142,
+    "confidence": 0.9561626315116882,
     "is_correct": true,
     "all_probs": [
-      0.04717866703867912,
-      0.9528213739395142
+      0.04383730888366699,
+      0.9561626315116882
     ],
     "error_category": "CORRECT"
   },
@@ -663,11 +663,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9295271635055542,
+    "confidence": 0.9555032849311829,
     "is_correct": true,
     "all_probs": [
-      0.07047286629676819,
-      0.9295271635055542
+      0.044496748596429825,
+      0.9555032849311829
     ],
     "error_category": "CORRECT"
   },
@@ -677,11 +677,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9661656618118286,
+    "confidence": 0.9546754360198975,
     "is_correct": true,
     "all_probs": [
-      0.9661656618118286,
-      0.033834315836429596
+      0.9546754360198975,
+      0.04532460868358612
     ],
     "error_category": "CORRECT"
   },
@@ -691,11 +691,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9461754560470581,
+    "confidence": 0.9513483047485352,
     "is_correct": true,
     "all_probs": [
-      0.9461754560470581,
-      0.053824517875909805
+      0.9513483047485352,
+      0.048651713877916336
     ],
     "error_category": "CORRECT"
   },
@@ -705,11 +705,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9623686671257019,
+    "confidence": 0.9582047462463379,
     "is_correct": true,
     "all_probs": [
-      0.9623686671257019,
-      0.03763129189610481
+      0.9582047462463379,
+      0.04179532453417778
     ],
     "error_category": "CORRECT"
   },
@@ -719,11 +719,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9550313949584961,
+    "confidence": 0.9528378248214722,
     "is_correct": true,
     "all_probs": [
-      0.9550313949584961,
-      0.044968653470277786
+      0.9528378248214722,
+      0.04716220870614052
     ],
     "error_category": "CORRECT"
   },
@@ -733,11 +733,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.961304783821106,
+    "confidence": 0.9491710066795349,
     "is_correct": true,
     "all_probs": [
-      0.03869523108005524,
-      0.961304783821106
+      0.05082906037569046,
+      0.9491710066795349
     ],
     "error_category": "CORRECT"
   },
@@ -747,11 +747,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9469705820083618,
+    "confidence": 0.9481891989707947,
     "is_correct": true,
     "all_probs": [
-      0.05302942171692848,
-      0.9469705820083618
+      0.05181083828210831,
+      0.9481891989707947
     ],
     "error_category": "CORRECT"
   },
@@ -761,11 +761,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.946077287197113,
+    "confidence": 0.9501590132713318,
     "is_correct": true,
     "all_probs": [
-      0.05392272025346756,
-      0.946077287197113
+      0.04984094202518463,
+      0.9501590132713318
     ],
     "error_category": "CORRECT"
   },
@@ -775,11 +775,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9591072201728821,
+    "confidence": 0.9538272023200989,
     "is_correct": true,
     "all_probs": [
-      0.04089277610182762,
-      0.9591072201728821
+      0.04617283493280411,
+      0.9538272023200989
     ],
     "error_category": "CORRECT"
   },
@@ -789,11 +789,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.947736382484436,
+    "confidence": 0.9557639360427856,
     "is_correct": true,
     "all_probs": [
-      0.947736382484436,
-      0.05226357653737068
+      0.9557639360427856,
+      0.04423614218831062
     ],
     "error_category": "CORRECT"
   },
@@ -803,11 +803,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.9208630323410034,
+    "confidence": 0.9397107362747192,
     "is_correct": false,
     "all_probs": [
-      0.07913703471422195,
-      0.9208630323410034
+      0.06028922647237778,
+      0.9397107362747192
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -817,11 +817,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9562757015228271,
+    "confidence": 0.9534874558448792,
     "is_correct": true,
     "all_probs": [
-      0.9562757015228271,
-      0.043724291026592255
+      0.9534874558448792,
+      0.04651256650686264
     ],
     "error_category": "CORRECT"
   },
@@ -831,11 +831,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9364998936653137,
+    "confidence": 0.9546342492103577,
     "is_correct": true,
     "all_probs": [
-      0.9364998936653137,
-      0.06350012868642807
+      0.9546342492103577,
+      0.04536575451493263
     ],
     "error_category": "CORRECT"
   },
@@ -845,11 +845,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9482292532920837,
+    "confidence": 0.9487978219985962,
     "is_correct": true,
     "all_probs": [
-      0.05177076905965805,
-      0.9482292532920837
+      0.0512022040784359,
+      0.9487978219985962
     ],
     "error_category": "CORRECT"
   },
@@ -859,11 +859,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.951788604259491,
+    "confidence": 0.9537152051925659,
     "is_correct": true,
     "all_probs": [
-      0.048211418092250824,
-      0.951788604259491
+      0.04628485068678856,
+      0.9537152051925659
     ],
     "error_category": "CORRECT"
   },
@@ -873,11 +873,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9581755995750427,
+    "confidence": 0.9537745118141174,
     "is_correct": true,
     "all_probs": [
-      0.04182438552379608,
-      0.9581755995750427
+      0.04622548446059227,
+      0.9537745118141174
     ],
     "error_category": "CORRECT"
   },
@@ -887,11 +887,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9299451112747192,
+    "confidence": 0.9536415934562683,
     "is_correct": true,
     "all_probs": [
-      0.07005488872528076,
-      0.9299451112747192
+      0.04635847732424736,
+      0.9536415934562683
     ],
     "error_category": "CORRECT"
   },
@@ -901,11 +901,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9533351063728333,
+    "confidence": 0.9545208811759949,
     "is_correct": true,
     "all_probs": [
-      0.9533351063728333,
-      0.046664875000715256
+      0.9545208811759949,
+      0.04547913745045662
     ],
     "error_category": "CORRECT"
   },
@@ -915,11 +915,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.8945453763008118,
+    "confidence": 0.9561928510665894,
     "is_correct": true,
     "all_probs": [
-      0.8945453763008118,
-      0.10545467585325241
+      0.9561928510665894,
+      0.04380713775753975
     ],
     "error_category": "CORRECT"
   },
@@ -929,11 +929,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9486613273620605,
+    "confidence": 0.9498562812805176,
     "is_correct": true,
     "all_probs": [
-      0.9486613273620605,
-      0.05133865773677826
+      0.9498562812805176,
+      0.0501437671482563
     ],
     "error_category": "CORRECT"
   },
@@ -943,11 +943,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.8618016242980957,
+    "confidence": 0.9459682703018188,
     "is_correct": true,
     "all_probs": [
-      0.8618016242980957,
-      0.1381983458995819
+      0.9459682703018188,
+      0.05403175950050354
     ],
     "error_category": "CORRECT"
   },
@@ -957,11 +957,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9485546946525574,
+    "confidence": 0.9482468366622925,
     "is_correct": true,
     "all_probs": [
-      0.05144533887505531,
-      0.9485546946525574
+      0.05175317823886871,
+      0.9482468366622925
     ],
     "error_category": "CORRECT"
   },
@@ -971,11 +971,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9522328972816467,
+    "confidence": 0.9379050731658936,
     "is_correct": true,
     "all_probs": [
-      0.047767072916030884,
-      0.9522328972816467
+      0.062094882130622864,
+      0.9379050731658936
     ],
     "error_category": "CORRECT"
   },
@@ -985,11 +985,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9541371464729309,
+    "confidence": 0.95379638671875,
     "is_correct": true,
     "all_probs": [
-      0.04586285352706909,
-      0.9541371464729309
+      0.0462036058306694,
+      0.95379638671875
     ],
     "error_category": "CORRECT"
   },
@@ -999,11 +999,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.961463212966919,
+    "confidence": 0.9549270272254944,
     "is_correct": true,
     "all_probs": [
-      0.03853675723075867,
-      0.961463212966919
+      0.045072995126247406,
+      0.9549270272254944
     ],
     "error_category": "CORRECT"
   },
@@ -1013,11 +1013,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9604265093803406,
+    "confidence": 0.9572886228561401,
     "is_correct": true,
     "all_probs": [
-      0.9604265093803406,
-      0.0395735539495945
+      0.9572886228561401,
+      0.042711373418569565
     ],
     "error_category": "CORRECT"
   },
@@ -1026,14 +1026,14 @@
     "sentence": "הוא הרים את הראש בזמן השיחה כדי לשמור על קשר עין.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 1,
-    "confidence": 0.5967919826507568,
-    "is_correct": false,
+    "predicted_label": 0,
+    "confidence": 0.9419606328010559,
+    "is_correct": true,
     "all_probs": [
-      0.40320801734924316,
-      0.5967919826507568
+      0.9419606328010559,
+      0.05803937464952469
     ],
-    "error_category": "FALSE_POSITIVE"
+    "error_category": "CORRECT"
   },
   {
     "id": "11_lit_24",
@@ -1041,11 +1041,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9558812379837036,
+    "confidence": 0.9533478617668152,
     "is_correct": true,
     "all_probs": [
-      0.9558812379837036,
-      0.04411880671977997
+      0.9533478617668152,
+      0.046652086079120636
     ],
     "error_category": "CORRECT"
   },
@@ -1055,11 +1055,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9625884294509888,
+    "confidence": 0.9545167088508606,
     "is_correct": true,
     "all_probs": [
-      0.9625884294509888,
-      0.037411510944366455
+      0.9545167088508606,
+      0.04548329859972
     ],
     "error_category": "CORRECT"
   },
@@ -1069,11 +1069,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9511615037918091,
+    "confidence": 0.9607787132263184,
     "is_correct": true,
     "all_probs": [
-      0.04883851483464241,
-      0.9511615037918091
+      0.039221275597810745,
+      0.9607787132263184
     ],
     "error_category": "CORRECT"
   },
@@ -1083,11 +1083,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9597307443618774,
+    "confidence": 0.9546006917953491,
     "is_correct": true,
     "all_probs": [
-      0.04026930406689644,
-      0.9597307443618774
+      0.045399341732263565,
+      0.9546006917953491
     ],
     "error_category": "CORRECT"
   },
@@ -1097,11 +1097,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9591922163963318,
+    "confidence": 0.9558279514312744,
     "is_correct": true,
     "all_probs": [
-      0.04080773517489433,
-      0.9591922163963318
+      0.04417206719517708,
+      0.9558279514312744
     ],
     "error_category": "CORRECT"
   },
@@ -1111,11 +1111,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.7497845888137817,
+    "confidence": 0.9449260830879211,
     "is_correct": true,
     "all_probs": [
-      0.25021544098854065,
-      0.7497845888137817
+      0.055073902010917664,
+      0.9449260830879211
     ],
     "error_category": "CORRECT"
   },
@@ -1125,11 +1125,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.7768787741661072,
+    "confidence": 0.9261226654052734,
     "is_correct": false,
     "all_probs": [
-      0.22312122583389282,
-      0.7768787741661072
+      0.07387732714414597,
+      0.9261226654052734
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -1139,11 +1139,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9539493322372437,
+    "confidence": 0.9547430276870728,
     "is_correct": true,
     "all_probs": [
-      0.9539493322372437,
-      0.04605065658688545
+      0.9547430276870728,
+      0.04525698721408844
     ],
     "error_category": "CORRECT"
   },
@@ -1153,11 +1153,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9662309885025024,
+    "confidence": 0.9576779007911682,
     "is_correct": true,
     "all_probs": [
-      0.9662309885025024,
-      0.03376903012394905
+      0.9576779007911682,
+      0.04232214391231537
     ],
     "error_category": "CORRECT"
   },
@@ -1167,11 +1167,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9573933482170105,
+    "confidence": 0.9552967548370361,
     "is_correct": true,
     "all_probs": [
-      0.9573933482170105,
-      0.042606621980667114
+      0.9552967548370361,
+      0.04470324143767357
     ],
     "error_category": "CORRECT"
   },
@@ -1181,11 +1181,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9096939563751221,
+    "confidence": 0.9449998736381531,
     "is_correct": true,
     "all_probs": [
-      0.09030607342720032,
-      0.9096939563751221
+      0.05500010773539543,
+      0.9449998736381531
     ],
     "error_category": "CORRECT"
   },
@@ -1195,11 +1195,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9484650492668152,
+    "confidence": 0.9554029703140259,
     "is_correct": true,
     "all_probs": [
-      0.05153492093086243,
-      0.9484650492668152
+      0.044597044587135315,
+      0.9554029703140259
     ],
     "error_category": "CORRECT"
   },
@@ -1209,11 +1209,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9514836072921753,
+    "confidence": 0.94486004114151,
     "is_correct": true,
     "all_probs": [
-      0.04851638153195381,
-      0.9514836072921753
+      0.055139947682619095,
+      0.94486004114151
     ],
     "error_category": "CORRECT"
   },
@@ -1223,11 +1223,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9427423477172852,
+    "confidence": 0.9392667412757874,
     "is_correct": true,
     "all_probs": [
-      0.057257670909166336,
-      0.9427423477172852
+      0.06073322892189026,
+      0.9392667412757874
     ],
     "error_category": "CORRECT"
   },
@@ -1237,11 +1237,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.950370728969574,
+    "confidence": 0.9523459672927856,
     "is_correct": true,
     "all_probs": [
-      0.950370728969574,
-      0.04962921887636185
+      0.9523459672927856,
+      0.04765406623482704
     ],
     "error_category": "CORRECT"
   },
@@ -1251,11 +1251,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9520934820175171,
+    "confidence": 0.9558678269386292,
     "is_correct": true,
     "all_probs": [
-      0.9520934820175171,
-      0.04790651053190231
+      0.9558678269386292,
+      0.044132135808467865
     ],
     "error_category": "CORRECT"
   },
@@ -1265,11 +1265,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9590932130813599,
+    "confidence": 0.9567677974700928,
     "is_correct": true,
     "all_probs": [
-      0.9590932130813599,
-      0.04090676084160805
+      0.9567677974700928,
+      0.04323221743106842
     ],
     "error_category": "CORRECT"
   },
@@ -1279,11 +1279,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.8417218327522278,
+    "confidence": 0.9470607042312622,
     "is_correct": true,
     "all_probs": [
-      0.8417218327522278,
-      0.1582781821489334
+      0.9470607042312622,
+      0.05293933302164078
     ],
     "error_category": "CORRECT"
   },
@@ -1293,11 +1293,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9572111368179321,
+    "confidence": 0.9556929469108582,
     "is_correct": true,
     "all_probs": [
-      0.042788904160261154,
-      0.9572111368179321
+      0.044307053089141846,
+      0.9556929469108582
     ],
     "error_category": "CORRECT"
   },
@@ -1307,11 +1307,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9536193609237671,
+    "confidence": 0.9528404474258423,
     "is_correct": true,
     "all_probs": [
-      0.046380650252103806,
-      0.9536193609237671
+      0.04715960472822189,
+      0.9528404474258423
     ],
     "error_category": "CORRECT"
   },
@@ -1321,11 +1321,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 0,
-    "confidence": 0.8907211422920227,
+    "confidence": 0.953193724155426,
     "is_correct": false,
     "all_probs": [
-      0.8907211422920227,
-      0.1092788428068161
+      0.953193724155426,
+      0.04680623859167099
     ],
     "error_category": "FALSE_NEGATIVE"
   },
@@ -1335,11 +1335,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9518724083900452,
+    "confidence": 0.9520074725151062,
     "is_correct": true,
     "all_probs": [
-      0.04812760651111603,
-      0.9518724083900452
+      0.047992557287216187,
+      0.9520074725151062
     ],
     "error_category": "CORRECT"
   },
@@ -1349,11 +1349,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9592284560203552,
+    "confidence": 0.9553231000900269,
     "is_correct": true,
     "all_probs": [
-      0.9592284560203552,
-      0.04077157378196716
+      0.9553231000900269,
+      0.044676899909973145
     ],
     "error_category": "CORRECT"
   },
@@ -1363,11 +1363,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9572292566299438,
+    "confidence": 0.952293872833252,
     "is_correct": true,
     "all_probs": [
-      0.9572292566299438,
-      0.04277070239186287
+      0.952293872833252,
+      0.04770611599087715
     ],
     "error_category": "CORRECT"
   },
@@ -1377,11 +1377,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9510272145271301,
+    "confidence": 0.9531638026237488,
     "is_correct": true,
     "all_probs": [
-      0.9510272145271301,
-      0.048972781747579575
+      0.9531638026237488,
+      0.046836186200380325
     ],
     "error_category": "CORRECT"
   },
@@ -1391,11 +1391,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9540491700172424,
+    "confidence": 0.9529291987419128,
     "is_correct": true,
     "all_probs": [
-      0.9540491700172424,
-      0.045950789004564285
+      0.9529291987419128,
+      0.04707077145576477
     ],
     "error_category": "CORRECT"
   },
@@ -1405,11 +1405,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9580671787261963,
+    "confidence": 0.9525973796844482,
     "is_correct": true,
     "all_probs": [
-      0.041932862251996994,
-      0.9580671787261963
+      0.04740254580974579,
+      0.9525973796844482
     ],
     "error_category": "CORRECT"
   },
@@ -1419,11 +1419,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9578938484191895,
+    "confidence": 0.9582448601722717,
     "is_correct": true,
     "all_probs": [
-      0.04210614040493965,
-      0.9578938484191895
+      0.04175516590476036,
+      0.9582448601722717
     ],
     "error_category": "CORRECT"
   },
@@ -1433,11 +1433,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9573686718940735,
+    "confidence": 0.9566274881362915,
     "is_correct": true,
     "all_probs": [
-      0.0426313579082489,
-      0.9573686718940735
+      0.04337248206138611,
+      0.9566274881362915
     ],
     "error_category": "CORRECT"
   },
@@ -1447,11 +1447,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9653204679489136,
+    "confidence": 0.9580681324005127,
     "is_correct": true,
     "all_probs": [
-      0.034679561853408813,
-      0.9653204679489136
+      0.041931845247745514,
+      0.9580681324005127
     ],
     "error_category": "CORRECT"
   },
@@ -1461,11 +1461,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.960225522518158,
+    "confidence": 0.9564106464385986,
     "is_correct": true,
     "all_probs": [
-      0.960225522518158,
-      0.039774492383003235
+      0.9564106464385986,
+      0.04358936846256256
     ],
     "error_category": "CORRECT"
   },
@@ -1475,11 +1475,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.956547737121582,
+    "confidence": 0.952392041683197,
     "is_correct": true,
     "all_probs": [
-      0.956547737121582,
-      0.043452296406030655
+      0.952392041683197,
+      0.04760798439383507
     ],
     "error_category": "CORRECT"
   },
@@ -1489,11 +1489,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.957813024520874,
+    "confidence": 0.9539809226989746,
     "is_correct": true,
     "all_probs": [
-      0.957813024520874,
-      0.042186930775642395
+      0.9539809226989746,
+      0.04601907357573509
     ],
     "error_category": "CORRECT"
   },
@@ -1503,11 +1503,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9554928541183472,
+    "confidence": 0.9538140892982483,
     "is_correct": true,
     "all_probs": [
-      0.9554928541183472,
-      0.04450714588165283
+      0.9538140892982483,
+      0.04618588089942932
     ],
     "error_category": "CORRECT"
   },
@@ -1517,11 +1517,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9588404297828674,
+    "confidence": 0.9549547433853149,
     "is_correct": true,
     "all_probs": [
-      0.04115964472293854,
-      0.9588404297828674
+      0.045045237988233566,
+      0.9549547433853149
     ],
     "error_category": "CORRECT"
   },
@@ -1531,11 +1531,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.6321122646331787,
+    "confidence": 0.6011600494384766,
     "is_correct": true,
     "all_probs": [
-      0.3678877651691437,
-      0.6321122646331787
+      0.3988399803638458,
+      0.6011600494384766
     ],
     "error_category": "CORRECT"
   },
@@ -1545,11 +1545,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9492283463478088,
+    "confidence": 0.9493297338485718,
     "is_correct": true,
     "all_probs": [
-      0.05077171325683594,
-      0.9492283463478088
+      0.050670236349105835,
+      0.9493297338485718
     ],
     "error_category": "CORRECT"
   },
@@ -1559,11 +1559,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.8917988538742065,
+    "confidence": 0.9515931010246277,
     "is_correct": true,
     "all_probs": [
-      0.10820110142230988,
-      0.8917988538742065
+      0.048406898975372314,
+      0.9515931010246277
     ],
     "error_category": "CORRECT"
   },
@@ -1573,11 +1573,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.8920924067497253,
+    "confidence": 0.95451420545578,
     "is_correct": true,
     "all_probs": [
-      0.8920924067497253,
-      0.10790757089853287
+      0.95451420545578,
+      0.0454857163131237
     ],
     "error_category": "CORRECT"
   },
@@ -1587,11 +1587,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.9090295433998108,
+    "confidence": 0.9373002052307129,
     "is_correct": false,
     "all_probs": [
-      0.09097043424844742,
-      0.9090295433998108
+      0.0626998096704483,
+      0.9373002052307129
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -1601,11 +1601,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9499678015708923,
+    "confidence": 0.9525043964385986,
     "is_correct": true,
     "all_probs": [
-      0.9499678015708923,
-      0.05003216862678528
+      0.9525043964385986,
+      0.04749564081430435
     ],
     "error_category": "CORRECT"
   },
@@ -1615,11 +1615,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9576390981674194,
+    "confidence": 0.9562779664993286,
     "is_correct": true,
     "all_probs": [
-      0.9576390981674194,
-      0.042360980063676834
+      0.9562779664993286,
+      0.0437220074236393
     ],
     "error_category": "CORRECT"
   },
@@ -1629,11 +1629,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9545321464538574,
+    "confidence": 0.9574571847915649,
     "is_correct": true,
     "all_probs": [
-      0.045467812567949295,
-      0.9545321464538574
+      0.04254275560379028,
+      0.9574571847915649
     ],
     "error_category": "CORRECT"
   },
@@ -1643,11 +1643,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9603967070579529,
+    "confidence": 0.9544041156768799,
     "is_correct": true,
     "all_probs": [
-      0.03960325941443443,
-      0.9603967070579529
+      0.04559588059782982,
+      0.9544041156768799
     ],
     "error_category": "CORRECT"
   },
@@ -1657,11 +1657,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9651271104812622,
+    "confidence": 0.9583542346954346,
     "is_correct": true,
     "all_probs": [
-      0.03487281873822212,
-      0.9651271104812622
+      0.04164578393101692,
+      0.9583542346954346
     ],
     "error_category": "CORRECT"
   },
@@ -1671,11 +1671,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9640184640884399,
+    "confidence": 0.95875084400177,
     "is_correct": true,
     "all_probs": [
-      0.03598150238394737,
-      0.9640184640884399
+      0.04124912619590759,
+      0.95875084400177
     ],
     "error_category": "CORRECT"
   },
@@ -1685,11 +1685,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9579603672027588,
+    "confidence": 0.9534609913825989,
     "is_correct": true,
     "all_probs": [
-      0.9579603672027588,
-      0.04203960672020912
+      0.9534609913825989,
+      0.04653902351856232
     ],
     "error_category": "CORRECT"
   },
@@ -1699,11 +1699,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9458918571472168,
+    "confidence": 0.9543931484222412,
     "is_correct": true,
     "all_probs": [
-      0.9458918571472168,
-      0.05410818010568619
+      0.9543931484222412,
+      0.04560684785246849
     ],
     "error_category": "CORRECT"
   },
@@ -1713,11 +1713,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.95383620262146,
+    "confidence": 0.9542952179908752,
     "is_correct": true,
     "all_probs": [
-      0.95383620262146,
-      0.04616380110383034
+      0.9542952179908752,
+      0.045704737305641174
     ],
     "error_category": "CORRECT"
   },
@@ -1727,11 +1727,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9585225582122803,
+    "confidence": 0.9521398544311523,
     "is_correct": true,
     "all_probs": [
-      0.9585225582122803,
-      0.041477467864751816
+      0.9521398544311523,
+      0.04786016419529915
     ],
     "error_category": "CORRECT"
   },
@@ -1741,11 +1741,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9650633931159973,
+    "confidence": 0.9581062197685242,
     "is_correct": true,
     "all_probs": [
-      0.03493664786219597,
-      0.9650633931159973
+      0.04189381003379822,
+      0.9581062197685242
     ],
     "error_category": "CORRECT"
   },
@@ -1755,11 +1755,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9571094512939453,
+    "confidence": 0.9558430910110474,
     "is_correct": true,
     "all_probs": [
-      0.042890481650829315,
-      0.9571094512939453
+      0.044156868010759354,
+      0.9558430910110474
     ],
     "error_category": "CORRECT"
   },
@@ -1769,11 +1769,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9580199122428894,
+    "confidence": 0.9523975253105164,
     "is_correct": true,
     "all_probs": [
-      0.04198014736175537,
-      0.9580199122428894
+      0.04760246351361275,
+      0.9523975253105164
     ],
     "error_category": "CORRECT"
   },
@@ -1783,11 +1783,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9569809436798096,
+    "confidence": 0.9518787860870361,
     "is_correct": true,
     "all_probs": [
-      0.04301898181438446,
-      0.9569809436798096
+      0.048121169209480286,
+      0.9518787860870361
     ],
     "error_category": "CORRECT"
   },
@@ -1797,11 +1797,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9554777145385742,
+    "confidence": 0.9552629590034485,
     "is_correct": true,
     "all_probs": [
-      0.9554777145385742,
-      0.044522300362586975
+      0.9552629590034485,
+      0.04473704844713211
     ],
     "error_category": "CORRECT"
   },
@@ -1811,11 +1811,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.953606367111206,
+    "confidence": 0.9544981718063354,
     "is_correct": true,
     "all_probs": [
-      0.953606367111206,
-      0.04639364406466484
+      0.9544981718063354,
+      0.04550187662243843
     ],
     "error_category": "CORRECT"
   },
@@ -1825,11 +1825,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.9478319883346558,
+    "confidence": 0.9287426471710205,
     "is_correct": false,
     "all_probs": [
-      0.05216800794005394,
-      0.9478319883346558
+      0.07125729322433472,
+      0.9287426471710205
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -1839,11 +1839,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9548408389091492,
+    "confidence": 0.954373300075531,
     "is_correct": true,
     "all_probs": [
-      0.9548408389091492,
-      0.04515920206904411
+      0.954373300075531,
+      0.0456266924738884
     ],
     "error_category": "CORRECT"
   },
@@ -1853,11 +1853,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9656089544296265,
+    "confidence": 0.9579441547393799,
     "is_correct": true,
     "all_probs": [
-      0.03439105302095413,
-      0.9656089544296265
+      0.04205581918358803,
+      0.9579441547393799
     ],
     "error_category": "CORRECT"
   },
@@ -1867,11 +1867,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9648077487945557,
+    "confidence": 0.9608665704727173,
     "is_correct": true,
     "all_probs": [
-      0.035192202776670456,
-      0.9648077487945557
+      0.0391334593296051,
+      0.9608665704727173
     ],
     "error_category": "CORRECT"
   },
@@ -1881,11 +1881,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9466115832328796,
+    "confidence": 0.9475383162498474,
     "is_correct": true,
     "all_probs": [
-      0.05338840186595917,
-      0.9466115832328796
+      0.0524616613984108,
+      0.9475383162498474
     ],
     "error_category": "CORRECT"
   },
@@ -1895,11 +1895,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9246382117271423,
+    "confidence": 0.9583285450935364,
     "is_correct": true,
     "all_probs": [
-      0.07536183297634125,
-      0.9246382117271423
+      0.041671447455883026,
+      0.9583285450935364
     ],
     "error_category": "CORRECT"
   },
@@ -1909,11 +1909,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.955181360244751,
+    "confidence": 0.9560678601264954,
     "is_correct": true,
     "all_probs": [
-      0.955181360244751,
-      0.044818609952926636
+      0.9560678601264954,
+      0.04393220320343971
     ],
     "error_category": "CORRECT"
   },
@@ -1923,11 +1923,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9537992477416992,
+    "confidence": 0.9529591798782349,
     "is_correct": true,
     "all_probs": [
-      0.9537992477416992,
-      0.046200722455978394
+      0.9529591798782349,
+      0.04704084247350693
     ],
     "error_category": "CORRECT"
   },
@@ -1937,11 +1937,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9547138810157776,
+    "confidence": 0.9539445638656616,
     "is_correct": true,
     "all_probs": [
-      0.9547138810157776,
-      0.04528610408306122
+      0.9539445638656616,
+      0.04605543240904808
     ],
     "error_category": "CORRECT"
   },
@@ -1951,11 +1951,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.947100043296814,
+    "confidence": 0.9537381529808044,
     "is_correct": true,
     "all_probs": [
-      0.947100043296814,
-      0.052899960428476334
+      0.9537381529808044,
+      0.046261779963970184
     ],
     "error_category": "CORRECT"
   },
@@ -1965,11 +1965,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.5818676352500916,
+    "confidence": 0.6290315985679626,
     "is_correct": true,
     "all_probs": [
-      0.41813230514526367,
-      0.5818676352500916
+      0.37096840143203735,
+      0.6290315985679626
     ],
     "error_category": "CORRECT"
   },
@@ -1979,11 +1979,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9507488012313843,
+    "confidence": 0.9585227966308594,
     "is_correct": true,
     "all_probs": [
-      0.04925119876861572,
-      0.9507488012313843
+      0.041477270424366,
+      0.9585227966308594
     ],
     "error_category": "CORRECT"
   },
@@ -1993,11 +1993,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9627116322517395,
+    "confidence": 0.9471401572227478,
     "is_correct": true,
     "all_probs": [
-      0.03728833422064781,
-      0.9627116322517395
+      0.052859872579574585,
+      0.9471401572227478
     ],
     "error_category": "CORRECT"
   },
@@ -2007,11 +2007,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9611373543739319,
+    "confidence": 0.9554964303970337,
     "is_correct": true,
     "all_probs": [
-      0.03886265307664871,
-      0.9611373543739319
+      0.04450353607535362,
+      0.9554964303970337
     ],
     "error_category": "CORRECT"
   },
@@ -2021,11 +2021,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9602892994880676,
+    "confidence": 0.9500203132629395,
     "is_correct": true,
     "all_probs": [
-      0.9602892994880676,
-      0.03971071168780327
+      0.9500203132629395,
+      0.04997964948415756
     ],
     "error_category": "CORRECT"
   },
@@ -2035,11 +2035,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9541236162185669,
+    "confidence": 0.9578114151954651,
     "is_correct": true,
     "all_probs": [
-      0.9541236162185669,
-      0.0458763912320137
+      0.9578114151954651,
+      0.0421886183321476
     ],
     "error_category": "CORRECT"
   },
@@ -2049,11 +2049,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9556670188903809,
+    "confidence": 0.9530115723609924,
     "is_correct": true,
     "all_probs": [
-      0.9556670188903809,
-      0.044333044439554214
+      0.9530115723609924,
+      0.04698838293552399
     ],
     "error_category": "CORRECT"
   },
@@ -2063,11 +2063,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9230113625526428,
+    "confidence": 0.8879603147506714,
     "is_correct": true,
     "all_probs": [
-      0.9230113625526428,
-      0.07698865979909897
+      0.8879603147506714,
+      0.11203966289758682
     ],
     "error_category": "CORRECT"
   },
@@ -2076,14 +2076,14 @@
     "sentence": "הוא הביט במסך הניתוח שפרס הרופא לפניו, וירד לו האסימון כמה מזל היה לו שהגיע לבדיקה בזמן – לפעמים חיים שלמים תלויים ברגע אחד של הקשבה לעצמך.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.5497391819953918,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.932537853717804,
+    "is_correct": false,
     "all_probs": [
-      0.45026081800460815,
-      0.5497391819953918
+      0.932537853717804,
+      0.06746214628219604
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "22_fig_24",
@@ -2091,11 +2091,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9656646251678467,
+    "confidence": 0.9581037163734436,
     "is_correct": true,
     "all_probs": [
-      0.03433533012866974,
-      0.9656646251678467
+      0.041896265000104904,
+      0.9581037163734436
     ],
     "error_category": "CORRECT"
   },
@@ -2105,11 +2105,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9693127274513245,
+    "confidence": 0.9593848586082458,
     "is_correct": true,
     "all_probs": [
-      0.030687233433127403,
-      0.9693127274513245
+      0.04061508551239967,
+      0.9593848586082458
     ],
     "error_category": "CORRECT"
   },
@@ -2119,11 +2119,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9482661485671997,
+    "confidence": 0.9545536637306213,
     "is_correct": true,
     "all_probs": [
-      0.05173379182815552,
-      0.9482661485671997
+      0.04544629156589508,
+      0.9545536637306213
     ],
     "error_category": "CORRECT"
   },
@@ -2133,11 +2133,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9608480334281921,
+    "confidence": 0.9559562802314758,
     "is_correct": true,
     "all_probs": [
-      0.9608480334281921,
-      0.03915192559361458
+      0.9559562802314758,
+      0.04404369741678238
     ],
     "error_category": "CORRECT"
   },
@@ -2147,11 +2147,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9569348692893982,
+    "confidence": 0.9534358382225037,
     "is_correct": true,
     "all_probs": [
-      0.9569348692893982,
-      0.04306510090827942
+      0.9534358382225037,
+      0.046564120799303055
     ],
     "error_category": "CORRECT"
   },
@@ -2161,11 +2161,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9441091418266296,
+    "confidence": 0.954343855381012,
     "is_correct": true,
     "all_probs": [
-      0.9441091418266296,
-      0.05589091405272484
+      0.954343855381012,
+      0.04565609246492386
     ],
     "error_category": "CORRECT"
   },
@@ -2175,11 +2175,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.962998628616333,
+    "confidence": 0.9549514651298523,
     "is_correct": true,
     "all_probs": [
-      0.962998628616333,
-      0.037001390010118484
+      0.9549514651298523,
+      0.04504856839776039
     ],
     "error_category": "CORRECT"
   },
@@ -2189,11 +2189,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9456662535667419,
+    "confidence": 0.9526820182800293,
     "is_correct": true,
     "all_probs": [
-      0.05433373898267746,
-      0.9456662535667419
+      0.047318022698163986,
+      0.9526820182800293
     ],
     "error_category": "CORRECT"
   },
@@ -2203,11 +2203,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.8932036757469177,
+    "confidence": 0.9428505301475525,
     "is_correct": true,
     "all_probs": [
-      0.10679637640714645,
-      0.8932036757469177
+      0.057149481028318405,
+      0.9428505301475525
     ],
     "error_category": "CORRECT"
   },
@@ -2217,11 +2217,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9440625905990601,
+    "confidence": 0.9448476433753967,
     "is_correct": true,
     "all_probs": [
-      0.05593738704919815,
-      0.9440625905990601
+      0.0551522932946682,
+      0.9448476433753967
     ],
     "error_category": "CORRECT"
   },
@@ -2231,11 +2231,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9638614058494568,
+    "confidence": 0.954018235206604,
     "is_correct": true,
     "all_probs": [
-      0.0361386314034462,
-      0.9638614058494568
+      0.04598177969455719,
+      0.954018235206604
     ],
     "error_category": "CORRECT"
   },
@@ -2245,11 +2245,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9592319130897522,
+    "confidence": 0.9563184976577759,
     "is_correct": true,
     "all_probs": [
-      0.9592319130897522,
-      0.040768101811409
+      0.9563184976577759,
+      0.043681442737579346
     ],
     "error_category": "CORRECT"
   },
@@ -2259,11 +2259,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9623571038246155,
+    "confidence": 0.956437885761261,
     "is_correct": true,
     "all_probs": [
-      0.9623571038246155,
-      0.037642911076545715
+      0.956437885761261,
+      0.04356212168931961
     ],
     "error_category": "CORRECT"
   },
@@ -2273,11 +2273,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.959159791469574,
+    "confidence": 0.9560112953186035,
     "is_correct": true,
     "all_probs": [
-      0.959159791469574,
-      0.040840182453393936
+      0.9560112953186035,
+      0.04398873820900917
     ],
     "error_category": "CORRECT"
   },
@@ -2287,11 +2287,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9608884453773499,
+    "confidence": 0.9559562802314758,
     "is_correct": true,
     "all_probs": [
-      0.9608884453773499,
-      0.03911156579852104
+      0.9559562802314758,
+      0.04404376074671745
     ],
     "error_category": "CORRECT"
   },
@@ -2301,11 +2301,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9688760042190552,
+    "confidence": 0.9524788856506348,
     "is_correct": true,
     "all_probs": [
-      0.031124012544751167,
-      0.9688760042190552
+      0.047521114349365234,
+      0.9524788856506348
     ],
     "error_category": "CORRECT"
   },
@@ -2315,11 +2315,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9691702127456665,
+    "confidence": 0.9592500329017639,
     "is_correct": true,
     "all_probs": [
-      0.03082975558936596,
-      0.9691702127456665
+      0.0407499335706234,
+      0.9592500329017639
     ],
     "error_category": "CORRECT"
   },
@@ -2329,11 +2329,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9675458669662476,
+    "confidence": 0.9585590362548828,
     "is_correct": true,
     "all_probs": [
-      0.03245414420962334,
-      0.9675458669662476
+      0.04144097492098808,
+      0.9585590362548828
     ],
     "error_category": "CORRECT"
   },
@@ -2343,11 +2343,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9606035947799683,
+    "confidence": 0.9528430104255676,
     "is_correct": true,
     "all_probs": [
-      0.039396461099386215,
-      0.9606035947799683
+      0.04715702682733536,
+      0.9528430104255676
     ],
     "error_category": "CORRECT"
   },
@@ -2357,11 +2357,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9451948404312134,
+    "confidence": 0.8912711143493652,
     "is_correct": true,
     "all_probs": [
-      0.9451948404312134,
-      0.05480519309639931
+      0.8912711143493652,
+      0.10872890055179596
     ],
     "error_category": "CORRECT"
   },
@@ -2370,14 +2370,14 @@
     "sentence": "הם ירו לכל הכיוונים בזיקוקים באירוע וזה יצא מכלל שליטה.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 0,
-    "confidence": 0.6818046569824219,
-    "is_correct": true,
+    "predicted_label": 1,
+    "confidence": 0.5527621507644653,
+    "is_correct": false,
     "all_probs": [
-      0.6818046569824219,
-      0.3181953430175781
+      0.44723784923553467,
+      0.5527621507644653
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_POSITIVE"
   },
   {
     "id": "25_lit_29",
@@ -2385,11 +2385,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9454430341720581,
+    "confidence": 0.9536235928535461,
     "is_correct": true,
     "all_probs": [
-      0.9454430341720581,
-      0.05455698445439339
+      0.9536235928535461,
+      0.04637643322348595
     ],
     "error_category": "CORRECT"
   },
@@ -2398,28 +2398,28 @@
     "sentence": "למרות האזהרות, היא ירתה לכל הכיוונים.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 0,
-    "confidence": 0.8096690773963928,
-    "is_correct": true,
+    "predicted_label": 1,
+    "confidence": 0.9483444094657898,
+    "is_correct": false,
     "all_probs": [
-      0.8096690773963928,
-      0.19033095240592957
+      0.05165554955601692,
+      0.9483444094657898
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_POSITIVE"
   },
   {
     "id": "25_fig_10",
     "sentence": "הוא בלבל את חבריו בעד מי הוא משחק לאחר שירה לכל הכיוונים באמצע תחרות פינג פונג.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.5953802466392517,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.9385737776756287,
+    "is_correct": false,
     "all_probs": [
-      0.4046197235584259,
-      0.5953802466392517
+      0.9385737776756287,
+      0.061426207423210144
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "25_fig_17",
@@ -2427,11 +2427,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 0,
-    "confidence": 0.9424198269844055,
+    "confidence": 0.9368122220039368,
     "is_correct": false,
     "all_probs": [
-      0.9424198269844055,
-      0.05758022516965866
+      0.9368122220039368,
+      0.0631878599524498
     ],
     "error_category": "FALSE_NEGATIVE"
   },
@@ -2441,11 +2441,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9218320250511169,
+    "confidence": 0.9554836750030518,
     "is_correct": true,
     "all_probs": [
-      0.07816794514656067,
-      0.9218320250511169
+      0.044516317546367645,
+      0.9554836750030518
     ],
     "error_category": "CORRECT"
   },
@@ -2455,11 +2455,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9398242235183716,
+    "confidence": 0.9406250715255737,
     "is_correct": true,
     "all_probs": [
-      0.06017576903104782,
-      0.9398242235183716
+      0.059374935925006866,
+      0.9406250715255737
     ],
     "error_category": "CORRECT"
   },
@@ -2469,11 +2469,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9540107846260071,
+    "confidence": 0.9533294439315796,
     "is_correct": true,
     "all_probs": [
-      0.9540107846260071,
-      0.04598928242921829
+      0.9533294439315796,
+      0.046670496463775635
     ],
     "error_category": "CORRECT"
   },
@@ -2483,11 +2483,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9532771110534668,
+    "confidence": 0.9516000151634216,
     "is_correct": true,
     "all_probs": [
-      0.9532771110534668,
-      0.04672285169363022
+      0.9516000151634216,
+      0.04840004816651344
     ],
     "error_category": "CORRECT"
   },
@@ -2497,11 +2497,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.8807753324508667,
+    "confidence": 0.941565990447998,
     "is_correct": true,
     "all_probs": [
-      0.8807753324508667,
-      0.11922470480203629
+      0.941565990447998,
+      0.05843405798077583
     ],
     "error_category": "CORRECT"
   },
@@ -2511,11 +2511,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9566494226455688,
+    "confidence": 0.9545745253562927,
     "is_correct": true,
     "all_probs": [
-      0.9566494226455688,
-      0.04335061088204384
+      0.9545745253562927,
+      0.04542549327015877
     ],
     "error_category": "CORRECT"
   },
@@ -2525,11 +2525,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9625882506370544,
+    "confidence": 0.956547737121582,
     "is_correct": true,
     "all_probs": [
-      0.03741181269288063,
-      0.9625882506370544
+      0.04345220699906349,
+      0.956547737121582
     ],
     "error_category": "CORRECT"
   },
@@ -2539,11 +2539,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.963192343711853,
+    "confidence": 0.9599350094795227,
     "is_correct": true,
     "all_probs": [
-      0.036807581782341,
-      0.963192343711853
+      0.0400649756193161,
+      0.9599350094795227
     ],
     "error_category": "CORRECT"
   },
@@ -2553,11 +2553,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9451795220375061,
+    "confidence": 0.9551039338111877,
     "is_correct": true,
     "all_probs": [
-      0.05482053384184837,
-      0.9451795220375061
+      0.04489613324403763,
+      0.9551039338111877
     ],
     "error_category": "CORRECT"
   },
@@ -2567,11 +2567,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.965430498123169,
+    "confidence": 0.956290602684021,
     "is_correct": true,
     "all_probs": [
-      0.03456956520676613,
-      0.965430498123169
+      0.043709348887205124,
+      0.956290602684021
     ],
     "error_category": "CORRECT"
   },
@@ -2581,11 +2581,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9605830907821655,
+    "confidence": 0.9570586681365967,
     "is_correct": true,
     "all_probs": [
-      0.9605830907821655,
-      0.03941692039370537
+      0.9570586681365967,
+      0.04294127970933914
     ],
     "error_category": "CORRECT"
   },
@@ -2595,11 +2595,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9286545515060425,
+    "confidence": 0.9582307934761047,
     "is_correct": true,
     "all_probs": [
-      0.9286545515060425,
-      0.07134545594453812
+      0.9582307934761047,
+      0.04176918417215347
     ],
     "error_category": "CORRECT"
   },
@@ -2609,11 +2609,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9564387798309326,
+    "confidence": 0.9556625485420227,
     "is_correct": true,
     "all_probs": [
-      0.9564387798309326,
-      0.0435611829161644
+      0.9556625485420227,
+      0.04433740675449371
     ],
     "error_category": "CORRECT"
   },
@@ -2622,14 +2622,14 @@
     "sentence": "המורה ביקשה לעודד מצוינות ולא רק ציונים, ולכן הדביקה מדבקה בצורת לב זהב על המחברת של התלמיד שהראה שיתוף פעולה ועזרה לחבריו בכיתה.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 1,
-    "confidence": 0.5781968832015991,
-    "is_correct": false,
+    "predicted_label": 0,
+    "confidence": 0.9258549809455872,
+    "is_correct": true,
     "all_probs": [
-      0.4218031167984009,
-      0.5781968832015991
+      0.9258549809455872,
+      0.07414505630731583
     ],
-    "error_category": "FALSE_POSITIVE"
+    "error_category": "CORRECT"
   },
   {
     "id": "27_fig_12",
@@ -2637,11 +2637,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9616208076477051,
+    "confidence": 0.9565861225128174,
     "is_correct": true,
     "all_probs": [
-      0.038379207253456116,
-      0.9616208076477051
+      0.0434139110147953,
+      0.9565861225128174
     ],
     "error_category": "CORRECT"
   },
@@ -2651,11 +2651,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9548148512840271,
+    "confidence": 0.9466014504432678,
     "is_correct": true,
     "all_probs": [
-      0.04518510773777962,
-      0.9548148512840271
+      0.05339854210615158,
+      0.9466014504432678
     ],
     "error_category": "CORRECT"
   },
@@ -2665,11 +2665,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 0,
-    "confidence": 0.7409349083900452,
+    "confidence": 0.9549649357795715,
     "is_correct": false,
     "all_probs": [
-      0.7409349083900452,
-      0.25906509160995483
+      0.9549649357795715,
+      0.045035067945718765
     ],
     "error_category": "FALSE_NEGATIVE"
   },
@@ -2679,11 +2679,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9609692096710205,
+    "confidence": 0.9556050896644592,
     "is_correct": true,
     "all_probs": [
-      0.03903072699904442,
-      0.9609692096710205
+      0.044394947588443756,
+      0.9556050896644592
     ],
     "error_category": "CORRECT"
   },
@@ -2693,11 +2693,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9573494791984558,
+    "confidence": 0.9545844197273254,
     "is_correct": true,
     "all_probs": [
-      0.9573494791984558,
-      0.042650602757930756
+      0.9545844197273254,
+      0.04541562870144844
     ],
     "error_category": "CORRECT"
   },
@@ -2707,11 +2707,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.958426296710968,
+    "confidence": 0.9548448324203491,
     "is_correct": true,
     "all_probs": [
-      0.958426296710968,
-      0.041573718190193176
+      0.9548448324203491,
+      0.045155107975006104
     ],
     "error_category": "CORRECT"
   },
@@ -2721,11 +2721,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9548372626304626,
+    "confidence": 0.9550394415855408,
     "is_correct": true,
     "all_probs": [
-      0.9548372626304626,
-      0.045162733644247055
+      0.9550394415855408,
+      0.04496058449149132
     ],
     "error_category": "CORRECT"
   },
@@ -2735,11 +2735,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9116077423095703,
+    "confidence": 0.947197437286377,
     "is_correct": true,
     "all_probs": [
-      0.9116077423095703,
-      0.08839225023984909
+      0.947197437286377,
+      0.052802521735429764
     ],
     "error_category": "CORRECT"
   },
@@ -2749,11 +2749,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9263613820075989,
+    "confidence": 0.9470161199569702,
     "is_correct": true,
     "all_probs": [
-      0.0736386775970459,
-      0.9263613820075989
+      0.052983853965997696,
+      0.9470161199569702
     ],
     "error_category": "CORRECT"
   },
@@ -2762,14 +2762,14 @@
     "sentence": "החיילת לקחה צעד אחורה מהמשימה הקשה כדי לאסוף כוחות",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.5519512891769409,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.93645179271698,
+    "is_correct": false,
     "all_probs": [
-      0.4480487108230591,
-      0.5519512891769409
+      0.93645179271698,
+      0.06354815512895584
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "28_fig_28",
@@ -2777,11 +2777,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9520905613899231,
+    "confidence": 0.9481635689735413,
     "is_correct": true,
     "all_probs": [
-      0.04790949076414108,
-      0.9520905613899231
+      0.051836419850587845,
+      0.9481635689735413
     ],
     "error_category": "CORRECT"
   },
@@ -2791,11 +2791,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9613458514213562,
+    "confidence": 0.9558742642402649,
     "is_correct": true,
     "all_probs": [
-      0.03865407034754753,
-      0.9613458514213562
+      0.04412578418850899,
+      0.9558742642402649
     ],
     "error_category": "CORRECT"
   },
@@ -2805,11 +2805,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9534243941307068,
+    "confidence": 0.9539637565612793,
     "is_correct": true,
     "all_probs": [
-      0.9534243941307068,
-      0.046575650572776794
+      0.9539637565612793,
+      0.04603626951575279
     ],
     "error_category": "CORRECT"
   },
@@ -2819,11 +2819,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9498850703239441,
+    "confidence": 0.951748251914978,
     "is_correct": true,
     "all_probs": [
-      0.9498850703239441,
-      0.050114911049604416
+      0.951748251914978,
+      0.04825183004140854
     ],
     "error_category": "CORRECT"
   },
@@ -2833,11 +2833,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9553183317184448,
+    "confidence": 0.952075183391571,
     "is_correct": true,
     "all_probs": [
-      0.9553183317184448,
-      0.04468167573213577
+      0.952075183391571,
+      0.047924794256687164
     ],
     "error_category": "CORRECT"
   },
@@ -2847,11 +2847,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9527777433395386,
+    "confidence": 0.9515557289123535,
     "is_correct": true,
     "all_probs": [
-      0.9527777433395386,
-      0.04722218960523605
+      0.9515557289123535,
+      0.04844421520829201
     ],
     "error_category": "CORRECT"
   },
@@ -2861,11 +2861,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9640655517578125,
+    "confidence": 0.9578824639320374,
     "is_correct": true,
     "all_probs": [
-      0.035934433341026306,
-      0.9640655517578125
+      0.04211745783686638,
+      0.9578824639320374
     ],
     "error_category": "CORRECT"
   },
@@ -2875,11 +2875,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.955860435962677,
+    "confidence": 0.9546290636062622,
     "is_correct": true,
     "all_probs": [
-      0.0441395528614521,
-      0.955860435962677
+      0.045370914041996,
+      0.9546290636062622
     ],
     "error_category": "CORRECT"
   },
@@ -2889,11 +2889,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9523443579673767,
+    "confidence": 0.951472282409668,
     "is_correct": true,
     "all_probs": [
-      0.04765566810965538,
-      0.9523443579673767
+      0.04852772131562233,
+      0.951472282409668
     ],
     "error_category": "CORRECT"
   },
@@ -2903,11 +2903,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9557140469551086,
+    "confidence": 0.9547611474990845,
     "is_correct": true,
     "all_probs": [
-      0.04428592696785927,
-      0.9557140469551086
+      0.04523887112736702,
+      0.9547611474990845
     ],
     "error_category": "CORRECT"
   },
@@ -2917,11 +2917,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9547230005264282,
+    "confidence": 0.950664758682251,
     "is_correct": true,
     "all_probs": [
-      0.9547230005264282,
-      0.04527699574828148
+      0.950664758682251,
+      0.04933526739478111
     ],
     "error_category": "CORRECT"
   },
@@ -2931,11 +2931,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9433354735374451,
+    "confidence": 0.9547697305679321,
     "is_correct": true,
     "all_probs": [
-      0.9433354735374451,
-      0.056664492934942245
+      0.9547697305679321,
+      0.0452302061021328
     ],
     "error_category": "CORRECT"
   },
@@ -2945,11 +2945,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9534171223640442,
+    "confidence": 0.9513601064682007,
     "is_correct": true,
     "all_probs": [
-      0.9534171223640442,
-      0.04658292979001999
+      0.9513601064682007,
+      0.04863997548818588
     ],
     "error_category": "CORRECT"
   },
@@ -2959,11 +2959,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.5410071611404419,
+    "confidence": 0.8823601603507996,
     "is_correct": true,
     "all_probs": [
-      0.5410071611404419,
-      0.4589928090572357
+      0.8823601603507996,
+      0.11763980239629745
     ],
     "error_category": "CORRECT"
   },
@@ -2973,11 +2973,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9520280957221985,
+    "confidence": 0.9583370685577393,
     "is_correct": true,
     "all_probs": [
-      0.047971926629543304,
-      0.9520280957221985
+      0.041662879288196564,
+      0.9583370685577393
     ],
     "error_category": "CORRECT"
   },
@@ -2987,11 +2987,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9557539224624634,
+    "confidence": 0.9536868929862976,
     "is_correct": true,
     "all_probs": [
-      0.0442461334168911,
-      0.9557539224624634
+      0.0463130846619606,
+      0.9536868929862976
     ],
     "error_category": "CORRECT"
   },
@@ -3001,11 +3001,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9488049745559692,
+    "confidence": 0.9461639523506165,
     "is_correct": true,
     "all_probs": [
-      0.05119499936699867,
-      0.9488049745559692
+      0.05383608862757683,
+      0.9461639523506165
     ],
     "error_category": "CORRECT"
   },
@@ -3015,11 +3015,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9587256908416748,
+    "confidence": 0.9555285573005676,
     "is_correct": true,
     "all_probs": [
-      0.04127436876296997,
-      0.9587256908416748
+      0.04447145015001297,
+      0.9555285573005676
     ],
     "error_category": "CORRECT"
   },
@@ -3029,11 +3029,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9623647332191467,
+    "confidence": 0.9555560946464539,
     "is_correct": true,
     "all_probs": [
-      0.9623647332191467,
-      0.037635330110788345
+      0.9555560946464539,
+      0.044443946331739426
     ],
     "error_category": "CORRECT"
   },
@@ -3043,11 +3043,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9573089480400085,
+    "confidence": 0.9541527032852173,
     "is_correct": true,
     "all_probs": [
-      0.9573089480400085,
-      0.04269104823470116
+      0.9541527032852173,
+      0.04584730789065361
     ],
     "error_category": "CORRECT"
   },
@@ -3057,11 +3057,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9588730931282043,
+    "confidence": 0.9525179862976074,
     "is_correct": true,
     "all_probs": [
-      0.9588730931282043,
-      0.04112691432237625
+      0.9525179862976074,
+      0.047482024878263474
     ],
     "error_category": "CORRECT"
   },
@@ -3071,11 +3071,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9570801258087158,
+    "confidence": 0.9556870460510254,
     "is_correct": true,
     "all_probs": [
-      0.9570801258087158,
-      0.042919885367155075
+      0.9556870460510254,
+      0.044312965124845505
     ],
     "error_category": "CORRECT"
   },
@@ -3085,11 +3085,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9535139799118042,
+    "confidence": 0.9579260349273682,
     "is_correct": true,
     "all_probs": [
-      0.046486008912324905,
-      0.9535139799118042
+      0.04207395389676094,
+      0.9579260349273682
     ],
     "error_category": "CORRECT"
   },
@@ -3099,11 +3099,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.948784589767456,
+    "confidence": 0.9548593163490295,
     "is_correct": true,
     "all_probs": [
-      0.05121538043022156,
-      0.948784589767456
+      0.045140717178583145,
+      0.9548593163490295
     ],
     "error_category": "CORRECT"
   },
@@ -3113,11 +3113,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9433795213699341,
+    "confidence": 0.5260294079780579,
     "is_correct": true,
     "all_probs": [
-      0.0566205158829689,
-      0.9433795213699341
+      0.4739706218242645,
+      0.5260294079780579
     ],
     "error_category": "CORRECT"
   },
@@ -3127,11 +3127,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9543957710266113,
+    "confidence": 0.955288827419281,
     "is_correct": true,
     "all_probs": [
-      0.04560428857803345,
-      0.9543957710266113
+      0.044711124151945114,
+      0.955288827419281
     ],
     "error_category": "CORRECT"
   },
@@ -3141,11 +3141,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9586802124977112,
+    "confidence": 0.9552992582321167,
     "is_correct": true,
     "all_probs": [
-      0.9586802124977112,
-      0.04131978377699852
+      0.9552992582321167,
+      0.04470072686672211
     ],
     "error_category": "CORRECT"
   },
@@ -3155,11 +3155,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.9196763634681702,
+    "confidence": 0.9467567801475525,
     "is_correct": false,
     "all_probs": [
-      0.08032364398241043,
-      0.9196763634681702
+      0.05324322730302811,
+      0.9467567801475525
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -3169,11 +3169,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.958031952381134,
+    "confidence": 0.955503523349762,
     "is_correct": true,
     "all_probs": [
-      0.958031952381134,
-      0.04196803644299507
+      0.955503523349762,
+      0.044496458023786545
     ],
     "error_category": "CORRECT"
   },
@@ -3183,11 +3183,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9571578502655029,
+    "confidence": 0.9566763639450073,
     "is_correct": true,
     "all_probs": [
-      0.9571578502655029,
-      0.04284219816327095
+      0.9566763639450073,
+      0.04332363232970238
     ],
     "error_category": "CORRECT"
   },
@@ -3197,11 +3197,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9649725556373596,
+    "confidence": 0.9574934840202332,
     "is_correct": true,
     "all_probs": [
-      0.03502747043967247,
-      0.9649725556373596
+      0.042506564408540726,
+      0.9574934840202332
     ],
     "error_category": "CORRECT"
   },
@@ -3211,11 +3211,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9646056294441223,
+    "confidence": 0.9584532380104065,
     "is_correct": true,
     "all_probs": [
-      0.035394348204135895,
-      0.9646056294441223
+      0.0415467843413353,
+      0.9584532380104065
     ],
     "error_category": "CORRECT"
   },
@@ -3225,11 +3225,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9642789959907532,
+    "confidence": 0.95713210105896,
     "is_correct": true,
     "all_probs": [
-      0.03572108596563339,
-      0.9642789959907532
+      0.04286789894104004,
+      0.95713210105896
     ],
     "error_category": "CORRECT"
   },
@@ -3239,11 +3239,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.959080696105957,
+    "confidence": 0.9553398489952087,
     "is_correct": true,
     "all_probs": [
-      0.04091925173997879,
-      0.959080696105957
+      0.044660210609436035,
+      0.9553398489952087
     ],
     "error_category": "CORRECT"
   },
@@ -3253,11 +3253,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9593859910964966,
+    "confidence": 0.9572299122810364,
     "is_correct": true,
     "all_probs": [
-      0.9593859910964966,
-      0.0406140461564064
+      0.9572299122810364,
+      0.04277009516954422
     ],
     "error_category": "CORRECT"
   },
@@ -3267,11 +3267,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9622501134872437,
+    "confidence": 0.9562156200408936,
     "is_correct": true,
     "all_probs": [
-      0.9622501134872437,
-      0.03774987533688545
+      0.9562156200408936,
+      0.043784432113170624
     ],
     "error_category": "CORRECT"
   },
@@ -3281,11 +3281,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9535412192344666,
+    "confidence": 0.9527680277824402,
     "is_correct": true,
     "all_probs": [
-      0.9535412192344666,
-      0.04645879939198494
+      0.9527680277824402,
+      0.04723198339343071
     ],
     "error_category": "CORRECT"
   },
@@ -3295,11 +3295,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9571901559829712,
+    "confidence": 0.9539887309074402,
     "is_correct": true,
     "all_probs": [
-      0.9571901559829712,
-      0.04280976206064224
+      0.9539887309074402,
+      0.046011269092559814
     ],
     "error_category": "CORRECT"
   },
@@ -3309,11 +3309,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9586853384971619,
+    "confidence": 0.9545668959617615,
     "is_correct": true,
     "all_probs": [
-      0.041314613074064255,
-      0.9586853384971619
+      0.04543304815888405,
+      0.9545668959617615
     ],
     "error_category": "CORRECT"
   },
@@ -3323,11 +3323,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9632221460342407,
+    "confidence": 0.9555019736289978,
     "is_correct": true,
     "all_probs": [
-      0.03677792847156525,
-      0.9632221460342407
+      0.044497959315776825,
+      0.9555019736289978
     ],
     "error_category": "CORRECT"
   },
@@ -3337,11 +3337,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9604883193969727,
+    "confidence": 0.9502290487289429,
     "is_correct": true,
     "all_probs": [
-      0.039511751383543015,
-      0.9604883193969727
+      0.04977096989750862,
+      0.9502290487289429
     ],
     "error_category": "CORRECT"
   },
@@ -3351,11 +3351,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9610827565193176,
+    "confidence": 0.9543011784553528,
     "is_correct": true,
     "all_probs": [
-      0.038917217403650284,
-      0.9610827565193176
+      0.04569881036877632,
+      0.9543011784553528
     ],
     "error_category": "CORRECT"
   },
@@ -3365,11 +3365,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.961151659488678,
+    "confidence": 0.9548548460006714,
     "is_correct": true,
     "all_probs": [
-      0.961151659488678,
-      0.03884829953312874
+      0.9548548460006714,
+      0.04514509439468384
     ],
     "error_category": "CORRECT"
   },
@@ -3379,11 +3379,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9563149213790894,
+    "confidence": 0.9542368054389954,
     "is_correct": true,
     "all_probs": [
-      0.9563149213790894,
-      0.043685127049684525
+      0.9542368054389954,
+      0.04576314985752106
     ],
     "error_category": "CORRECT"
   },
@@ -3393,11 +3393,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9560818672180176,
+    "confidence": 0.9543254971504211,
     "is_correct": true,
     "all_probs": [
-      0.9560818672180176,
-      0.043918151408433914
+      0.9543254971504211,
+      0.04567445069551468
     ],
     "error_category": "CORRECT"
   },
@@ -3407,11 +3407,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9481104016304016,
+    "confidence": 0.9475963711738586,
     "is_correct": true,
     "all_probs": [
-      0.9481104016304016,
-      0.05188955366611481
+      0.9475963711738586,
+      0.052403680980205536
     ],
     "error_category": "CORRECT"
   },
@@ -3421,11 +3421,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9571384191513062,
+    "confidence": 0.958480954170227,
     "is_correct": true,
     "all_probs": [
-      0.04286159202456474,
-      0.9571384191513062
+      0.04151909798383713,
+      0.958480954170227
     ],
     "error_category": "CORRECT"
   },
@@ -3434,14 +3434,14 @@
     "sentence": "בזמן המשחק הכוכב העולה לא רצה להראות חולשה מול כולם, אז הוא נשך שפתיים במקום.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.7965789437294006,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.9375174641609192,
+    "is_correct": false,
     "all_probs": [
-      0.20342107117176056,
-      0.7965789437294006
+      0.9375174641609192,
+      0.06248260661959648
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "35_fig_25",
@@ -3449,11 +3449,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9611352682113647,
+    "confidence": 0.9535719752311707,
     "is_correct": true,
     "all_probs": [
-      0.03886474668979645,
-      0.9611352682113647
+      0.04642800986766815,
+      0.9535719752311707
     ],
     "error_category": "CORRECT"
   },
@@ -3463,11 +3463,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9571494460105896,
+    "confidence": 0.9576389789581299,
     "is_correct": true,
     "all_probs": [
-      0.04285053163766861,
-      0.9571494460105896
+      0.042361069470644,
+      0.9576389789581299
     ],
     "error_category": "CORRECT"
   },
@@ -3477,11 +3477,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.952106773853302,
+    "confidence": 0.9523353576660156,
     "is_correct": true,
     "all_probs": [
-      0.952106773853302,
-      0.04789329320192337
+      0.9523353576660156,
+      0.04766464605927467
     ],
     "error_category": "CORRECT"
   },
@@ -3491,11 +3491,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9590923190116882,
+    "confidence": 0.9541330337524414,
     "is_correct": true,
     "all_probs": [
-      0.9590923190116882,
-      0.04090769216418266
+      0.9541330337524414,
+      0.0458669550716877
     ],
     "error_category": "CORRECT"
   },
@@ -3505,11 +3505,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9576135873794556,
+    "confidence": 0.9537099003791809,
     "is_correct": true,
     "all_probs": [
-      0.9576135873794556,
-      0.04238642379641533
+      0.9537099003791809,
+      0.04629011079668999
     ],
     "error_category": "CORRECT"
   },
@@ -3519,11 +3519,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9547311663627625,
+    "confidence": 0.950922429561615,
     "is_correct": true,
     "all_probs": [
-      0.9547311663627625,
-      0.045268770307302475
+      0.950922429561615,
+      0.04907757043838501
     ],
     "error_category": "CORRECT"
   },
@@ -3533,11 +3533,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9486492872238159,
+    "confidence": 0.9537832736968994,
     "is_correct": true,
     "all_probs": [
-      0.05135072395205498,
-      0.9486492872238159
+      0.04621672257781029,
+      0.9537832736968994
     ],
     "error_category": "CORRECT"
   },
@@ -3547,11 +3547,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9226709604263306,
+    "confidence": 0.9354795813560486,
     "is_correct": true,
     "all_probs": [
-      0.07732897996902466,
-      0.9226709604263306
+      0.0645204558968544,
+      0.9354795813560486
     ],
     "error_category": "CORRECT"
   },
@@ -3561,11 +3561,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9658348560333252,
+    "confidence": 0.955780029296875,
     "is_correct": true,
     "all_probs": [
-      0.0341651551425457,
-      0.9658348560333252
+      0.04421994090080261,
+      0.955780029296875
     ],
     "error_category": "CORRECT"
   },
@@ -3575,11 +3575,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.959867537021637,
+    "confidence": 0.9559135437011719,
     "is_correct": true,
     "all_probs": [
-      0.04013248533010483,
-      0.959867537021637
+      0.044086482375860214,
+      0.9559135437011719
     ],
     "error_category": "CORRECT"
   },
@@ -3589,11 +3589,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9623264074325562,
+    "confidence": 0.956307053565979,
     "is_correct": true,
     "all_probs": [
-      0.9623264074325562,
-      0.03767355531454086
+      0.956307053565979,
+      0.04369296506047249
     ],
     "error_category": "CORRECT"
   },
@@ -3603,11 +3603,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9572958946228027,
+    "confidence": 0.9547017216682434,
     "is_correct": true,
     "all_probs": [
-      0.9572958946228027,
-      0.042704083025455475
+      0.9547017216682434,
+      0.04529824107885361
     ],
     "error_category": "CORRECT"
   },
@@ -3617,11 +3617,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9534885287284851,
+    "confidence": 0.95317542552948,
     "is_correct": true,
     "all_probs": [
-      0.9534885287284851,
-      0.0465114563703537
+      0.95317542552948,
+      0.04682455211877823
     ],
     "error_category": "CORRECT"
   },
@@ -3631,11 +3631,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9572267532348633,
+    "confidence": 0.9566093683242798,
     "is_correct": true,
     "all_probs": [
-      0.9572267532348633,
-      0.04277319833636284
+      0.9566093683242798,
+      0.04339059814810753
     ],
     "error_category": "CORRECT"
   },
@@ -3645,11 +3645,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.950509250164032,
+    "confidence": 0.9446398615837097,
     "is_correct": true,
     "all_probs": [
-      0.04949072003364563,
-      0.950509250164032
+      0.055360157042741776,
+      0.9446398615837097
     ],
     "error_category": "CORRECT"
   },
@@ -3659,11 +3659,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.949821412563324,
+    "confidence": 0.9510093331336975,
     "is_correct": true,
     "all_probs": [
-      0.05017857626080513,
-      0.949821412563324
+      0.04899066314101219,
+      0.9510093331336975
     ],
     "error_category": "CORRECT"
   },
@@ -3673,11 +3673,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9409878849983215,
+    "confidence": 0.942925214767456,
     "is_correct": true,
     "all_probs": [
-      0.05901206657290459,
-      0.9409878849983215
+      0.05707477033138275,
+      0.942925214767456
     ],
     "error_category": "CORRECT"
   },
@@ -3687,11 +3687,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9370301961898804,
+    "confidence": 0.9405391216278076,
     "is_correct": true,
     "all_probs": [
-      0.06296981871128082,
-      0.9370301961898804
+      0.05946095287799835,
+      0.9405391216278076
     ],
     "error_category": "CORRECT"
   },
@@ -3701,11 +3701,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9579119086265564,
+    "confidence": 0.9586876630783081,
     "is_correct": true,
     "all_probs": [
-      0.9579119086265564,
-      0.04208813235163689
+      0.9586876630783081,
+      0.04131230711936951
     ],
     "error_category": "CORRECT"
   },
@@ -3715,11 +3715,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9583826065063477,
+    "confidence": 0.9600222110748291,
     "is_correct": true,
     "all_probs": [
-      0.9583826065063477,
-      0.04161738231778145
+      0.9600222110748291,
+      0.0399777777493
     ],
     "error_category": "CORRECT"
   },
@@ -3729,11 +3729,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9407503604888916,
+    "confidence": 0.9576209187507629,
     "is_correct": true,
     "all_probs": [
-      0.9407503604888916,
-      0.05924965441226959
+      0.9576209187507629,
+      0.04237902909517288
     ],
     "error_category": "CORRECT"
   },
@@ -3743,11 +3743,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9381877779960632,
+    "confidence": 0.959424614906311,
     "is_correct": true,
     "all_probs": [
-      0.9381877779960632,
-      0.061812255531549454
+      0.959424614906311,
+      0.040575359016656876
     ],
     "error_category": "CORRECT"
   },
@@ -3757,11 +3757,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9614840745925903,
+    "confidence": 0.9571822285652161,
     "is_correct": true,
     "all_probs": [
-      0.03851590305566788,
-      0.9614840745925903
+      0.042817845940589905,
+      0.9571822285652161
     ],
     "error_category": "CORRECT"
   },
@@ -3771,11 +3771,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9633798599243164,
+    "confidence": 0.9518837928771973,
     "is_correct": true,
     "all_probs": [
-      0.0366201288998127,
-      0.9633798599243164
+      0.04811621457338333,
+      0.9518837928771973
     ],
     "error_category": "CORRECT"
   },
@@ -3785,11 +3785,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9492285251617432,
+    "confidence": 0.9547715783119202,
     "is_correct": true,
     "all_probs": [
-      0.05077148601412773,
-      0.9492285251617432
+      0.045228417962789536,
+      0.9547715783119202
     ],
     "error_category": "CORRECT"
   },
@@ -3799,11 +3799,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.952028751373291,
+    "confidence": 0.9603320360183716,
     "is_correct": true,
     "all_probs": [
-      0.04797125607728958,
-      0.952028751373291
+      0.0396680049598217,
+      0.9603320360183716
     ],
     "error_category": "CORRECT"
   },
@@ -3813,11 +3813,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9627969264984131,
+    "confidence": 0.9586127996444702,
     "is_correct": true,
     "all_probs": [
-      0.9627969264984131,
-      0.037203021347522736
+      0.9586127996444702,
+      0.04138711839914322
     ],
     "error_category": "CORRECT"
   },
@@ -3827,11 +3827,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.7608098983764648,
+    "confidence": 0.7909673452377319,
     "is_correct": true,
     "all_probs": [
-      0.7608098983764648,
-      0.23919008672237396
+      0.7909673452377319,
+      0.20903263986110687
     ],
     "error_category": "CORRECT"
   },
@@ -3841,11 +3841,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9623291492462158,
+    "confidence": 0.9561410546302795,
     "is_correct": true,
     "all_probs": [
-      0.9623291492462158,
-      0.03767088055610657
+      0.9561410546302795,
+      0.04385897144675255
     ],
     "error_category": "CORRECT"
   },
@@ -3855,11 +3855,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9617554545402527,
+    "confidence": 0.9604502320289612,
     "is_correct": true,
     "all_probs": [
-      0.9617554545402527,
-      0.03824460506439209
+      0.9604502320289612,
+      0.03954970836639404
     ],
     "error_category": "CORRECT"
   },
@@ -3869,11 +3869,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9617817997932434,
+    "confidence": 0.9572312235832214,
     "is_correct": true,
     "all_probs": [
-      0.038218218833208084,
-      0.9617817997932434
+      0.042768705636262894,
+      0.9572312235832214
     ],
     "error_category": "CORRECT"
   },
@@ -3883,11 +3883,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9673567414283752,
+    "confidence": 0.9561198949813843,
     "is_correct": true,
     "all_probs": [
-      0.032643258571624756,
-      0.9673567414283752
+      0.043880071491003036,
+      0.9561198949813843
     ],
     "error_category": "CORRECT"
   },
@@ -3897,11 +3897,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9660739898681641,
+    "confidence": 0.9596287608146667,
     "is_correct": true,
     "all_probs": [
-      0.033925995230674744,
-      0.9660739898681641
+      0.04037122055888176,
+      0.9596287608146667
     ],
     "error_category": "CORRECT"
   },
@@ -3911,11 +3911,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9634132981300354,
+    "confidence": 0.9561262130737305,
     "is_correct": true,
     "all_probs": [
-      0.036586690694093704,
-      0.9634132981300354
+      0.043873731046915054,
+      0.9561262130737305
     ],
     "error_category": "CORRECT"
   },
@@ -3925,11 +3925,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9563950300216675,
+    "confidence": 0.957533061504364,
     "is_correct": true,
     "all_probs": [
-      0.9563950300216675,
-      0.043604977428913116
+      0.957533061504364,
+      0.0424669086933136
     ],
     "error_category": "CORRECT"
   },
@@ -3939,11 +3939,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.8706768751144409,
+    "confidence": 0.901075005531311,
     "is_correct": true,
     "all_probs": [
-      0.8706768751144409,
-      0.1293230801820755
+      0.901075005531311,
+      0.09892506897449493
     ],
     "error_category": "CORRECT"
   },
@@ -3953,11 +3953,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9509372115135193,
+    "confidence": 0.9594705700874329,
     "is_correct": true,
     "all_probs": [
-      0.9509372115135193,
-      0.04906280338764191
+      0.9594705700874329,
+      0.04052948206663132
     ],
     "error_category": "CORRECT"
   },
@@ -3967,11 +3967,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9333643913269043,
+    "confidence": 0.9572457671165466,
     "is_correct": true,
     "all_probs": [
-      0.9333643913269043,
-      0.0666356235742569
+      0.9572457671165466,
+      0.042754169553518295
     ],
     "error_category": "CORRECT"
   },
@@ -3981,11 +3981,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.8498257398605347,
+    "confidence": 0.8335312008857727,
     "is_correct": true,
     "all_probs": [
-      0.15017427504062653,
-      0.8498257398605347
+      0.1664688140153885,
+      0.8335312008857727
     ],
     "error_category": "CORRECT"
   },
@@ -3994,14 +3994,14 @@
     "sentence": "היא עשתה סצנה מתמשכת בחנות בגדים, הפילה קולבים, צרחה ובכתה עד שהזמינו משטרה – כל זה רק בגלל שלא מצאה את המידה שלה, והלקוחות הביטו בה בהלם.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.9482601284980774,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.5994545817375183,
+    "is_correct": false,
     "all_probs": [
-      0.051739826798439026,
-      0.9482601284980774
+      0.5994545817375183,
+      0.4005454480648041
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "40_fig_32",
@@ -4009,11 +4009,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 0,
-    "confidence": 0.8396131992340088,
+    "confidence": 0.9546211361885071,
     "is_correct": false,
     "all_probs": [
-      0.8396131992340088,
-      0.1603868305683136
+      0.9546211361885071,
+      0.0453789085149765
     ],
     "error_category": "FALSE_NEGATIVE"
   },
@@ -4023,11 +4023,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 0,
-    "confidence": 0.8601415753364563,
+    "confidence": 0.9467284083366394,
     "is_correct": false,
     "all_probs": [
-      0.8601415753364563,
-      0.1398584246635437
+      0.9467284083366394,
+      0.0532715804874897
     ],
     "error_category": "FALSE_NEGATIVE"
   },
@@ -4037,11 +4037,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9545132517814636,
+    "confidence": 0.9548068046569824,
     "is_correct": true,
     "all_probs": [
-      0.9545132517814636,
-      0.045486774295568466
+      0.9548068046569824,
+      0.045193176716566086
     ],
     "error_category": "CORRECT"
   },
@@ -4051,11 +4051,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9537059664726257,
+    "confidence": 0.9539793729782104,
     "is_correct": true,
     "all_probs": [
-      0.9537059664726257,
-      0.04629398509860039
+      0.9539793729782104,
+      0.046020638197660446
     ],
     "error_category": "CORRECT"
   },
@@ -4065,11 +4065,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9557960629463196,
+    "confidence": 0.9549063444137573,
     "is_correct": true,
     "all_probs": [
-      0.9557960629463196,
-      0.044203996658325195
+      0.9549063444137573,
+      0.04509364813566208
     ],
     "error_category": "CORRECT"
   },
@@ -4079,11 +4079,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9506090879440308,
+    "confidence": 0.9546614289283752,
     "is_correct": true,
     "all_probs": [
-      0.9506090879440308,
-      0.04939086735248566
+      0.9546614289283752,
+      0.04533856362104416
     ],
     "error_category": "CORRECT"
   },
@@ -4093,11 +4093,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9610716104507446,
+    "confidence": 0.9611676335334778,
     "is_correct": true,
     "all_probs": [
-      0.038928404450416565,
-      0.9610716104507446
+      0.03883236646652222,
+      0.9611676335334778
     ],
     "error_category": "CORRECT"
   },
@@ -4107,11 +4107,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9700024127960205,
+    "confidence": 0.9598714113235474,
     "is_correct": true,
     "all_probs": [
-      0.029997633770108223,
-      0.9700024127960205
+      0.040128618478775024,
+      0.9598714113235474
     ],
     "error_category": "CORRECT"
   },
@@ -4121,11 +4121,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9597123861312866,
+    "confidence": 0.9525997638702393,
     "is_correct": true,
     "all_probs": [
-      0.04028763622045517,
-      0.9597123861312866
+      0.047400232404470444,
+      0.9525997638702393
     ],
     "error_category": "CORRECT"
   },
@@ -4135,11 +4135,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9639036655426025,
+    "confidence": 0.9587228298187256,
     "is_correct": true,
     "all_probs": [
-      0.03609626740217209,
-      0.9639036655426025
+      0.041277166455984116,
+      0.9587228298187256
     ],
     "error_category": "CORRECT"
   },
@@ -4149,11 +4149,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9595016241073608,
+    "confidence": 0.9561265707015991,
     "is_correct": true,
     "all_probs": [
-      0.9595016241073608,
-      0.040498342365026474
+      0.9561265707015991,
+      0.0438733771443367
     ],
     "error_category": "CORRECT"
   },
@@ -4163,11 +4163,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.961605966091156,
+    "confidence": 0.9559888243675232,
     "is_correct": true,
     "all_probs": [
-      0.961605966091156,
-      0.0383940264582634
+      0.9559888243675232,
+      0.04401112347841263
     ],
     "error_category": "CORRECT"
   },
@@ -4177,11 +4177,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9612698554992676,
+    "confidence": 0.9557687044143677,
     "is_correct": true,
     "all_probs": [
-      0.9612698554992676,
-      0.038730088621377945
+      0.9557687044143677,
+      0.04423127323389053
     ],
     "error_category": "CORRECT"
   },
@@ -4190,14 +4190,14 @@
     "sentence": "המתמטיקאי הגאון פתח דף חדש כדי לכתוב נוסחאות.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 0,
-    "confidence": 0.5305163860321045,
-    "is_correct": true,
+    "predicted_label": 1,
+    "confidence": 0.9245599508285522,
+    "is_correct": false,
     "all_probs": [
-      0.5305163860321045,
-      0.4694835841655731
+      0.07544009387493134,
+      0.9245599508285522
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_POSITIVE"
   },
   {
     "id": "42_fig_23",
@@ -4205,11 +4205,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9530870318412781,
+    "confidence": 0.9487414956092834,
     "is_correct": true,
     "all_probs": [
-      0.04691299796104431,
-      0.9530870318412781
+      0.051258500665426254,
+      0.9487414956092834
     ],
     "error_category": "CORRECT"
   },
@@ -4219,11 +4219,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9569476842880249,
+    "confidence": 0.9578532576560974,
     "is_correct": true,
     "all_probs": [
-      0.04305232688784599,
-      0.9569476842880249
+      0.0421467125415802,
+      0.9578532576560974
     ],
     "error_category": "CORRECT"
   },
@@ -4233,11 +4233,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9625992774963379,
+    "confidence": 0.9555468559265137,
     "is_correct": true,
     "all_probs": [
-      0.037400707602500916,
-      0.9625992774963379
+      0.04445316269993782,
+      0.9555468559265137
     ],
     "error_category": "CORRECT"
   },
@@ -4247,11 +4247,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9663236141204834,
+    "confidence": 0.9597646594047546,
     "is_correct": true,
     "all_probs": [
-      0.03367633745074272,
-      0.9663236141204834
+      0.04023529216647148,
+      0.9597646594047546
     ],
     "error_category": "CORRECT"
   },
@@ -4261,11 +4261,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.735807478427887,
+    "confidence": 0.7339656352996826,
     "is_correct": false,
     "all_probs": [
-      0.26419249176979065,
-      0.735807478427887
+      0.26603439450263977,
+      0.7339656352996826
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -4275,11 +4275,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.960542619228363,
+    "confidence": 0.9597933292388916,
     "is_correct": true,
     "all_probs": [
-      0.960542619228363,
-      0.039457377046346664
+      0.9597933292388916,
+      0.04020670801401138
     ],
     "error_category": "CORRECT"
   },
@@ -4289,11 +4289,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9576519727706909,
+    "confidence": 0.9559153914451599,
     "is_correct": true,
     "all_probs": [
-      0.9576519727706909,
-      0.04234806448221207
+      0.9559153914451599,
+      0.044084593653678894
     ],
     "error_category": "CORRECT"
   },
@@ -4303,11 +4303,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9614047408103943,
+    "confidence": 0.9561576247215271,
     "is_correct": true,
     "all_probs": [
-      0.9614047408103943,
-      0.03859527036547661
+      0.9561576247215271,
+      0.04384242743253708
     ],
     "error_category": "CORRECT"
   },
@@ -4317,11 +4317,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9529080986976624,
+    "confidence": 0.9510037302970886,
     "is_correct": true,
     "all_probs": [
-      0.04709186404943466,
-      0.9529080986976624
+      0.04899630695581436,
+      0.9510037302970886
     ],
     "error_category": "CORRECT"
   },
@@ -4330,14 +4330,14 @@
     "sentence": "הוא פתח עיניים כי לא רצה ליפול שוב בפח.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.5675609707832336,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.9596100449562073,
+    "is_correct": false,
     "all_probs": [
-      0.43243899941444397,
-      0.5675609707832336
+      0.9596100449562073,
+      0.040389880537986755
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "43_fig_16",
@@ -4345,11 +4345,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9642089009284973,
+    "confidence": 0.9542444348335266,
     "is_correct": true,
     "all_probs": [
-      0.035791050642728806,
-      0.9642089009284973
+      0.04575563967227936,
+      0.9542444348335266
     ],
     "error_category": "CORRECT"
   },
@@ -4359,11 +4359,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9217377305030823,
+    "confidence": 0.9409831762313843,
     "is_correct": true,
     "all_probs": [
-      0.07826226949691772,
-      0.9217377305030823
+      0.059016887098550797,
+      0.9409831762313843
     ],
     "error_category": "CORRECT"
   },
@@ -4372,14 +4372,14 @@
     "sentence": "אם הוא היה יודע כמה מסוכן זה, אולי לא היה קובר את עצמו עד הראש בחול כשההורים לא מסתכלים – המשחק התמים בחוף הפך לשיעור חשוב על גבולות ומודעות.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 0,
-    "confidence": 0.7578158378601074,
-    "is_correct": true,
+    "predicted_label": 1,
+    "confidence": 0.7144666910171509,
+    "is_correct": false,
     "all_probs": [
-      0.7578158378601074,
-      0.24218416213989258
+      0.28553324937820435,
+      0.7144666910171509
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_POSITIVE"
   },
   {
     "id": "44_lit_7",
@@ -4387,11 +4387,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9498223662376404,
+    "confidence": 0.9538924098014832,
     "is_correct": true,
     "all_probs": [
-      0.9498223662376404,
-      0.050177671015262604
+      0.9538924098014832,
+      0.046107593923807144
     ],
     "error_category": "CORRECT"
   },
@@ -4401,11 +4401,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.9563701748847961,
+    "confidence": 0.9546976089477539,
     "is_correct": false,
     "all_probs": [
-      0.04362976923584938,
-      0.9563701748847961
+      0.0453023724257946,
+      0.9546976089477539
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -4415,11 +4415,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9534356594085693,
+    "confidence": 0.9545860290527344,
     "is_correct": true,
     "all_probs": [
-      0.9534356594085693,
-      0.04656439647078514
+      0.9545860290527344,
+      0.04541398584842682
     ],
     "error_category": "CORRECT"
   },
@@ -4429,11 +4429,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9506463408470154,
+    "confidence": 0.9504470825195312,
     "is_correct": true,
     "all_probs": [
-      0.04935367405414581,
-      0.9506463408470154
+      0.04955289512872696,
+      0.9504470825195312
     ],
     "error_category": "CORRECT"
   },
@@ -4443,11 +4443,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9595587253570557,
+    "confidence": 0.9556724429130554,
     "is_correct": true,
     "all_probs": [
-      0.040441256016492844,
-      0.9595587253570557
+      0.0443275049328804,
+      0.9556724429130554
     ],
     "error_category": "CORRECT"
   },
@@ -4457,11 +4457,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9623724222183228,
+    "confidence": 0.9579901099205017,
     "is_correct": true,
     "all_probs": [
-      0.037627555429935455,
-      0.9623724222183228
+      0.04200984165072441,
+      0.9579901099205017
     ],
     "error_category": "CORRECT"
   },
@@ -4471,11 +4471,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9574781656265259,
+    "confidence": 0.9576218128204346,
     "is_correct": true,
     "all_probs": [
-      0.04252186045050621,
-      0.9574781656265259
+      0.04237817972898483,
+      0.9576218128204346
     ],
     "error_category": "CORRECT"
   },
@@ -4485,11 +4485,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9491003155708313,
+    "confidence": 0.9565486907958984,
     "is_correct": true,
     "all_probs": [
-      0.9491003155708313,
-      0.05089963972568512
+      0.9565486907958984,
+      0.04345129802823067
     ],
     "error_category": "CORRECT"
   },
@@ -4499,11 +4499,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.953655481338501,
+    "confidence": 0.9545007348060608,
     "is_correct": true,
     "all_probs": [
-      0.953655481338501,
-      0.046344559639692307
+      0.9545007348060608,
+      0.04549922049045563
     ],
     "error_category": "CORRECT"
   },
@@ -4513,11 +4513,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9512864947319031,
+    "confidence": 0.9544543027877808,
     "is_correct": true,
     "all_probs": [
-      0.9512864947319031,
-      0.04871349409222603
+      0.9544543027877808,
+      0.04554566740989685
     ],
     "error_category": "CORRECT"
   },
@@ -4527,11 +4527,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9480761289596558,
+    "confidence": 0.9539238810539246,
     "is_correct": true,
     "all_probs": [
-      0.9480761289596558,
-      0.05192385986447334
+      0.9539238810539246,
+      0.04607614874839783
     ],
     "error_category": "CORRECT"
   },
@@ -4541,11 +4541,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9474868774414062,
+    "confidence": 0.956379771232605,
     "is_correct": true,
     "all_probs": [
-      0.05251310393214226,
-      0.9474868774414062
+      0.04362015798687935,
+      0.956379771232605
     ],
     "error_category": "CORRECT"
   },
@@ -4554,14 +4554,14 @@
     "sentence": "אם התלמיד לא ילמד לקחת אחריות, הוא ימשיך לקבל סטירה אחרי סטירה מהמורה, לא על הציונים, אלא על חוסר המאמץ שמורגש בכל שורה שהוא כותב.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.719454288482666,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.7322511672973633,
+    "is_correct": false,
     "all_probs": [
-      0.28054574131965637,
-      0.719454288482666
+      0.7322511672973633,
+      0.2677488327026367
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "45_fig_34",
@@ -4569,11 +4569,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9667208194732666,
+    "confidence": 0.9586845636367798,
     "is_correct": true,
     "all_probs": [
-      0.0332791730761528,
-      0.9667208194732666
+      0.041315462440252304,
+      0.9586845636367798
     ],
     "error_category": "CORRECT"
   },
@@ -4583,11 +4583,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9605373740196228,
+    "confidence": 0.8431848883628845,
     "is_correct": true,
     "all_probs": [
-      0.03946267068386078,
-      0.9605373740196228
+      0.1568150818347931,
+      0.8431848883628845
     ],
     "error_category": "CORRECT"
   },
@@ -4597,11 +4597,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.5724485516548157,
+    "confidence": 0.9280111193656921,
     "is_correct": true,
     "all_probs": [
-      0.5724485516548157,
-      0.4275514483451843
+      0.9280111193656921,
+      0.07198883593082428
     ],
     "error_category": "CORRECT"
   },
@@ -4611,11 +4611,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 1,
-    "confidence": 0.9343240261077881,
+    "confidence": 0.9532867670059204,
     "is_correct": false,
     "all_probs": [
-      0.06567589938640594,
-      0.9343240261077881
+      0.046713247895240784,
+      0.9532867670059204
     ],
     "error_category": "FALSE_POSITIVE"
   },
@@ -4625,11 +4625,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9553544521331787,
+    "confidence": 0.958334743976593,
     "is_correct": true,
     "all_probs": [
-      0.9553544521331787,
-      0.04464556649327278
+      0.958334743976593,
+      0.04166528210043907
     ],
     "error_category": "CORRECT"
   },
@@ -4639,11 +4639,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9534325003623962,
+    "confidence": 0.9535649418830872,
     "is_correct": true,
     "all_probs": [
-      0.9534325003623962,
-      0.04656752943992615
+      0.9535649418830872,
+      0.04643500596284866
     ],
     "error_category": "CORRECT"
   },
@@ -4653,11 +4653,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9531404376029968,
+    "confidence": 0.9579412341117859,
     "is_correct": true,
     "all_probs": [
-      0.046859610825777054,
-      0.9531404376029968
+      0.04205872491002083,
+      0.9579412341117859
     ],
     "error_category": "CORRECT"
   },
@@ -4667,11 +4667,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9610145688056946,
+    "confidence": 0.958790123462677,
     "is_correct": true,
     "all_probs": [
-      0.03898541256785393,
-      0.9610145688056946
+      0.04120991379022598,
+      0.958790123462677
     ],
     "error_category": "CORRECT"
   },
@@ -4681,11 +4681,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9588557481765747,
+    "confidence": 0.9526897668838501,
     "is_correct": true,
     "all_probs": [
-      0.0411442331969738,
-      0.9588557481765747
+      0.04731020703911781,
+      0.9526897668838501
     ],
     "error_category": "CORRECT"
   },
@@ -4695,11 +4695,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9595189690589905,
+    "confidence": 0.9531742334365845,
     "is_correct": true,
     "all_probs": [
-      0.0404810793697834,
-      0.9595189690589905
+      0.04682573676109314,
+      0.9531742334365845
     ],
     "error_category": "CORRECT"
   },
@@ -4709,11 +4709,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9527835845947266,
+    "confidence": 0.9505897760391235,
     "is_correct": true,
     "all_probs": [
-      0.9527835845947266,
-      0.047216396778821945
+      0.9505897760391235,
+      0.04941021278500557
     ],
     "error_category": "CORRECT"
   },
@@ -4723,11 +4723,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9575148820877075,
+    "confidence": 0.9553688764572144,
     "is_correct": true,
     "all_probs": [
-      0.9575148820877075,
-      0.042485058307647705
+      0.9553688764572144,
+      0.04463109374046326
     ],
     "error_category": "CORRECT"
   },
@@ -4737,11 +4737,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9608981013298035,
+    "confidence": 0.953213632106781,
     "is_correct": true,
     "all_probs": [
-      0.9608981013298035,
-      0.03910188376903534
+      0.953213632106781,
+      0.0467863567173481
     ],
     "error_category": "CORRECT"
   },
@@ -4751,11 +4751,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9535183310508728,
+    "confidence": 0.9515820741653442,
     "is_correct": true,
     "all_probs": [
-      0.9535183310508728,
-      0.04648162052035332
+      0.9515820741653442,
+      0.04841794818639755
     ],
     "error_category": "CORRECT"
   },
@@ -4765,11 +4765,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9627368450164795,
+    "confidence": 0.9583904147148132,
     "is_correct": true,
     "all_probs": [
-      0.0372631810605526,
-      0.9627368450164795
+      0.04160960391163826,
+      0.9583904147148132
     ],
     "error_category": "CORRECT"
   },
@@ -4779,11 +4779,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9507454633712769,
+    "confidence": 0.7236555814743042,
     "is_correct": true,
     "all_probs": [
-      0.04925454780459404,
-      0.9507454633712769
+      0.2763444185256958,
+      0.7236555814743042
     ],
     "error_category": "CORRECT"
   },
@@ -4793,11 +4793,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9646613001823425,
+    "confidence": 0.9551557898521423,
     "is_correct": true,
     "all_probs": [
-      0.03533872589468956,
-      0.9646613001823425
+      0.04484424740076065,
+      0.9551557898521423
     ],
     "error_category": "CORRECT"
   },
@@ -4807,11 +4807,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9545722603797913,
+    "confidence": 0.9563642144203186,
     "is_correct": true,
     "all_probs": [
-      0.04542781040072441,
-      0.9545722603797913
+      0.04363574460148811,
+      0.9563642144203186
     ],
     "error_category": "CORRECT"
   },
@@ -4821,11 +4821,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9578647613525391,
+    "confidence": 0.9545153379440308,
     "is_correct": true,
     "all_probs": [
-      0.9578647613525391,
-      0.04213524982333183
+      0.9545153379440308,
+      0.04548466205596924
     ],
     "error_category": "CORRECT"
   },
@@ -4835,11 +4835,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9575799107551575,
+    "confidence": 0.952172577381134,
     "is_correct": true,
     "all_probs": [
-      0.9575799107551575,
-      0.042420025914907455
+      0.952172577381134,
+      0.047827426344156265
     ],
     "error_category": "CORRECT"
   },
@@ -4849,11 +4849,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9601459503173828,
+    "confidence": 0.9550219178199768,
     "is_correct": true,
     "all_probs": [
-      0.9601459503173828,
-      0.03985406458377838
+      0.9550219178199768,
+      0.04497803375124931
     ],
     "error_category": "CORRECT"
   },
@@ -4863,11 +4863,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9527618885040283,
+    "confidence": 0.9575555324554443,
     "is_correct": true,
     "all_probs": [
-      0.9527618885040283,
-      0.04723808914422989
+      0.9575555324554443,
+      0.0424443855881691
     ],
     "error_category": "CORRECT"
   },
@@ -4876,28 +4876,28 @@
     "sentence": "אבא שלי קפץ למים ונאם מול מאות אנשים, למרות שתמיד פחד מהמיקרופון – והוא הוכיח שעם לב אמיץ גם קול רועד מצליח לגעת באנשים.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.9480144381523132,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.9506256580352783,
+    "is_correct": false,
     "all_probs": [
-      0.05198560655117035,
-      0.9480144381523132
+      0.9506256580352783,
+      0.04937438666820526
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "48_fig_12",
     "sentence": "הוא לא היסס לרגע, קפץ למים ופתח דוכן קטן בשוק, גם כשאמרו לו שהמצב הכלכלי גרוע – היום אנשים עומדים בתור אצלו כל בוקר.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.7918563485145569,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.9439268708229065,
+    "is_correct": false,
     "all_probs": [
-      0.20814359188079834,
-      0.7918563485145569
+      0.9439268708229065,
+      0.05607311800122261
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "48_fig_26",
@@ -4905,11 +4905,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9654945731163025,
+    "confidence": 0.9593650102615356,
     "is_correct": true,
     "all_probs": [
-      0.034505393356084824,
-      0.9654945731163025
+      0.04063500836491585,
+      0.9593650102615356
     ],
     "error_category": "CORRECT"
   },
@@ -4919,11 +4919,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9610946178436279,
+    "confidence": 0.9559741020202637,
     "is_correct": true,
     "all_probs": [
-      0.03890540823340416,
-      0.9610946178436279
+      0.04402581974864006,
+      0.9559741020202637
     ],
     "error_category": "CORRECT"
   },
@@ -4933,11 +4933,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9611166715621948,
+    "confidence": 0.957400918006897,
     "is_correct": true,
     "all_probs": [
-      0.9611166715621948,
-      0.03888338804244995
+      0.957400918006897,
+      0.042599137872457504
     ],
     "error_category": "CORRECT"
   },
@@ -4947,11 +4947,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9558855891227722,
+    "confidence": 0.953612208366394,
     "is_correct": true,
     "all_probs": [
-      0.9558855891227722,
-      0.04411442577838898
+      0.953612208366394,
+      0.04638781398534775
     ],
     "error_category": "CORRECT"
   },
@@ -4961,11 +4961,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9308796525001526,
+    "confidence": 0.9496241807937622,
     "is_correct": true,
     "all_probs": [
-      0.9308796525001526,
-      0.06912032514810562
+      0.9496241807937622,
+      0.05037577450275421
     ],
     "error_category": "CORRECT"
   },
@@ -4975,11 +4975,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9492883682250977,
+    "confidence": 0.952147364616394,
     "is_correct": true,
     "all_probs": [
-      0.9492883682250977,
-      0.050711628049612045
+      0.952147364616394,
+      0.047852642834186554
     ],
     "error_category": "CORRECT"
   },
@@ -4989,11 +4989,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9567632079124451,
+    "confidence": 0.9566211700439453,
     "is_correct": true,
     "all_probs": [
-      0.043236829340457916,
-      0.9567632079124451
+      0.04337889701128006,
+      0.9566211700439453
     ],
     "error_category": "CORRECT"
   },
@@ -5003,11 +5003,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.8638600707054138,
+    "confidence": 0.9437105059623718,
     "is_correct": true,
     "all_probs": [
-      0.1361398994922638,
-      0.8638600707054138
+      0.0562894269824028,
+      0.9437105059623718
     ],
     "error_category": "CORRECT"
   },
@@ -5017,11 +5017,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9394662976264954,
+    "confidence": 0.948005199432373,
     "is_correct": true,
     "all_probs": [
-      0.06053370237350464,
-      0.9394662976264954
+      0.051994819194078445,
+      0.948005199432373
     ],
     "error_category": "CORRECT"
   },
@@ -5031,11 +5031,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9510813355445862,
+    "confidence": 0.9559128880500793,
     "is_correct": true,
     "all_probs": [
-      0.04891861602663994,
-      0.9510813355445862
+      0.04408711567521095,
+      0.9559128880500793
     ],
     "error_category": "CORRECT"
   },
@@ -5045,11 +5045,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9389318823814392,
+    "confidence": 0.9529914259910583,
     "is_correct": true,
     "all_probs": [
-      0.9389318823814392,
-      0.061068128794431686
+      0.9529914259910583,
+      0.04700858145952225
     ],
     "error_category": "CORRECT"
   },
@@ -5059,11 +5059,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9474043250083923,
+    "confidence": 0.9539474248886108,
     "is_correct": true,
     "all_probs": [
-      0.9474043250083923,
-      0.052595704793930054
+      0.9539474248886108,
+      0.04605262726545334
     ],
     "error_category": "CORRECT"
   },
@@ -5073,11 +5073,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9229180812835693,
+    "confidence": 0.9555628299713135,
     "is_correct": true,
     "all_probs": [
-      0.9229180812835693,
-      0.07708198577165604
+      0.9555628299713135,
+      0.044437143951654434
     ],
     "error_category": "CORRECT"
   },
@@ -5087,11 +5087,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9539289474487305,
+    "confidence": 0.9544380903244019,
     "is_correct": true,
     "all_probs": [
-      0.9539289474487305,
-      0.04607105255126953
+      0.9544380903244019,
+      0.045561909675598145
     ],
     "error_category": "CORRECT"
   },
@@ -5101,11 +5101,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9569370746612549,
+    "confidence": 0.95794278383255,
     "is_correct": true,
     "all_probs": [
-      0.04306287318468094,
-      0.9569370746612549
+      0.04205729067325592,
+      0.95794278383255
     ],
     "error_category": "CORRECT"
   },
@@ -5115,11 +5115,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9636543393135071,
+    "confidence": 0.9572057723999023,
     "is_correct": true,
     "all_probs": [
-      0.03634564206004143,
-      0.9636543393135071
+      0.04279419407248497,
+      0.9572057723999023
     ],
     "error_category": "CORRECT"
   },
@@ -5129,11 +5129,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9500532150268555,
+    "confidence": 0.9502450227737427,
     "is_correct": true,
     "all_probs": [
-      0.04994677007198334,
-      0.9500532150268555
+      0.04975495487451553,
+      0.9502450227737427
     ],
     "error_category": "CORRECT"
   },
@@ -5143,11 +5143,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9665412902832031,
+    "confidence": 0.9579805135726929,
     "is_correct": true,
     "all_probs": [
-      0.03345875442028046,
-      0.9665412902832031
+      0.042019475251436234,
+      0.9579805135726929
     ],
     "error_category": "CORRECT"
   },
@@ -5157,11 +5157,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9558340311050415,
+    "confidence": 0.9553486704826355,
     "is_correct": true,
     "all_probs": [
-      0.9558340311050415,
-      0.04416592791676521
+      0.9553486704826355,
+      0.04465136677026749
     ],
     "error_category": "CORRECT"
   },
@@ -5171,11 +5171,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9520993828773499,
+    "confidence": 0.9542511105537415,
     "is_correct": true,
     "all_probs": [
-      0.9520993828773499,
-      0.04790063574910164
+      0.9542511105537415,
+      0.04574884474277496
     ],
     "error_category": "CORRECT"
   },
@@ -5185,11 +5185,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9614285230636597,
+    "confidence": 0.9546678066253662,
     "is_correct": true,
     "all_probs": [
-      0.9614285230636597,
-      0.03857147693634033
+      0.9546678066253662,
+      0.04533212631940842
     ],
     "error_category": "CORRECT"
   },
@@ -5199,11 +5199,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9565314054489136,
+    "confidence": 0.9514282941818237,
     "is_correct": true,
     "all_probs": [
-      0.9565314054489136,
-      0.043468620628118515
+      0.9514282941818237,
+      0.04857168346643448
     ],
     "error_category": "CORRECT"
   },
@@ -5213,11 +5213,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9625207781791687,
+    "confidence": 0.9555694460868835,
     "is_correct": true,
     "all_probs": [
-      0.037479277700185776,
-      0.9625207781791687
+      0.04443049058318138,
+      0.9555694460868835
     ],
     "error_category": "CORRECT"
   },
@@ -5227,11 +5227,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9653894901275635,
+    "confidence": 0.9550632238388062,
     "is_correct": true,
     "all_probs": [
-      0.03461047261953354,
-      0.9653894901275635
+      0.044936735183000565,
+      0.9550632238388062
     ],
     "error_category": "CORRECT"
   },
@@ -5240,14 +5240,14 @@
     "sentence": "המדריך שבר את הקרח בטיול כשהודיע בצחוק שאם מישהו הולך לאיבוד, לפחות שיצלם נוף יפה – כל הקבוצה צחקה והמשיכה בהליכה קלה יותר באווירה טובה.",
     "expression": "",
     "true_label": 1,
-    "predicted_label": 1,
-    "confidence": 0.6771889925003052,
-    "is_correct": true,
+    "predicted_label": 0,
+    "confidence": 0.6984931230545044,
+    "is_correct": false,
     "all_probs": [
-      0.32281097769737244,
-      0.6771889925003052
+      0.6984931230545044,
+      0.3015068769454956
     ],
-    "error_category": "CORRECT"
+    "error_category": "FALSE_NEGATIVE"
   },
   {
     "id": "52_fig_40",
@@ -5255,11 +5255,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9708812236785889,
+    "confidence": 0.9583566784858704,
     "is_correct": true,
     "all_probs": [
-      0.029118727892637253,
-      0.9708812236785889
+      0.041643302887678146,
+      0.9583566784858704
     ],
     "error_category": "CORRECT"
   },
@@ -5269,11 +5269,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9572180509567261,
+    "confidence": 0.9529874324798584,
     "is_correct": true,
     "all_probs": [
-      0.9572180509567261,
-      0.042781975120306015
+      0.9529874324798584,
+      0.04701252281665802
     ],
     "error_category": "CORRECT"
   },
@@ -5283,11 +5283,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9538379311561584,
+    "confidence": 0.9520571827888489,
     "is_correct": true,
     "all_probs": [
-      0.9538379311561584,
-      0.046162012964487076
+      0.9520571827888489,
+      0.0479428805410862
     ],
     "error_category": "CORRECT"
   },
@@ -5297,11 +5297,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9487558603286743,
+    "confidence": 0.953920841217041,
     "is_correct": true,
     "all_probs": [
-      0.9487558603286743,
-      0.05124415084719658
+      0.953920841217041,
+      0.04607919976115227
     ],
     "error_category": "CORRECT"
   },
@@ -5311,11 +5311,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9051099419593811,
+    "confidence": 0.9336825013160706,
     "is_correct": true,
     "all_probs": [
-      0.9051099419593811,
-      0.09488999098539352
+      0.9336825013160706,
+      0.06631748378276825
     ],
     "error_category": "CORRECT"
   },
@@ -5325,11 +5325,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9637895226478577,
+    "confidence": 0.9640882611274719,
     "is_correct": true,
     "all_probs": [
-      0.036210499703884125,
-      0.9637895226478577
+      0.03591177240014076,
+      0.9640882611274719
     ],
     "error_category": "CORRECT"
   },
@@ -5339,11 +5339,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 0,
-    "confidence": 0.8658230304718018,
+    "confidence": 0.9329184889793396,
     "is_correct": false,
     "all_probs": [
-      0.8658230304718018,
-      0.13417692482471466
+      0.9329184889793396,
+      0.06708156317472458
     ],
     "error_category": "FALSE_NEGATIVE"
   },
@@ -5353,11 +5353,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9613304734230042,
+    "confidence": 0.9575011134147644,
     "is_correct": true,
     "all_probs": [
-      0.03866955265402794,
-      0.9613304734230042
+      0.0424988828599453,
+      0.9575011134147644
     ],
     "error_category": "CORRECT"
   },
@@ -5367,11 +5367,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9685588479042053,
+    "confidence": 0.9640083909034729,
     "is_correct": true,
     "all_probs": [
-      0.0314410999417305,
-      0.9685588479042053
+      0.03599157929420471,
+      0.9640083909034729
     ],
     "error_category": "CORRECT"
   },
@@ -5381,11 +5381,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9257531762123108,
+    "confidence": 0.9568213820457458,
     "is_correct": true,
     "all_probs": [
-      0.9257531762123108,
-      0.074246846139431
+      0.9568213820457458,
+      0.04317861795425415
     ],
     "error_category": "CORRECT"
   },
@@ -5395,11 +5395,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9510694742202759,
+    "confidence": 0.9554053544998169,
     "is_correct": true,
     "all_probs": [
-      0.9510694742202759,
-      0.048930440098047256
+      0.9554053544998169,
+      0.044594667851924896
     ],
     "error_category": "CORRECT"
   },
@@ -5409,11 +5409,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9467977285385132,
+    "confidence": 0.9574841856956482,
     "is_correct": true,
     "all_probs": [
-      0.9467977285385132,
-      0.05320223793387413
+      0.9574841856956482,
+      0.042515829205513
     ],
     "error_category": "CORRECT"
   },
@@ -5423,11 +5423,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9524905681610107,
+    "confidence": 0.9531922936439514,
     "is_correct": true,
     "all_probs": [
-      0.9524905681610107,
-      0.047509413212537766
+      0.9531922936439514,
+      0.04680771008133888
     ],
     "error_category": "CORRECT"
   },
@@ -5437,11 +5437,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9500534534454346,
+    "confidence": 0.9533659815788269,
     "is_correct": true,
     "all_probs": [
-      0.049946509301662445,
-      0.9500534534454346
+      0.0466340072453022,
+      0.9533659815788269
     ],
     "error_category": "CORRECT"
   },
@@ -5451,11 +5451,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9444270730018616,
+    "confidence": 0.9505545496940613,
     "is_correct": true,
     "all_probs": [
-      0.05557292327284813,
-      0.9444270730018616
+      0.049445413053035736,
+      0.9505545496940613
     ],
     "error_category": "CORRECT"
   },
@@ -5465,11 +5465,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9533259868621826,
+    "confidence": 0.9512010812759399,
     "is_correct": true,
     "all_probs": [
-      0.046674054116010666,
-      0.9533259868621826
+      0.04879898205399513,
+      0.9512010812759399
     ],
     "error_category": "CORRECT"
   },
@@ -5479,11 +5479,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9626984596252441,
+    "confidence": 0.9557476043701172,
     "is_correct": true,
     "all_probs": [
-      0.03730155527591705,
-      0.9626984596252441
+      0.044252414256334305,
+      0.9557476043701172
     ],
     "error_category": "CORRECT"
   },
@@ -5493,11 +5493,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9501140117645264,
+    "confidence": 0.9546173214912415,
     "is_correct": true,
     "all_probs": [
-      0.9501140117645264,
-      0.04988594725728035
+      0.9546173214912415,
+      0.04538266733288765
     ],
     "error_category": "CORRECT"
   },
@@ -5507,11 +5507,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.8791524171829224,
+    "confidence": 0.9524469375610352,
     "is_correct": true,
     "all_probs": [
-      0.8791524171829224,
-      0.12084753066301346
+      0.9524469375610352,
+      0.04755308851599693
     ],
     "error_category": "CORRECT"
   },
@@ -5521,11 +5521,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9494538307189941,
+    "confidence": 0.9535465240478516,
     "is_correct": true,
     "all_probs": [
-      0.9494538307189941,
-      0.05054610222578049
+      0.9535465240478516,
+      0.046453531831502914
     ],
     "error_category": "CORRECT"
   },
@@ -5535,11 +5535,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9620581269264221,
+    "confidence": 0.9538607001304626,
     "is_correct": true,
     "all_probs": [
-      0.9620581269264221,
-      0.03794192522764206
+      0.9538607001304626,
+      0.04613923281431198
     ],
     "error_category": "CORRECT"
   },
@@ -5549,11 +5549,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9638491868972778,
+    "confidence": 0.9588839411735535,
     "is_correct": true,
     "all_probs": [
-      0.036150772124528885,
-      0.9638491868972778
+      0.04111611098051071,
+      0.9588839411735535
     ],
     "error_category": "CORRECT"
   },
@@ -5563,11 +5563,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9706783294677734,
+    "confidence": 0.9579751491546631,
     "is_correct": true,
     "all_probs": [
-      0.029321614652872086,
-      0.9706783294677734
+      0.04202483966946602,
+      0.9579751491546631
     ],
     "error_category": "CORRECT"
   },
@@ -5577,11 +5577,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.956585705280304,
+    "confidence": 0.9573854804039001,
     "is_correct": true,
     "all_probs": [
-      0.043414294719696045,
-      0.956585705280304
+      0.042614515870809555,
+      0.9573854804039001
     ],
     "error_category": "CORRECT"
   },
@@ -5591,11 +5591,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9649873375892639,
+    "confidence": 0.9568716883659363,
     "is_correct": true,
     "all_probs": [
-      0.03501260280609131,
-      0.9649873375892639
+      0.04312829673290253,
+      0.9568716883659363
     ],
     "error_category": "CORRECT"
   },
@@ -5605,11 +5605,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9501670598983765,
+    "confidence": 0.9537684321403503,
     "is_correct": true,
     "all_probs": [
-      0.9501670598983765,
-      0.04983295872807503
+      0.9537684321403503,
+      0.04623151570558548
     ],
     "error_category": "CORRECT"
   },
@@ -5619,11 +5619,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.7708995342254639,
+    "confidence": 0.954833984375,
     "is_correct": true,
     "all_probs": [
-      0.7708995342254639,
-      0.22910049557685852
+      0.954833984375,
+      0.045166049152612686
     ],
     "error_category": "CORRECT"
   },
@@ -5633,11 +5633,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9511544704437256,
+    "confidence": 0.9505818486213684,
     "is_correct": true,
     "all_probs": [
-      0.9511544704437256,
-      0.04884551465511322
+      0.9505818486213684,
+      0.04941821098327637
     ],
     "error_category": "CORRECT"
   },
@@ -5647,11 +5647,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9555729627609253,
+    "confidence": 0.9555193185806274,
     "is_correct": true,
     "all_probs": [
-      0.9555729627609253,
-      0.04442708194255829
+      0.9555193185806274,
+      0.04448069632053375
     ],
     "error_category": "CORRECT"
   },
@@ -5661,11 +5661,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9542174935340881,
+    "confidence": 0.9616444110870361,
     "is_correct": true,
     "all_probs": [
-      0.04578253999352455,
-      0.9542174935340881
+      0.03835562616586685,
+      0.9616444110870361
     ],
     "error_category": "CORRECT"
   },
@@ -5675,11 +5675,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9673342108726501,
+    "confidence": 0.9602415561676025,
     "is_correct": true,
     "all_probs": [
-      0.03266575559973717,
-      0.9673342108726501
+      0.03975847363471985,
+      0.9602415561676025
     ],
     "error_category": "CORRECT"
   },
@@ -5689,11 +5689,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9653400182723999,
+    "confidence": 0.9592265486717224,
     "is_correct": true,
     "all_probs": [
-      0.034659963101148605,
-      0.9653400182723999
+      0.04077344387769699,
+      0.9592265486717224
     ],
     "error_category": "CORRECT"
   },
@@ -5703,11 +5703,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9693605899810791,
+    "confidence": 0.9573795795440674,
     "is_correct": true,
     "all_probs": [
-      0.030639469623565674,
-      0.9693605899810791
+      0.04262033849954605,
+      0.9573795795440674
     ],
     "error_category": "CORRECT"
   },
@@ -5717,11 +5717,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9610036015510559,
+    "confidence": 0.9549241065979004,
     "is_correct": true,
     "all_probs": [
-      0.9610036015510559,
-      0.038996364921331406
+      0.9549241065979004,
+      0.04507587105035782
     ],
     "error_category": "CORRECT"
   },
@@ -5731,11 +5731,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9562377333641052,
+    "confidence": 0.9539380669593811,
     "is_correct": true,
     "all_probs": [
-      0.9562377333641052,
-      0.043762218207120895
+      0.9539380669593811,
+      0.0460619255900383
     ],
     "error_category": "CORRECT"
   },
@@ -5745,11 +5745,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9574116468429565,
+    "confidence": 0.9530295729637146,
     "is_correct": true,
     "all_probs": [
-      0.9574116468429565,
-      0.04258836433291435
+      0.9530295729637146,
+      0.046970434486866
     ],
     "error_category": "CORRECT"
   },
@@ -5759,11 +5759,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9543972611427307,
+    "confidence": 0.9527519941329956,
     "is_correct": true,
     "all_probs": [
-      0.9543972611427307,
-      0.04560268670320511
+      0.9527519941329956,
+      0.04724794626235962
     ],
     "error_category": "CORRECT"
   },
@@ -5773,11 +5773,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9601614475250244,
+    "confidence": 0.9522737264633179,
     "is_correct": true,
     "all_probs": [
-      0.03983859717845917,
-      0.9601614475250244
+      0.04772625118494034,
+      0.9522737264633179
     ],
     "error_category": "CORRECT"
   },
@@ -5787,11 +5787,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.962257981300354,
+    "confidence": 0.9565945267677307,
     "is_correct": true,
     "all_probs": [
-      0.03774208202958107,
-      0.962257981300354
+      0.04340551793575287,
+      0.9565945267677307
     ],
     "error_category": "CORRECT"
   },
@@ -5801,11 +5801,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9643220901489258,
+    "confidence": 0.9520166516304016,
     "is_correct": true,
     "all_probs": [
-      0.0356779582798481,
-      0.9643220901489258
+      0.04798338562250137,
+      0.9520166516304016
     ],
     "error_category": "CORRECT"
   },
@@ -5815,11 +5815,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9605845212936401,
+    "confidence": 0.9547113180160522,
     "is_correct": true,
     "all_probs": [
-      0.03941546753048897,
-      0.9605845212936401
+      0.04528866335749626,
+      0.9547113180160522
     ],
     "error_category": "CORRECT"
   },
@@ -5829,11 +5829,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9578321576118469,
+    "confidence": 0.9541560411453247,
     "is_correct": true,
     "all_probs": [
-      0.9578321576118469,
-      0.042167872190475464
+      0.9541560411453247,
+      0.0458439402282238
     ],
     "error_category": "CORRECT"
   },
@@ -5842,14 +5842,14 @@
     "sentence": "אל תתני לעצמך לשים רגליים על הברכיים של חברה שלך באמצע השיחה – זו לא רק חוסר נימוס, אלא גם עלולה להתפרש לא נכון כשמדובר באירוע רשמי.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 1,
-    "confidence": 0.5385590195655823,
-    "is_correct": false,
+    "predicted_label": 0,
+    "confidence": 0.9468509554862976,
+    "is_correct": true,
     "all_probs": [
-      0.46144095063209534,
-      0.5385590195655823
+      0.9468509554862976,
+      0.05314909294247627
     ],
-    "error_category": "FALSE_POSITIVE"
+    "error_category": "CORRECT"
   },
   {
     "id": "59_lit_13",
@@ -5857,11 +5857,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9548704028129578,
+    "confidence": 0.9513190984725952,
     "is_correct": true,
     "all_probs": [
-      0.9548704028129578,
-      0.04512963071465492
+      0.9513190984725952,
+      0.04868096858263016
     ],
     "error_category": "CORRECT"
   },
@@ -5871,11 +5871,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9525994658470154,
+    "confidence": 0.9527632594108582,
     "is_correct": true,
     "all_probs": [
-      0.9525994658470154,
-      0.047400571405887604
+      0.9527632594108582,
+      0.04723673686385155
     ],
     "error_category": "CORRECT"
   },
@@ -5885,11 +5885,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9272708892822266,
+    "confidence": 0.9541811347007751,
     "is_correct": true,
     "all_probs": [
-      0.07272915542125702,
-      0.9272708892822266
+      0.04581884294748306,
+      0.9541811347007751
     ],
     "error_category": "CORRECT"
   },
@@ -5899,11 +5899,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9596397280693054,
+    "confidence": 0.9535942077636719,
     "is_correct": true,
     "all_probs": [
-      0.04036032035946846,
-      0.9596397280693054
+      0.0464058443903923,
+      0.9535942077636719
     ],
     "error_category": "CORRECT"
   },
@@ -5913,11 +5913,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.94919353723526,
+    "confidence": 0.9515179395675659,
     "is_correct": true,
     "all_probs": [
-      0.0508064441382885,
-      0.94919353723526
+      0.048482075333595276,
+      0.9515179395675659
     ],
     "error_category": "CORRECT"
   },
@@ -5927,11 +5927,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.957378089427948,
+    "confidence": 0.9499722123146057,
     "is_correct": true,
     "all_probs": [
-      0.042621929198503494,
-      0.957378089427948
+      0.05002780258655548,
+      0.9499722123146057
     ],
     "error_category": "CORRECT"
   },
@@ -5941,11 +5941,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9559109210968018,
+    "confidence": 0.953481912612915,
     "is_correct": true,
     "all_probs": [
-      0.9559109210968018,
-      0.044089045375585556
+      0.953481912612915,
+      0.046518098562955856
     ],
     "error_category": "CORRECT"
   },
@@ -5954,14 +5954,14 @@
     "sentence": "הלהבות באירוע המחאה שפכו אור כתום על פני המפגינים, אך אף אחד לא ידע האם מדובר בסמל של תקווה – או באזהרה למה שעוד עלול לקרות.",
     "expression": "",
     "true_label": 0,
-    "predicted_label": 1,
-    "confidence": 0.8635757565498352,
-    "is_correct": false,
+    "predicted_label": 0,
+    "confidence": 0.9545480012893677,
+    "is_correct": true,
     "all_probs": [
-      0.13642427325248718,
-      0.8635757565498352
+      0.9545480012893677,
+      0.04545198753476143
     ],
-    "error_category": "FALSE_POSITIVE"
+    "error_category": "CORRECT"
   },
   {
     "id": "60_lit_20",
@@ -5969,11 +5969,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9504293203353882,
+    "confidence": 0.9521389603614807,
     "is_correct": true,
     "all_probs": [
-      0.9504293203353882,
-      0.0495707131922245
+      0.9521389603614807,
+      0.04786107316613197
     ],
     "error_category": "CORRECT"
   },
@@ -5983,11 +5983,11 @@
     "expression": "",
     "true_label": 0,
     "predicted_label": 0,
-    "confidence": 0.9506831169128418,
+    "confidence": 0.9530813097953796,
     "is_correct": true,
     "all_probs": [
-      0.9506831169128418,
-      0.04931693151593208
+      0.9530813097953796,
+      0.046918731182813644
     ],
     "error_category": "CORRECT"
   },
@@ -5997,11 +5997,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9657554626464844,
+    "confidence": 0.9542176127433777,
     "is_correct": true,
     "all_probs": [
-      0.03424458205699921,
-      0.9657554626464844
+      0.045782413333654404,
+      0.9542176127433777
     ],
     "error_category": "CORRECT"
   },
@@ -6011,11 +6011,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9682208299636841,
+    "confidence": 0.9594051837921143,
     "is_correct": true,
     "all_probs": [
-      0.031779222190380096,
-      0.9682208299636841
+      0.040594834834337234,
+      0.9594051837921143
     ],
     "error_category": "CORRECT"
   },
@@ -6025,11 +6025,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9611100554466248,
+    "confidence": 0.9573021531105042,
     "is_correct": true,
     "all_probs": [
-      0.03888997808098793,
-      0.9611100554466248
+      0.042697880417108536,
+      0.9573021531105042
     ],
     "error_category": "CORRECT"
   },
@@ -6039,11 +6039,11 @@
     "expression": "",
     "true_label": 1,
     "predicted_label": 1,
-    "confidence": 0.9600359797477722,
+    "confidence": 0.9606179594993591,
     "is_correct": true,
     "all_probs": [
-      0.039964091032743454,
-      0.9600359797477722
+      0.03938206285238266,
+      0.9606179594993591
     ],
     "error_category": "CORRECT"
   }

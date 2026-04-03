@@ -281,7 +281,7 @@ def plot_error_heatmap_span(stats_df):
     # Order rows: Hebrew models first, then multilingual, seen before unseen
     model_order = []
     for model in ['dictabert', 'alephbert-base', 'alephbertgimmel-base',
-                  'xlm-roberta-base', 'bert-base-multilingual-cased']:
+                  'neodictabert', 'xlm-roberta-base', 'bert-base-multilingual-cased']:
         for split in ['Seen', 'Unseen']:
             label = f'{model} ({split})'
             if label in pivot.index:

@@ -521,8 +521,8 @@
     ],
     "predicted_tags": [
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "B-IDIOM",
       "I-IDIOM",
@@ -550,8 +550,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "3_lit_31",
@@ -2095,8 +2095,8 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -2107,8 +2107,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MISS"
   },
   {
     "id": "7_lit_35",
@@ -3643,9 +3643,9 @@
     "predicted_tags": [
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -3671,7 +3671,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "MISS"
   },
   {
     "id": "11_fig_35",
@@ -5214,7 +5214,7 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "I-IDIOM",
       "O",
       "O",
@@ -5230,8 +5230,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MISS"
   },
   {
     "id": "16_lit_10",
@@ -10518,7 +10518,7 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "B-IDIOM",
       "I-IDIOM",
       "O",
@@ -10530,8 +10530,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "32_fig_23",
@@ -11792,7 +11792,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "O",
       "O",
       "O"
     ],
@@ -15366,9 +15366,9 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -15395,8 +15395,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "45_fig_8",

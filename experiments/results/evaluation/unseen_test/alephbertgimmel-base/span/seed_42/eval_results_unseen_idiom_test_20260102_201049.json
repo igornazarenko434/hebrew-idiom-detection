@@ -1,0 +1,37 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/alephbertgimmel-base/span/seed_42",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "span",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 4.1247382164001465,
+    "model_preparation_time": 0.0025,
+    "precision": 0.7876106194690266,
+    "recall": 0.7416666666666667,
+    "f1": 0.7639484978540773,
+    "accuracy": 0.9696090940726134,
+    "runtime": 2.1843,
+    "samples_per_second": 219.746,
+    "steps_per_second": 13.734
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 3e-05,
+    "batch_size": 8,
+    "num_epochs": 8,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01,
+    "seed": 42,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 4,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": true
+  }
+}

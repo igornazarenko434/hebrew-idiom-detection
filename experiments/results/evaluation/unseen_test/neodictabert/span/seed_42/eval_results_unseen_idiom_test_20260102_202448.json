@@ -1,0 +1,37 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/neodictabert/span/seed_42",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "span",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 8.697848320007324,
+    "model_preparation_time": 0.0022,
+    "precision": 0.7044444444444444,
+    "recall": 0.6604166666666667,
+    "f1": 0.6817204301075268,
+    "accuracy": 0.9642732861616982,
+    "runtime": 2.9489,
+    "samples_per_second": 162.772,
+    "steps_per_second": 10.173
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 3e-05,
+    "batch_size": 8,
+    "num_epochs": 5,
+    "warmup_ratio": 0.2,
+    "weight_decay": 0.01,
+    "seed": 42,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 4,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": true
+  }
+}

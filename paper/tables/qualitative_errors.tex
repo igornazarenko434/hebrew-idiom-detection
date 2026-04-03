@@ -1,0 +1,16 @@
+\begin{tabular}{lllllll}
+\toprule
+model & ID & Idiom & Gold & Pred & Error & Explanation \\
+\midrule
+neodictabert & 19\_lit\_1 & חצה קו אדום & חוצה את הקו האדום & חוצה את הקו & PARTIAL\_END & Model truncated the idiom ending (end‑boundary miss). Missing tokens: האדום. \\
+neodictabert & 49\_lit\_1 & רץ אחרי הזנב של עצמו & רץ אחרי הזנב של עצמו & רץ אחרי הזנב & PARTIAL\_END & Model truncated the idiom ending (end‑boundary miss). Missing tokens: של, עצמו. \\
+neodictabert & 2\_lit\_1 & איבד את הראש & מאבד את הראש &  & MISS & Model predicted no span despite gold idiom. \\
+neodictabert & 33\_lit\_1 & נשאר מאחור & נשאר מאחור &  & MISS & Model predicted no span despite gold idiom. \\
+neodictabert & 20\_lit\_24 & חתך פינה & חתכה פינה & נחתכה באצבע & WRONG\_SPAN & Predicted a different span than the gold idiom. Predicted different tokens: נחתכה, באצבע. \\
+xlm-roberta-base & 19\_lit\_1 & חצה קו אדום & חוצה את הקו האדום & חוצה את הקו & PARTIAL\_END & Model truncated the idiom ending (end‑boundary miss). Missing tokens: האדום. \\
+xlm-roberta-base & 49\_lit\_1 & רץ אחרי הזנב של עצמו & רץ אחרי הזנב של עצמו & רץ אחרי הזנב & PARTIAL\_END & Model truncated the idiom ending (end‑boundary miss). Missing tokens: של, עצמו. \\
+xlm-roberta-base & 33\_lit\_1 & נשאר מאחור & נשאר מאחור &  & MISS & Model predicted no span despite gold idiom. \\
+xlm-roberta-base & 55\_lit\_3 & שבר שתיקה & ישבור שתיקה &  & MISS & Model predicted no span despite gold idiom. \\
+xlm-roberta-base & 20\_lit\_24 & חתך פינה & חתכה פינה & נחתכה באצבע & WRONG\_SPAN & Predicted a different span than the gold idiom. Predicted different tokens: נחתכה, באצבע. \\
+\bottomrule
+\end{tabular}

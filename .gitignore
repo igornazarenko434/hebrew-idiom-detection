@@ -105,9 +105,24 @@ coverage.xml
 *.swp
 *~
 
-# Gemini-added ignore rules
+# Infrastructure configs
 VAST_AI_CONNECTION.txt
 rclone_backup.conf
+
+# Experiment artifacts
 experiments/results/hpo_analysis/
 experiments/results/optuna_studies/
+experiments/cache/
 training_results/
+
+# Submission archives
+*.zip
+
+# Matplotlib config
+.mplconfig/
+
+# Additional virtual environments
+venv312/
+
+# Claude AI config
+.claude/

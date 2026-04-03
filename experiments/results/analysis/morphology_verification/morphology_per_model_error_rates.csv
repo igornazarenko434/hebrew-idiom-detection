@@ -1,0 +1,9 @@
+model,split,morphology_variant_count,morphology_variant_error_rate,exact_match_count,exact_match_error_rate,gap
+bert-base-multilingual-cased,seen_test,112,0.03571428571428571,0,0.0,0.03571428571428571
+bert-base-multilingual-cased,unseen_test,32,0.6875,4,1.0,-0.3125
+dictabert,seen_test,117,0.07692307692307693,0,0.0,0.07692307692307693
+dictabert,unseen_test,30,0.6,2,1.0,-0.4
+neodictabert,seen_test,112,0.03571428571428571,0,0.0,0.03571428571428571
+neodictabert,unseen_test,28,0.6428571428571429,1,1.0,-0.3571428571428571
+xlm-roberta-base,seen_test,116,0.06896551724137931,0,0.0,0.06896551724137931
+xlm-roberta-base,unseen_test,30,0.6666666666666666,1,1.0,-0.33333333333333337

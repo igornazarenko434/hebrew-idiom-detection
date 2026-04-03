@@ -1,7 +1,7 @@
 # Error Analysis Summary Report
-**Generated:** 2025-12-31 13:36:37
-**Total Predictions Analyzed:** 27,360
-**Scope:** 5 models × 2 tasks × 3 seeds × 2 splits × variable samples
+**Generated:** 2026-01-02 22:54:49
+**Total Predictions Analyzed:** 32,832
+**Scope:** 6 models × 2 tasks × 3 seeds × 2 splits × variable samples
 
 ---
 
@@ -11,8 +11,8 @@
 
 **1. Error Categorization (Step 1)**
 - **Tool:** `scripts/categorize_all_errors.py`
-- **Input:** 60 evaluation files (5 models × 2 tasks × 3 seeds × 2 splits)
-- **Process:** Applied standardized error taxonomy to all 27,360 predictions
+- **Input:** 72 evaluation files (6 models × 2 tasks × 3 seeds × 2 splits)
+- **Process:** Applied standardized error taxonomy to all 32,832 predictions
 - **Output:** Added `error_category` field to all `eval_predictions.json` files
 - **Taxonomy Source:** `src/utils/error_analysis.py` (categorize_span_error, categorize_cls_error)
 
@@ -27,13 +27,14 @@
   - SPAN Unseen: ~1,440 predictions per model
 
 **3. Cross-Model Aggregation (Step 3)**
-- **Method:** Averaged percentages across all 5 models
+- **Method:** Averaged percentages across all 6 models
 - **Purpose:** Report overall error distribution patterns
 - **Models Included:**
   - alephbert-base
   - alephbertgimmel-base
   - bert-base-multilingual-cased
   - dictabert
+  - neodictabert
   - xlm-roberta-base
 
 ---
@@ -95,14 +96,14 @@ POSITION_ERRORS = ['SHIFT', 'WRONG_SPAN', 'MULTI_SPAN']
 
 | error_category   |   Seen |   Unseen |
 |:-----------------|-------:|---------:|
-| CORRECT          |  92.61 |    90.62 |
-| FALSE_POSITIVE   |   3.16 |     6.01 |
-| FALSE_NEGATIVE   |   4.23 |     3.36 |
+| CORRECT          |  92.82 |    91.23 |
+| FALSE_POSITIVE   |   2.64 |     5.44 |
+| FALSE_NEGATIVE   |   4.54 |     3.33 |
 
 **Interpretation:**
 - Models maintain high accuracy (~93-91%) on both seen and unseen idioms
-- False Positives increase on unseen idioms (3.16% → 6.01%), suggesting models over-predict figurative meaning for novel idioms
-- False Negatives decrease on unseen idioms (4.23% → 3.36%)
+- False Positives increase on unseen idioms (2.64% → 5.44%), suggesting models over-predict figurative meaning for novel idioms
+- False Negatives decrease on unseen idioms (4.54% → 3.33%)
 
 ---
 
@@ -110,10 +111,10 @@ POSITION_ERRORS = ['SHIFT', 'WRONG_SPAN', 'MULTI_SPAN']
 
 | category_group   |   Seen |   Unseen |
 |:-----------------|-------:|---------:|
-| PERFECT          |  98.94 |    66.4  |
-| BOUNDARY_ERRORS  |   0.15 |     8.54 |
-| DETECTION_ERRORS |   0.26 |     7.61 |
-| POSITION_ERRORS  |   0.55 |     1.57 |
+| PERFECT          |  99.04 |    64.28 |
+| BOUNDARY_ERRORS  |   0.1  |     8.35 |
+| DETECTION_ERRORS |   0.25 |    11.23 |
+| POSITION_ERRORS  |   0.44 |     1.67 |
 
 **Category Grouping Breakdown:**
 - **PERFECT**: 1 category (exact matches)
@@ -122,12 +123,12 @@ POSITION_ERRORS = ['SHIFT', 'WRONG_SPAN', 'MULTI_SPAN']
 - **POSITION_ERRORS**: 3 categories (wrong location)
 
 **Interpretation:**
-- **Dramatic Generalization Gap:** Perfect matches drop from 98.9% (seen) to 66.4% (unseen)
-- **Boundary Errors Dominate Unseen:** 8.54% boundary errors on unseen idioms vs 0.15% on seen
+- **Dramatic Generalization Gap:** Perfect matches drop from 99.0% (seen) to 64.3% (unseen)
+- **Boundary Errors Dominate Unseen:** 8.35% boundary errors on unseen idioms vs 0.10% on seen
   - Models can detect idioms but struggle with exact boundaries for novel expressions
-- **Detection Failures:** 7.61% detection errors on unseen idioms
+- **Detection Failures:** 11.23% detection errors on unseen idioms
   - Models miss some unseen idioms entirely or hallucinate non-existent ones
-- **Position Errors Rare:** Only 1.57% on unseen idioms
+- **Position Errors Rare:** Only 1.67% on unseen idioms
   - When models detect idioms, they usually find the correct region
 
 ---
@@ -135,25 +136,25 @@ POSITION_ERRORS = ['SHIFT', 'WRONG_SPAN', 'MULTI_SPAN']
 ## Key Findings
 
 ### CLS Task Performance
-- **Seen Test Accuracy:** 92.6% (averaged across 5 models, 3 seeds each)
-- **Unseen Test Accuracy:** 90.6%
-- **Generalization Gap:** 2.0 percentage points
-- **Dominant Error (Unseen):** 90.6% (CORRECT)
+- **Seen Test Accuracy:** 92.8% (averaged across 6 models, 3 seeds each)
+- **Unseen Test Accuracy:** 91.2%
+- **Generalization Gap:** 1.6 percentage points
+- **Dominant Error (Unseen):** 91.2% (CORRECT)
 
 ### SPAN Task Performance
-- **Seen Test Perfect Matches:** 98.9%
-- **Unseen Test Perfect Matches:** 66.4%
-- **Generalization Gap:** 32.5 percentage points
+- **Seen Test Perfect Matches:** 99.0%
+- **Unseen Test Perfect Matches:** 64.3%
+- **Generalization Gap:** 34.8 percentage points
 - **Dominant Errors (Unseen):**
-  1. **BOUNDARY ERRORS:** 8.5% (['PARTIAL_START', 'PARTIAL_END', 'PARTIAL_BOTH', 'EXTEND_START', 'EXTEND_END', 'EXTEND_BOTH'])
-  2. **DETECTION ERRORS:** 7.6% (['MISS', 'FALSE_POSITIVE'])
-  3. **POSITION ERRORS:** 1.6% (['SHIFT', 'WRONG_SPAN', 'MULTI_SPAN'])
+  1. **DETECTION ERRORS:** 11.2% (['MISS', 'FALSE_POSITIVE'])
+  2. **BOUNDARY ERRORS:** 8.3% (['PARTIAL_START', 'PARTIAL_END', 'PARTIAL_BOTH', 'EXTEND_START', 'EXTEND_END', 'EXTEND_BOTH'])
+  3. **POSITION ERRORS:** 1.7% (['SHIFT', 'WRONG_SPAN', 'MULTI_SPAN'])
 
 ### Critical Insights
-1. **CLS generalizes well:** Only 2.0% performance drop on unseen idioms
-2. **SPAN struggles with generalization:** 32.5% drop indicates exact boundary detection is harder for novel idioms
+1. **CLS generalizes well:** Only 1.6% performance drop on unseen idioms
+2. **SPAN struggles with generalization:** 34.8% drop indicates exact boundary detection is harder for novel idioms
 3. **Boundary detection is the bottleneck:** Models can often detect idioms but fail on precise token boundaries
-4. **Seen idioms nearly perfect:** 98.9% perfect matches shows models learn seen idiom boundaries very well
+4. **Seen idioms nearly perfect:** 99.0% perfect matches shows models learn seen idiom boundaries very well
 
 ---
 

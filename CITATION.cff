@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Detection Without Localization: Compositional Generalization Failures in Transformer Models for Hebrew Idiom Boundaries"
+type: thesis
+authors:
+  - family-names: Nazarenko
+    given-names: Igor
+  - family-names: Amit
+    given-names: Yuval
+date-released: 2026-02-16
+institution:
+  name: "Reichman University, Efi Arazi School of Computer Science"
+keywords:
+  - Hebrew NLP
+  - idiom detection
+  - compositional generalization
+  - transformer models
+  - multi-word expressions
+  - BIO tagging
+  - sequence labeling
+license: MIT
+repository-code: "https://github.com/igornazarenko434/hebrew-idiom-detection"

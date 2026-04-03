@@ -1,12 +1,13 @@
 #!/bin/bash
 # Mission 3.3: Zero-Shot Evaluation for All Models
-# Runs src/idiom_experiment.py in zero_shot mode for 5 models x 2 datasets
+# Runs src/idiom_experiment.py in zero_shot mode for 6 models x 2 datasets
 
 # Models to evaluate
 MODELS=(
     "onlplab/alephbert-base"
     "dicta-il/alephbertgimmel-base"
     "dicta-il/dictabert"
+    "dicta-il/neodictabert"
     "bert-base-multilingual-cased"
     "xlm-roberta-base"
 )

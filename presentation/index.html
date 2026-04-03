@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hebrew Idiom Detection - Final Project</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0a0a0f; color: #e8e8ed; -webkit-font-smoothing: antialiased; }
+
+/* ===== SLIDE ENGINE ===== */
+.deck { width: 100%; height: 100%; position: relative; }
+.slide {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  padding: 48px 64px 40px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  transform: translateX(30px);
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1; pointer-events: auto;
+  transform: translateX(0);
+}
+.slide.prev {
+  transform: translateX(-30px);
+}
+
+/* ===== PROGRESS BAR ===== */
+#progress-bar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, #4f8cff, #a78bfa);
+  transition: width 0.4s ease;
+  z-index: 1000;
+}
+#slide-counter {
+  position: fixed; bottom: 16px; right: 24px;
+  font-size: 13px; color: #666; z-index: 1000;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: 2.4em; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+h2 { font-size: 1.8em; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 20px; }
+h3 { font-size: 1.15em; font-weight: 600; line-height: 1.3; margin-bottom: 10px; color: #a0b4ff; }
+p, li { font-size: 1.05em; line-height: 1.65; }
+ul, ol { padding-left: 1.4em; }
+li { margin-bottom: 6px; }
+li::marker { color: #4f8cff; }
+.small { font-size: 0.85em; color: #888; }
+.highlight { color: #fbbf24; font-weight: 600; }
+.accent { color: #a78bfa; font-weight: 600; }
+.red { color: #f87171; font-weight: 600; }
+.green { color: #34d399; font-weight: 600; }
+.blue { color: #60a5fa; font-weight: 600; }
+
+/* ===== LAYOUT HELPERS ===== */
+.flex-row { display: flex; gap: 32px; flex: 1; min-height: 0; }
+.flex-col { display: flex; flex-direction: column; }
+.col { flex: 1; min-width: 0; }
+.col-narrow { flex: 0.7; min-width: 0; }
+.col-wide { flex: 1.3; min-width: 0; }
+.center { display: flex; align-items: center; justify-content: center; }
+.gap-sm { gap: 12px; }
+.gap-md { gap: 24px; }
+.mt-auto { margin-top: auto; }
+.mb-sm { margin-bottom: 12px; }
+.mb-md { margin-bottom: 24px; }
+
+/* ===== CARDS & BOXES ===== */
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 20px;
+}
+.card-accent {
+  background: rgba(79,140,255,0.07);
+  border: 1px solid rgba(79,140,255,0.2);
+  border-radius: 12px; padding: 20px;
+}
+.card-warn {
+  background: rgba(251,191,36,0.07);
+  border: 1px solid rgba(251,191,36,0.2);
+  border-radius: 12px; padding: 20px;
+}
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+.stat-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 16px; text-align: center;
+}
+.stat-box .num { font-size: 2em; font-weight: 700; color: #4f8cff; line-height: 1.2; }
+.stat-box .label { font-size: 0.8em; color: #999; margin-top: 4px; }
+
+/* ===== TABLES ===== */
+table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.06); }
+th { color: #a0b4ff; font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid rgba(79,140,255,0.3); }
+tr:hover td { background: rgba(255,255,255,0.02); }
+td.best { color: #34d399; font-weight: 700; }
+
+/* ===== FIGURE ===== */
+.fig-container { text-align: center; }
+.fig-container img {
+  max-width: 100%; max-height: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.fig-caption { font-size: 0.78em; color: #777; margin-top: 6px; font-style: italic; }
+
+/* ===== TITLE SLIDE ===== */
+.slide-title {
+  justify-content: center; align-items: center; text-align: center;
+  background: radial-gradient(ellipse at 50% 30%, rgba(79,140,255,0.08) 0%, transparent 70%);
+}
+.slide-title h1 { font-size: 2.2em; max-width: 900px; margin-bottom: 20px; }
+.slide-title .subtitle { font-size: 1.15em; color: #a0b4ff; margin-bottom: 28px; }
+.slide-title .authors { font-size: 0.95em; color: #888; }
+.slide-title .venue { font-size: 0.85em; color: #666; margin-top: 8px; }
+
+/* ===== SECTION DIVIDER ===== */
+.slide-section {
+  justify-content: center; align-items: flex-start;
+  padding-left: 10%;
+  background: radial-gradient(ellipse at 20% 50%, rgba(167,139,250,0.08) 0%, transparent 60%);
+}
+.slide-section .section-number { font-size: 4em; font-weight: 800; color: rgba(79,140,255,0.2); line-height: 1; }
+.slide-section h2 { font-size: 2.5em; margin-top: -10px; }
+.slide-section p { font-size: 1.1em; color: #888; max-width: 600px; margin-top: 12px; }
+
+/* ===== PIPELINE DIAGRAM ===== */
+.pipeline { display: flex; align-items: center; gap: 4px; margin: 16px 0; flex-wrap: wrap; }
+.pipeline-step {
+  background: rgba(79,140,255,0.1); border: 1px solid rgba(79,140,255,0.25);
+  border-radius: 8px; padding: 10px 16px; font-size: 0.85em; font-weight: 500;
+  text-align: center; min-width: 100px;
+}
+.pipeline-arrow { color: #4f8cff; font-size: 1.3em; }
+
+/* ===== BAR CHART (SVG) ===== */
+.bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 180px; padding-bottom: 24px; position: relative; }
+.bar-group { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.bar {
+  width: 32px; border-radius: 4px 4px 0 0;
+  transition: height 0.6s ease;
+  position: relative;
+}
+.bar-label { font-size: 0.65em; color: #888; margin-top: 4px; text-align: center; max-width: 60px; word-break: break-word; }
+.bar-value { font-size: 0.65em; font-weight: 600; margin-bottom: 2px; }
+
+/* ===== SPEAKER NOTES PANEL ===== */
+#notes-panel {
+  position: fixed; bottom: 0; left: 0; width: 100%;
+  background: rgba(10,10,20,0.95); border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 12px 24px; font-size: 0.85em; color: #aaa;
+  transform: translateY(100%); transition: transform 0.3s ease;
+  z-index: 999; max-height: 150px; overflow-y: auto;
+}
+#notes-panel.visible { transform: translateY(0); }
+#notes-panel .notes-title { font-size: 0.7em; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 4px; }
+
+/* ===== KEYBOARD HINT ===== */
+#kb-hint {
+  position: fixed; bottom: 16px; left: 24px;
+  font-size: 0.7em; color: #444; z-index: 1000;
+}
+kbd { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 3px; padding: 1px 5px; font-family: inherit; font-size: 0.95em; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1000px) {
+  .slide { padding: 32px 36px 32px; }
+  h1 { font-size: 1.8em; }
+  h2 { font-size: 1.4em; }
+  .flex-row { flex-direction: column; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== HEBREW TEXT ===== */
+.hebrew { direction: rtl; font-family: 'David CLM', 'Segoe UI', sans-serif; }
+
+/* ===== TAG BADGES ===== */
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.78em; font-weight: 600; margin: 1px 2px; }
+.tag-b { background: rgba(79,140,255,0.2); color: #7cb3ff; }
+.tag-i { background: rgba(167,139,250,0.2); color: #c4b5fd; }
+.tag-o { background: rgba(255,255,255,0.05); color: #666; }
+
+/* ===== EVIDENCE CHECKLIST ===== */
+.evidence-row { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.evidence-check { color: #34d399; font-size: 1.1em; flex-shrink: 0; margin-top: 2px; }
+.evidence-claim { font-weight: 600; }
+.evidence-source { font-size: 0.82em; color: #888; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="slide-counter"></div>
+<div id="kb-hint"><kbd>&larr;</kbd> <kbd>&rarr;</kbd> navigate &middot; <kbd>N</kbd> notes &middot; <kbd>F</kbd> fullscreen</div>
+
+<!-- ===== SLIDE 1: TITLE ===== -->
+<div class="deck">
+
+<div class="slide slide-title" data-notes="Welcome everyone. This is our final project for the NLP course at the Efi Arazi School of Computer Science, Reichman University, MLDS track.">
+  <div>
+    <div class="subtitle">Final Project Presentation</div>
+    <h1>Detection Without Localization:<br>Compositional Generalization Failures in Transformer Models for Hebrew Idiom Boundaries</h1>
+    <div class="authors" style="margin-top: 28px;">
+      <strong>Igor Nazarenko</strong> &amp; <strong>Yuval Amit</strong><br>
+      Efi Arazi School of Computer Science | Reichman University &middot; MLDS Track
+    </div>
+    <div class="venue">Hebrew Idiom Detection: Dataset Creation &amp; Model Benchmarking</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2: OPENING WORDS ===== -->
+<div class="slide" data-notes="Walk through what we originally planned, then highlight how the project exceeded the initial scope. The primary objective was always the dataset construction, and the research grew from there.">
+  <h2>Opening Words &mdash; Plan vs Reality</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>What We Planned</h3>
+      <div class="card" style="margin-bottom: 12px;">
+        <p style="margin-bottom: 8px; color: #a0b4ff; font-weight: 600;">Primary Objective: Dataset Construction</p>
+        <ul>
+          <li>Build a tagged Hebrew idiom dataset &mdash; <strong>4,000 sentences</strong></li>
+          <li>LLM-assisted drafts + full manual review by 2 annotators</li>
+          <li>100% agreement required (disagreements &rarr; delete or revise)</li>
+          <li>Create a separate test set &mdash; <strong>400 sentences</strong>, written manually</li>
+          <li>Standardize format, compute statistics</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p style="margin-bottom: 8px; color: #a0b4ff; font-weight: 600;">Research &amp; Evaluation</p>
+        <ul>
+          <li>Two tasks: figurative/literal classification + idiom location</li>
+          <li>At least 5 models (2+ Hebrew, 2+ multilingual)</li>
+          <li>LLM prompting evaluation &mdash; <span style="color: #fbbf24;">marked as optional</span></li>
+          <li>At least 2 LLMs &mdash; <span style="color: #fbbf24;">marked as optional</span></li>
+          <li>Write final report, publish data on Git</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <h3>What We Actually Did</h3>
+      <div class="card" style="border-color: rgba(52,211,153,0.3); margin-bottom: 12px;">
+        <p style="margin-bottom: 8px; color: #34d399; font-weight: 600;">Dataset &mdash; Exceeded Plan</p>
+        <ul>
+          <li><span class="green">4,800 sentences</span> (planned 4,000 &mdash; <strong>+20%</strong>)</li>
+          <li><span class="green">60 idioms</span> with 100% polysemy coverage</li>
+          <li>Every sentence manually rewritten, not just reviewed</li>
+          <li><span class="green">480 unseen test sentences</span> (planned 400 &mdash; <strong>+20%</strong>)</li>
+          <li>Cohen's &kappa; = 0.97 (near-perfect agreement)</li>
+          <li>14/14 automated quality checks passed</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color: rgba(52,211,153,0.3);">
+        <p style="margin-bottom: 8px; color: #34d399; font-weight: 600;">Research &mdash; Far Beyond "Optional"</p>
+        <ul>
+          <li><span class="green">6 encoder models</span> (4 Hebrew + 2 multilingual)</li>
+          <li><span class="green">5 LLMs</span> with zero-shot + few-shot (was optional, became core)</li>
+          <li>Optuna HPO, 3 seeds, bootstrap CIs, statistical tests</li>
+          <li>Deep error analysis, interpretability, attention analysis</li>
+          <li>35+ figures, full research paper</li>
+          <li>Paid cloud GPU infrastructure (VAST.ai)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card-warn" style="margin-top: 8px; text-align: center;">
+    <strong>The primary work objective was the dataset construction</strong> &mdash; building a high-quality, dual-annotated Hebrew idiom resource from scratch. The comprehensive model benchmarking and analysis grew organically from there, turning what started as evaluation into a full research contribution.
+  </div>
+</div>
+
+<!-- ===== SLIDE 3: MOTIVATION ===== -->
+<div class="slide" data-notes="Hebrew idioms are ambiguous between literal and figurative meanings. No existing Hebrew dataset covers both classification AND span detection. We ask whether transformers truly learn idiom structure.">
+  <h2>Why Hebrew Idioms?</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>The Challenge</h3>
+      <ul>
+        <li>Idioms are <span class="highlight">context-dependent</span> &mdash; same words, different meanings</li>
+        <li>Hebrew adds complexity: <span class="accent">rich morphology</span>, prefixed tokens, agglutinative structure</li>
+        <li><span class="red">No existing Hebrew idiom dataset</span> with dual-task annotations</li>
+        <li>Prior work focuses on English; <span class="blue">Hebrew is under-resourced</span></li>
+      </ul>
+      <div class="card-accent" style="margin-top: 20px;">
+        <h3 style="margin-bottom: 6px;">Core Question</h3>
+        <p>Do transformers learn <em>compositional</em> idiom representations that generalize, or do they <em>memorize</em> specific expressions?</p>
+      </div>
+    </div>
+    <div class="col" style="display: flex; flex-direction: column; justify-content: center;">
+      <div class="card" style="font-size: 0.95em;">
+        <h3>Example: "broke the head"</h3>
+        <p><span class="hebrew" style="font-size: 1.1em;">הוא שבר את הראש על הבעיה</span></p>
+        <p style="margin-top: 8px;"><span class="green">Figurative:</span> "He racked his brain over the problem"</p>
+        <p style="margin-top: 4px;"><span class="red">Literal:</span> Actual physical head injury</p>
+        <p style="margin-top: 12px; color: #888; font-size: 0.88em;">Models must use <em>context</em> to distinguish meaning &mdash; the words alone are identical.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4: CONTRIBUTIONS ===== -->
+<div class="slide" data-notes="Three main contributions: dataset, benchmark, analysis. The key novelty is the dissociation finding and the comparison with prompting.">
+  <h2>Research Contributions</h2>
+  <div class="flex-row" style="flex: 1; align-items: stretch;">
+    <div class="col">
+      <div class="card-accent" style="height: 100%; display: flex; flex-direction: column;">
+        <div style="font-size: 2em; margin-bottom: 8px;">1</div>
+        <h3>Novel Dataset</h3>
+        <p>Hebrew-Idioms-4800: <strong>4,800 sentences</strong>, 60 idioms, dual-task annotations (classification + span), near-perfect IAA (&kappa; = 0.97)</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-accent" style="height: 100%; display: flex; flex-direction: column;">
+        <div style="font-size: 2em; margin-bottom: 8px;">2</div>
+        <h3>Comprehensive Benchmark</h3>
+        <p><strong>6 encoder models + 5 LLMs</strong> on both tasks, across seen &amp; unseen idioms, with bootstrap CIs and paired statistical tests</p>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-accent" style="height: 100%; display: flex; flex-direction: column;">
+        <div style="font-size: 2em; margin-bottom: 8px;">3</div>
+        <h3>Deep Error Analysis</h3>
+        <p>Systematic boundary failures, <strong>99.94% end-bias</strong>, length effects, attention paradox, and <strong>fine-tuning vs prompting reversal</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="card-warn" style="margin-top: 16px;">
+    <strong>Central Finding:</strong> Fine-tuned transformers <em>classify</em> idiomaticity through surface patterns but <em>fail to learn compositional boundary cues</em> that generalize to novel expressions. Prompting offers a potential alternative.
+  </div>
+</div>
+
+<!-- ===== SLIDE 5: DATASET SECTION DIVIDER ===== -->
+<div class="slide slide-section" data-notes="Now we'll go deep into the dataset construction, which is a major contribution of this work.">
+  <div class="section-number">I</div>
+  <h2>The Dataset</h2>
+  <p>Hebrew-Idioms-4800: Construction, annotation, and quality assurance</p>
+</div>
+
+<!-- ===== SLIDE 6: DATASET OVERVIEW ===== -->
+<div class="slide" data-notes="4800 sentences, 60 idioms, perfectly balanced. Every idiom appears in both literal and figurative contexts. This is the first Hebrew dataset with dual annotations.">
+  <h2>Hebrew-Idioms-4800 &mdash; Overview</h2>
+  <div class="stat-grid" style="margin-bottom: 20px;">
+    <div class="stat-box"><div class="num">4,800</div><div class="label">Total Sentences</div></div>
+    <div class="stat-box"><div class="num">60</div><div class="label">Unique Idioms</div></div>
+    <div class="stat-box"><div class="num">50/50</div><div class="label">Literal / Figurative</div></div>
+    <div class="stat-box"><div class="num">&kappa; = 0.97</div><div class="label">Cohen's Kappa</div></div>
+    <div class="stat-box"><div class="num">100%</div><div class="label">Polysemous</div></div>
+    <div class="stat-box"><div class="num">9.2/10</div><div class="label">Quality Score</div></div>
+  </div>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>Corpus Statistics</h3>
+      <table>
+        <tr><td>Vocabulary size</td><td><strong>15,107</strong> unique tokens</td></tr>
+        <tr><td>Total tokens</td><td>83,844</td></tr>
+        <tr><td>Mean sentence length</td><td>17.5 tokens (83 chars)</td></tr>
+        <tr><td>Sentence range</td><td>5&ndash;47 tokens</td></tr>
+        <tr><td>Mean idiom length</td><td>2.5 tokens</td></tr>
+        <tr><td>Idiom length range</td><td>2&ndash;5 tokens</td></tr>
+        <tr><td>Hapax legomena</td><td>56.9% of vocabulary <span class="small" style="display: inline;">(words appearing only once &mdash; indicates rich, natural language variety, not templated text)</span></td></tr>
+      </table>
+    </div>
+    <div class="col">
+      <h3>What Makes It Unique</h3>
+      <ul>
+        <li><strong>First Hebrew idiom dataset</strong> with dual-task annotations</li>
+        <li><strong>100% polysemy</strong> &mdash; every idiom in <em>both</em> literal &amp; figurative contexts</li>
+        <li>Sentence-level <em>classification</em> + token-level <em>BIO span</em> tagging</li>
+        <li>High lexical diversity (56.9% hapax rate confirms genuine language variety, not templates)</li>
+        <li>Up to <strong>35 morphological variants</strong> per idiom</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 7: DATA CONSTRUCTION ===== -->
+<div class="slide" data-notes="Three-phase construction process. LLM assisted initial drafts, then EVERY sentence manually rewritten by native speakers. Unseen test set created entirely by hand.">
+  <h2>Data Construction Process</h2>
+  <div class="pipeline" style="margin-bottom: 24px; justify-content: center;">
+    <div class="pipeline-step" style="background: rgba(251,191,36,0.1); border-color: rgba(251,191,36,0.3);">Phase 1<br><small>ChatGPT Drafts</small></div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="background: rgba(79,140,255,0.15); border-color: rgba(79,140,255,0.35);">Phase 2<br><small>Manual Rewrite<br>(every sentence)</small></div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="background: rgba(52,211,153,0.1); border-color: rgba(52,211,153,0.3);">Phase 3<br><small>Dual Annotation<br>(2 native speakers)</small></div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3);">Adjudication<br><small>Disagreement<br>resolution</small></div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step" style="background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.3);">Validation<br><small>14/14 checks<br>passed</small></div>
+  </div>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <div class="card">
+        <h3>54 Seen Idioms (4,320 sentences)</h3>
+        <ul>
+          <li>ChatGPT generated initial drafts</li>
+          <li><span class="highlight">Every single sentence manually rewritten</span> by native Hebrew speakers</li>
+          <li>Corrected grammar, syntax, natural flow</li>
+          <li>Ensured authentic Hebrew with proper morphological forms</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="border-color: rgba(52,211,153,0.2);">
+        <h3>6 Unseen Idioms (480 sentences)</h3>
+        <ul>
+          <li><span class="green">Created ENTIRELY by native speakers</span></li>
+          <li><strong>Zero LLM assistance</strong> &mdash; clean generalization benchmark</li>
+          <li>Selected for length diversity (2&ndash;5 tokens), semantic variety, structural variety</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="flex-row" style="margin-top: 16px;">
+    <div class="col">
+      <div class="card">
+        <h3>Annotation</h3>
+        <ul>
+          <li>2 native Hebrew annotators, independent labeling</li>
+          <li>Disagreements: only <strong>66/4,800 (1.4%)</strong></li>
+          <li>Resolved through discussion + sentence revision</li>
+          <li>Inter-annotator: <strong>&kappa; = 0.9725</strong> (near-perfect)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <h3>Quality Validation &mdash; 14/14 Checks Passed</h3>
+        <ul class="small" style="column-count: 2;">
+          <li>0 missing values</li>
+          <li>0 duplicate rows</li>
+          <li>Complete ID sequence</li>
+          <li>100% label consistency</li>
+          <li>100% IOB2 alignment</li>
+          <li>100% character spans</li>
+          <li>100% token spans</li>
+          <li>0 encoding issues</li>
+          <li>100% Hebrew text</li>
+          <li>100% length consistency</li>
+          <li>100% expression presence</li>
+          <li>All data types correct</li>
+          <li>0 whitespace issues</li>
+          <li>0 BOM/ZWSP/ZWJ (no invisible Unicode characters that could corrupt tokenization)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 8: SPLITS & ANNOTATION FORMAT ===== -->
+<div class="slide" data-notes="Hybrid split strategy: seen idioms contribute to train/val/test, while 6 unseen idioms are completely held out. This enables testing both in-domain generalization and zero-shot transfer.">
+  <h2>Dataset Splits &amp; Annotation Format</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>Hybrid Split Strategy</h3>
+      <table>
+        <thead><tr><th>Split</th><th>Samples</th><th>%</th><th>Idioms</th></tr></thead>
+        <tbody>
+          <tr><td>Train</td><td>3,456</td><td>72%</td><td>54 (seen)</td></tr>
+          <tr><td>Validation</td><td>432</td><td>9%</td><td>54 (seen)</td></tr>
+          <tr><td>Seen Test</td><td>432</td><td>9%</td><td>54 (seen)</td></tr>
+          <tr style="background: rgba(79,140,255,0.06);"><td><strong>Unseen Test</strong></td><td><strong>480</strong></td><td><strong>10%</strong></td><td><strong>6 (held-out)</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="small" style="margin-top: 10px;">Perfect 50/50 literal/figurative balance in every split. Per-idiom: 32+32 train, 4+4 val, 4+4 test.</p>
+      <h3 style="margin-top: 18px;">6 Held-Out Unseen Idioms</h3>
+      <table style="font-size: 0.85em;">
+        <thead><tr><th>Idiom</th><th>Tokens</th><th>Selection Rationale</th></tr></thead>
+        <tbody>
+          <tr><td class="hebrew">&#1495;&#1514;&#1498; &#1508;&#1497;&#1504;&#1492;</td><td>2</td><td>Basic transfer test</td></tr>
+          <tr><td class="hebrew">&#1495;&#1510;&#1492; &#1511;&#1493; &#1488;&#1491;&#1493;&#1501;</td><td>3</td><td>Boundary metaphor &mdash; <span class="small">uses limit/threshold words figuratively</span></td></tr>
+          <tr><td class="hebrew">&#1504;&#1513;&#1488;&#1512; &#1502;&#1488;&#1495;&#1493;&#1512;</td><td>2</td><td>Spatial metaphor &mdash; <span class="small">uses physical location words ("behind") to express abstract falling behind</span></td></tr>
+          <tr><td class="hebrew">&#1513;&#1489;&#1512; &#1513;&#1514;&#1497;&#1511;&#1492;</td><td>2</td><td>Common "break" pattern</td></tr>
+          <tr><td class="hebrew">&#1488;&#1497;&#1489;&#1491; &#1488;&#1514; &#1492;&#1512;&#1488;&#1513;</td><td>3</td><td>Body-part idiom &mdash; <span class="small">uses body part ("head") for abstract meaning</span></td></tr>
+          <tr><td class="hebrew">&#1512;&#1509; &#1488;&#1495;&#1512;&#1497; &#1492;&#1494;&#1504;&#1489; &#1513;&#1500; &#1506;&#1510;&#1502;&#1493;</td><td>5</td><td>Longest; multi-token test</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <h3>Annotation Format (per sentence)</h3>
+      <div class="card" style="font-family: 'Consolas', 'Courier New', monospace; font-size: 0.82em; line-height: 1.7;">
+        <div><strong>sentence:</strong> <span class="hebrew">&#1488;&#1489;&#1497; &#1513;&#1489;&#1512; &#1488;&#1514; &#1492;&#1511;&#1512;&#1495; &#1489;&#1502;&#1493;&#1506;&#1491;&#1493;&#1503;...</span></div>
+        <div><strong>label:</strong> 1 (Figurative)</div>
+        <div><strong>tokens:</strong> [<span class="hebrew">&#1488;&#1489;&#1497;</span>, <span class="hebrew">&#1513;&#1489;&#1512;</span>, <span class="hebrew">&#1488;&#1514;</span>, <span class="hebrew">&#1492;&#1511;&#1512;&#1495;</span>, ...]</div>
+        <div><strong>iob_tags:</strong> [<span class="tag tag-o">O</span>, <span class="tag tag-b">B-IDIOM</span>, <span class="tag tag-i">I-IDIOM</span>, <span class="tag tag-i">I-IDIOM</span>, <span class="tag tag-o">O</span>, ...]</div>
+        <div><strong>start_token:</strong> 1 &nbsp; <strong>end_token:</strong> 4</div>
+        <div><strong>start_char:</strong> 4 &nbsp; <strong>end_char:</strong> 18</div>
+        <div><strong>base_pie:</strong> <span class="hebrew">&#1513;&#1489;&#1512; &#1488;&#1514; &#1492;&#1511;&#1512;&#1495;</span> (broke the ice)</div>
+      </div>
+      <h3 style="margin-top: 16px;">Two Supported Tasks</h3>
+      <div class="card" style="margin-bottom: 8px;">
+        <strong class="blue">Task 1 &mdash; CLS:</strong> Binary sentence classification (literal vs figurative) using [CLS] embedding + linear head
+      </div>
+      <div class="card">
+        <strong class="accent">Task 2 &mdash; SPAN:</strong> Token-level BIO sequence labeling + CRF layer. Evaluated with exact-match span F1.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 9: EXPERIMENT SECTION DIVIDER ===== -->
+<div class="slide slide-section" data-notes="Moving to the experimental setup and model benchmarking.">
+  <div class="section-number">II</div>
+  <h2>Experiments &amp; Results</h2>
+  <p>6 encoder models, 5 LLMs, 2 tasks, seen vs unseen evaluation</p>
+</div>
+
+<!-- ===== SLIDE 10: MODELS & SETUP ===== -->
+<div class="slide" data-notes="We evaluate 6 base-size encoders (4 Hebrew-specific, 2 multilingual) and 5 LLMs. Training uses Optuna HPO, 3 seeds, CRF for SPAN, early stopping.">
+  <h2>Models &amp; Experimental Setup</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>Fine-Tuned Encoders (6 models)</h3>
+      <table>
+        <thead><tr><th>Model</th><th>Type</th><th>Params</th><th>Key Feature</th></tr></thead>
+        <tbody>
+          <tr><td>AlephBERT</td><td>Hebrew</td><td>110M</td><td>52K vocab</td></tr>
+          <tr><td>AlephBERTGimmel</td><td>Hebrew</td><td>110M</td><td>128K vocab</td></tr>
+          <tr><td>DictaBERT</td><td>Hebrew</td><td>110M</td><td>50K vocab</td></tr>
+          <tr><td>NeoDictaBERT</td><td>Hebrew</td><td>110M</td><td>285B tokens, 4K context</td></tr>
+          <tr><td>mBERT</td><td>Multilingual</td><td>110M</td><td>104 languages</td></tr>
+          <tr><td>XLM-RoBERTa</td><td>Multilingual</td><td>125M</td><td>100 languages, 250K vocab</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 16px;">LLM Prompting Baselines (5 models)</h3>
+      <table style="font-size: 0.88em;">
+        <tbody>
+          <tr><td>Gemini 3 Flash</td><td>Qwen 3 235B</td></tr>
+          <tr><td>Llama 4 Maverick</td><td>Llama 4 Scout</td></tr>
+          <tr><td colspan="2">Dicta 3 Nemotron 12B</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <h3>Training Protocol</h3>
+      <div class="card" style="margin-bottom: 12px;">
+        <ul>
+          <li><strong>HPO:</strong> 15 Optuna trials per model-task (TPE sampling)</li>
+          <li><strong>Seeds:</strong> 42, 123, 456 (report mean &pm; std)</li>
+          <li><strong>CRF layer</strong> for SPAN task (valid BIO transitions)</li>
+          <li>AdamW + cosine LR schedule + warmup</li>
+          <li>Early stopping on validation F1</li>
+          <li>Label smoothing (&alpha;=0.1) for CLS</li>
+        </ul>
+      </div>
+      <h3>Evaluation Metrics</h3>
+      <div class="card" style="margin-bottom: 12px;">
+        <ul>
+          <li><strong>CLS:</strong> Binary F1 (primary), accuracy, precision, recall</li>
+          <li><strong>SPAN:</strong> Exact-match span F1 (primary)</li>
+          <li>95% bootstrap CIs (10K resamples)</li>
+          <li>Paired t-tests + Bonferroni (&alpha;=0.000833)</li>
+        </ul>
+      </div>
+      <h3>Prompting Protocol</h3>
+      <div class="card" style="margin-bottom: 12px;">
+        <ul>
+          <li>Hebrew instructions, JSON output format</li>
+          <li>Zero-shot and few-shot (k=3)</li>
+          <li>Character-level span matching</li>
+          <li>Single-run evaluations</li>
+        </ul>
+      </div>
+      <h3>Infrastructure</h3>
+      <div class="card">
+        <ul>
+          <li><strong>VAST.ai</strong> cloud GPU instances (paid)</li>
+          <li><strong>RTX 4090</strong> (24GB VRAM) for HPO &amp; fine-tuning</li>
+          <li><strong>RTX 5090</strong> for Dicta3 Nemotron self-hosted inference (vLLM)</li>
+          <li>Persistent volume + Google Drive sync</li>
+          <li>Other LLMs via OpenRouter API</li>
+          <li>Local CPU/GPU for evaluation &amp; analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 11: MAIN RESULTS ===== -->
+<div class="slide" data-notes="Key result: CLS generalizes (0.5-3.5% drop) but SPAN collapses (23-41% drop). NeoDictaBERT best on CLS, DictaBERT best unseen SPAN. Gemini3 Flash beats all fine-tuned models on unseen SPAN.">
+  <h2>Main Results</h2>
+  <div style="flex: 1; overflow-y: auto;">
+    <h3>Fine-Tuned Encoders (Mean F1 &pm; Std, 3 seeds)</h3>
+    <table>
+      <thead><tr><th>Model</th><th>CLS Seen</th><th>CLS Unseen</th><th>&Delta;</th><th>SPAN Seen</th><th>SPAN Unseen</th><th>&Delta;</th></tr></thead>
+      <tbody>
+        <tr><td>NeoDictaBERT</td><td class="best">95.83 <small>&pm;1.20</small></td><td class="best">92.35 <small>&pm;0.32</small></td><td>-3.48</td><td class="best">99.65 <small>&pm;0.12</small></td><td>66.12 <small>&pm;7.01</small></td><td class="red">-33.53</td></tr>
+        <tr><td>DictaBERT</td><td>94.13 <small>&pm;0.27</small></td><td>92.21 <small>&pm;0.44</small></td><td>-1.92</td><td>99.42 <small>&pm;0.20</small></td><td class="best">76.10 <small>&pm;4.82</small></td><td class="red">-23.32</td></tr>
+        <tr><td>AlephBERTGimmel</td><td>93.98 <small>&pm;1.23</small></td><td>90.75 <small>&pm;1.19</small></td><td>-3.23</td><td>98.96 <small>&pm;0.12</small></td><td>74.70 <small>&pm;1.51</small></td><td class="red">-24.26</td></tr>
+        <tr><td>AlephBERT</td><td>92.98 <small>&pm;0.27</small></td><td>90.97 <small>&pm;0.67</small></td><td>-2.01</td><td>99.38 <small>&pm;0.29</small></td><td>66.77 <small>&pm;2.13</small></td><td class="red">-32.61</td></tr>
+        <tr><td>XLM-RoBERTa</td><td>91.19 <small>&pm;1.39</small></td><td>90.69 <small>&pm;0.53</small></td><td>-0.50</td><td>99.35 <small>&pm;0.18</small></td><td>61.48 <small>&pm;3.63</small></td><td class="red">-37.87</td></tr>
+        <tr><td>mBERT</td><td>88.80 <small>&pm;0.54</small></td><td>90.35 <small>&pm;0.73</small></td><td class="green">+1.55</td><td>99.46 <small>&pm;0.24</small></td><td>58.82 <small>&pm;7.97</small></td><td class="red">-40.64</td></tr>
+      </tbody>
+    </table>
+    <h3 style="margin-top: 16px;">LLM Prompting (single run)</h3>
+    <table style="font-size: 0.85em;">
+      <thead><tr><th>Setting</th><th>Model</th><th>CLS Seen</th><th>CLS Unseen</th><th>SPAN Seen</th><th>SPAN Unseen</th></tr></thead>
+      <tbody>
+        <tr style="background: rgba(52,211,153,0.06);"><td>Zero-shot</td><td><strong>Gemini3 Flash</strong></td><td class="best">93%</td><td class="best">90%</td><td class="best">84%</td><td class="best">86%</td></tr>
+        <tr><td>Zero-shot</td><td>Qwen3 235B</td><td>50%</td><td>42%</td><td>69%</td><td>71%</td></tr>
+        <tr><td>Zero-shot</td><td>Llama4 Maverick</td><td>47%</td><td>43%</td><td>61%</td><td>67%</td></tr>
+        <tr><td>Zero-shot</td><td>Dicta3 Nemotron</td><td>40%</td><td>40%</td><td>62%</td><td>68%</td></tr>
+        <tr><td>Zero-shot</td><td>Llama4 Scout</td><td>36%</td><td>35%</td><td>51%</td><td>52%</td></tr>
+        <tr style="border-top: 2px solid rgba(79,140,255,0.3); background: rgba(52,211,153,0.06);"><td>Few-shot</td><td><strong>Gemini3 Flash</strong></td><td class="best">96%</td><td class="best">92%</td><td class="best">87%</td><td class="best">90%</td></tr>
+        <tr><td>Few-shot</td><td>Qwen3 235B</td><td>67%</td><td>57%</td><td>75%</td><td>72%</td></tr>
+        <tr><td>Few-shot</td><td>Llama4 Maverick</td><td>59%</td><td>57%</td><td>69%</td><td>71%</td></tr>
+        <tr><td>Few-shot</td><td>Dicta3 Nemotron</td><td>47%</td><td>47%</td><td>67%</td><td>72%</td></tr>
+        <tr><td>Few-shot</td><td>Llama4 Scout</td><td>55%</td><td>43%</td><td>72%</td><td>65%</td></tr>
+      </tbody>
+    </table>
+    <div class="card-warn" style="margin-top: 12px; font-size: 0.92em;">
+      <strong>Key dissociation:</strong> CLS drops only 0.5&ndash;3.5 points &rarr; SPAN drops <span class="red">23&ndash;41 points</span>. Gemini3 Flash achieves <span class="green">90% unseen SPAN F1</span>, exceeding best fine-tuned (76.1%).
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 12: GENERALIZATION GAP ===== -->
+<div class="slide" data-notes="The generalization gap is the central finding. CLS is robust, SPAN collapses. This shows models classify idiomaticity but can't localize novel idiom boundaries.">
+  <h2>The Generalization Gap</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>Classification: Robust Generalization</h3>
+      <div class="fig-container">
+        <img src="assets/figures/generalization_bar_cls.png" alt="CLS generalization gap - small drops across all models" style="max-height: 260px;">
+        <div class="fig-caption">CLS F1: Seen vs Unseen. Drop: 0.5&ndash;3.5%</div>
+      </div>
+      <div class="card" style="margin-top: 12px; text-align: center;">
+        <span class="green" style="font-size: 1.5em;">~91% F1</span><br>
+        <span class="small">on completely unseen idioms</span>
+      </div>
+    </div>
+    <div class="col">
+      <h3>Span Detection: Catastrophic Drop</h3>
+      <div class="fig-container">
+        <img src="assets/figures/generalization_bar_span.png" alt="SPAN generalization gap - massive drops across all models" style="max-height: 260px;">
+        <div class="fig-caption">SPAN F1: Seen vs Unseen. Drop: 23&ndash;41%</div>
+      </div>
+      <div class="card" style="margin-top: 12px; text-align: center;">
+        <span class="red" style="font-size: 1.5em;">59&ndash;76% F1</span><br>
+        <span class="small">down from ~99% on seen idioms</span>
+      </div>
+    </div>
+  </div>
+  <div class="card-accent" style="margin-top: 12px;">
+    <strong>Detection&ndash;Localization Dissociation:</strong> Models <em>detect</em> figurative usage without being able to <em>locate</em> idiom boundaries in novel expressions. 34&ndash;44% of unseen predictions are CLS-correct but SPAN-wrong.
+  </div>
+</div>
+
+<!-- ===== SLIDE 13: ERROR ANALYSIS ===== -->
+<div class="slide" data-notes="Error analysis reveals 99.94% end-boundary bias: 1761 PARTIAL_END vs 1 PARTIAL_START. Long unseen idioms (5+ tokens) fail at 70-100% error rates. Models are confidently wrong (0.99 confidence on errors).">
+  <h2>Error Analysis Deep Dive</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col-wide">
+      <h3>SPAN Error Distribution: Seen vs Unseen</h3>
+      <div class="fig-container">
+        <img src="assets/figures/error_distribution_span_aggregated.png" alt="Error distribution showing shift from 99% PERFECT on seen to 64% on unseen with massive boundary errors" style="max-height: 250px;">
+        <div class="fig-caption">Aggregated across 6 models &times; 3 seeds</div>
+      </div>
+    </div>
+    <div class="col-narrow">
+      <div class="card" style="margin-bottom: 12px;">
+        <h3>99.94% End-Boundary Bias</h3>
+        <table style="font-size: 0.88em;">
+          <tr><td>PARTIAL_END</td><td class="red"><strong>1,761</strong></td></tr>
+          <tr><td>PARTIAL_START</td><td>1</td></tr>
+        </table>
+        <p class="small" style="margin-top: 6px;">Models reliably detect idiom <em>starts</em> (B-IDIOM) but systematically fail to predict where idioms <em>end</em>.</p>
+      </div>
+      <div class="card" style="margin-bottom: 12px;">
+        <h3>Length Catastrophe</h3>
+        <p>5+ token unseen idioms:<br><span class="red" style="font-size: 1.2em;">70&ndash;100% error rate</span></p>
+        <p style="margin-top: 6px;"><span class="hebrew" style="font-size: 1.05em;">&#1512;&#1509; &#1488;&#1495;&#1512;&#1497; &#1492;&#1494;&#1504;&#1489; &#1513;&#1500; &#1506;&#1510;&#1502;&#1493;</span></p>
+        <p class="small">"Chased his own tail" (5 tokens): SPAN F1 = <span class="red"><strong>0.023</strong></span></p>
+        <p class="small" style="margin-top: 4px;">Removing this single idiom raises unseen SPAN F1 from 0.68 &rarr; <span class="green">0.82</span></p>
+      </div>
+      <div class="card">
+        <h3>High-Confidence Errors</h3>
+        <p>Mean confidence on wrong predictions:</p>
+        <ul class="small">
+          <li>PARTIAL_END: <span class="red">0.993</span></li>
+          <li>MISS: <span class="red">0.976</span></li>
+          <li>PERFECT: 0.998</li>
+        </ul>
+        <p class="small">Systematically wrong with near-maximal confidence.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 14: PROMPTING VS FINE-TUNING ===== -->
+<div class="slide" data-notes="Striking reversal: fine-tuning produces PARTIAL_END errors, prompting produces PARTIAL_START errors. Gemini3 Flash actually improves from seen to unseen. But most LLMs show severe classification bias.">
+  <h2>Fine-Tuning vs Prompting: A Reversal</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>Error Pattern Reversal</h3>
+      <div class="card" style="margin-bottom: 16px;">
+        <table>
+          <thead><tr><th>Pattern</th><th>Fine-Tuning</th><th>Prompting</th></tr></thead>
+          <tbody>
+            <tr><td>PARTIAL_END</td><td class="red"><strong>99.94%</strong></td><td>&asymp; 0%</td></tr>
+            <tr><td>PARTIAL_START</td><td>&asymp; 0%</td><td class="red"><strong>5&ndash;13%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Fine-tuned models <strong>anchor on B-IDIOM</strong> (idiom starts) but can't extrapolate where idioms terminate.</p>
+      <p style="margin-top: 8px;">Prompting models <strong>lack this anchoring</strong> but apply more general boundary heuristics.</p>
+      <div class="card-accent" style="margin-top: 16px;">
+        <strong>Gemini3 Flash:</strong> <span class="green">90% unseen SPAN F1</span> &mdash; actually <em>improves</em> from seen (87%). Exceeds best fine-tuned model (76.1%).
+      </div>
+    </div>
+    <div class="col">
+      <h3>But: LLM Classification Bias</h3>
+      <table>
+        <thead><tr><th>Model</th><th>Literal Acc.</th><th>Figurative Acc.</th></tr></thead>
+        <tbody>
+          <tr style="background: rgba(52,211,153,0.06);"><td>Gemini3 Flash</td><td class="green">87%</td><td class="green">99%</td></tr>
+          <tr><td>Dicta3 Nemotron</td><td class="green">95%</td><td class="red">13%</td></tr>
+          <tr><td>Llama4 Maverick</td><td class="red">13%</td><td class="green">97%</td></tr>
+          <tr><td>Llama4 Scout</td><td class="red">2%</td><td>86%</td></tr>
+          <tr><td>Qwen3 235B</td><td class="red">15%</td><td class="green">94%</td></tr>
+        </tbody>
+      </table>
+      <div class="card-warn" style="margin-top: 16px;">
+        <strong>Only Gemini3 Flash</strong> shows balanced classification. All others collapse to predicting predominantly one class &mdash; their CLS performance is dominated by label bias, not genuine understanding.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 15: INTERPRETABILITY ===== -->
+<div class="slide" data-notes="Attention analysis shows a paradox: errors have MORE idiom-focused attention than correct predictions. Embedding space shows CLS representations overlap for seen/unseen, explaining why classification generalizes.">
+  <h2>Interpretability Insights</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>Attention Paradox</h3>
+      <p>PARTIAL_END errors show <em>higher</em> idiom-token attention than correct predictions:</p>
+      <div class="card" style="margin: 12px 0;">
+        <table>
+          <thead><tr><th>Model</th><th>PERFECT</th><th>PARTIAL_END</th><th>&Delta;</th></tr></thead>
+          <tbody>
+            <tr><td>NeoDictaBERT</td><td>0.232</td><td>0.301</td><td class="red">+29.6%</td></tr>
+            <tr><td>XLM-RoBERTa</td><td>0.178</td><td>0.256</td><td class="red">+43.9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><span class="highlight">Boundary failures are NOT due to missing idiom focus.</span> Models attend to idiom tokens but cannot decide where the idiom terminates.</p>
+      <div class="fig-container" style="margin-top: 12px;">
+        <img src="assets/figures/neodictabert_attention_ratio_correct_vs_partial_end.png" alt="Attention ratio comparison" style="max-height: 160px;">
+        <div class="fig-caption">NeoDictaBERT: Attention on correct vs error predictions</div>
+      </div>
+    </div>
+    <div class="col">
+      <h3>Embedding Space (t-SNE)</h3>
+      <div class="fig-container">
+        <img src="assets/figures/neodictabert_tsne_seen_vs_unseen.png" alt="t-SNE showing heavy overlap between seen and unseen CLS embeddings" style="max-height: 240px;">
+        <div class="fig-caption">NeoDictaBERT [CLS] embeddings: seen vs unseen overlap</div>
+      </div>
+      <p style="margin-top: 12px;">Heavy overlap between seen and unseen idioms in CLS embedding space &rarr; explains <span class="green">robust CLS generalization</span>.</p>
+      <div class="card" style="margin-top: 12px;">
+        <h3>Interpretability Heatmap</h3>
+        <img src="assets/figures/interp_partial_end_example.png" alt="IG heatmap showing PARTIAL_END error" style="max-width: 100%; border-radius: 6px;">
+        <div class="fig-caption">PARTIAL_END error: model focuses on idiom but truncates end</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 16: LIMITATIONS ===== -->
+<div class="slide" data-notes="Important limitations to acknowledge: only 3 seeds (limited power), single unseen split with 6 idioms, no CRF ablation, Hebrew-only, prompting is single-run.">
+  <h2>Limitations</h2>
+  <div class="flex-row" style="flex: 1; align-items: flex-start;">
+    <div class="col">
+      <h3>Statistical</h3>
+      <ul>
+        <li><strong>3 seeds</strong> &rarr; power to detect only Cohen's d &ge; 3.26</li>
+        <li>No pairwise model comparisons reach significance after Bonferroni correction</li>
+        <li>Rankings are <em>observed trends</em>, not validated differences</li>
+      </ul>
+      <h3 style="margin-top: 20px;">Scope</h3>
+      <ul>
+        <li><strong>Hebrew-only</strong> &mdash; cross-lingual replication needed</li>
+        <li><strong>60 idioms</strong> &mdash; small fraction of Hebrew's inventory</li>
+        <li>Single 6-idiom unseen split (leave-one-out not performed)</li>
+        <li>Aggregate unseen performance sensitive to hardest idiom (removing "chased own tail" raises F1 from 0.68 to 0.82)</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>Methodological</h3>
+      <ul>
+        <li><strong>No CRF ablation</strong> &mdash; can't determine if end-bias comes from CRF or encoder</li>
+        <li><strong>Base-size models only</strong> (110&ndash;125M) &mdash; larger models may improve</li>
+        <li>Diagnostics run on subset of models</li>
+      </ul>
+      <h3 style="margin-top: 20px;">Prompting</h3>
+      <ul>
+        <li><strong>Single-run evaluations</strong> &mdash; no confidence intervals</li>
+        <li>Variance across prompts not measured</li>
+        <li>4 of 5 LLMs show severe classification bias</li>
+        <li>End-boundary bias hypotheses are <strong>post-hoc and untested</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 17: CLAIMS VS EVIDENCE ===== -->
+<div class="slide" data-notes="Every claim in the paper is backed by specific evidence. This sanity check ensures scientific rigor.">
+  <h2>Claims vs Evidence</h2>
+  <div style="flex: 1; overflow-y: auto;">
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">CLS generalizes robustly (0.6&ndash;3.5% drop)</div>
+        <div class="evidence-source">Table 1: All 6 models, 3 seeds. CIs overlap on unseen.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">SPAN degrades 23&ndash;41% on unseen idioms</div>
+        <div class="evidence-source">Table 1: All 6 models. Consistent across seeds. Fig: generalization bars.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">99.94% end-boundary bias (1,761 vs 1)</div>
+        <div class="evidence-source">Error analysis: 8,640 unseen predictions aggregated. Fig: error distribution.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">5+ token unseen idioms fail at 70&ndash;100%</div>
+        <div class="evidence-source">Length-stratified analysis. Per-idiom table: "chased own tail" F1 = 0.023.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">High-confidence systematic errors (M &gt; 0.99)</div>
+        <div class="evidence-source">Calibration analysis: NeoDictaBERT, XLM-RoBERTa confidence CSVs.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">Attention higher on errors than correct predictions</div>
+        <div class="evidence-source">Attention analysis: NeoDictaBERT +29.6%, XLM-R +43.9%. Fig: attention ratios.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">Prompting shows reversed error patterns (PARTIAL_START)</div>
+        <div class="evidence-source">LLM error analysis: 5&ndash;13% PARTIAL_START, near-zero PARTIAL_END.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">Gemini3 Flash: 90% unseen SPAN F1, exceeding fine-tuned</div>
+        <div class="evidence-source">Table 1: Single-run result. Caveat: no CI, single evaluation.</div>
+      </div>
+    </div>
+    <div class="evidence-row">
+      <div class="evidence-check">&#10003;</div>
+      <div>
+        <div class="evidence-claim">Most LLMs show severe CLS classification bias</div>
+        <div class="evidence-source">Per-class accuracy table: 4/5 LLMs collapse to one class.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 18: TAKEAWAYS ===== -->
+<div class="slide" style="background: radial-gradient(ellipse at 50% 60%, rgba(79,140,255,0.06) 0%, transparent 60%);" data-notes="Summary of what we built, what we found, and what's next.">
+  <h2>Takeaways &amp; Future Work</h2>
+  <div class="flex-row" style="flex: 1;">
+    <div class="col">
+      <h3>What We Built</h3>
+      <div class="card" style="margin-bottom: 16px;">
+        <ul>
+          <li><strong>Hebrew-Idioms-4800</strong> &mdash; first dual-task Hebrew idiom dataset</li>
+          <li>4,800 sentences, 60 idioms, &kappa; = 0.97</li>
+          <li>Complete benchmark: 6 encoders + 5 LLMs</li>
+          <li>Full analysis pipeline with 35+ figures</li>
+        </ul>
+      </div>
+      <h3>Central Finding</h3>
+      <div class="card-warn">
+        <p>Current fine-tuned transformers <strong>classify idiomaticity through surface patterns</strong> but <strong>fail to learn compositional boundary cues</strong> that generalize to novel expressions.</p>
+        <p style="margin-top: 8px;">Prompting offers a potential alternative for boundary generalization.</p>
+      </div>
+      <h3 style="margin-top: 12px;">Non-Standard CLS Formulation</h3>
+      <div class="card-accent">
+        <p>Our CLS task passes <strong>only the raw sentence</strong> without the idiom itself &mdash; unlike classical idiom identification that provides both sentence + idiom as input. Models must <em>infer</em> idiomaticity from context alone, simulating native language understanding.</p>
+      </div>
+    </div>
+    <div class="col">
+      <h3>Key Numbers</h3>
+      <div class="stat-grid" style="margin-bottom: 16px;">
+        <div class="stat-box"><div class="num" style="font-size: 1.5em;">~92%</div><div class="label">CLS on unseen</div></div>
+        <div class="stat-box"><div class="num" style="font-size: 1.5em; color: #f87171;">59&ndash;76%</div><div class="label">SPAN on unseen</div></div>
+        <div class="stat-box"><div class="num" style="font-size: 1.5em;">99.94%</div><div class="label">end-boundary bias</div></div>
+        <div class="stat-box"><div class="num" style="font-size: 1.5em; color: #34d399;">90%</div><div class="label">Gemini3 unseen SPAN</div></div>
+      </div>
+      <h3>Future Work</h3>
+      <div class="card">
+        <ul>
+          <li><strong>BERT vs LLM with idiom hint</strong> &mdash; we only tested LLMs with raw sentences (no idiom clue); providing the idiom in the prompt may improve LLM CLS and enable a fair comparison with fine-tuned encoders</li>
+          <li><strong>Cross-lingual replication</strong> &mdash; does end-bias hold for English, Arabic?</li>
+          <li><strong>CRF ablation</strong> &mdash; isolate encoder vs CRF contribution</li>
+          <li><strong>Model scaling</strong> &mdash; larger encoders may improve</li>
+          <li><strong>Hybrid approaches</strong> &mdash; combine fine-tuning with prompting</li>
+          <li><strong>Leave-one-idiom-out</strong> cross-validation</li>
+          <li><strong>Dataset release</strong> to HuggingFace for community research</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 16px; color: #666;">
+    <strong>Thank you!</strong> &mdash; Questions?
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- ===== NOTES PANEL ===== -->
+<div id="notes-panel">
+  <div class="notes-title">Speaker Notes</div>
+  <div id="notes-content"></div>
+</div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+(function() {
+  'use strict';
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const totalSlides = slides.length;
+  let currentSlide = 0;
+  let notesVisible = false;
+
+  const progressBar = document.getElementById('progress-bar');
+  const slideCounter = document.getElementById('slide-counter');
+  const notesPanel = document.getElementById('notes-panel');
+  const notesContent = document.getElementById('notes-content');
+
+  function goToSlide(n) {
+    if (n < 0 || n >= totalSlides) return;
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'prev');
+      if (i === n) s.classList.add('active');
+      else if (i < n) s.classList.add('prev');
+    });
+    currentSlide = n;
+    updateUI();
+  }
+
+  function updateUI() {
+    const pct = ((currentSlide + 1) / totalSlides) * 100;
+    progressBar.style.width = pct + '%';
+    slideCounter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+    const notes = slides[currentSlide].getAttribute('data-notes') || '';
+    notesContent.textContent = notes || '(No notes for this slide)';
+  }
+
+  function next() { goToSlide(currentSlide + 1); }
+  function prev() { goToSlide(currentSlide - 1); }
+
+  document.addEventListener('keydown', function(e) {
+    switch(e.key) {
+      case 'ArrowRight': case ' ': case 'PageDown':
+        e.preventDefault(); next(); break;
+      case 'ArrowLeft': case 'PageUp':
+        e.preventDefault(); prev(); break;
+      case 'Home': e.preventDefault(); goToSlide(0); break;
+      case 'End': e.preventDefault(); goToSlide(totalSlides - 1); break;
+      case 'n': case 'N':
+        notesVisible = !notesVisible;
+        notesPanel.classList.toggle('visible', notesVisible);
+        break;
+      case 'f': case 'F':
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+        else document.exitFullscreen();
+        break;
+    }
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e) {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? next() : prev(); }
+  });
+
+  // Click navigation (left/right halves)
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('#notes-panel, #kb-hint, a, button')) return;
+    const x = e.clientX / window.innerWidth;
+    x > 0.5 ? next() : prev();
+  });
+
+  // Hash support
+  function readHash() {
+    const h = parseInt(location.hash.replace('#',''), 10);
+    if (h >= 1 && h <= totalSlides) goToSlide(h - 1);
+  }
+  window.addEventListener('hashchange', readHash);
+
+  // Init
+  readHash();
+  if (currentSlide === 0) goToSlide(0);
+})();
+</script>
+
+</body>
+</html>

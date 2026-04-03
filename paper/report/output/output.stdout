@@ -1,0 +1,168 @@
+chktex exit: 0
+Rc files read:
+  /usr/local/share/latexmk/LatexMk
+Latexmk: This is Latexmk, John Collins, 27 Dec. 2024. Version 4.86a.
+Latexmk: Changing directory to '/compile/'
+No existing .aux file, so I'll make a simple one, and require run of *latex.
+Force *latex to be remade.
+------------
+Running 'internal overleaf_pre_process "main.tex" "output.pdf"'
+------------
+Latexmk: calling overleaf_pre_process( "main.tex" "output.pdf" )
+Latexmk: applying rule 'pdflatex'...
+Rule 'pdflatex':  Reasons for rerun
+Category 'other':
+  Rerun of 'pdflatex' forced or previously required:
+    Reason or flag: 'go_mode=3'
+
+------------
+Run number 1 of rule 'pdflatex'
+------------
+------------
+Running 'pdflatex  -synctex=1 -interaction=batchmode -recorder --jobname="output"  "main.tex"'
+------------
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+Latexmk: Getting log file 'output.log'
+Latexmk: Examining 'output.fls'
+Latexmk: Examining 'output.log'
+Latexmk: References changed.
+Latexmk: Log file says output to 'output.pdf'
+Latexmk: Found bibliography file(s):
+  ./custom.bib
+Latexmk: applying rule 'bibtex output'...
+Rule 'bibtex output':  Reasons for rerun
+Category 'other':
+  Rerun of 'bibtex output' forced or previously required:
+    Reason or flag: 'Initial set up of rule'
+
+------------
+Run number 1 of rule 'bibtex output'
+------------
+------------
+Running 'bibtex  "output.aux"'
+------------
+This is BibTeX, Version 0.99d (TeX Live 2025)
+The top-level auxiliary file: output.aux
+The style file: plainnat.bst
+Database file #1: custom.bib
+Latexmk: applying rule 'pdflatex'...
+Rule 'pdflatex':  Reasons for rerun
+Changed files or newly in use/created:
+  output.aux
+  output.bbl
+  output.toc
+
+------------
+Run number 2 of rule 'pdflatex'
+------------
+------------
+Running 'pdflatex  -synctex=1 -interaction=batchmode -recorder --jobname="output"  "main.tex"'
+------------
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+Latexmk: Getting log file 'output.log'
+Latexmk: Examining 'output.fls'
+Latexmk: Examining 'output.log'
+Latexmk: Found input bbl file 'output.bbl'
+Latexmk: References changed.
+Latexmk: References changed.
+Latexmk: Log file says output to 'output.pdf'
+Latexmk: Found bibliography file(s):
+  ./custom.bib
+Latexmk: applying rule 'bibtex output'...
+Rule 'bibtex output':  Reasons for rerun
+Changed files or newly in use/created:
+  output.aux
+
+------------
+Run number 2 of rule 'bibtex output'
+------------
+------------
+Running 'bibtex  "output.aux"'
+------------
+This is BibTeX, Version 0.99d (TeX Live 2025)
+The top-level auxiliary file: output.aux
+The style file: plainnat.bst
+Database file #1: custom.bib
+Latexmk: applying rule 'pdflatex'...
+Rule 'pdflatex':  Reasons for rerun
+Changed files or newly in use/created:
+  output.aux
+  output.toc
+
+------------
+Run number 3 of rule 'pdflatex'
+------------
+------------
+Running 'pdflatex  -synctex=1 -interaction=batchmode -recorder --jobname="output"  "main.tex"'
+------------
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+Latexmk: Getting log file 'output.log'
+Latexmk: Examining 'output.fls'
+Latexmk: Examining 'output.log'
+Latexmk: Found input bbl file 'output.bbl'
+Latexmk: Log file says output to 'output.pdf'
+Latexmk: Found bibliography file(s):
+  ./custom.bib
+Latexmk: applying rule 'bibtex output'...
+Rule 'bibtex output':  Reasons for rerun
+Changed files or newly in use/created:
+  output.aux
+
+------------
+Run number 3 of rule 'bibtex output'
+------------
+------------
+Running 'bibtex  "output.aux"'
+------------
+This is BibTeX, Version 0.99d (TeX Live 2025)
+The top-level auxiliary file: output.aux
+The style file: plainnat.bst
+Database file #1: custom.bib
+Latexmk: applying rule 'pdflatex'...
+Rule 'pdflatex':  Reasons for rerun
+Changed files or newly in use/created:
+  output.aux
+
+------------
+Run number 4 of rule 'pdflatex'
+------------
+------------
+Running 'pdflatex  -synctex=1 -interaction=batchmode -recorder --jobname="output"  "main.tex"'
+------------
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+Latexmk: Getting log file 'output.log'
+Latexmk: Examining 'output.fls'
+Latexmk: Examining 'output.log'
+Latexmk: Found input bbl file 'output.bbl'
+Latexmk: Log file says output to 'output.pdf'
+Latexmk: Found bibliography file(s):
+  ./custom.bib
+Latexmk: All targets (output.pdf) are up-to-date
+------------
+Running 'internal overleaf_post_process "main.tex" "output.pdf"'
+------------
+Latexmk: calling overleaf_post_process( "main.tex" "output.pdf" )
+qpdf exit code=3
+Renaming optimised file to output.pdf
+Extracting xref table for output.pdf
+qpdf --show-xref exit code=0
+Latexmk: Undoing directory change
+'pdflatex': time = 0.87
+'bibtex output': time = 0.04
+'pdflatex': time = 0.88
+'bibtex output': time = 0.03
+'pdflatex': time = 0.87
+'bibtex output': time = 0.05
+'pdflatex': time = 0.88
+Processing time = 4.25, of which invoked processes = 3.62, other = 0.63.
+Elapsed clock time = 4.33.
+Number of rules run = 7
+

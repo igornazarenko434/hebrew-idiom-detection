@@ -9634,7 +9634,7 @@
     "predicted_tags": [
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "I-IDIOM",
       "I-IDIOM",
       "O",
@@ -9662,8 +9662,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MISS"
   },
   {
     "id": "30_fig_14",
@@ -15367,7 +15367,7 @@
       "O",
       "O",
       "O",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -15395,7 +15395,7 @@
       "O",
       "O"
     ],
-    "is_correct": false,
+    "is_correct": true,
     "error_category": "PERFECT"
   },
   {

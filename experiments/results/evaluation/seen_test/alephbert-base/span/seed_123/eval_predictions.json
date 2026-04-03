@@ -3577,8 +3577,8 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -3603,8 +3603,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "11_fig_33",

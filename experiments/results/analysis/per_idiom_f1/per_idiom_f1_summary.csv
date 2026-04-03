@@ -1,64 +1,64 @@
 model,task,split,idiom_id,base_pie,f1_mean,f1_std,precision_mean,recall_mean,num_samples_total,n_seeds
-alephbert-base,cls,seen_test,1,איבד את הצפון,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+alephbert-base,cls,seen_test,1,איבד את הצפון,0.873015873015873,0.0,0.9,0.875,24,3
 alephbert-base,cls,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,5,הוריד פרופיל,0.791005291005291,0.07102324740031112,0.7999999999999999,0.7916666666666666,24,3
-alephbert-base,cls,seen_test,6,החזיק אצבעות,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbert-base,cls,seen_test,5,הוריד פרופיל,0.832010582010582,0.07102324740031109,0.85,0.8333333333333334,24,3
+alephbert-base,cls,seen_test,6,החזיק אצבעות,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbert-base,cls,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,9,הלך על ביצים,0.873015873015873,0.0,0.9,0.875,24,3
-alephbert-base,cls,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
+alephbert-base,cls,seen_test,10,הניף דגל לבן,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbert-base,cls,seen_test,11,הרים את הראש,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbert-base,cls,seen_test,12,הרים גבה,0.873015873015873,0.0,0.9,0.875,24,3
 alephbert-base,cls,seen_test,13,הרים ידיים,0.873015873015873,0.0,0.9,0.875,24,3
 alephbert-base,cls,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,15,חזר למסלול,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,16,חטף חום,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+alephbert-base,cls,seen_test,16,חטף חום,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbert-base,cls,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,18,חיבר נקודות,0.873015873015873,0.0,0.9,0.875,24,3
-alephbert-base,cls,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,22,ירד לו האסימון,0.8743386243386243,0.1250052489029816,0.8833333333333333,0.875,24,3
-alephbert-base,cls,seen_test,23,ירד מהעץ,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbert-base,cls,seen_test,21,יצא מהקופסה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+alephbert-base,cls,seen_test,22,ירד לו האסימון,0.873015873015873,0.0,0.9,0.875,24,3
+alephbert-base,cls,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,25,ירה לכל הכיוונים,0.7473544973544973,0.12700479329185338,0.7611111111111111,0.75,24,3
+alephbert-base,cls,seen_test,25,ירה לכל הכיוונים,0.5285714285714286,0.08010763733933678,0.5444444444444444,0.5416666666666666,24,3
 alephbert-base,cls,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,27,לב זהב,0.832010582010582,0.07102324740031112,0.85,0.8333333333333334,24,3
+alephbert-base,cls,seen_test,27,לב זהב,0.873015873015873,0.0,0.9,0.875,24,3
 alephbert-base,cls,seen_test,28,לקח צעד אחורה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbert-base,cls,seen_test,29,משך בחוטים,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,30,נכנס מתחת לאלונקה,1.0,0.0,1.0,1.0,24,3
+alephbert-base,cls,seen_test,30,נכנס מתחת לאלונקה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbert-base,cls,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,32,נפל מהכיסא,0.873015873015873,0.0,0.9,0.875,24,3
+alephbert-base,cls,seen_test,32,נפל מהכיסא,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbert-base,cls,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1.0,24,3
+alephbert-base,cls,seen_test,35,נשך שפתיים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbert-base,cls,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,39,עשה סלט,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbert-base,cls,seen_test,40,עשה סצנה,0.5434343434343435,0.2007637696776541,0.623015873015873,0.625,24,3
+alephbert-base,cls,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
+alephbert-base,cls,seen_test,40,עשה סצנה,0.6202020202020203,0.09797459113520922,0.8015873015873015,0.6666666666666666,24,3
 alephbert-base,cls,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,42,פתח דף חדש,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbert-base,cls,seen_test,43,פתח עיניים,0.7883597883597884,0.14662863979419066,0.8111111111111112,0.7916666666666666,24,3
-alephbert-base,cls,seen_test,44,קבר את עצמו,0.873015873015873,0.0,0.9,0.875,24,3
-alephbert-base,cls,seen_test,45,קיבל סטירה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbert-base,cls,seen_test,46,קיפל את הזנב,0.8264550264550264,0.08064575188680483,0.8777777777777778,0.8333333333333334,24,3
-alephbert-base,cls,seen_test,47,קפא במקום,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,48,קפץ למים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbert-base,cls,seen_test,50,שבר את הכלים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbert-base,cls,seen_test,42,פתח דף חדש,0.873015873015873,0.0,0.9,0.875,24,3
+alephbert-base,cls,seen_test,43,פתח עיניים,0.7444444444444445,0.00962250448649373,0.7777777777777777,0.75,24,3
+alephbert-base,cls,seen_test,44,קבר את עצמו,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
+alephbert-base,cls,seen_test,45,קיבל סטירה,0.873015873015873,0.0,0.9,0.875,24,3
+alephbert-base,cls,seen_test,46,קיפל את הזנב,0.77989417989418,0.08064575188680485,0.8555555555555555,0.7916666666666666,24,3
+alephbert-base,cls,seen_test,47,קפא במקום,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbert-base,cls,seen_test,48,קפץ למים,0.77989417989418,0.08064575188680485,0.8555555555555555,0.7916666666666666,24,3
+alephbert-base,cls,seen_test,50,שבר את הכלים,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,51,שבר את הלב,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,52,שבר את הקרח,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbert-base,cls,seen_test,52,שבר את הקרח,0.873015873015873,0.0,0.9,0.875,24,3
 alephbert-base,cls,seen_test,53,שבר את הראש,0.873015873015873,0.0,0.9,0.875,24,3
 alephbert-base,cls,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
 alephbert-base,cls,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
-alephbert-base,cls,seen_test,59,שם רגליים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbert-base,cls,seen_test,60,שפכה אור,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-alephbert-base,cls,unseen_test,2,איבד את הראש,0.9287584449030318,0.019366663670375452,0.9382866593782412,0.9291666666666667,240,3
-alephbert-base,cls,unseen_test,19,חצה קו אדום,0.9749973954263687,0.012501953633705749,0.9751980404419429,0.975,240,3
-alephbert-base,cls,unseen_test,20,חתך פינה,0.8905599486664921,0.007306192321321459,0.908190677947517,0.8916666666666666,240,3
-alephbert-base,cls,unseen_test,33,נשאר מאחור,0.9290120152517108,0.0072745877167738615,0.932853572388456,0.9291666666666667,240,3
-alephbert-base,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9791634109496276,0.014436012356671309,0.9794663331248697,0.9791666666666666,240,3
-alephbert-base,cls,unseen_test,55,שבר שתיקה,0.7085780835580026,0.10920951988132473,0.8227044059423921,0.7333333333333333,240,3
+alephbert-base,cls,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
+alephbert-base,cls,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
+alephbert-base,cls,unseen_test,2,איבד את הראש,0.928802126339746,0.007320318420308936,0.9380032206119161,0.9291666666666667,240,3
+alephbert-base,cls,unseen_test,19,חצה קו אדום,0.9833320310465177,0.007215750551404951,0.9835365853658536,0.9833333333333334,240,3
+alephbert-base,cls,unseen_test,20,חתך פינה,0.8864530997265999,0.012627213429228765,0.9023445895121428,0.8875000000000001,240,3
+alephbert-base,cls,unseen_test,33,נשאר מאחור,0.9289332514030573,0.00734374963291747,0.9346834655226971,0.9291666666666667,240,3
+alephbert-base,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9707503317001125,0.029007893064934922,0.9733514001806686,0.9708333333333333,240,3
+alephbert-base,cls,unseen_test,55,שבר שתיקה,0.7433750103675137,0.060540238169230945,0.8295695982014113,0.7583333333333333,240,3
 alephbert-base,span,seen_test,1,איבד את הצפון,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
@@ -68,7 +68,7 @@ alephbert-base,span,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,9,הלך על ביצים,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
-alephbert-base,span,seen_test,11,הרים את הראש,0.9063180827886711,0.030188249369392146,0.8296296296296296,1.0,24,3
+alephbert-base,span,seen_test,11,הרים את הראש,0.9063180827886711,0.030188249369392135,0.8296296296296296,1.0,24,3
 alephbert-base,span,seen_test,12,הרים גבה,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,13,הרים ידיים,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
@@ -80,12 +80,12 @@ alephbert-base,span,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,22,ירד לו האסימון,0.9411764705882352,0.0,0.8888888888888888,1.0,24,3
 alephbert-base,span,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
-alephbert-base,span,seen_test,25,ירה לכל הכיוונים,1.0,0.0,1.0,1.0,24,3
+alephbert-base,span,seen_test,25,ירה לכל הכיוונים,0.9583333333333334,0.07216878364870323,0.9583333333333334,0.9583333333333334,24,3
 alephbert-base,span,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,28,לקח צעד אחורה,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,29,משך בחוטים,1.0,0.0,1.0,1.0,24,3
-alephbert-base,span,seen_test,30,נכנס מתחת לאלונקה,1.0,0.0,1.0,1.0,24,3
+alephbert-base,span,seen_test,30,נכנס מתחת לאלונקה,0.9555555555555556,0.03849001794597505,1.0,0.9166666666666666,24,3
 alephbert-base,span,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
@@ -96,7 +96,7 @@ alephbert-base,span,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,40,עשה סצנה,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
-alephbert-base,span,seen_test,42,פתח דף חדש,1.0,0.0,1.0,1.0,24,3
+alephbert-base,span,seen_test,42,פתח דף חדש,0.9777777777777779,0.03849001794597503,1.0,0.9583333333333334,24,3
 alephbert-base,span,seen_test,43,פתח עיניים,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,44,קבר את עצמו,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,45,קיבל סטירה,1.0,0.0,1.0,1.0,24,3
@@ -113,87 +113,87 @@ alephbert-base,span,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
 alephbert-base,span,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-alephbert-base,span,unseen_test,2,איבד את הראש,0.9937629399585921,0.006250040186077647,0.9917181069958847,0.9958333333333332,240,3
-alephbert-base,span,unseen_test,19,חצה קו אדום,0.805139024126366,0.07593216801998344,0.8337671100828996,0.7791666666666667,240,3
-alephbert-base,span,unseen_test,20,חתך פינה,0.9313967877057844,0.04964591324057242,0.9401853377094774,0.9249999999999999,240,3
-alephbert-base,span,unseen_test,33,נשאר מאחור,0.674361882517441,0.09002831658303943,0.7357620600671207,0.625,240,3
+alephbert-base,span,unseen_test,2,איבד את הראש,0.9958333333333332,0.007216878364870297,0.9958333333333332,0.9958333333333332,240,3
+alephbert-base,span,unseen_test,19,חצה קו אדום,0.6575864995219834,0.2294413637768803,0.6790279753437648,0.6375000000000001,240,3
+alephbert-base,span,unseen_test,20,חתך פינה,0.9581236897274633,0.01591108995779868,0.9621308016877638,0.9541666666666666,240,3
+alephbert-base,span,unseen_test,33,נשאר מאחור,0.3318208105342764,0.2874322521620816,0.4813363195222098,0.25416666666666665,240,3
 alephbert-base,span,unseen_test,49,רץ אחרי הזנב של עצמו,0.0,0.0,0.0,0.0,240,3
-alephbert-base,span,unseen_test,55,שבר שתיקה,0.9833328450330091,0.0036107643750722482,0.9833834713757358,0.9833333333333334,240,3
+alephbert-base,span,unseen_test,55,שבר שתיקה,0.970218187609492,0.04082553265172696,0.97422568767598,0.9666666666666667,240,3
 alephbertgimmel-base,cls,seen_test,1,איבד את הצפון,0.873015873015873,0.0,0.9,0.875,24,3
-alephbertgimmel-base,cls,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,cls,seen_test,3,דרך במקום,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbertgimmel-base,cls,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,5,הוריד פרופיל,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbertgimmel-base,cls,seen_test,6,החזיק אצבעות,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
-alephbertgimmel-base,cls,seen_test,7,הייתה בעננים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbertgimmel-base,cls,seen_test,6,החזיק אצבעות,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
+alephbertgimmel-base,cls,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,9,הלך על ביצים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbertgimmel-base,cls,seen_test,10,הניף דגל לבן,0.9111111111111111,0.15396007178390017,0.9444444444444443,0.9166666666666666,24,3
+alephbertgimmel-base,cls,seen_test,10,הניף דגל לבן,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbertgimmel-base,cls,seen_test,11,הרים את הראש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-alephbertgimmel-base,cls,seen_test,12,הרים גבה,0.8743386243386243,0.1250052489029816,0.8833333333333333,0.875,24,3
+alephbertgimmel-base,cls,seen_test,12,הרים גבה,0.7883597883597884,0.14662863979419066,0.8111111111111112,0.7916666666666666,24,3
 alephbertgimmel-base,cls,seen_test,13,הרים ידיים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbertgimmel-base,cls,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,15,חזר למסלול,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-alephbertgimmel-base,cls,seen_test,16,חטף חום,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbertgimmel-base,cls,seen_test,16,חטף חום,0.8743386243386243,0.1250052489029816,0.8833333333333333,0.875,24,3
 alephbertgimmel-base,cls,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,18,חיבר נקודות,0.9166666666666666,0.14433756729740646,0.9166666666666666,0.9166666666666666,24,3
+alephbertgimmel-base,cls,seen_test,18,חיבר נקודות,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbertgimmel-base,cls,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,22,ירד לו האסימון,0.873015873015873,0.0,0.9,0.875,24,3
-alephbertgimmel-base,cls,seen_test,23,ירד מהעץ,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbertgimmel-base,cls,seen_test,23,ירד מהעץ,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbertgimmel-base,cls,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,25,ירה לכל הכיוונים,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
-alephbertgimmel-base,cls,seen_test,26,ירק דם,0.873015873015873,0.0,0.9,0.875,24,3
-alephbertgimmel-base,cls,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,cls,seen_test,25,ירה לכל הכיוונים,0.77989417989418,0.08064575188680483,0.8555555555555555,0.7916666666666666,24,3
+alephbertgimmel-base,cls,seen_test,26,ירק דם,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+alephbertgimmel-base,cls,seen_test,27,לב זהב,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbertgimmel-base,cls,seen_test,28,לקח צעד אחורה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-alephbertgimmel-base,cls,seen_test,29,משך בחוטים,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,30,נכנס מתחת לאלונקה,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,cls,seen_test,29,משך בחוטים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbertgimmel-base,cls,seen_test,30,נכנס מתחת לאלונקה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbertgimmel-base,cls,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,cls,seen_test,35,נשך שפתיים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbertgimmel-base,cls,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,39,עשה סלט,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-alephbertgimmel-base,cls,seen_test,40,עשה סצנה,0.6202020202020203,0.09797459113520922,0.8015873015873015,0.6666666666666666,24,3
+alephbertgimmel-base,cls,seen_test,39,עשה סלט,0.873015873015873,0.0,0.9,0.875,24,3
+alephbertgimmel-base,cls,seen_test,40,עשה סצנה,0.6,0.23094010767585038,0.6388888888888888,0.6666666666666666,24,3
 alephbertgimmel-base,cls,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,42,פתח דף חדש,0.9111111111111111,0.15396007178390017,0.9444444444444443,0.9166666666666666,24,3
-alephbertgimmel-base,cls,seen_test,43,פתח עיניים,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,cls,seen_test,42,פתח דף חדש,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,cls,seen_test,43,פתח עיניים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 alephbertgimmel-base,cls,seen_test,44,קבר את עצמו,0.873015873015873,0.0,0.9,0.875,24,3
-alephbertgimmel-base,cls,seen_test,45,קיבל סטירה,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,46,קיפל את הזנב,0.77989417989418,0.08064575188680485,0.8555555555555555,0.7916666666666666,24,3
+alephbertgimmel-base,cls,seen_test,45,קיבל סטירה,0.9111111111111111,0.15396007178390017,0.9444444444444443,0.9166666666666666,24,3
+alephbertgimmel-base,cls,seen_test,46,קיפל את הזנב,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
 alephbertgimmel-base,cls,seen_test,47,קפא במקום,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,48,קפץ למים,0.8264550264550264,0.08064575188680483,0.8777777777777778,0.8333333333333334,24,3
+alephbertgimmel-base,cls,seen_test,48,קפץ למים,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
 alephbertgimmel-base,cls,seen_test,50,שבר את הכלים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,51,שבר את הלב,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 alephbertgimmel-base,cls,seen_test,52,שבר את הקרח,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,53,שבר את הראש,0.791005291005291,0.07102324740031112,0.7999999999999999,0.7916666666666666,24,3
+alephbertgimmel-base,cls,seen_test,53,שבר את הראש,0.873015873015873,0.0,0.9,0.875,24,3
 alephbertgimmel-base,cls,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,56,שחרר קיטור,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbertgimmel-base,cls,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,seen_test,59,שם רגליים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+alephbertgimmel-base,cls,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,cls,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,cls,unseen_test,2,איבד את הראש,0.9498746867167919,0.0,0.9545454545454546,0.9499999999999998,240,3
-alephbertgimmel-base,cls,unseen_test,19,חצה קו אדום,0.9624354144359714,0.012554843398442749,0.9652840699352327,0.9625,240,3
-alephbertgimmel-base,cls,unseen_test,20,חתך פינה,0.8992970846515244,0.01259700215717135,0.9114937259628993,0.8999999999999999,240,3
-alephbertgimmel-base,cls,unseen_test,33,נשאר מאחור,0.9288888888888889,0.01449035969730828,0.9359788359788359,0.9291666666666667,240,3
-alephbertgimmel-base,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9958326821899255,0.007218006178335723,0.9959349593495935,0.9958333333333332,240,3
-alephbertgimmel-base,cls,unseen_test,55,שבר שתיקה,0.7282467229773825,0.008810267574812961,0.8315118397085609,0.7458333333333332,240,3
+alephbertgimmel-base,cls,unseen_test,2,איבד את הראש,0.9540655215988126,0.007258738941791753,0.9580690627202255,0.9541666666666666,240,3
+alephbertgimmel-base,cls,unseen_test,19,חצה קו אדום,0.9665791045862763,0.02615491731768394,0.969479932894567,0.9666666666666667,240,3
+alephbertgimmel-base,cls,unseen_test,20,חתך פינה,0.8866320264525273,0.0,0.8997421018697614,0.8874999999999998,240,3
+alephbertgimmel-base,cls,unseen_test,33,נשאר מאחור,0.8949064102222639,0.02959164572502148,0.9088032284522137,0.8958333333333334,240,3
+alephbertgimmel-base,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9791438521970406,0.019118822087593922,0.9804355850867479,0.9791666666666666,240,3
+alephbertgimmel-base,cls,unseen_test,55,שבר שתיקה,0.7476911674218268,0.03884068757668341,0.8394483476450688,0.7625000000000001,240,3
 alephbertgimmel-base,span,seen_test,1,איבד את הצפון,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,3,דרך במקום,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
+alephbertgimmel-base,span,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,5,הוריד פרופיל,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,6,החזיק אצבעות,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,7,הייתה בעננים,0.9583333333333334,0.07216878364870322,0.9583333333333334,0.9583333333333334,24,3
+alephbertgimmel-base,span,seen_test,7,הייתה בעננים,0.9333333333333332,0.0,1.0,0.875,24,3
 alephbertgimmel-base,span,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,9,הלך על ביצים,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,span,seen_test,9,הלך על ביצים,0.9583333333333334,0.07216878364870323,0.9583333333333334,0.9583333333333334,24,3
 alephbertgimmel-base,span,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,11,הרים את הראש,0.8453159041394337,0.03773531171174026,0.7851851851851852,0.9166666666666666,24,3
+alephbertgimmel-base,span,seen_test,11,הרים את הראש,0.8624727668845317,0.03443347193696292,0.8175925925925926,0.9166666666666666,24,3
 alephbertgimmel-base,span,seen_test,12,הרים גבה,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,13,הרים ידיים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,15,חזר למסלול,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,16,חטף חום,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,span,seen_test,16,חטף חום,0.9777777777777779,0.03849001794597505,1.0,0.9583333333333334,24,3
 alephbertgimmel-base,span,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,18,חיבר נקודות,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
@@ -202,21 +202,21 @@ alephbertgimmel-base,span,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,25,ירה לכל הכיוונים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,span,seen_test,27,לב זהב,0.9803921568627452,0.033961780540566214,0.9629629629629629,1.0,24,3
 alephbertgimmel-base,span,seen_test,28,לקח צעד אחורה,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,29,משך בחוטים,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,30,נכנס מתחת לאלונקה,0.9777777777777779,0.03849001794597503,1.0,0.9583333333333334,24,3
+alephbertgimmel-base,span,seen_test,30,נכנס מתחת לאלונקה,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,32,נפל מהכיסא,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
+alephbertgimmel-base,span,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,36,נתן גז,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
+alephbertgimmel-base,span,seen_test,36,נתן גז,0.9411764705882352,0.0,0.8888888888888888,1.0,24,3
 alephbertgimmel-base,span,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,40,עשה סצנה,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,42,פתח דף חדש,1.0,0.0,1.0,1.0,24,3
+alephbertgimmel-base,span,seen_test,42,פתח דף חדש,0.9777777777777779,0.03849001794597505,1.0,0.9583333333333334,24,3
 alephbertgimmel-base,span,seen_test,43,פתח עיניים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,44,קבר את עצמו,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,45,קיבל סטירה,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
@@ -226,79 +226,79 @@ alephbertgimmel-base,span,seen_test,48,קפץ למים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,50,שבר את הכלים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,51,שבר את הלב,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,52,שבר את הקרח,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,53,שבר את הראש,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
+alephbertgimmel-base,span,seen_test,53,שבר את הראש,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,seen_test,57,שיחק באש,0.9803921568627452,0.033961780540566214,0.9629629629629629,1.0,24,3
+alephbertgimmel-base,span,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
 alephbertgimmel-base,span,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-alephbertgimmel-base,span,unseen_test,2,איבד את הראש,1.0,0.0,1.0,1.0,240,3
-alephbertgimmel-base,span,unseen_test,19,חצה קו אדום,0.8754072711842541,0.08882778116437948,0.9191919191919192,0.8375,240,3
-alephbertgimmel-base,span,unseen_test,20,חתך פינה,0.9403581686359267,0.010363525818147158,0.9608591408591408,0.9208333333333334,240,3
-alephbertgimmel-base,span,unseen_test,33,נשאר מאחור,0.7558740601503758,0.03301786167744191,0.9672431865828092,0.6208333333333332,240,3
+alephbertgimmel-base,span,unseen_test,2,איבד את הראש,0.989463906581741,0.009704343891790349,0.9958333333333332,0.9833333333333334,240,3
+alephbertgimmel-base,span,unseen_test,19,חצה קו אדום,0.8946706887883359,0.058036725324925896,0.9247176159577025,0.8666666666666667,240,3
+alephbertgimmel-base,span,unseen_test,20,חתך פינה,0.9446894223964288,0.0034888061342506537,0.9652540442014126,0.9250000000000002,240,3
+alephbertgimmel-base,span,unseen_test,33,נשאר מאחור,0.742747047783019,0.04662505111763876,0.949575042986981,0.6124999999999999,240,3
 alephbertgimmel-base,span,unseen_test,49,רץ אחרי הזנב של עצמו,0.0,0.0,0.0,0.0,240,3
-alephbertgimmel-base,span,unseen_test,55,שבר שתיקה,0.989517819706499,0.01815566884244105,0.9915611814345991,0.9874999999999999,240,3
-bert-base-multilingual-cased,cls,seen_test,1,איבד את הצפון,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-bert-base-multilingual-cased,cls,seen_test,3,דרך במקום,0.873015873015873,0.0,0.9,0.875,24,3
-bert-base-multilingual-cased,cls,seen_test,4,הוריד את הכפפות,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-bert-base-multilingual-cased,cls,seen_test,5,הוריד פרופיל,0.611904761904762,0.14180165637455328,0.6277777777777778,0.625,24,3
-bert-base-multilingual-cased,cls,seen_test,6,החזיק אצבעות,0.6626984126984127,0.07560539239387956,0.6722222222222222,0.6666666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,7,הייתה בעננים,0.7854497354497355,0.07629099409912837,0.8277777777777778,0.7916666666666666,24,3
+alephbertgimmel-base,span,unseen_test,55,שבר שתיקה,0.9686058700209644,0.035031620616153024,0.9705696202531646,0.9666666666666667,240,3
+bert-base-multilingual-cased,cls,seen_test,1,איבד את הצפון,0.873015873015873,0.0,0.9,0.875,24,3
+bert-base-multilingual-cased,cls,seen_test,3,דרך במקום,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
+bert-base-multilingual-cased,cls,seen_test,5,הוריד פרופיל,0.75,0.0,0.75,0.75,24,3
+bert-base-multilingual-cased,cls,seen_test,6,החזיק אצבעות,0.6952380952380953,0.06598288790738581,0.7666666666666666,0.7083333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,7,הייתה בעננים,0.873015873015873,0.0,0.9,0.875,24,3
 bert-base-multilingual-cased,cls,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,9,הלך על ביצים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,9,הלך על ביצים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 bert-base-multilingual-cased,cls,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,11,הרים את הראש,0.873015873015873,0.0,0.9,0.875,24,3
-bert-base-multilingual-cased,cls,seen_test,12,הרים גבה,0.7473544973544973,0.12700479329185338,0.7611111111111111,0.75,24,3
+bert-base-multilingual-cased,cls,seen_test,11,הרים את הראש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+bert-base-multilingual-cased,cls,seen_test,12,הרים גבה,0.873015873015873,0.0,0.9,0.875,24,3
 bert-base-multilingual-cased,cls,seen_test,13,הרים ידיים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,14,חותך כמו סכין,0.8743386243386243,0.12500524890298156,0.8833333333333333,0.875,24,3
+bert-base-multilingual-cased,cls,seen_test,14,חותך כמו סכין,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 bert-base-multilingual-cased,cls,seen_test,15,חזר למסלול,0.873015873015873,0.0,0.9,0.875,24,3
-bert-base-multilingual-cased,cls,seen_test,16,חטף חום,0.832010582010582,0.07102324740031112,0.85,0.8333333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,16,חטף חום,0.873015873015873,0.0,0.9,0.875,24,3
 bert-base-multilingual-cased,cls,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,cls,seen_test,18,חיבר נקודות,0.873015873015873,0.0,0.9,0.875,24,3
 bert-base-multilingual-cased,cls,seen_test,21,יצא מהקופסה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,22,ירד לו האסימון,0.873015873015873,0.0,0.9,0.875,24,3
-bert-base-multilingual-cased,cls,seen_test,23,ירד מהעץ,0.832010582010582,0.07102324740031112,0.85,0.8333333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,22,ירד לו האסימון,0.75,0.0,0.75,0.75,24,3
+bert-base-multilingual-cased,cls,seen_test,23,ירד מהעץ,0.873015873015873,0.0,0.9,0.875,24,3
 bert-base-multilingual-cased,cls,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,25,ירה לכל הכיוונים,0.5343915343915344,0.1466286397941907,0.5444444444444444,0.5416666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,26,ירק דם,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,27,לב זהב,0.6952380952380953,0.06598288790738584,0.7666666666666666,0.7083333333333334,24,3
-bert-base-multilingual-cased,cls,seen_test,28,לקח צעד אחורה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+bert-base-multilingual-cased,cls,seen_test,25,ירה לכל הכיוונים,0.652910052910053,0.20528009571186692,0.6777777777777777,0.6666666666666666,24,3
+bert-base-multilingual-cased,cls,seen_test,26,ירק דם,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,27,לב זהב,0.7021164021164021,0.18845711176923102,0.7444444444444445,0.7083333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,28,לקח צעד אחורה,0.8743386243386243,0.12500524890298156,0.8833333333333333,0.875,24,3
 bert-base-multilingual-cased,cls,seen_test,29,משך בחוטים,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,30,נכנס מתחת לאלונקה,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
+bert-base-multilingual-cased,cls,seen_test,30,נכנס מתחת לאלונקה,0.6571428571428571,0.06598288790738584,0.6999999999999998,0.6666666666666666,24,3
 bert-base-multilingual-cased,cls,seen_test,31,נפל בין הכיסאות,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
+bert-base-multilingual-cased,cls,seen_test,32,נפל מהכיסא,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 bert-base-multilingual-cased,cls,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,35,נשך שפתיים,0.791005291005291,0.07102324740031112,0.7999999999999999,0.7916666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,36,נתן גז,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+bert-base-multilingual-cased,cls,seen_test,35,נשך שפתיים,0.75,0.0,0.75,0.75,24,3
+bert-base-multilingual-cased,cls,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,cls,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,38,סגר חשבון,0.7417989417989418,0.12719559112225792,0.7888888888888889,0.75,24,3
-bert-base-multilingual-cased,cls,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,40,עשה סצנה,0.5313131313131314,0.055985480648691036,0.6904761904761904,0.5833333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,38,סגר חשבון,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,39,עשה סלט,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+bert-base-multilingual-cased,cls,seen_test,40,עשה סצנה,0.5313131313131314,0.05598548064869102,0.6904761904761904,0.5833333333333334,24,3
 bert-base-multilingual-cased,cls,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,42,פתח דף חדש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,43,פתח עיניים,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,42,פתח דף חדש,0.873015873015873,0.0,0.9,0.875,24,3
+bert-base-multilingual-cased,cls,seen_test,43,פתח עיניים,0.77989417989418,0.08064575188680483,0.8555555555555555,0.7916666666666666,24,3
 bert-base-multilingual-cased,cls,seen_test,44,קבר את עצמו,0.6571428571428571,0.06598288790738584,0.6999999999999998,0.6666666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,45,קיבל סטירה,0.873015873015873,0.0,0.9,0.875,24,3
-bert-base-multilingual-cased,cls,seen_test,46,קיפל את הזנב,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
+bert-base-multilingual-cased,cls,seen_test,45,קיבל סטירה,1.0,0.0,1.0,1.0,24,3
+bert-base-multilingual-cased,cls,seen_test,46,קיפל את הזנב,0.77989417989418,0.08064575188680483,0.8555555555555555,0.7916666666666666,24,3
 bert-base-multilingual-cased,cls,seen_test,47,קפא במקום,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,48,קפץ למים,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,50,שבר את הכלים,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
-bert-base-multilingual-cased,cls,seen_test,51,שבר את הלב,0.7883597883597884,0.14662863979419066,0.8111111111111112,0.7916666666666666,24,3
+bert-base-multilingual-cased,cls,seen_test,48,קפץ למים,0.9111111111111111,0.15396007178390017,0.9444444444444443,0.9166666666666666,24,3
+bert-base-multilingual-cased,cls,seen_test,50,שבר את הכלים,0.8687830687830688,0.13338371434149188,0.9111111111111111,0.875,24,3
+bert-base-multilingual-cased,cls,seen_test,51,שבר את הלב,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 bert-base-multilingual-cased,cls,seen_test,52,שבר את הקרח,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,53,שבר את הראש,0.8687830687830688,0.13338371434149188,0.9111111111111111,0.875,24,3
+bert-base-multilingual-cased,cls,seen_test,53,שבר את הראש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 bert-base-multilingual-cased,cls,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,cls,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,57,שיחק באש,0.873015873015873,0.0,0.9,0.875,24,3
+bert-base-multilingual-cased,cls,seen_test,57,שיחק באש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 bert-base-multilingual-cased,cls,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,cls,seen_test,59,שם רגליים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-bert-base-multilingual-cased,cls,seen_test,60,שפכה אור,0.873015873015873,0.0,0.9,0.875,24,3
-bert-base-multilingual-cased,cls,unseen_test,2,איבד את הראש,0.9287782377948818,0.014682013014041708,0.9381402679275018,0.9291666666666667,240,3
-bert-base-multilingual-cased,cls,unseen_test,19,חצה קו אדום,0.9288544875544035,0.007411010704441668,0.936513358656938,0.9291666666666667,240,3
-bert-base-multilingual-cased,cls,unseen_test,20,חתך פינה,0.8699455231876573,0.019651021234557038,0.8806219468463713,0.8708333333333332,240,3
-bert-base-multilingual-cased,cls,unseen_test,33,נשאר מאחור,0.8616310054613748,0.021451741018987832,0.87237128547071,0.8624999999999999,240,3
-bert-base-multilingual-cased,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9833268194559402,0.007224777291073298,0.983933410762679,0.9833333333333334,240,3
-bert-base-multilingual-cased,cls,unseen_test,55,שבר שתיקה,0.8302524644628534,0.008054311718581916,0.8592504855112235,0.8333333333333334,240,3
+bert-base-multilingual-cased,cls,seen_test,59,שם רגליים,0.832010582010582,0.07102324740031112,0.85,0.8333333333333334,24,3
+bert-base-multilingual-cased,cls,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
+bert-base-multilingual-cased,cls,unseen_test,2,איבד את הראש,0.916047125349451,0.014771991345473558,0.9287439613526569,0.9166666666666666,240,3
+bert-base-multilingual-cased,cls,unseen_test,19,חצה קו אדום,0.9288888888888889,0.01449035969730828,0.9359788359788359,0.9291666666666667,240,3
+bert-base-multilingual-cased,cls,unseen_test,20,חתך פינה,0.886706257874495,0.013006158724885539,0.8981358353033885,0.8874999999999998,240,3
+bert-base-multilingual-cased,cls,unseen_test,33,נשאר מאחור,0.8574332022717491,0.020137828665713235,0.8665636184675719,0.8583333333333334,240,3
+bert-base-multilingual-cased,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9791595016458657,0.019098330087077956,0.9796599064891748,0.9791666666666666,240,3
+bert-base-multilingual-cased,cls,unseen_test,55,שבר שתיקה,0.8470520810946343,0.04622028267206867,0.8743767806267807,0.85,240,3
 bert-base-multilingual-cased,span,seen_test,1,איבד את הצפון,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
@@ -306,18 +306,18 @@ bert-base-multilingual-cased,span,seen_test,5,הוריד פרופיל,1.0,0.0,1.
 bert-base-multilingual-cased,span,seen_test,6,החזיק אצבעות,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,span,seen_test,9,הלך על ביצים,0.9387254901960785,0.06253603344202487,0.9212962962962963,0.9583333333333334,24,3
+bert-base-multilingual-cased,span,seen_test,9,הלך על ביצים,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,span,seen_test,11,הרים את הראש,0.888888888888889,0.0,0.8000000000000002,1.0,24,3
+bert-base-multilingual-cased,span,seen_test,11,הרים את הראש,0.8845315904139435,0.05894444121337114,0.8222222222222223,0.9583333333333334,24,3
 bert-base-multilingual-cased,span,seen_test,12,הרים גבה,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,13,הרים ידיים,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,15,חזר למסלול,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,16,חטף חום,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,span,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,span,seen_test,18,חיבר נקודות,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
+bert-base-multilingual-cased,span,seen_test,17,חטף מכה,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
+bert-base-multilingual-cased,span,seen_test,18,חיבר נקודות,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,span,seen_test,22,ירד לו האסימון,0.9411764705882352,0.0,0.8888888888888888,1.0,24,3
+bert-base-multilingual-cased,span,seen_test,22,ירד לו האסימון,0.8970588235294118,0.038207003108137,0.8796296296296297,0.9166666666666666,24,3
 bert-base-multilingual-cased,span,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,25,ירה לכל הכיוונים,1.0,0.0,1.0,1.0,24,3
@@ -333,7 +333,7 @@ bert-base-multilingual-cased,span,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1
 bert-base-multilingual-cased,span,seen_test,36,נתן גז,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,span,seen_test,39,עשה סלט,0.9411764705882352,0.0,0.8888888888888888,1.0,24,3
+bert-base-multilingual-cased,span,seen_test,39,עשה סלט,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,40,עשה סצנה,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,42,פתח דף חדש,1.0,0.0,1.0,1.0,24,3
@@ -353,82 +353,82 @@ bert-base-multilingual-cased,span,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,2
 bert-base-multilingual-cased,span,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
 bert-base-multilingual-cased,span,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-bert-base-multilingual-cased,span,unseen_test,2,איבד את הראש,0.9979296066252589,0.0035860265167057567,0.9958847736625515,1.0,240,3
-bert-base-multilingual-cased,span,unseen_test,19,חצה קו אדום,0.32069264069264075,0.26871072442505506,0.3263532440003028,0.31666666666666665,240,3
-bert-base-multilingual-cased,span,unseen_test,20,חתך פינה,0.7600314889788574,0.038286550180642503,0.7800682261208577,0.7416666666666667,240,3
-bert-base-multilingual-cased,span,unseen_test,33,נשאר מאחור,0.9056186331304473,0.02039493979279429,0.9338411138411139,0.8791666666666668,240,3
+bert-base-multilingual-cased,span,unseen_test,2,איבד את הראש,0.9958592132505176,0.003586026516705749,0.9917695473251028,1.0,240,3
+bert-base-multilingual-cased,span,unseen_test,19,חצה קו אדום,0.32245325843299416,0.3642780968913041,0.35190786672940333,0.3166666666666667,240,3
+bert-base-multilingual-cased,span,unseen_test,20,חתך פינה,0.9089704101268312,0.08399445148674752,0.9107768677091089,0.9083333333333333,240,3
+bert-base-multilingual-cased,span,unseen_test,33,נשאר מאחור,0.4763441761681198,0.2882972942735559,0.5970796676441837,0.44166666666666665,240,3
 bert-base-multilingual-cased,span,unseen_test,49,רץ אחרי הזנב של עצמו,0.0,0.0,0.0,0.0,240,3
-bert-base-multilingual-cased,span,unseen_test,55,שבר שתיקה,0.546231177624536,0.0840237000949028,0.6711950762207549,0.4625000000000001,240,3
-dictabert,cls,seen_test,1,איבד את הצפון,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,3,דרך במקום,0.8222222222222223,0.15396007178390017,0.8888888888888888,0.8333333333333334,24,3
+bert-base-multilingual-cased,span,unseen_test,55,שבר שתיקה,0.8038149198927859,0.10806892499092827,0.8234093234093235,0.7916666666666666,240,3
+dictabert,cls,seen_test,1,איבד את הצפון,0.8743386243386243,0.1250052489029816,0.8833333333333333,0.875,24,3
+dictabert,cls,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,5,הוריד פרופיל,0.873015873015873,0.0,0.9,0.875,24,3
-dictabert,cls,seen_test,6,החזיק אצבעות,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
+dictabert,cls,seen_test,5,הוריד פרופיל,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+dictabert,cls,seen_test,6,החזיק אצבעות,0.8264550264550264,0.08064575188680483,0.8777777777777778,0.8333333333333334,24,3
 dictabert,cls,seen_test,7,הייתה בעננים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 dictabert,cls,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,9,הלך על ביצים,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,11,הרים את הראש,0.873015873015873,0.0,0.9,0.875,24,3
-dictabert,cls,seen_test,12,הרים גבה,0.873015873015873,0.0,0.9,0.875,24,3
+dictabert,cls,seen_test,12,הרים גבה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 dictabert,cls,seen_test,13,הרים ידיים,0.873015873015873,0.0,0.9,0.875,24,3
 dictabert,cls,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,15,חזר למסלול,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 dictabert,cls,seen_test,16,חטף חום,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,18,חיבר נקודות,0.873015873015873,0.0,0.9,0.875,24,3
-dictabert,cls,seen_test,21,יצא מהקופסה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+dictabert,cls,seen_test,18,חיבר נקודות,0.8743386243386243,0.1250052489029816,0.8833333333333333,0.875,24,3
+dictabert,cls,seen_test,21,יצא מהקופסה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 dictabert,cls,seen_test,22,ירד לו האסימון,0.873015873015873,0.0,0.9,0.875,24,3
-dictabert,cls,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
+dictabert,cls,seen_test,23,ירד מהעץ,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 dictabert,cls,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,25,ירה לכל הכיוונים,0.75,0.0,0.75,0.75,24,3
+dictabert,cls,seen_test,25,ירה לכל הכיוונים,0.5636363636363637,0.0,0.7857142857142857,0.625,24,3
 dictabert,cls,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,28,לקח צעד אחורה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+dictabert,cls,seen_test,27,לב זהב,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+dictabert,cls,seen_test,28,לקח צעד אחורה,0.873015873015873,0.0,0.9,0.875,24,3
 dictabert,cls,seen_test,29,משך בחוטים,0.873015873015873,0.0,0.9,0.875,24,3
-dictabert,cls,seen_test,30,נכנס מתחת לאלונקה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+dictabert,cls,seen_test,30,נכנס מתחת לאלונקה,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1.0,24,3
+dictabert,cls,seen_test,35,נשך שפתיים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 dictabert,cls,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,39,עשה סלט,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-dictabert,cls,seen_test,40,עשה סצנה,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
+dictabert,cls,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
+dictabert,cls,seen_test,40,עשה סצנה,0.5434343434343435,0.2007637696776541,0.623015873015873,0.625,24,3
 dictabert,cls,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,42,פתח דף חדש,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,43,פתח עיניים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-dictabert,cls,seen_test,44,קבר את עצמו,0.873015873015873,0.0,0.9,0.875,24,3
+dictabert,cls,seen_test,44,קבר את עצמו,0.832010582010582,0.07102324740031109,0.85,0.8333333333333334,24,3
 dictabert,cls,seen_test,45,קיבל סטירה,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,46,קיפל את הזנב,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+dictabert,cls,seen_test,46,קיפל את הזנב,0.8222222222222223,0.15396007178390014,0.8888888888888888,0.8333333333333334,24,3
 dictabert,cls,seen_test,47,קפא במקום,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,48,קפץ למים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+dictabert,cls,seen_test,48,קפץ למים,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
 dictabert,cls,seen_test,50,שבר את הכלים,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,51,שבר את הלב,0.873015873015873,0.0,0.9,0.875,24,3
-dictabert,cls,seen_test,52,שבר את הקרח,0.873015873015873,0.0,0.9,0.875,24,3
+dictabert,cls,seen_test,51,שבר את הלב,1.0,0.0,1.0,1.0,24,3
+dictabert,cls,seen_test,52,שבר את הקרח,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 dictabert,cls,seen_test,53,שבר את הראש,0.873015873015873,0.0,0.9,0.875,24,3
 dictabert,cls,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
 dictabert,cls,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-dictabert,cls,unseen_test,2,איבד את הראש,0.9582563564808334,0.007258738941791753,0.9615926708949964,0.9583333333333334,240,3
-dictabert,cls,unseen_test,19,חצה קו אדום,0.9833150793108768,0.019122663790677667,0.9843070523728493,0.9833333333333334,240,3
-dictabert,cls,unseen_test,20,חתך פינה,0.9207139685355501,0.007220561702678024,0.9233971767631498,0.9208333333333334,240,3
-dictabert,cls,unseen_test,33,נשאר מאחור,0.8946102271562829,0.01977173415554949,0.9140661938534279,0.8958333333333334,240,3
+dictabert,cls,seen_test,60,שפכה אור,0.9111111111111111,0.15396007178390014,0.9444444444444443,0.9166666666666666,24,3
+dictabert,cls,unseen_test,2,איבד את הראש,0.9330285141502652,0.007320318420308936,0.9412238325281802,0.9333333333333332,240,3
+dictabert,cls,unseen_test,19,חצה קו אדום,0.9874941372660148,0.012507817844059268,0.9879984514130856,0.9874999999999999,240,3
+dictabert,cls,unseen_test,20,חתך פינה,0.9457831488392757,0.007249640020319814,0.947410165892418,0.9458333333333333,240,3
+dictabert,cls,unseen_test,33,נשאר מאחור,0.9122077093202722,0.012689700771904781,0.9177778428358336,0.9125,240,3
 dictabert,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.991665364379851,0.007218006178335723,0.991869918699187,0.9916666666666667,240,3
-dictabert,cls,unseen_test,55,שבר שתיקה,0.6901738767225577,0.062010164315613764,0.819903216159639,0.7166666666666667,240,3
+dictabert,cls,unseen_test,55,שבר שתיקה,0.7474903520401144,0.04458803855360699,0.8395688510505351,0.7625000000000001,240,3
 dictabert,span,seen_test,1,איבד את הצפון,1.0,0.0,1.0,1.0,24,3
-dictabert,span,seen_test,3,דרך במקום,0.9777777777777779,0.03849001794597503,1.0,0.9583333333333334,24,3
+dictabert,span,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,5,הוריד פרופיל,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,6,החזיק אצבעות,1.0,0.0,1.0,1.0,24,3
-dictabert,span,seen_test,7,הייתה בעננים,0.9803921568627452,0.033961780540566214,0.9629629629629629,1.0,24,3
+dictabert,span,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,9,הלך על ביצים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
-dictabert,span,seen_test,11,הרים את הראש,0.869281045751634,0.08344539434512237,0.7962962962962963,0.9583333333333334,24,3
+dictabert,span,seen_test,11,הרים את הראש,0.888888888888889,0.0,0.8000000000000002,1.0,24,3
 dictabert,span,seen_test,12,הרים גבה,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,13,הרים ידיים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
@@ -438,25 +438,25 @@ dictabert,span,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,18,חיבר נקודות,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,22,ירד לו האסימון,0.9411764705882352,0.0,0.8888888888888888,1.0,24,3
-dictabert,span,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
+dictabert,span,seen_test,23,ירד מהעץ,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
 dictabert,span,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,25,ירה לכל הכיוונים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,28,לקח צעד אחורה,1.0,0.0,1.0,1.0,24,3
-dictabert,span,seen_test,29,משך בחוטים,0.9777777777777779,0.03849001794597505,1.0,0.9583333333333334,24,3
-dictabert,span,seen_test,30,נכנס מתחת לאלונקה,0.9333333333333332,0.0,1.0,0.875,24,3
+dictabert,span,seen_test,29,משך בחוטים,0.9555555555555556,0.03849001794597505,1.0,0.9166666666666666,24,3
+dictabert,span,seen_test,30,נכנס מתחת לאלונקה,0.9777777777777779,0.03849001794597503,1.0,0.9583333333333334,24,3
 dictabert,span,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
-dictabert,span,seen_test,38,סגר חשבון,0.9777777777777779,0.03849001794597503,1.0,0.9583333333333334,24,3
+dictabert,span,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,40,עשה סצנה,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
-dictabert,span,seen_test,42,פתח דף חדש,0.9777777777777779,0.03849001794597505,1.0,0.9583333333333334,24,3
+dictabert,span,seen_test,42,פתח דף חדש,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,43,פתח עיניים,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,44,קבר את עצמו,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,45,קיבל סטירה,1.0,0.0,1.0,1.0,24,3
@@ -471,74 +471,194 @@ dictabert,span,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,
 dictabert,span,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
 dictabert,span,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
-dictabert,span,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
+dictabert,span,seen_test,59,שם רגליים,0.9803921568627452,0.033961780540566235,0.9629629629629629,1.0,24,3
 dictabert,span,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-dictabert,span,unseen_test,2,איבד את הראש,0.9979035639412999,0.0036311337684882196,1.0,0.9958333333333332,240,3
-dictabert,span,unseen_test,19,חצה קו אדום,0.6718642117376294,0.5032732445228196,0.6772580272580272,0.6666666666666666,240,3
-dictabert,span,unseen_test,20,חתך פינה,0.9387503695342524,0.05082580537824364,0.9486582861582861,0.9291666666666667,240,3
-dictabert,span,unseen_test,33,נשאר מאחור,0.8003405211603453,0.10667595216801161,0.9292510686874574,0.7125,240,3
-dictabert,span,unseen_test,49,רץ אחרי הזנב של עצמו,0.00411522633744856,0.007127781101106492,0.0040650406504065045,0.004166666666666667,240,3
-dictabert,span,unseen_test,55,שבר שתיקה,0.9915611814345991,0.014616462511129724,0.9957264957264957,0.9874999999999999,240,3
-xlm-roberta-base,cls,seen_test,1,איבד את הצפון,0.6878787878787879,0.10759709562170296,0.7619047619047619,0.7083333333333334,24,3
-xlm-roberta-base,cls,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,4,הוריד את הכפפות,0.873015873015873,0.0,0.9,0.875,24,3
-xlm-roberta-base,cls,seen_test,5,הוריד פרופיל,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-xlm-roberta-base,cls,seen_test,6,החזיק אצבעות,0.7417989417989418,0.12719559112225795,0.7888888888888889,0.75,24,3
-xlm-roberta-base,cls,seen_test,7,הייתה בעננים,0.873015873015873,0.0,0.9,0.875,24,3
+dictabert,span,unseen_test,2,איבד את הראש,0.9979296066252589,0.003586026516705741,0.9958847736625515,1.0,240,3
+dictabert,span,unseen_test,19,חצה קו אדום,0.9103105590062112,0.026974548170216123,0.9274544385655497,0.8958333333333334,240,3
+dictabert,span,unseen_test,20,חתך פינה,0.9129172057075193,0.03999695835750557,0.9268413712858158,0.9,240,3
+dictabert,span,unseen_test,33,נשאר מאחור,0.5867372284234111,0.2962107663198228,0.8655798655798655,0.4916666666666667,240,3
+dictabert,span,unseen_test,49,רץ אחרי הזנב של עצמו,0.13899922762882047,0.17028927333271343,0.1452766057196437,0.13333333333333333,240,3
+dictabert,span,unseen_test,55,שבר שתיקה,1.0,0.0,1.0,1.0,240,3
+neodictabert,cls,seen_test,1,איבד את הצפון,0.873015873015873,0.0,0.9,0.875,24,3
+neodictabert,cls,seen_test,3,דרך במקום,0.8264550264550264,0.08064575188680483,0.8777777777777778,0.8333333333333334,24,3
+neodictabert,cls,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,5,הוריד פרופיל,0.832010582010582,0.07102324740031112,0.85,0.8333333333333334,24,3
+neodictabert,cls,seen_test,6,החזיק אצבעות,0.8743386243386243,0.12500524890298156,0.8833333333333333,0.875,24,3
+neodictabert,cls,seen_test,7,הייתה בעננים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,9,הלך על ביצים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+neodictabert,cls,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,11,הרים את הראש,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,12,הרים גבה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,13,הרים ידיים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,15,חזר למסלול,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,16,חטף חום,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,18,חיבר נקודות,0.8743386243386243,0.12500524890298156,0.8833333333333333,0.875,24,3
+neodictabert,cls,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,22,ירד לו האסימון,0.873015873015873,0.0,0.9,0.875,24,3
+neodictabert,cls,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,25,ירה לכל הכיוונים,0.6952380952380953,0.06598288790738581,0.7666666666666666,0.7083333333333334,24,3
+neodictabert,cls,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,28,לקח צעד אחורה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,29,משך בחוטים,0.873015873015873,0.0,0.9,0.875,24,3
+neodictabert,cls,seen_test,30,נכנס מתחת לאלונקה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,35,נשך שפתיים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,40,עשה סצנה,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+neodictabert,cls,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,42,פתח דף חדש,0.9166666666666666,0.14433756729740646,0.9166666666666666,0.9166666666666666,24,3
+neodictabert,cls,seen_test,43,פתח עיניים,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,44,קבר את עצמו,0.873015873015873,0.0,0.9,0.875,24,3
+neodictabert,cls,seen_test,45,קיבל סטירה,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,46,קיפל את הזנב,0.77989417989418,0.08064575188680485,0.8555555555555555,0.7916666666666666,24,3
+neodictabert,cls,seen_test,47,קפא במקום,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,48,קפץ למים,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,50,שבר את הכלים,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,51,שבר את הלב,0.9111111111111111,0.15396007178390014,0.9444444444444443,0.9166666666666666,24,3
+neodictabert,cls,seen_test,52,שבר את הקרח,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,53,שבר את הראש,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,54,שבר את תקרת הזכוכית,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+neodictabert,cls,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
+neodictabert,cls,unseen_test,2,איבד את הראש,0.9540903458499388,0.019137653045461698,0.9569035964384801,0.9541666666666666,240,3
+neodictabert,cls,unseen_test,19,חצה קו אדום,0.9749765343869661,0.012525429439388674,0.9763705444363414,0.975,240,3
+neodictabert,cls,unseen_test,20,חתך פינה,0.9541020565948392,0.02612524402840751,0.9556940575233258,0.9541666666666666,240,3
+neodictabert,cls,unseen_test,33,נשאר מאחור,0.9457204530127802,0.007195343841863407,0.9496885892234731,0.9458333333333333,240,3
+neodictabert,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9833320310465177,0.0072157505514049425,0.9835365853658536,0.9833333333333334,240,3
+neodictabert,cls,unseen_test,55,שבר שתיקה,0.7074767174209443,0.023762956810399735,0.8244580986516471,0.7291666666666666,240,3
+neodictabert,span,seen_test,1,איבד את הצפון,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,5,הוריד פרופיל,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,6,החזיק אצבעות,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,9,הלך על ביצים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,11,הרים את הראש,0.9166666666666666,0.07216878364870323,0.9166666666666666,0.9166666666666666,24,3
+neodictabert,span,seen_test,12,הרים גבה,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,13,הרים ידיים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,15,חזר למסלול,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,16,חטף חום,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,18,חיבר נקודות,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,22,ירד לו האסימון,0.9411764705882352,0.0,0.8888888888888888,1.0,24,3
+neodictabert,span,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,25,ירה לכל הכיוונים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,28,לקח צעד אחורה,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,29,משך בחוטים,0.9777777777777779,0.03849001794597503,1.0,0.9583333333333334,24,3
+neodictabert,span,seen_test,30,נכנס מתחת לאלונקה,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,40,עשה סצנה,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,42,פתח דף חדש,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,43,פתח עיניים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,44,קבר את עצמו,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,45,קיבל סטירה,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,46,קיפל את הזנב,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,47,קפא במקום,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,48,קפץ למים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,50,שבר את הכלים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,51,שבר את הלב,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,52,שבר את הקרח,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,53,שבר את הראש,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
+neodictabert,span,unseen_test,2,איבד את הראש,0.9696840994892294,0.0307211173996247,0.9912037037037038,0.9500000000000001,240,3
+neodictabert,span,unseen_test,19,חצה קו אדום,0.5256027253668764,0.2092615540650128,0.5262130801687763,0.525,240,3
+neodictabert,span,unseen_test,20,חתך פינה,0.9833333333333334,0.00721687836487036,0.9833333333333334,0.9833333333333334,240,3
+neodictabert,span,unseen_test,33,נשאר מאחור,0.45564385846916705,0.33863193889117105,0.6453853046594982,0.3791666666666667,240,3
+neodictabert,span,unseen_test,49,רץ אחרי הזנב של עצמו,0.0,0.0,0.0,0.0,240,3
+neodictabert,span,unseen_test,55,שבר שתיקה,0.9937629399585921,0.006250040186077592,0.9917181069958847,0.9958333333333332,240,3
+xlm-roberta-base,cls,seen_test,1,איבד את הצפון,0.7444444444444445,0.00962250448649373,0.7777777777777777,0.75,24,3
+xlm-roberta-base,cls,seen_test,3,דרך במקום,0.8687830687830688,0.13338371434149188,0.9111111111111111,0.875,24,3
+xlm-roberta-base,cls,seen_test,4,הוריד את הכפפות,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+xlm-roberta-base,cls,seen_test,5,הוריד פרופיל,0.873015873015873,0.0,0.9,0.875,24,3
+xlm-roberta-base,cls,seen_test,6,החזיק אצבעות,0.7417989417989418,0.12719559112225792,0.7888888888888889,0.75,24,3
+xlm-roberta-base,cls,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,cls,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,cls,seen_test,9,הלך על ביצים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 xlm-roberta-base,cls,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,11,הרים את הראש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-xlm-roberta-base,cls,seen_test,12,הרים גבה,0.8743386243386243,0.1250052489029816,0.8833333333333333,0.875,24,3
-xlm-roberta-base,cls,seen_test,13,הרים ידיים,0.8743386243386243,0.1250052489029816,0.8833333333333333,0.875,24,3
+xlm-roberta-base,cls,seen_test,11,הרים את הראש,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+xlm-roberta-base,cls,seen_test,12,הרים גבה,0.7473544973544973,0.1270047932918534,0.7611111111111111,0.75,24,3
+xlm-roberta-base,cls,seen_test,13,הרים ידיים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 xlm-roberta-base,cls,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,15,חזר למסלול,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-xlm-roberta-base,cls,seen_test,16,חטף חום,0.873015873015873,0.0,0.9,0.875,24,3
+xlm-roberta-base,cls,seen_test,15,חזר למסלול,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+xlm-roberta-base,cls,seen_test,16,חטף חום,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
 xlm-roberta-base,cls,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,18,חיבר נקודות,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+xlm-roberta-base,cls,seen_test,18,חיבר נקודות,0.873015873015873,0.0,0.9,0.875,24,3
 xlm-roberta-base,cls,seen_test,21,יצא מהקופסה,0.873015873015873,0.0,0.9,0.875,24,3
-xlm-roberta-base,cls,seen_test,22,ירד לו האסימון,0.75,0.0,0.75,0.75,24,3
-xlm-roberta-base,cls,seen_test,23,ירד מהעץ,0.9111111111111111,0.15396007178390017,0.9444444444444443,0.9166666666666666,24,3
+xlm-roberta-base,cls,seen_test,22,ירד לו האסימון,0.791005291005291,0.07102324740031109,0.7999999999999999,0.7916666666666666,24,3
+xlm-roberta-base,cls,seen_test,23,ירד מהעץ,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 xlm-roberta-base,cls,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,25,ירה לכל הכיוונים,0.7417989417989418,0.12719559112225795,0.7888888888888889,0.75,24,3
+xlm-roberta-base,cls,seen_test,25,ירה לכל הכיוונים,0.7417989417989418,0.12719559112225792,0.7888888888888889,0.75,24,3
 xlm-roberta-base,cls,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,27,לב זהב,0.832010582010582,0.07102324740031112,0.85,0.8333333333333334,24,3
+xlm-roberta-base,cls,seen_test,27,לב זהב,0.873015873015873,0.0,0.9,0.875,24,3
 xlm-roberta-base,cls,seen_test,28,לקח צעד אחורה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 xlm-roberta-base,cls,seen_test,29,משך בחוטים,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,30,נכנס מתחת לאלונקה,0.7473544973544973,0.12700479329185338,0.7611111111111111,0.75,24,3
+xlm-roberta-base,cls,seen_test,30,נכנס מתחת לאלונקה,0.7007936507936509,0.0712829202832759,0.7388888888888889,0.7083333333333334,24,3
 xlm-roberta-base,cls,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,32,נפל מהכיסא,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-xlm-roberta-base,cls,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,35,נשך שפתיים,0.873015873015873,0.0,0.9,0.875,24,3
+xlm-roberta-base,cls,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
+xlm-roberta-base,cls,seen_test,34,נשבר מבפנים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+xlm-roberta-base,cls,seen_test,35,נשך שפתיים,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 xlm-roberta-base,cls,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,cls,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
+xlm-roberta-base,cls,seen_test,38,סגר חשבון,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 xlm-roberta-base,cls,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,40,עשה סצנה,0.4666666666666666,0.23094010767585035,0.4444444444444444,0.5833333333333334,24,3
+xlm-roberta-base,cls,seen_test,40,עשה סצנה,0.5053391053391053,0.15151597608516099,0.5563492063492063,0.5833333333333334,24,3
 xlm-roberta-base,cls,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,seen_test,42,פתח דף חדש,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-xlm-roberta-base,cls,seen_test,43,פתח עיניים,0.832010582010582,0.07102324740031112,0.85,0.8333333333333334,24,3
+xlm-roberta-base,cls,seen_test,42,פתח דף חדש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
+xlm-roberta-base,cls,seen_test,43,פתח עיניים,0.791005291005291,0.07102324740031109,0.7999999999999999,0.7916666666666666,24,3
 xlm-roberta-base,cls,seen_test,44,קבר את עצמו,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-xlm-roberta-base,cls,seen_test,45,קיבל סטירה,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-xlm-roberta-base,cls,seen_test,46,קיפל את הזנב,0.7388888888888889,0.00962250448649373,0.8055555555555555,0.75,24,3
+xlm-roberta-base,cls,seen_test,45,קיבל סטירה,0.8264550264550264,0.08064575188680483,0.8777777777777778,0.8333333333333334,24,3
+xlm-roberta-base,cls,seen_test,46,קיפל את הזנב,0.7333333333333334,0.0,0.8333333333333334,0.75,24,3
 xlm-roberta-base,cls,seen_test,47,קפא במקום,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
-xlm-roberta-base,cls,seen_test,48,קפץ למים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+xlm-roberta-base,cls,seen_test,48,קפץ למים,0.8687830687830688,0.13338371434149185,0.9111111111111111,0.875,24,3
 xlm-roberta-base,cls,seen_test,50,שבר את הכלים,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,cls,seen_test,51,שבר את הלב,0.8264550264550264,0.08064575188680485,0.8777777777777778,0.8333333333333334,24,3
-xlm-roberta-base,cls,seen_test,52,שבר את הקרח,0.873015873015873,0.0,0.9,0.875,24,3
+xlm-roberta-base,cls,seen_test,52,שבר את הקרח,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 xlm-roberta-base,cls,seen_test,53,שבר את הראש,0.9153439153439153,0.07331431989709533,0.9333333333333332,0.9166666666666666,24,3
 xlm-roberta-base,cls,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,cls,seen_test,56,שחרר קיטור,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
 xlm-roberta-base,cls,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,cls,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,cls,seen_test,59,שם רגליים,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
-xlm-roberta-base,cls,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,cls,unseen_test,2,איבד את הראש,0.9498746867167919,0.0,0.9545454545454546,0.9499999999999998,240,3
-xlm-roberta-base,cls,unseen_test,19,חצה קו אדום,0.9457098628925253,0.007322479028490847,0.9496632996632997,0.9458333333333333,240,3
-xlm-roberta-base,cls,unseen_test,20,חתך פינה,0.861816180065154,0.021610308593204366,0.8700401899890391,0.8624999999999999,240,3
+xlm-roberta-base,cls,seen_test,60,שפכה אור,0.9576719576719577,0.07331431989709533,0.9666666666666667,0.9583333333333334,24,3
+xlm-roberta-base,cls,unseen_test,2,איבד את הראש,0.9498837509312695,0.021737911523023568,0.9535365930714769,0.9500000000000001,240,3
+xlm-roberta-base,cls,unseen_test,19,חצה קו אדום,0.9457452772639062,0.03150740315625888,0.9485231229417276,0.9458333333333333,240,3
+xlm-roberta-base,cls,unseen_test,20,חתך פינה,0.8695583858719428,0.007698359218202934,0.8859233336798217,0.8708333333333332,240,3
 xlm-roberta-base,cls,unseen_test,33,נשאר מאחור,0.8915402030300649,0.007272238648812181,0.8934621804878843,0.8916666666666666,240,3
-xlm-roberta-base,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9791555923421039,0.007224777291073274,0.9800619434765775,0.9791666666666666,240,3
-xlm-roberta-base,cls,unseen_test,55,שבר שתיקה,0.7464822786987736,0.0663320410973046,0.8401733500417711,0.7625000000000001,240,3
+xlm-roberta-base,cls,unseen_test,49,רץ אחרי הזנב של עצמו,0.9707974764318282,0.014463117997146996,0.9726791453961051,0.9708333333333333,240,3
+xlm-roberta-base,cls,unseen_test,55,שבר שתיקה,0.8048396454277039,0.049749821927372574,0.8647091020316173,0.8125,240,3
 xlm-roberta-base,span,seen_test,1,איבד את הצפון,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,3,דרך במקום,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,4,הוריד את הכפפות,1.0,0.0,1.0,1.0,24,3
@@ -547,8 +667,8 @@ xlm-roberta-base,span,seen_test,6,החזיק אצבעות,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,7,הייתה בעננים,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,8,הלך בין טיפות,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,9,הלך על ביצים,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,seen_test,10,הניף דגל לבן,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,seen_test,11,הרים את הראש,0.857843137254902,0.02971655797299541,0.8425925925925926,0.875,24,3
+xlm-roberta-base,span,seen_test,10,הניף דגל לבן,0.9166666666666666,0.07216878364870322,0.9166666666666666,0.9166666666666666,24,3
+xlm-roberta-base,span,seen_test,11,הרים את הראש,0.8453159041394337,0.03773531171174023,0.7851851851851852,0.9166666666666666,24,3
 xlm-roberta-base,span,seen_test,12,הרים גבה,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,13,הרים ידיים,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,14,חותך כמו סכין,1.0,0.0,1.0,1.0,24,3
@@ -557,11 +677,11 @@ xlm-roberta-base,span,seen_test,16,חטף חום,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,17,חטף מכה,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,18,חיבר נקודות,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,21,יצא מהקופסה,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,seen_test,22,ירד לו האסימון,0.9191176470588235,0.038207003108137,0.8842592592592592,0.9583333333333334,24,3
+xlm-roberta-base,span,seen_test,22,ירד לו האסימון,0.9411764705882352,0.0,0.8888888888888888,1.0,24,3
 xlm-roberta-base,span,seen_test,23,ירד מהעץ,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,24,ירד מהפסים,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,25,ירה לכל הכיוונים,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,seen_test,26,ירק דם,0.9803921568627452,0.033961780540566214,0.9629629629629629,1.0,24,3
+xlm-roberta-base,span,seen_test,26,ירק דם,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,27,לב זהב,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,28,לקח צעד אחורה,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,29,משך בחוטים,1.0,0.0,1.0,1.0,24,3
@@ -569,10 +689,10 @@ xlm-roberta-base,span,seen_test,30,נכנס מתחת לאלונקה,1.0,0.0,1.0,
 xlm-roberta-base,span,seen_test,31,נפל בין הכיסאות,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,32,נפל מהכיסא,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,34,נשבר מבפנים,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,seen_test,35,נשך שפתיים,0.9166666666666666,0.07216878364870323,0.9166666666666666,0.9166666666666666,24,3
+xlm-roberta-base,span,seen_test,35,נשך שפתיים,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,36,נתן גז,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,37,נתן יד,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,seen_test,38,סגר חשבון,0.9777777777777779,0.03849001794597505,1.0,0.9583333333333334,24,3
+xlm-roberta-base,span,seen_test,38,סגר חשבון,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,39,עשה סלט,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,40,עשה סצנה,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,41,פתח דלתות,1.0,0.0,1.0,1.0,24,3
@@ -589,13 +709,13 @@ xlm-roberta-base,span,seen_test,52,שבר את הקרח,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,53,שבר את הראש,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,54,שבר את תקרת הזכוכית,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,56,שחרר קיטור,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,seen_test,57,שיחק באש,1.0,0.0,1.0,1.0,24,3
+xlm-roberta-base,span,seen_test,57,שיחק באש,0.9583333333333334,0.07216878364870322,0.9583333333333334,0.9583333333333334,24,3
 xlm-roberta-base,span,seen_test,58,שם עליו פס,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,59,שם רגליים,1.0,0.0,1.0,1.0,24,3
 xlm-roberta-base,span,seen_test,60,שפכה אור,1.0,0.0,1.0,1.0,24,3
-xlm-roberta-base,span,unseen_test,2,איבד את הראש,0.9958847736625515,0.007127781101106539,0.991869918699187,1.0,240,3
-xlm-roberta-base,span,unseen_test,19,חצה קו אדום,0.745619350603444,0.1070997431635656,0.7373603762492652,0.7541666666666668,240,3
-xlm-roberta-base,span,unseen_test,20,חתך פינה,0.9192503299945649,0.05241501664012751,0.9177806936297211,0.9208333333333334,240,3
-xlm-roberta-base,span,unseen_test,33,נשאר מאחור,0.5024766720105233,0.4318744866383909,0.5492074991218827,0.4666666666666666,240,3
+xlm-roberta-base,span,unseen_test,2,איבד את הראש,0.9979296066252589,0.0035860265167057567,0.9958847736625515,1.0,240,3
+xlm-roberta-base,span,unseen_test,19,חצה קו אדום,0.562621886936013,0.30382373349960534,0.5546949703576209,0.5708333333333333,240,3
+xlm-roberta-base,span,unseen_test,20,חתך פינה,0.9624467752646587,0.016773820127968627,0.9624433505235194,0.9625,240,3
+xlm-roberta-base,span,unseen_test,33,נשאר מאחור,0.3472363704961328,0.19025195097893552,0.674040404040404,0.24583333333333335,240,3
 xlm-roberta-base,span,unseen_test,49,רץ אחרי הזנב של עצמו,0.0,0.0,0.0,0.0,240,3
-xlm-roberta-base,span,unseen_test,55,שבר שתיקה,0.6000080460776444,0.2670078670699464,0.600396257022763,0.6,240,3
+xlm-roberta-base,span,unseen_test,55,שבר שתיקה,0.7758121621988963,0.13747481996886313,0.827143378958661,0.7374999999999999,240,3

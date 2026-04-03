@@ -10,13 +10,13 @@ The Docker setup provides:
 - All project dependencies pre-installed
 - Jupyter notebook support
 - TensorBoard integration
-- Automatic mounting of `data/`, `professor_review/`, and experiment directories
+- Automatic mounting of `data/` and experiment directories
 - Optional `.env` injection via Docker Compose
 
 ## Files
 
 - `Dockerfile` - Main Docker image definition
-- `../docker-compose.yml` - Docker Compose configuration for easy orchestration
+- `docker-compose.yml` - Docker Compose configuration for easy orchestration
 - `../.dockerignore` - Files excluded from Docker build context
 
 ## Prerequisites
@@ -35,16 +35,16 @@ The Docker setup provides:
 
 ```bash
 # Build the image
-docker-compose build
+docker-compose -f docker/docker-compose.yml build
 
 # Start the container
-docker-compose up -d
+docker-compose -f docker/docker-compose.yml up -d
 
 # Access the container
-docker-compose exec hebrew-idiom-detection bash
+docker-compose -f docker/docker-compose.yml exec hebrew-idiom-detection bash
 
 # Stop the container
-docker-compose down
+docker-compose -f docker/docker-compose.yml down
 ```
 
 ### Option 2: Using Docker directly
@@ -56,7 +56,7 @@ docker build -t hebrew-idiom-detection:latest -f docker/Dockerfile .
 # Run the container
 docker run -it --name hebrew-idiom \
   -v $(pwd)/data:/workspace/data \
-  -v $(pwd)/professor_review:/workspace/professor_review \
+  -v $(pwd)/notebooks:/workspace/notebooks \
   -v $(pwd)/src:/workspace/src \
   -v $(pwd)/experiments:/workspace/experiments \
   -v $(pwd)/models:/workspace/models \
@@ -74,7 +74,7 @@ docker-compose up -d
 docker run -it --gpus all \
   --name hebrew-idiom \
   -v $(pwd)/data:/workspace/data \
-  -v $(pwd)/professor_review:/workspace/professor_review \
+  -v $(pwd)/notebooks:/workspace/notebooks \
   -v $(pwd)/src:/workspace/src \
   -v $(pwd)/experiments:/workspace/experiments \
   -v $(pwd)/models:/workspace/models \

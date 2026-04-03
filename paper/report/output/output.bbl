@@ -1,0 +1,254 @@
+\begin{thebibliography}{38}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Cacciari and Tabossi(1988)]{cacciari1988comprehension}
+Cristina Cacciari and Patrizia Tabossi.
+\newblock The comprehension of idioms.
+\newblock \emph{Journal of Memory and Language}, 27\penalty0 (6):\penalty0 668--683, 1988.
+\newblock \doi{10.1016/0749-596X(88)90014-9}.
+
+\bibitem[Conneau et~al.(2020)Conneau, Khandelwal, Goyal, Chaudhary, Wenzek, Guzm{\'a}n, Grave, Ott, Zettlemoyer, and Stoyanov]{conneau2020unsupervised}
+Alexis Conneau, Kartikay Khandelwal, Naman Goyal, Vishrav Chaudhary, Guillaume Wenzek, Francisco Guzm{\'a}n, Edouard Grave, Myle Ott, Luke Zettlemoyer, and Veselin Stoyanov.
+\newblock Unsupervised cross-lingual representation learning at scale.
+\newblock In \emph{Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics (ACL)}, pages 8440--8451. Association for Computational Linguistics, 2020.
+\newblock \doi{10.18653/v1/2020.acl-main.747}.
+\newblock URL \url{https://aclanthology.org/2020.acl-main.747/}.
+
+\bibitem[Constant et~al.(2017)Constant, Eryigit, Monti, van~der Plas, Ramisch, Rosner, and Todirascu]{constant2017survey}
+Mathieu Constant, G{\"u}ls{\"e}n Eryigit, Johanna Monti, Lonneke van~der Plas, Carlos Ramisch, Michael Rosner, and Amalia Todirascu.
+\newblock Multiword expression processing: A survey.
+\newblock \emph{Computational Linguistics}, 43\penalty0 (4):\penalty0 837--892, 2017.
+\newblock \doi{10.1162/COLI_a_00302}.
+\newblock URL \url{https://aclanthology.org/J17-4005/}.
+
+\bibitem[Devlin et~al.(2019)Devlin, Chang, Lee, and Toutanova]{devlin2019bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language understanding.
+\newblock In \emph{Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)}, pages 4171--4186. Association for Computational Linguistics, 2019.
+\newblock \doi{10.18653/v1/N19-1423}.
+\newblock URL \url{https://aclanthology.org/N19-1423}.
+
+\bibitem[Gibbs(1990)]{gibbs1990psycholinguistic}
+Raymond~W. Gibbs.
+\newblock Psycholinguistic studies on the conceptual basis of idiomaticity.
+\newblock \emph{Cognitive Linguistics}, 1\penalty0 (4):\penalty0 417--451, 1990.
+\newblock \doi{10.1515/cogl.1990.1.4.417}.
+
+\bibitem[{Google DeepMind}(2024)]{google_gemini3_2024}
+{Google DeepMind}.
+\newblock Gemini: A family of highly capable multimodal models, 2024.
+\newblock URL \url{https://deepmind.google/technologies/gemini/}.
+\newblock Technical report.
+
+\bibitem[Gueta et~al.(2023)Gueta, Shmidman, Shmidman, Shmidman, Guedalia, Koppel, Bareket, Seker, and Tsarfaty]{gueta2023alephbertgimmel}
+Eylon Gueta, Avi Shmidman, Shaltiel Shmidman, Cheyn~Shmuel Shmidman, Joshua Guedalia, Moshe Koppel, Dan Bareket, Amit Seker, and Reut Tsarfaty.
+\newblock Large pre-trained models with extra-large vocabularies: A contrastive analysis of {H}ebrew {BERT} models and a new one to outperform them all.
+\newblock \emph{arXiv preprint arXiv:2211.15199}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2211.15199}.
+
+\bibitem[Haagsma et~al.(2020)Haagsma, Bos, and Nissim]{haagsma2020magpie}
+Hessel Haagsma, Johan Bos, and Malvina Nissim.
+\newblock {MAGPIE}: A large corpus of potentially idiomatic expressions.
+\newblock In \emph{Proceedings of the Twelfth Language Resources and Evaluation Conference (LREC)}, pages 279--287. European Language Resources Association, 2020.
+\newblock URL \url{https://aclanthology.org/2020.lrec-1.35}.
+
+\bibitem[Hashiloni et~al.(2025)Hashiloni, Hefetz, and Bar]{hashiloni2025easypie}
+Kai~Golan Hashiloni, Ofri Hefetz, and Kfir Bar.
+\newblock Easy as {PIE}? identifying multi-word expressions with {LLM}s.
+\newblock In \emph{Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 23771--23790, Suzhou, China, 2025. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2025.emnlp-main.1213}.
+\newblock URL \url{https://aclanthology.org/2025.emnlp-main.1213}.
+
+\bibitem[Hefetz et~al.(2025)Hefetz, Hashiloni, Mannor, and Bar]{hefetz2025notjust}
+Ofri Hefetz, Kai~Golan Hashiloni, Alon Mannor, and Kfir Bar.
+\newblock Not just a piece of cake: Cross-lingual fine-tuning for idiom identification.
+\newblock In \emph{Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics (IJCNLP-AACL)}, pages 2521--2537, Mumbai, India, 2025. Association for Computational Linguistics.
+\newblock URL \url{https://aclanthology.org/2025.ijcnlp-long.136}.
+
+\bibitem[Keysers et~al.(2020)Keysers, Sch{\"a}rli, Scales, Buisman, Furrer, Kashubin, Momchev, Sinopalnikov, Stafiniak, Tihon, Tsarkov, Wang, van Zee, and Bousquet]{keysers2020measuring}
+Daniel Keysers, Nathanael Sch{\"a}rli, Nathan Scales, Hylke Buisman, Daniel Furrer, Sergii Kashubin, Nikola Momchev, Danila Sinopalnikov, Lukasz Stafiniak, Tibor Tihon, Dmitry Tsarkov, Xiao Wang, Marc van Zee, and Olivier Bousquet.
+\newblock Measuring compositional generalization: A comprehensive method on realistic data.
+\newblock In \emph{Proceedings of the 8th International Conference on Learning Representations (ICLR)}, 2020.
+\newblock URL \url{https://openreview.net/forum?id=SygcCnNKwr}.
+
+\bibitem[Kim and Linzen(2020)]{kim2020cogs}
+Najoung Kim and Tal Linzen.
+\newblock {COGS}: A compositional generalization challenge based on semantic interpretation.
+\newblock In \emph{Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 9087--9105. Association for Computational Linguistics, 2020.
+\newblock \doi{10.18653/v1/2020.emnlp-main.731}.
+\newblock URL \url{https://aclanthology.org/2020.emnlp-main.731}.
+
+\bibitem[Lake and Baroni(2018)]{lake2018generalization}
+Brenden~M. Lake and Marco Baroni.
+\newblock Generalization without systematicity: On the compositional skills of sequence-to-sequence recurrent networks.
+\newblock In \emph{Proceedings of the 35th International Conference on Machine Learning (ICML)}, pages 2873--2882. PMLR, 2018.
+\newblock URL \url{https://proceedings.mlr.press/v80/lake18a.html}.
+
+\bibitem[Lample et~al.(2016)Lample, Ballesteros, Subramanian, Kawakami, and Dyer]{lample2016neural}
+Guillaume Lample, Miguel Ballesteros, Sandeep Subramanian, Kazuya Kawakami, and Chris Dyer.
+\newblock Neural architectures for named entity recognition.
+\newblock In \emph{Proceedings of the 2016 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (NAACL-HLT)}, pages 260--270. Association for Computational Linguistics, 2016.
+\newblock \doi{10.18653/v1/N16-1030}.
+\newblock URL \url{https://aclanthology.org/N16-1030}.
+
+\bibitem[McCurdy et~al.(2024)McCurdy, Soulos, Smolensky, Fernandez, and Gao]{mccurdy2024compositional}
+Kate McCurdy, Paul Soulos, Paul Smolensky, Roland Fernandez, and Jianfeng Gao.
+\newblock Toward compositional behavior in neural models: A survey of current views.
+\newblock In \emph{Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing (EMNLP)}, pages 9323--9339. Association for Computational Linguistics, 2024.
+\newblock \doi{10.18653/v1/2024.emnlp-main.524}.
+\newblock URL \url{https://aclanthology.org/2024.emnlp-main.524}.
+
+\bibitem[{Meta AI}(2025)]{MetaLlama4_2025}
+{Meta AI}.
+\newblock The llama 4 model family, 2025.
+\newblock URL \url{https://ai.meta.com/llama/}.
+\newblock Technical report.
+
+\bibitem[Mi et~al.(2025)Mi, Villavicencio, and Moosavi]{mi2024rolling}
+Maggie Mi, Aline Villavicencio, and Nafise~Sadat Moosavi.
+\newblock Rolling the {DICE} on idiomaticity: How {LLM}s fail to grasp context.
+\newblock In \emph{Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 7314--7332, Vienna, Austria, 2025. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2025.acl-long.362}.
+\newblock URL \url{https://aclanthology.org/2025.acl-long.362}.
+
+\bibitem[Mileti{\'c} and Schulte~im Walde(2024)]{miletic2024mwesurvey}
+Filip Mileti{\'c} and Sabine Schulte~im Walde.
+\newblock Semantics of multiword expressions in transformer-based models: A survey.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 12:\penalty0 593--612, 2024.
+\newblock \doi{10.1162/tacl_a_00657}.
+\newblock URL \url{https://aclanthology.org/2024.tacl-1.33}.
+
+\bibitem[Nedumpozhimana and Kelleher(2021)]{nedumpozhimana2021finding}
+Vasudevan Nedumpozhimana and John Kelleher.
+\newblock Finding {BERT}'s idiomatic key.
+\newblock In \emph{Proceedings of the 17th Workshop on Multiword Expressions (MWE 2021)}, pages 57--62. Association for Computational Linguistics, 2021.
+\newblock \doi{10.18653/v1/2021.mwe-1.7}.
+\newblock URL \url{https://aclanthology.org/2021.mwe-1.7}.
+
+\bibitem[Phelps et~al.(2024)Phelps, Pickard, Mi, Gow-Smith, and Villavicencio]{phelps2024sign}
+Dylan Phelps, Thomas Pickard, Maggie Mi, Edward Gow-Smith, and Aline Villavicencio.
+\newblock Sign of the times: Evaluating the use of large language models for idiomaticity detection.
+\newblock In \emph{Proceedings of the Joint Workshop on Multiword Expressions and Universal Dependencies (MWE-UD) @ LREC-COLING 2024}, pages 178--187, Torino, Italia, 2024. European Language Resources Association.
+\newblock URL \url{https://aclanthology.org/2024.mwe-1.22}.
+
+\bibitem[{Qwen Team}(2025)]{qwen3_2025}
+{Qwen Team}.
+\newblock Qwen3 technical report, 2025.
+\newblock URL \url{https://arxiv.org/abs/2505.09388}.
+
+\bibitem[Ramshaw and Marcus(1995)]{ramshaw1995text}
+Lance~A. Ramshaw and Mitchell~P. Marcus.
+\newblock Text chunking using transformation-based learning.
+\newblock In \emph{Third Workshop on Very Large Corpora}, pages 82--94. Association for Computational Linguistics, 1995.
+\newblock URL \url{https://aclanthology.org/W95-0107}.
+
+\bibitem[Salton et~al.(2016)Salton, Ross, and Kelleher]{salton2016idiom}
+Giancarlo Salton, Robert Ross, and John Kelleher.
+\newblock Idiom token classification using sentential distributed semantics.
+\newblock In \emph{Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers)}, pages 194--204. Association for Computational Linguistics, 2016.
+\newblock \doi{10.18653/v1/P16-2032}.
+\newblock URL \url{https://aclanthology.org/P16-2032}.
+
+\bibitem[Seker et~al.(2022)Seker, Bandel, Bareket, Brusilovsky, Greenfeld, and Tsarfaty]{seker2022alephbert}
+Amit Seker, Elron Bandel, Dan Bareket, Idan Brusilovsky, Refael Greenfeld, and Reut Tsarfaty.
+\newblock {AlephBERT}: Language model pre-training and evaluation from sub-word to sentence level.
+\newblock In \emph{Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pages 46--56. Association for Computational Linguistics, 2022.
+\newblock \doi{10.18653/v1/2022.acl-long.4}.
+\newblock URL \url{https://aclanthology.org/2022.acl-long.4}.
+
+\bibitem[Shmidman et~al.(2023)Shmidman, Shmidman, and Koppel]{shmidman2023dictabert}
+Shaltiel Shmidman, Avi Shmidman, and Moshe Koppel.
+\newblock {DictaBERT}: A state-of-the-art {BERT} suite for modern {H}ebrew.
+\newblock \emph{arXiv preprint arXiv:2308.16687}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2308.16687}.
+
+\bibitem[Shmidman et~al.(2025{\natexlab{a}})Shmidman, Shmidman, Cohen, and Koppel]{Shmidman2025DictaLM3}
+Shaltiel Shmidman, Avi Shmidman, Amir D.~N. Cohen, and Moshe Koppel.
+\newblock Dicta-lm 3.0: Advancing the frontier of hebrew sovereign llms.
+\newblock Technical report, Dicta: The Israel Center for Text Analysis, 2025{\natexlab{a}}.
+\newblock URL \url{https://www.dicta.org.il/publications/DictaLM_3_0___Techincal_Report.pdf}.
+
+\bibitem[Shmidman et~al.(2025{\natexlab{b}})Shmidman, Shmidman, and Koppel]{shmidman2025neodictabert}
+Shaltiel Shmidman, Avi Shmidman, and Moshe Koppel.
+\newblock {NeoDictaBERT}: Pushing the frontier of {BERT} models for {H}ebrew.
+\newblock \emph{arXiv preprint arXiv:2510.20386}, 2025{\natexlab{b}}.
+\newblock URL \url{https://arxiv.org/abs/2510.20386}.
+
+\bibitem[Shutova(2015)]{shutova2015design}
+Ekaterina Shutova.
+\newblock Design and evaluation of metaphor processing systems.
+\newblock \emph{Computational Linguistics}, 41\penalty0 (4):\penalty0 579--623, 2015.
+\newblock \doi{10.1162/COLI_a_00233}.
+\newblock URL \url{https://aclanthology.org/J15-4002/}.
+
+\bibitem[Sprenger et~al.(2006)Sprenger, Levelt, and Kempen]{sprenger2006lexical}
+Simone~A. Sprenger, Willem J.~M. Levelt, and Gerard Kempen.
+\newblock Lexical access during the production of idiomatic phrases.
+\newblock \emph{Journal of Memory and Language}, 54\penalty0 (2):\penalty0 161--184, 2006.
+\newblock \doi{10.1016/j.jml.2005.11.001}.
+
+\bibitem[Tayyar~Madabushi et~al.(2021)Tayyar~Madabushi, Gow-Smith, Scarton, and Villavicencio]{tayyar2022epie}
+Harish Tayyar~Madabushi, Edward Gow-Smith, Carolina Scarton, and Aline Villavicencio.
+\newblock {AStitchInLanguageModels}: Dataset and methods for the exploration of idiomaticity in pre-trained language models.
+\newblock In \emph{Findings of the Association for Computational Linguistics: EMNLP 2021}, pages 3464--3477. Association for Computational Linguistics, 2021.
+\newblock \doi{10.18653/v1/2021.findings-emnlp.294}.
+\newblock URL \url{https://aclanthology.org/2021.findings-emnlp.294}.
+
+\bibitem[Tayyar~Madabushi et~al.(2022)Tayyar~Madabushi, Gow-Smith, Garcia, Scarton, Idiart, and Villavicencio]{peng2022semeval}
+Harish Tayyar~Madabushi, Edward Gow-Smith, Marcos Garcia, Carolina Scarton, Marco Idiart, and Aline Villavicencio.
+\newblock {SemEval}-2022 task 2: Multilingual idiomaticity detection and sentence embedding.
+\newblock In \emph{Proceedings of the 16th International Workshop on Semantic Evaluation (SemEval-2022)}, pages 107--121. Association for Computational Linguistics, 2022.
+\newblock \doi{10.18653/v1/2022.semeval-1.13}.
+\newblock URL \url{https://aclanthology.org/2022.semeval-1.13}.
+
+\bibitem[Tedeschi et~al.(2022)Tedeschi, Martelli, and Navigli]{tedeschi-etal-2022-id10m}
+Simone Tedeschi, Federico Martelli, and Roberto Navigli.
+\newblock {ID}10{M}: Idiom identification in 10 languages.
+\newblock In Marine Carpuat, Marie-Catherine de~Marneffe, and Ivan~Vladimir Meza~Ruiz, editors, \emph{Findings of the Association for Computational Linguistics: NAACL 2022}, pages 2715--2726, Seattle, United States, July 2022. Association for Computational Linguistics.
+\newblock \doi{10.18653/v1/2022.findings-naacl.208}.
+\newblock URL \url{https://aclanthology.org/2022.findings-naacl.208/}.
+
+\bibitem[Titone and Connine(1999)]{titone1999processing}
+Debra~A. Titone and Cynthia~M. Connine.
+\newblock On the compositional and noncompositional nature of idiomatic expressions.
+\newblock \emph{Journal of Pragmatics}, 31\penalty0 (12):\penalty0 1655--1674, 1999.
+\newblock \doi{10.1016/S0378-2166(99)00008-9}.
+
+\bibitem[Tsarfaty et~al.(2019)Tsarfaty, Sadde, Klein, and Seker]{tsarfaty2019whats}
+Reut Tsarfaty, Shoval Sadde, Stav Klein, and Amit Seker.
+\newblock What's wrong with hebrew {NLP}? and how to make it right.
+\newblock In \emph{Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP): System Demonstrations}, pages 259--264. Association for Computational Linguistics, 2019.
+\newblock \doi{10.18653/v1/D19-3044}.
+\newblock URL \url{https://aclanthology.org/D19-3044/}.
+
+\bibitem[Wintner(2004)]{wintner2014hebrew}
+Shuly Wintner.
+\newblock Hebrew computational linguistics: Past and future.
+\newblock \emph{Artificial Intelligence Review}, 21\penalty0 (2):\penalty0 113--138, 2004.
+\newblock \doi{10.1023/B:AIRE.0000006605.67886.94}.
+
+\bibitem[Yayavaram et~al.(2024)Yayavaram, Yayavaram, Upadhyay, and Das]{yayavaram2024bert}
+Arnav Yayavaram, Siddharth Yayavaram, Prajna~Devi Upadhyay, and Apurba Das.
+\newblock {BERT}-based idiom identification using language translation and word cohesion.
+\newblock In \emph{Proceedings of the Joint Workshop on Multiword Expressions and Universal Dependencies (MWE-UD) @ LREC-COLING 2024}, pages 220--230, Torino, Italia, 2024. European Language Resources Association.
+\newblock URL \url{https://aclanthology.org/2024.mwe-1.26}.
+
+\bibitem[Zaitova et~al.(2025)Zaitova, Hirak, Abdullah, Klakow, M{\"o}bius, and Avgustinova]{zaitova2025attention}
+Iuliia Zaitova, Vitalii Hirak, Badr~M. Abdullah, Dietrich Klakow, Bernd M{\"o}bius, and Tania Avgustinova.
+\newblock Attention on multiword expressions: A multilingual study of {BERT}-based models with regard to idiomaticity and microsyntax.
+\newblock In \emph{Findings of the Association for Computational Linguistics: NAACL 2025}, pages 4083--4092. Association for Computational Linguistics, 2025.
+\newblock \doi{10.18653/v1/2025.findings-naacl.228}.
+\newblock URL \url{https://aclanthology.org/2025.findings-naacl.228}.
+
+\bibitem[Zeng and Bhat(2021)]{zeng2021idiomatic}
+Ziheng Zeng and Suma Bhat.
+\newblock Idiomatic expression identification using semantic compatibility.
+\newblock \emph{Transactions of the Association for Computational Linguistics}, 9:\penalty0 1546--1562, 2021.
+\newblock \doi{10.1162/tacl_a_00442}.
+\newblock URL \url{https://aclanthology.org/2021.tacl-1.92}.
+
+\end{thebibliography}

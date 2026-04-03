@@ -89,18 +89,82 @@ def load_all_results():
     return pd.DataFrame(data)
 
 
+def bootstrap_ci(scores, n_bootstrap=10000, confidence_level=0.95, random_state=42):
+    """
+    Compute bootstrap confidence interval for mean.
+
+    Args:
+        scores: Array of F1 scores (typically 3 seeds)
+        n_bootstrap: Number of bootstrap resamples
+        confidence_level: Confidence level (default 0.95 for 95% CI)
+        random_state: Random seed for reproducibility
+
+    Returns:
+        (ci_low, ci_high): Bootstrap confidence interval bounds
+    """
+    from scipy.stats import bootstrap
+
+    if len(scores) < 2:
+        return np.nan, np.nan
+
+    # Bootstrap requires a callable that returns the statistic
+    def mean_func(sample, axis):
+        return np.mean(sample, axis=axis)
+
+    # Perform bootstrap
+    rng = np.random.RandomState(random_state)
+    result = bootstrap(
+        (scores,),
+        mean_func,
+        n_resamples=n_bootstrap,
+        confidence_level=confidence_level,
+        random_state=rng,
+        method='percentile'
+    )
+
+    return result.confidence_interval.low, result.confidence_interval.high
+
+
 def calculate_statistics(df):
-    """Calculate Mean ± Std for all metrics."""
-    # Aggregation: Mean ± Std per (Task, Model, Test_Set)
-    summary = df.groupby(["test_set", "task", "model"])["f1"].agg(
-        ["mean", "std", "count"]
-    ).reset_index()
+    """
+    Calculate Mean ± Std and Bootstrap 95% CI for all metrics.
+
+    Updated for Priority 1 Task: Bootstrap CIs (CONLL_2026_COMPREHENSIVE_REVIEW.md)
+    """
+    # Group by Test Set, Task, Model
+    grouped = df.groupby(["test_set", "task", "model"])
+
+    results = []
+    for (test_set, task, model), group in grouped:
+        f1_scores = group["f1"].values
+
+        # Compute statistics
+        mean_f1 = np.mean(f1_scores)
+        std_f1 = np.std(f1_scores, ddof=1)
+        count = len(f1_scores)
+
+        # Compute bootstrap CI
+        ci_low, ci_high = bootstrap_ci(f1_scores)
+
+        results.append({
+            "test_set": test_set,
+            "task": task,
+            "model": model,
+            "mean": mean_f1,
+            "std": std_f1,
+            "count": count,
+            "ci_low": ci_low,
+            "ci_high": ci_high
+        })
+
+    summary = pd.DataFrame(results)
 
     # Sort by Test Set, Task, then Mean F1 (Desc)
     summary = summary.sort_values(
         ["test_set", "task", "mean"],
         ascending=[True, True, False]
     )
+
     return summary
 
 
@@ -355,14 +419,18 @@ def main():
         f.write("# Comprehensive Fine-Tuning Analysis\n\n")
 
         f.write("## 1. In-Domain Performance (Seen Test)\n")
-        f.write("Performance on idioms seen during training (split by sentences).\n\n")
-        seen_summary = summary[summary['test_set'] == 'Seen'][['task', 'model', 'mean', 'std']]
-        f.write(seen_summary.to_markdown(index=False, floatfmt=".4f"))
+        f.write("Performance on idioms seen during training (split by sentences).\n")
+        f.write("Reporting: Mean F1 ± Std (95% Bootstrap CI)\n\n")
+        seen_summary = summary[summary['test_set'] == 'Seen'][['task', 'model', 'mean', 'std', 'ci_low', 'ci_high']].copy()
+        seen_summary['ci'] = seen_summary.apply(lambda r: f"[{r['ci_low']:.4f}, {r['ci_high']:.4f}]", axis=1)
+        f.write(seen_summary[['task', 'model', 'mean', 'std', 'ci']].to_markdown(index=False, floatfmt=".4f"))
 
         f.write("\n\n## 2. Generalization Performance (Unseen Test)\n")
-        f.write("Performance on completely new idioms never seen during training (Zero-Shot Transfer).\n\n")
-        unseen_summary = summary[summary['test_set'] == 'Unseen'][['task', 'model', 'mean', 'std']]
-        f.write(unseen_summary.to_markdown(index=False, floatfmt=".4f"))
+        f.write("Performance on completely new idioms never seen during training (Zero-Shot Transfer).\n")
+        f.write("Reporting: Mean F1 ± Std (95% Bootstrap CI)\n\n")
+        unseen_summary = summary[summary['test_set'] == 'Unseen'][['task', 'model', 'mean', 'std', 'ci_low', 'ci_high']].copy()
+        unseen_summary['ci'] = unseen_summary.apply(lambda r: f"[{r['ci_low']:.4f}, {r['ci_high']:.4f}]", axis=1)
+        f.write(unseen_summary[['task', 'model', 'mean', 'std', 'ci']].to_markdown(index=False, floatfmt=".4f"))
 
         f.write("\n\n" + ttest_report)
 
@@ -373,10 +441,10 @@ def main():
         best_unseen_cls = summary[(summary['test_set']=='Unseen') & (summary['task']=='cls')].iloc[0]
         best_unseen_span = summary[(summary['test_set']=='Unseen') & (summary['task']=='span')].iloc[0]
 
-        f.write(f"- **Best In-Domain (CLS):** {best_seen_cls['model']} ({best_seen_cls['mean']:.4f} ± {best_seen_cls['std']:.4f})\n")
-        f.write(f"- **Best In-Domain (SPAN):** {best_seen_span['model']} ({best_seen_span['mean']:.4f} ± {best_seen_span['std']:.4f})\n")
-        f.write(f"- **Best Generalization (CLS):** {best_unseen_cls['model']} ({best_unseen_cls['mean']:.4f} ± {best_unseen_cls['std']:.4f})\n")
-        f.write(f"- **Best Generalization (SPAN):** {best_unseen_span['model']} ({best_unseen_span['mean']:.4f} ± {best_unseen_span['std']:.4f})\n")
+        f.write(f"- **Best In-Domain (CLS):** {best_seen_cls['model']} ({best_seen_cls['mean']:.4f} ± {best_seen_cls['std']:.4f}, 95% CI: [{best_seen_cls['ci_low']:.4f}, {best_seen_cls['ci_high']:.4f}])\n")
+        f.write(f"- **Best In-Domain (SPAN):** {best_seen_span['model']} ({best_seen_span['mean']:.4f} ± {best_seen_span['std']:.4f}, 95% CI: [{best_seen_span['ci_low']:.4f}, {best_seen_span['ci_high']:.4f}])\n")
+        f.write(f"- **Best Generalization (CLS):** {best_unseen_cls['model']} ({best_unseen_cls['mean']:.4f} ± {best_unseen_cls['std']:.4f}, 95% CI: [{best_unseen_cls['ci_low']:.4f}, {best_unseen_cls['ci_high']:.4f}])\n")
+        f.write(f"- **Best Generalization (SPAN):** {best_unseen_span['model']} ({best_unseen_span['mean']:.4f} ± {best_unseen_span['std']:.4f}, 95% CI: [{best_unseen_span['ci_low']:.4f}, {best_unseen_span['ci_high']:.4f}])\n")
 
     # Save statistical significance log
     with open(SIG_FILE, 'w') as f:

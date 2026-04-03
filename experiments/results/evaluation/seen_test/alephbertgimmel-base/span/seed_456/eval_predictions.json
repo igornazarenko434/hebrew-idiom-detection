@@ -2095,8 +2095,8 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -2107,8 +2107,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MISS"
   },
   {
     "id": "7_lit_35",
@@ -2844,12 +2844,12 @@
       "O",
       "O",
       "B-IDIOM",
-      "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "PARTIAL_END"
   },
   {
     "id": "9_fig_8",
@@ -3653,9 +3653,9 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -3671,7 +3671,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "11_fig_35",
@@ -8677,11 +8677,11 @@
       "I-IDIOM",
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "28_lit_7",
@@ -9634,7 +9634,7 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "I-IDIOM",
       "I-IDIOM",
       "O",
@@ -9662,8 +9662,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "30_fig_14",
@@ -11791,13 +11791,13 @@
       "O",
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "37_lit_7",
@@ -17982,8 +17982,8 @@
     "predicted_tags": [
       "O",
       "O",
-      "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "B-IDIOM",
       "I-IDIOM",
@@ -17991,7 +17991,7 @@
       "O",
       "O"
     ],
-    "is_correct": false,
+    "is_correct": true,
     "error_category": "PERFECT"
   },
   {
@@ -19022,8 +19022,8 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -19038,8 +19038,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "57_fig_9",

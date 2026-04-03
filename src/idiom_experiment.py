@@ -757,7 +757,11 @@ class ZeroShotEvaluator:
         self.cfg = cfg
         print(f"Loading model: {cfg.model_id}")
         trust_remote_code = "neodictabert" in cfg.model_id
-        self.tokenizer = AutoTokenizer.from_pretrained(cfg.model_id, trust_remote_code=trust_remote_code)
+        self.tokenizer = load_tokenizer_safe(
+            cfg.model_id,
+            trust_remote_code=trust_remote_code,
+            fix_mistral_regex="neodictabert" in cfg.model_id
+        )
         self.model = AutoModel.from_pretrained(cfg.model_id, trust_remote_code=trust_remote_code)
         self.model.eval()
         self.device = torch.device(cfg.device)

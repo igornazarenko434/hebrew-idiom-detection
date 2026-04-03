@@ -12,6 +12,7 @@ def load_results(results_dir):
             data = json.load(f)
             model_id = data['model_id']
             split = data['split']
+            model_id_l = model_id.lower()
             
             # Task 1 Metrics
             t1 = data['tasks']['classification']['metrics']
@@ -25,7 +26,7 @@ def load_results(results_dir):
                 
             results.append({
                 'Model': model_id.split('/')[-1],
-                'Type': 'Hebrew' if 'alephbert' in model_id or 'dictabert' in model_id else 'Multilingual',
+                'Type': 'Hebrew' if any(k in model_id_l for k in ("alephbert", "dictabert", "neodictabert")) else 'Multilingual',
                 'Dataset': split,
                 'Task 1 Accuracy': t1['accuracy'],
                 'Task 1 F1': t1['f1_macro'],
@@ -77,13 +78,14 @@ def generate_markdown_report(df, output_path):
     
     best_t1 = df.loc[df['Task 1 F1'].idxmax()]
     
+    num_models = df['Model'].nunique()
     report = f"""# Mission 3.4: Zero-Shot Results Analysis
 
 **Generated:** {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}
 
 ## 1. Executive Summary
 
-This analysis covers the zero-shot evaluation of 5 models across two datasets (Seen 'test' and Unseen 'unseen_idiom_test').
+This analysis covers the zero-shot evaluation of {num_models} models across two datasets (Seen 'test' and Unseen 'unseen_idiom_test').
 
 - **Best Model (Task 1):** {best_t1['Model']} (F1: {best_t1['Task 1 F1']:.4f})
 - **Hebrew vs Multilingual:**

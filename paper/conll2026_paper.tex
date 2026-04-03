@@ -1,0 +1,665 @@
+% CoNLL 2026 Paper - Hebrew-Idioms-4800
+% Uses official ACL style files (https://github.com/acl-org/acl-style-files)
+% Compile with XeLaTeX for Hebrew support
+\documentclass[11pt]{article}
+
+% ACL style package - use "review" for submission, "final" for camera-ready
+\usepackage[review]{acl}
+
+% Microtype for improved layout
+\usepackage{microtype}
+
+% Math and tables
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+
+% Graphics
+\usepackage{graphicx}
+\usepackage{float}
+
+% Hebrew support via babel (compatible with XeLaTeX/LuaLaTeX)
+% Based on official acl_lualatex.tex template
+\usepackage[english,bidi=default]{babel}
+\babelfont{rm}{TeXGyreTermesX}
+\babelprovide[import]{hebrew}
+\babelfont[*hebrew]{rm}[Script=Hebrew]{David CLM}
+
+% Fallback if David CLM is not available - uncomment below and comment above
+% \babelfont[*hebrew]{rm}[Script=Hebrew]{DejaVu Sans}
+
+% Custom column types for tables
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+% Compact itemize/enumerate
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+
+% Increase title box if needed
+% \setlength\titlebox{6cm}
+
+\title{Detection Without Localization: Compositional Generalization Failures\\in Transformer Models for Hebrew Idiom Boundaries}
+
+% Author information - will be anonymized in review mode
+\author{
+  Igor Nazarenko \\
+  Reichman University \\
+  School of Computer Science \\
+  Herzliya, Israel \\
+  \texttt{igor.nazarenko@post.runi.ac.il}
+  \And
+  Yuval Amit \\
+  Reichman University \\
+  School of Computer Science \\
+  Herzliya, Israel \\
+  \texttt{yuval.amit@post.runi.ac.il}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Do transformer models learn compositional representations of multi-word expressions, or do they rely on memorization? We investigate this question through idiom boundary prediction, where models must generalize structural knowledge to novel expressions. Using Hebrew-Idioms-4800---a new dual-task dataset of 4,800 sentences covering 60 idioms with near-perfect annotation agreement (Cohen's $\kappa = 0.97$)---we evaluate six transformer encoders and five LLMs on both idiom usage classification (CLS) and token-level idiom identification (SPAN; BIO tagging) across seen and held-out idioms. Our results reveal a striking dissociation: classification generalizes robustly to unseen idioms (F1 0.90--0.92; 0.6--3.5 point drop), while span identification degrades substantially (F1 0.59--0.76; 23--41 point drop). Error analysis exposes systematic boundary failures: partial-end truncations dominate fine-tuned model errors (1,761 vs.\ 1 partial-start across all models), and long unseen idioms (5+ tokens) exhibit 70--100\% error rates despite near-perfect seen performance. Strikingly, LLM prompting exhibits \textit{reversed} patterns: partial-start errors dominate (5--13\%), and Gemini3 Flash achieves 90\% SPAN F1 on unseen idioms---exceeding the best fine-tuned model (76.1\%)---suggesting that fine-tuning induces boundary memorization while prompting preserves compositional reasoning. These findings demonstrate that current fine-tuned transformers classify idiomaticity through surface patterns but fail to learn compositional boundary cues, while prompting offers a potential alternative for generalization.
+\end{abstract}
+
+\section{Introduction}
+
+Idioms are pervasive in natural language and often ambiguous between literal and figurative meanings, making them a persistent challenge for NLP systems. As a core type of multi-word expression (MWE), idioms require models to recognize non-compositional meaning that cannot be derived from individual constituent words. While idiom usage classification has been studied extensively as a sentence-level task, practical applications frequently require precise span identification of idiom boundaries---a capability that remains underexplored. Hebrew adds additional complexity through rich morphology and right-to-left script conventions, and existing idiom resources are predominantly in other languages.
+
+Psycholinguistic research suggests that humans process idioms through unified lexical representations (``superlemmas'') that encode both meaning and syntactic boundaries \citep{sprenger2006lexical}. This raises a fundamental question for neural models: \textit{do transformers learn analogous compositional representations that generalize boundary knowledge to novel idioms, or do they rely on memorization of specific expressions?} We hypothesize that if transformers learn compositional boundary cues, span identification should generalize comparably to idiom usage classification; failure to do so would indicate boundary-specific memorization.
+
+We address this question by constructing a dual-task Hebrew dataset that supports both idiom usage classification and token-level idiom identification, and by benchmarking transformer models across seen and unseen idioms. Our results reveal a clear dissociation between classification and span identification: classification generalizes robustly to unseen idioms, while span prediction collapses for lexically novel expressions. We further analyze error patterns and model behavior to identify systematic failure modes.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+    \item A dual-task Hebrew idiom dataset with 4,800 manually revised sentences, balanced labels, and high annotation reliability (Cohen's $\kappa = 0.97$).
+    \item A benchmark of six transformer encoders and five LLMs on idiom usage classification and token-level idiom identification across seen and unseen idioms with bootstrap confidence intervals and paired statistical tests.
+    \item Comprehensive analysis of error structure, boundary bias, length effects, cross-task consistency, and a striking contrast between fine-tuning and prompting failure modes.
+\end{enumerate}
+
+\section{Related Work}
+
+\paragraph{Figurative language processing.}
+Idioms are a subset of figurative language alongside metaphor and sarcasm, characterized by non-compositional meaning \citep{shutova2015design}. While figurative language detection methods inform idiom modeling, they rarely address span identification---a gap our dual-task formulation targets.
+
+\paragraph{Idiom identification datasets and methods.}
+Multiword expression (MWE) processing has received substantial attention as a core NLP challenge \citep{constant2017survey}. Prior idiom resources focus primarily on English and other languages. MAGPIE \citep{haagsma2020magpie} provides a large English corpus of potentially idiomatic expressions with sentential annotations. PIE \citep{salton2016idiom} introduces token-level idiom classification using distributional semantics. SemEval-2022 Task 2 \citep{peng2022semeval} established multilingual idiomaticity detection benchmarks for English, Portuguese, and Galician. EPIE \citep{tayyar2022epie} extends coverage to multiple European languages. \citet{zeng2021idiomatic} propose semantic compatibility features for idiom identification, showing that compositionality metrics improve detection. \citet{nedumpozhimana2021finding} investigate how BERT encodes idiomaticity, finding that idiomatic meaning is distributed across layers rather than localized---a finding relevant to our observation that classification succeeds while boundary identification fails. Recent work has explored LLM-based approaches: \citet{hashiloni2025easypie} evaluate LLMs on MWE identification, finding that prompting strategies show promise but face challenges with idiom boundaries. \citet{hefetz2025notjust} demonstrate effective cross-lingual transfer for idiom identification, showing that fine-tuning on English data generalizes to other languages. \citet{mi2024rolling} find that LLMs struggle to interpret idioms in context despite recognizing them in isolation, corroborating our finding that classification and span identification involve separable competencies. \citet{yayavaram2024bert} propose cross-lingual objectives for BERT-based idiom detection. These resources typically emphasize sentence-level classification; our work uniquely combines classification with precise boundary annotation and tests zero-shot idiom generalization.
+
+\paragraph{Cognitive models of idiom processing.}
+Psycholinguistic research has established that idiom comprehension involves complex interactions between compositional and non-compositional processing. The \textit{configuration hypothesis} \citep{cacciari1988comprehension} proposes that idioms are recognized when sufficient constituent words are encountered, triggering retrieval of the figurative meaning. \citet{titone1999processing} demonstrated that both compositional analysis and direct retrieval operate in parallel during idiom processing. The \textit{superlemma} model \citep{sprenger2006lexical} posits that idioms are stored as unified lexical entries with associated syntactic frames. \citet{gibbs1990psycholinguistic} further showed that idiom comprehension relies on underlying conceptual metaphors. If transformer models learned representations analogous to human superlemmas, we would expect both idiom usage classification and span identification to generalize equally to novel idioms; failure to do so would suggest partial recognition without unified boundary representation.
+
+\paragraph{Compositional generalization in neural networks.}
+Our idiom boundary task shares properties with compositional generalization benchmarks: models must apply structural knowledge (BIO boundary rules) to novel lexical items (unseen idioms). \citet{lake2018generalization} demonstrated that sequence-to-sequence models fail to generalize systematically to novel compositions of known primitives. The COGS benchmark \citep{kim2020cogs} and CFQ \citep{keysers2020measuring} extended this finding to semantic parsing, showing that transformers struggle with compositional generalization even when individual components are well-learned. Our work applies this lens to multi-word expression processing, testing whether models can generalize boundary identification rules to lexically novel idioms.
+
+\paragraph{Sequence labeling for boundaries.}
+BIO (Begin--Inside--Outside) tagging \citep{ramshaw1995text} and CRF-based sequence labeling \citep{lample2016neural} are standard for boundary-sensitive tasks such as NER. We adapt this paradigm to idiom span identification, using a CRF layer to enforce valid BIO transitions and reporting exact-match span F1 as the primary metric. Unlike NER, idiom spans exhibit strong length-generalization interactions that we systematically analyze.
+
+\paragraph{Hebrew NLP resources.}
+Hebrew presents unique challenges including rich morphology, right-to-left script, and limited resources \citep{wintner2014hebrew,tsarfaty2019whats}. Recent Hebrew transformers---AlephBERT \citep{seker2022alephbert}, AlephBERTGimmel, DictaBERT, and NeoDictaBERT---provide strong baselines for Hebrew tasks, but Hebrew idiom identification resources remain absent. Our dataset fills this gap.
+
+\section{Dataset: Hebrew-Idioms-4800}
+
+\subsection{Data Collection}
+
+We generated initial sentence drafts with ChatGPT 5.2 and then manually rewrote every sentence to ensure natural Hebrew and to reduce templated artifacts. This LLM assisted then human revised process was applied to 54 idioms (4,320 sentences). For the unseen idiom test split, all 480 sentences covering 6 held-out idioms were created entirely by native speakers without LLM assistance to preserve a clean generalization benchmark. The final dataset contains 4,800 sentences across 60 idioms.
+
+\subsection{Annotation}
+
+Two native Hebrew annotators independently labeled each sentence as literal or figurative and marked idiom spans using BIO tags. Disagreements (66 of 4,800; 1.4\%) were resolved through adjudication and sentence revision. Inter-annotator agreement is high (Cohen's $\kappa = 0.97$; observed agreement 98.6\%).
+
+\subsection{Statistics}
+
+Table~\ref{tab:dataset_stats} summarizes key dataset statistics. All idioms are polysemous (appear in both literal and figurative contexts). Idioms appear mostly at sentence start (65.1\%), then middle (30.2\%), then end (4.8\%).
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.95}
+\begin{tabularx}{\linewidth}{@{}l r X r@{}}
+\toprule
+\multicolumn{2}{l}{\textbf{Splits (sentences)}} & \multicolumn{2}{l}{\textbf{Corpus statistics}} \\
+\midrule
+Train (54 idioms) & 3,456 & Total sentences & 4,800 \\
+Validation (54 idioms) & 432 & Unique idioms & 60 \\
+Seen test (54 idioms) & 432 & Label balance & 50/50 \\
+Unseen test (6 idioms) & 480 & Mean sentence length & 17.5 tokens \\
+ &  & Sentence length range & 5--47 tokens \\
+ &  & Mean idiom length & 2.5 tokens \\
+ &  & Idiom length range & 2--5 tokens \\
+ &  & Vocabulary size & 15,107 \\
+ &  & Total tokens & 83,844 \\
+\bottomrule
+\end{tabularx}
+\caption{Dataset statistics and split sizes for Hebrew-Idioms-4800.}
+\label{tab:dataset_stats}
+\end{table}
+
+\subsection{Data Splits}
+
+We use a hybrid split strategy designed to test both in-domain generalization and zero-shot transfer to novel idioms:
+\begin{itemize}
+    \item \textbf{Train:} 3,456 sentences (72\%; 54 idioms)
+    \item \textbf{Validation:} 432 sentences (9\%; 54 idioms)
+    \item \textbf{Seen test:} 432 sentences (9\%; 54 idioms)
+    \item \textbf{Unseen test:} 480 sentences (10\%; 6 held-out idioms)
+\end{itemize}
+For the 54 seen idioms, we apply an 80/10/10 sentence-level split while maintaining 50/50 literal/figurative balance within each partition. The 6 unseen idioms are entirely held out from training and validation to evaluate zero-shot generalization.
+
+\paragraph{Unseen idiom selection.}
+The 6 held-out idioms were selected to test diverse generalization capabilities across four dimensions: (1) \textit{length diversity}---ranging from 2 to 5 tokens to test span identification across lengths; (2) \textit{semantic diversity}---covering body-part metaphors, spatial metaphors, action metaphors, and boundary/threshold metaphors; (3) \textit{frequency range}---from common to medium-frequency idioms; and (4) \textit{structural variety}---different syntactic patterns (verb-noun, verb-preposition-noun, complex clauses). This selection enables evaluation of whether models learn generalizable features or memorize specific idioms. See Appendix~\ref{sec:appendix_idioms} for the complete list with selection rationale.
+
+\subsection{Preprocessing and Validation}
+
+We remove BOM characters and directional marks (LRM/RLM), normalize multiple whitespaces to single spaces, and strip leading/trailing whitespace. We verify BIO tag alignment, character-level and token-level span validity, label consistency, and encoding cleanliness for all 4,800 samples. All validation checks pass with zero errors.
+
+\subsection{Annotation Format}
+
+Each example includes sentence text, pre-tokenized tokens, BIO tags, binary label, and both token- and character-level spans. The dataset is pre-tokenized with punctuation as separate tokens, and BIO tags are aligned to these tokens. Each sentence contains exactly one potential idiomatic expression (PIE), which may be literal or figurative depending on context.
+
+\paragraph{Example.}
+\begin{itemize}[noitemsep,topsep=0pt]
+    \item \textbf{Hebrew:} \foreignlanguage{hebrew}{אבי שבר את הקרח במועדון הספורט בשיחה על נבחרת ישראל.}
+    \item \textbf{Translation:} Avi \textbf{broke the ice} at the sports club in a conversation about the Israeli national team.
+    \item \textbf{Idiom:} \foreignlanguage{hebrew}{שבר את הקרח} (broke the ice)
+    \item \textbf{Label:} Figurative
+    \item \textbf{Tokens:} [\foreignlanguage{hebrew}{אבי}, \foreignlanguage{hebrew}{שבר}, \foreignlanguage{hebrew}{את}, \foreignlanguage{hebrew}{הקרח}, \foreignlanguage{hebrew}{במועדון}, \foreignlanguage{hebrew}{הספורט}, \foreignlanguage{hebrew}{בשיחה}, \foreignlanguage{hebrew}{על}, \foreignlanguage{hebrew}{נבחרת}, \foreignlanguage{hebrew}{ישראל}, .]
+    \item \textbf{BIO tags:} [O, B-IDIOM, I-IDIOM, I-IDIOM, O, O, O, O, O, O, O]
+\end{itemize}
+
+\section{Method}
+
+\subsection{Tasks}
+
+\paragraph{Task formulation.}
+As noted by \citet{tedeschi-etal-2022-id10m}, prior work on idiom identification typically assumes that potentially idiomatic expressions are pre identified in advance, and focuses on determining whether a given expression is used figuratively within its surrounding context. This assumption constitutes a major limitation, since it requires explicit enumeration of idiom candidates before inference. Following this observation, we drop the pre identification requirement and reformulate idiom analysis as a sentence level task that combines idiomaticity classification and span localization.
+
+
+For idiomaticity classification, the task is defined as assigning a binary label, figurative or literal, to each input sentence. For span localization, the objective is to identify the exact idiomatic phrase within the sentence when such a phrase is present. We implement span localization using two parallel approaches. In the prompting setting, large language models are instructed to jointly produce the sentence level label and the exact idiomatic phrase as it appears in the input sentence. In the supervised setting, pretrained models are fine tuned specifically for span localization using the IOB2 tagging scheme, following standard sequence labeling practice. In addition, the same model architectures are trained separately for sentence level classification, ensuring a clear separation between classification and localization objectives.
+
+This task formulation is intentionally designed to simulate native language understanding, in which idiomatic expressions are not known in advance and must be inferred directly from sentential context. As a result, it enables a direct and realistic comparison between prompting based inference and supervised sequence labeling approaches, while avoiding the pre identification assumption inherent in earlier idiom identification frameworks.
+
+
+Following the task formulation described above, we implement and evaluate two modeling tasks, corresponding to idiomaticity classification and idiom span localization.
+
+\paragraph{Task 1: Idiom usage classification (CLS).}
+This task is formulated as binary sentence level classification, predicting whether an idiom is used figuratively or literally. Models operate on the sentence representation, using the [CLS] embedding followed by a linear classification layer.
+
+\paragraph{Task 2: Token level idiom identification (SPAN).}
+This task is formulated as token level sequence labeling using the BIO tagging scheme. A conditional random field layer is applied to enforce valid label transitions. Performance is evaluated using exact match span F1, where both the start and end boundaries of a predicted span must match the gold annotation.
+
+\paragraph{Character level spans.}
+Although the dataset includes gold character level start and end indices and corresponding masks, character level span identification is not modeled or evaluated in this work.
+
+\subsection{Models}
+
+We evaluate six base-size transformer encoders:
+\begin{itemize}
+    \item \textbf{Hebrew-specific:} AlephBERT \citep{seker2022alephbert}\footnote{\url{https://huggingface.co/onlplab/alephbert-base}}, AlephBERTGimmel\footnote{\url{https://huggingface.co/dicta-il/alephbertgimmel-base}}, DictaBERT\footnote{\url{https://huggingface.co/dicta-il/dictabert}}, NeoDictaBERT\footnote{\url{https://huggingface.co/dicta-il/neodictabert}}
+    \item \textbf{Multilingual:} mBERT \citep{devlin2019bert}\footnote{\url{https://huggingface.co/bert-base-multilingual-cased}}, XLM-RoBERTa \citep{conneau2020unsupervised}\footnote{\url{https://huggingface.co/xlm-roberta-base}}
+\end{itemize}
+
+\subsection{Training}
+
+We fine-tune each model on both tasks using Optuna-based hyperparameter tuning and three random seeds (42, 123, 456). Training uses AdamW with a cosine learning-rate schedule and warmup, early stopping on validation F1, and label smoothing ($\alpha{=}0.1$) for CLS. For SPAN, we apply BIO subword alignment and train all models with a CRF layer to enforce valid tag sequences. Learning rates are selected per model/task from $5\text{e-}6$ to $5\text{e-}5$.
+
+\paragraph{Hyperparameter optimization.}
+We ran 15 Optuna trials per model-task combination using TPE sampling with median pruning. The search space included: learning rate $\{5\text{e-}6, 1\text{e-}5, 2\text{e-}5, 3\text{e-}5, 5\text{e-}5\}$, batch size $\{8, 16, 32\}$, epochs $\{3, 5, 8\}$, warmup ratio $\{0.0, 0.1, 0.2\}$, weight decay $\{0.0, 0.01, 0.05\}$, and gradient accumulation steps $\{1, 2, 4\}$.
+
+\paragraph{Hardware.}
+VAST.ai GPU instances (RTX 4090, 24GB VRAM) for HPO and full fine-tuning with a persistent VAST.ai volume; results are synced to Google Drive, and local CPU/GPU is used for evaluation and analysis.
+
+\subsection{LLM Prompting Baselines}
+We evaluate five large language models as prompting-based baselines:
+Gemini~3~Flash~Preview~\cite{google_gemini3_2024},
+Llama~4~Maverick~Instruct and Llama~4~Scout~Instruct~\cite{MetaLlama4_2025},
+Dicta~3~Nemotron~12B~\cite{Shmidman2025DictaLM3},
+and Qwen~3~235B~A22B~2507~Instruct~\cite{qwen3_2025}.
+All models are evaluated using Hebrew-language instructions under both zero-shot and few-shot prompting settings, with $k=3$ exemplars in the latter.
+
+
+
+\paragraph{Prompting methodology.}
+Prompts jointly request idiom classification as literal or figurative and span extraction using a structured JSON output format. Models are instructed to return the idiom text exactly as it appears in the sentence, constrained to a minimal span of two to six words. Span extraction and evaluation are performed using character level offsets. Predicted spans are mapped to their character positions within the original sentence and compared directly against gold annotations using exact character match criteria. Span level performance is reported using an exact match span F1 metric, aligned with the evaluation used for the fine tuned models. Full prompt templates are provided in Appendix~\ref{sec:appendix_prompts}. All reported results are based on a single evaluation run for each dataset split, Seen and Unseen, without repeated sampling or multiple runs, since the evaluated LLMs are not pretrained on the task specific data. For inference infrastructure, Dicta 3 Nemotron 12B is served on a self hosted Vast AI instance equipped with an RTX 5090 GPU via a vLLM compatible API. The remaining models are accessed through externally hosted endpoints using OpenRouter, while enforcing the use of the exact specified model through the same unified API interface.
+
+
+\section{Experimental Setup}
+
+\subsection{Metrics}
+
+\begin{itemize}
+    \item \textbf{CLS:} F1 (binary, positive-class; primary), accuracy, precision, recall
+    \item \textbf{SPAN:} exact span F1 (primary), computed from BIO tags with exact boundary matching
+\end{itemize}
+
+We report mean $\pm$ standard deviation across seeds and 95\% bootstrap confidence intervals (10,000 resamples). Pairwise comparisons use paired $t$-tests with Bonferroni correction ($\alpha = 0.000833$ for 60 comparisons) and Cohen's $d$ effect sizes.
+
+\subsection{Baselines}
+
+\begin{itemize}
+    \item \textbf{Zero-shot encoder baselines:} Pretrained encoders without task-specific training yield near-random CLS performance ($\sim$50\% F1) and near-zero SPAN F1.
+    \item \textbf{Heuristic span baseline:} Exact string matching of the gold idiom surface form achieves 100\% SPAN F1 on the evaluation splits, validating label alignment.
+    \item \textbf{LLM prompting baselines:} Five LLMs evaluated on both test sets; see Section~\ref{sec:prompting}.
+\end{itemize}
+
+\section{Results}
+
+\subsection{Main Results}
+
+Table~\ref{tab:combined_results} summarizes F1 on seen and unseen splits for both fine-tuned encoders and prompting baselines. For fine-tuned models, CLS remains stable under idiom shift (0.5--3.5 point drop), with mBERT improving on unseen idioms (+1.55). In contrast, SPAN identification degrades substantially (23--41 point drop). NeoDictaBERT achieves the highest observed CLS F1 on both splits, and DictaBERT achieves the highest observed unseen SPAN F1 with the smallest generalization gap, though these differences are not statistically significant after Bonferroni correction. Prompting results are single-run evaluations.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.0}
+\begin{tabularx}{\linewidth}{@{}l X c c c c@{}}
+\toprule
+ &  & \multicolumn{2}{c}{\textbf{CLS F1}} & \multicolumn{2}{c}{\textbf{SPAN F1}} \\
+\cmidrule(lr){3-4} \cmidrule(lr){5-6}
+\textbf{Setting} & \textbf{Model} & \textbf{Seen} & \textbf{Unseen} & \textbf{Seen} & \textbf{Unseen} \\
+\midrule
+\multicolumn{6}{l}{\textbf{Fine-tuned encoders (Mean F1 $\pm$ Std; 3 seeds)}} \\
+FT & NeoDictaBERT & 95.83{\tiny$\pm$1.20} & 92.35{\tiny$\pm$0.32} & 99.65{\tiny$\pm$0.12} & 66.12{\tiny$\pm$7.01} \\
+FT & DictaBERT & 94.13{\tiny$\pm$0.27} & 92.21{\tiny$\pm$0.44} & 99.42{\tiny$\pm$0.20} & \textbf{76.10}{\tiny$\pm$4.82} \\
+FT & AlephBERTGimmel & 93.98{\tiny$\pm$1.23} & 90.75{\tiny$\pm$1.19} & 98.96{\tiny$\pm$0.12} & 74.70{\tiny$\pm$1.51} \\
+FT & AlephBERT & 92.98{\tiny$\pm$0.27} & 90.97{\tiny$\pm$0.67} & 99.38{\tiny$\pm$0.29} & 66.77{\tiny$\pm$2.13} \\
+FT & XLM-RoBERTa & 91.19{\tiny$\pm$1.39} & 90.69{\tiny$\pm$0.53} & 99.35{\tiny$\pm$0.18} & 61.48{\tiny$\pm$3.63} \\
+FT & mBERT & 88.80{\tiny$\pm$0.54} & 90.35{\tiny$\pm$0.73} & 99.46{\tiny$\pm$0.24} & 58.82{\tiny$\pm$7.97} \\
+\midrule
+\multicolumn{6}{l}{\textbf{Prompting baselines (single run)}} \\
+Zero-shot & Gemini3 Flash & 93\% & 90\% & 84\% & 86\% \\
+Zero-shot & Qwen3 235B & 50\% & 42\% & 69\% & 71\% \\
+Zero-shot & Llama4 Maverick & 47\% & 43\% & 61\% & 67\% \\
+Zero-shot & Dicta3 Nemotron & 40\% & 40\% & 62\% & 68\% \\
+Zero-shot & Llama4 Scout & 36\% & 35\% & 51\% & 52\% \\
+Few-shot ($k{=}3$) & Gemini3 Flash & 96\% & 92\% & 87\% & 90\% \\
+Few-shot ($k{=}3$) & Qwen3 235B & 67\% & 57\% & 75\% & 72\% \\
+Few-shot ($k{=}3$) & Llama4 Maverick & 59\% & 57\% & 69\% & 71\% \\
+Few-shot ($k{=}3$) & Dicta3 Nemotron & 47\% & 47\% & 67\% & 72\% \\
+Few-shot ($k{=}3$) & Llama4 Scout & 55\% & 43\% & 72\% & 65\% \\
+\bottomrule
+\end{tabularx}
+\caption{Combined results for fine-tuned encoders and prompting baselines on seen and unseen splits. Fine-tuned results report Mean F1 $\pm$ Std across three seeds; prompting results are single-run evaluations.}
+\label{tab:combined_results}
+\end{table*}
+
+\subsection{mBERT Anomaly Analysis}
+
+mBERT shows an unusual pattern: higher CLS F1 on unseen idioms than on seen idioms ($-1.55$\% gap). Per-seed analysis confirms this is consistent across all seeds:
+\begin{itemize}
+    \item Seed 42: Seen 88.18\%, Unseen 90.42\% (+2.24\%)
+    \item Seed 123: Seen 89.11\%, Unseen 89.58\% (+0.47\%)
+    \item Seed 456: Seen 89.12\%, Unseen 91.04\% (+1.92\%)
+\end{itemize}
+The cause of this pattern remains unclear; one possibility is that multilingual pretraining exposes mBERT to cross-lingual idiom patterns, though this hypothesis requires further investigation. Regardless of the cause, this classification advantage does not transfer to span identification, where mBERT shows the largest generalization gap (40.64\%).
+
+\subsection{Error Distribution}
+
+Aggregated SPAN error analysis across all 6 models and 3 seeds (7,776 seen predictions, 8,640 unseen predictions) shows a sharp shift from near-perfect boundary prediction on seen idioms (99.0\% PERFECT) to substantial boundary and MISS errors on unseen idioms (64.3\% PERFECT). Boundary errors rise from 0.8\% to 24.5\%, and MISS errors rise from 0.17\% to 11.2\% on unseen idioms.
+
+Figure~\ref{fig:error_dist_span} visualizes this shift in error categories between seen and unseen splits.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{error_distribution_span_aggregated.png}
+\caption{Aggregated SPAN error distribution across all models and seeds, comparing seen vs.\ unseen splits.}
+\label{fig:error_dist_span}
+\end{figure}
+
+\subsection{Boundary Directionality Bias}
+
+Boundary errors on unseen idioms exhibit extreme asymmetry. Across all 6 models (3 seeds each, 8,640 total predictions), we observe:
+\begin{itemize}
+    \item \textbf{PARTIAL\_END:} 1,761 errors (truncated endings)
+    \item \textbf{PARTIAL\_START:} 1 error (truncated beginning)
+    \item \textbf{Ratio:} 99.94\% end-boundary bias
+\end{itemize}
+
+This pattern holds consistently across Hebrew-specific and multilingual models, while seen idioms show near-zero boundary errors. The dominance of end-truncation suggests that models reliably detect idiom starts (B-IDIOM tag) but fail to predict where idioms terminate (I-IDIOM to O transition) for novel expressions.
+
+\subsection{Length Effects}
+
+Length-stratified errors reveal a catastrophic interaction for unseen idioms with 5+ tokens. For the models analyzed in the length study (mBERT, DictaBERT, NeoDictaBERT, XLM-R), error rates for 5+ token unseen idioms range from 70\% to 100\%, while seen idioms remain below 2\% error regardless of length. The longest unseen idiom (\foreignlanguage{hebrew}{רץ אחרי הזנב של עצמו}) has near-zero SPAN F1 (0.023) across models and substantially drives the aggregate unseen drop: removing it raises mean unseen SPAN F1 from 0.6839 to 0.8247 ($\Delta{=}0.1408$). See Appendix~\ref{sec:appendix_per_idiom} for per-idiom results. This suggests that boundary prediction difficulty scales with idiom length for unseen expressions.
+
+\subsection{Cross-Task Consistency}
+
+On unseen idioms, a substantial fraction of predictions are CLS-correct but SPAN-incorrect:
+\begin{itemize}
+    \item NeoDictaBERT: 43.96\%
+    \item XLM-RoBERTa: 34.79\%
+\end{itemize}
+This demonstrates a strong classification--span identification dissociation: models can correctly identify figurative usage without accurately predicting idiom boundaries.
+
+\subsection{Confidence Calibration}
+
+Confidence remains high even for errors. For NeoDictaBERT (unseen SPAN), mean prediction confidence is: PERFECT 0.998, PARTIAL\_END 0.993, MISS 0.976. For XLM-RoBERTa: PERFECT 0.994, PARTIAL\_END 0.995, MISS 0.983. This indicates systematic boundary misidentification with high certainty rather than low-confidence errors.
+
+\subsection{Attention Analysis}
+
+Attention analysis reveals a counter-intuitive pattern: PARTIAL\_END errors show higher idiom-token attention than correct predictions:
+\begin{itemize}
+    \item NeoDictaBERT: PERFECT 0.232, PARTIAL\_END 0.301 (+29.6\%)
+    \item XLM-RoBERTa: PERFECT 0.178, PARTIAL\_END 0.256 (+43.9\%)
+\end{itemize}
+This indicates that boundary failures are not due to missing idiom focus, but to the model's inability to decide where the idiom terminates.
+
+\subsection{Prompting Baselines}
+\label{sec:prompting}
+
+Table~\ref{tab:combined_results} presents prompting results on both seen and unseen test sets on all the models.
+
+% Prompting results are included in Table~\ref{tab:combined_results}.
+
+\paragraph{Key finding: Reversed generalization pattern.}
+Prompting models exhibit a strikingly different generalization pattern from fine tuned models. While fine tuned models show a 23--41\% SPAN F1 drop from seen to unseen idioms, prompting models maintain similar results between both the test sets, as both are in fact "unseen" sets.
+
+\paragraph{Error pattern reversal.}
+SPAN error analysis reveals a fundamental difference in failure modes:
+\begin{itemize}
+    \item \textbf{Prompting:} PARTIAL\_START errors dominate (5--13\% of predictions), with near-zero PARTIAL\_END errors
+    \item \textbf{Fine-tuning:} PARTIAL\_END errors dominate (99.94\%), with near-zero PARTIAL\_START errors
+\end{itemize}
+This reversal indicates that prompting models struggle to identify where idioms \textit{begin}, while fine-tuned models struggle with where idioms \textit{end}. The fine-tuning approach anchors on B-IDIOM tags but fails to generalize I-IDIOM$\rightarrow$O transitions; prompting lacks this anchoring altogether.
+
+\paragraph{Classification bias and evaluation reliability.}
+Confusion matrix analysis and per-class accuracy breakdowns reveal that most prompting-based models exhibit severe and systematic classification biases, substantially limiting the reliability of their apparent generalization performance (Table~\ref{tab:prompting_bias}).
+Rather than learning a balanced decision boundary between literal and figurative usages, these models overwhelmingly favor a single class.
+
+\begin{itemize}
+    \item \textbf{Dicta3 Nemotron:} Exhibits a pronounced \emph{literal bias}, achieving high literal accuracy (95\%) while correctly identifying only 13\% of figurative instances.
+    \item \textbf{Llama4 models (Maverick, Scout):} Show extreme \emph{figurative bias}. Maverick correctly classifies 97\% of figurative cases but only 13\% of literal ones, while Scout further collapses to near-exclusive figurative prediction, with just 2\% literal accuracy.
+    \item \textbf{Qwen3 235B:} Similarly favors the figurative class, attaining 94\% figurative accuracy at the expense of literal accuracy (15\%).
+    \item \textbf{Gemini3 Flash:} Is the only model exhibiting relatively balanced behavior, maintaining strong performance on both literal (87\%) and figurative (99\%) instances.
+\end{itemize}
+
+Crucially, with the exception of Gemini3 Flash, the observed performance of prompting based models is dominated by label bias rather than genuine generalization.
+Such skewed prediction strategies inflate class specific accuracy while obscuring fundamental decision boundary failures, rendering aggregate accuracy metrics unreliable.
+In several cases, performance approaches that of biased guessing, or even worse, as models effectively predict the majority class irrespective of input semantics.
+
+
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Model (zero-shot)} & \textbf{Literal Acc.} & \textbf{Figurative Acc.} \\
+\midrule
+Gemini3 Flash & 87\% & 99\% \\
+Dicta3 Nemotron & 95\% & 13\% \\
+Llama4 Maverick & 13\% & 97\% \\
+Llama4 Scout & 2\% & 86\% \\
+Qwen3 235B & 15\% & 94\% \\
+\bottomrule
+\end{tabular}
+\caption{Per-class CLS accuracy on seen test (zero-shot), revealing systematic biases toward literal (Dicta3) or figurative (Llama4, Qwen3) predictions.}
+\label{tab:prompting_bias}
+\end{table}
+
+\section{Discussion}
+
+Our results reveal a consistent dissociation between idiom usage classification and span identification: CLS generalizes across unseen idioms with small performance drops (0.6--3.5\%), but SPAN identification fails under lexical shift (23--41\% drop). The boundary error asymmetry in fine-tuned models---99.94\% PARTIAL\_END vs.\ 0.06\% PARTIAL\_START---suggests that models reliably identify idiom starts but systematically fail to predict where idioms terminate.
+
+\paragraph{Theoretical implications.}
+This dissociation connects to cognitive models of idiom processing. If transformers learned representations analogous to human ``superlemmas'' \citep{sprenger2006lexical}---unified lexical entries encoding both meaning and boundaries---we would expect idiom usage classification and span identification to generalize together. Instead, our findings suggest a partial implementation of the ``configuration hypothesis'' \citep{cacciari1988comprehension}: models recognize idioms when sufficient constituent words are encountered (enabling classification) but lack the unified boundary representation needed for precise span identification. This aligns with broader findings on compositional generalization failures in neural networks \citep{lake2018generalization,kim2020cogs}, where models learn individual components but fail to apply structural rules systematically to novel combinations.
+
+\paragraph{Attention does not explain boundary errors.}
+For the models analyzed (NeoDictaBERT, XLM-RoBERTa), attention analysis reveals that PARTIAL\_END errors exhibit higher idiom-focused attention than correct predictions (+29.6\% and +43.9\%, respectively). This indicates boundary failures arise despite increased attention to idiom tokens, challenging explanations based on idiom ``neglect'' and supporting the view that attention is not sufficient for accurate boundary decisions.
+
+Representative attribution heatmaps for unseen PARTIAL\_END errors are provided in Appendix~\ref{sec:appendix_interpretability}.
+
+\paragraph{Prompting reveals distinct failure modes and superior generalization.}
+The error pattern contrast between fine-tuning and prompting is striking: fine-tuned models show 99.94\% end-boundary truncation, while prompting models show predominantly start-boundary truncation (5--13\%). This suggests that fine-tuning with BIO tags produces models that reliably anchor on B-IDIOM transitions but cannot extrapolate I-IDIOM to O terminations for novel idioms, while prompting lacks this anchoring but applies more general boundary heuristics.
+
+Critically, prompting models exhibit a \textit{reversed} generalization pattern: while fine-tuned models degrade 23--41\% from seen to unseen idioms, Gemini3 Flash actually \textit{improves} from 87\% to 90\% SPAN F1 on unseen idioms, exceeding the best fine-tuned model (76.1\%). This suggests that fine-tuning induces boundary memorization that harms generalization, while prompting may preserve compositional reasoning; however, these prompting results are based on single runs. Most LLMs underperform fine-tuned models on classification, showing strong biases toward either literal (Dicta3 Nemotron) or figurative (Llama4, Qwen3) predictions---only Gemini3 Flash achieves balanced, high-accuracy classification.
+
+\paragraph{Four hypotheses for end-boundary bias.}
+We propose four non-exclusive hypotheses: (1) \textit{positional attention bias}---transformers may give higher weight to earlier tokens; (2) \textit{Hebrew linguistic structure}---idiom-initial tokens may provide stronger lexical cues; (3) \textit{BIO supervision asymmetry}---B-IDIOM provides strong anchoring while I-IDIOM$\rightarrow$O depends on weaker cues; (4) \textit{literal context interference}---post-idiom tokens may semantically overlap with idiom-internal content. These are speculative and remain untested.
+
+\section*{Limitations}
+
+\paragraph{Statistical power.}
+Our experiments use three random seeds per condition, achieving 80\% power to detect large effects (Cohen's $d \geq 3.26$). No pairwise model comparisons reach statistical significance after Bonferroni correction ($\alpha = 0.000833$ for 60 comparisons), so claims about relative model rankings should be interpreted as observed trends rather than statistically validated differences.
+
+\paragraph{Cross-lingual scope.}
+All findings are based on Hebrew data. Whether the 99.94\% end-boundary bias and classification--span identification dissociation generalize to other languages remains an open question.
+
+\paragraph{Model scale.}
+We evaluate base-size encoders (110--125M parameters). Larger models may improve compositional generalization; scaling experiments remain future work.
+
+\paragraph{Ablation coverage.}
+We do not ablate individual components (CRF layer, tokenization strategy). Without CRF ablation, we cannot determine whether the end-boundary bias arises from learned CRF transition probabilities or from the underlying encoder representations. This limits our mechanistic understanding of the failure mode.
+
+\paragraph{Idiom coverage and split robustness.}
+Our dataset covers 60 idioms---a small fraction of Hebrew's idiom inventory. Furthermore, our generalization claims rest on a single 6-idiom held-out split; leave-one-idiom-out cross-validation would provide stronger evidence but was not performed due to computational constraints. Aggregate unseen SPAN performance is sensitive to the hardest held-out idiom (id=49); removing it raises mean unseen SPAN F1 from 0.6839 to 0.8247, indicating that a single long idiom can disproportionately influence the overall gap.
+
+\paragraph{Untested hypotheses.}
+The four hypotheses for end-boundary bias (positional attention, Hebrew structure, BIO asymmetry, literal context interference) are proposed post-hoc and remain untested. Future work should design targeted experiments to distinguish between these explanations.
+
+\paragraph{Diagnostic coverage.}
+Several diagnostics (cross-task consistency, calibration, attention) were run on a subset of models; broader coverage may reveal additional variation.
+
+\paragraph{Prompting protocol.}
+Prompting results are based on single evaluations without multiple runs. Confidence intervals are not available, and variance across different prompts or random seeds is not measured. While the error pattern reversal (PARTIAL\_START vs.\ PARTIAL\_END) and generalization advantage appear robust across multiple models, definitive conclusions require replication.
+
+\section{Ethics and Broader Impact}
+
+\paragraph{Data collection.}
+Initial sentence drafts were generated using ChatGPT, then manually rewritten by native Hebrew speakers. All unseen idiom test sentences (480 samples) were created entirely by native speakers without LLM assistance. No human subjects data was collected; all sentences are LLM-generated then human-revised, or fully human-authored for unseen test.
+
+\paragraph{Annotator involvement.}
+Two native Hebrew speakers annotated all sentences independently as part of their academic work. The annotation process took approximately 40 hours total.
+
+\paragraph{Potential risks.}
+Idiom identification systems could potentially be used to identify non-native speakers. We believe the academic contribution outweighs these risks, and our dataset does not contain sensitive content.
+
+\section{Conclusion}
+
+We present Hebrew-Idioms-4800, the first dual-task dataset for Hebrew idiom usage classification and span identification, comprising 4,800 manually revised sentences with near-perfect annotation agreement ($\kappa = 0.97$).
+
+Our benchmark reveals a fundamental \textbf{classification--span identification dissociation}: while idiom usage classification generalizes robustly to unseen idioms (0.6--3.5\% F1 drop), span identification degrades substantially (23--41\% drop). Fine-tuned models exhibit a striking \textbf{99.94\% end-boundary bias}---1,761 PARTIAL\_END errors vs.\ 1 PARTIAL\_START across all models---indicating systematic failure to predict idiom terminations for novel expressions. Longer unseen idioms (5+ tokens) fail at 70--100\% error rates with near-maximal confidence in the analyzed models ($M > 0.99$).
+
+\textbf{Attention analysis} (for the models analyzed) reveals that boundary errors show higher idiom-focused attention than correct predictions (+29.6\% for NeoDictaBERT, +43.9\% for XLM-RoBERTa), indicating attention is not sufficient for correct boundary decisions.
+
+\textbf{Prompting reveals an alternative strategy}: LLM prompting exhibits reversed error patterns (PARTIAL\_START dominates instead of PARTIAL\_END) and reversed generalization (Gemini3 Flash achieves 90\% SPAN F1 on unseen idioms, exceeding the best fine-tuned model's 76.1\%). This suggests that fine-tuning induces boundary memorization, while prompting may preserve compositional reasoning in single-run evaluations---though most LLMs show strong classification biases.
+
+Our central finding: \textbf{current fine-tuned transformer models appear to rely on memorized idiom boundaries rather than learning compositional cues that generalize to lexically novel expressions}. Prompting offers a potential path forward for boundary generalization, though classification biases remain a challenge. Future work should investigate cross-lingual replication, CRF ablation, model scaling, and hybrid fine-tuning-prompting approaches.
+
+We will release the dataset, evaluation protocol, and analysis suite to support community research.
+
+% Bibliography - placed before appendices per ACL guidelines
+\bibliographystyle{acl_natbib}
+\bibliography{references}
+
+\appendix
+
+\section{Extended Statistical Tests}
+\label{sec:appendix_stats}
+
+Pairwise model comparisons used paired $t$-tests with Bonferroni correction ($\alpha = 0.000833$ for 60 comparisons). Summary: 0 of 60 comparisons reach significance after correction; 14 of 60 reach significance at $p < 0.05$ uncorrected. With $n=3$ seeds, we achieve 80\% power to detect Cohen's $d \geq 3.26$.
+
+Table~\ref{tab:stat_tests} shows representative comparisons with the largest effect sizes.
+
+\begin{table}[h]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{0.95}
+\begin{tabularx}{\linewidth}{@{}l X c c c@{}}
+\toprule
+\textbf{Task} & \textbf{Comparison} & \textbf{$p$} & \textbf{$d$} & \textbf{Sig.} \\
+\midrule
+CLS Seen & AlephBERT vs.\ mBERT & .012 & 5.20 & {\tiny p$<$.05} \\
+CLS Seen & AlephBERTG vs.\ mBERT & .011 & 5.37 & {\tiny p$<$.05} \\
+CLS Seen & mBERT vs.\ DictaBERT & .003 & 11.30 & {\tiny p$<$.05} \\
+CLS Seen & mBERT vs.\ NeoDicta & .020 & 4.04 & {\tiny p$<$.05} \\
+CLS Seen & NeoDicta vs.\ XLM-R & .007 & 6.77 & {\tiny p$<$.05} \\
+\midrule
+CLS Uns. & mBERT vs.\ NeoDicta & .028 & 3.35 & {\tiny p$<$.05} \\
+CLS Uns. & NeoDicta vs.\ XLM-R & .005 & 7.84 & {\tiny p$<$.05} \\
+\midrule
+SPAN Uns. & AlephBERTG vs.\ XLM-R & .028 & 3.36 & {\tiny p$<$.05} \\
+SPAN Uns. & DictaBERT vs.\ NeoDicta & .022 & 3.84 & {\tiny p$<$.05} \\
+\bottomrule
+\end{tabularx}
+\caption{Representative pairwise comparisons with largest effect sizes. None reach significance after Bonferroni correction ($\alpha = 0.000833$). Full results available in supplementary materials.}
+\label{tab:stat_tests}
+\end{table}
+
+\section{Qualitative Error Examples}
+\label{sec:appendix_errors}
+
+Table~\ref{tab:error_examples} shows representative SPAN errors on unseen idioms, illustrating PARTIAL\_END truncation patterns.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{2cm}p{4.5cm}}
+\toprule
+\textbf{Model} & \textbf{Error Description} \\
+\midrule
+NeoDictaBERT & Gold: ``crossing the red line'' $\rightarrow$ Pred: ``crossing the line'' (PARTIAL\_END) \\
+NeoDictaBERT & Gold: ``chasing his own tail'' $\rightarrow$ Pred: ``chasing his tail'' (PARTIAL\_END) \\
+XLM-RoBERTa & Gold: ``stayed behind'' $\rightarrow$ Pred: --- (MISS) \\
+\bottomrule
+\end{tabular}
+\caption{Representative SPAN errors on unseen idioms.}
+\label{tab:error_examples}
+\end{table}
+
+\section{Prompting Templates}
+\label{sec:appendix_prompts}
+
+Both zero-shot and few-shot prompts use structured JSON output with strict extraction rules. The instruction prompt specifies the task and output schema:
+
+\paragraph{Instruction prompt (both conditions):}
+\begin{quote}
+\small
+\texttt{You are performing an evaluation task.}\\[0.5em]
+\texttt{Given one Hebrew sentence that contains exactly ONE idiomatic expression:}\\[0.5em]
+\texttt{Return EXACTLY ONE JSON object and nothing else.}\\[0.5em]
+\texttt{JSON schema: \{"idiom\_text": "", "label": "literal" | "figurative"\}}\\[0.5em]
+\texttt{Hard rules:}\\
+\texttt{- idiom\_text MUST be copied EXACTLY from the sentence.}\\
+\texttt{- idiom\_text MUST be ONLY the idiom itself (minimal span).}\\
+\texttt{- idiom\_text length MUST be 2 to 6 words (space-separated).}\\
+\texttt{- idiom\_text MUST NOT include punctuation at beginning or end.}\\
+\texttt{- idiom\_text MUST NOT equal the whole sentence.}\\
+\texttt{- label must be exactly "literal" or "figurative".}
+\end{quote}
+
+\paragraph{Few-shot exemplars ($k=3$):}
+Three examples are appended to the instruction prompt, covering both literal and figurative uses. Example (translated):
+\begin{itemize}
+    \item \textbf{Figurative:} ``For five years, the veteran manager \textit{marched in place} because he refused to adopt new technologies...'' $\rightarrow$ \texttt{\{"idiom\_text": "דרך במקום", "label": "figurative"\}}
+    \item \textbf{Literal:} ``He had to wait for entry approval and got bored, so he \textit{marched in place} and counted steps...'' $\rightarrow$ \texttt{\{"idiom\_text": "דרך במקום", "label": "literal"\}}
+    \item \textbf{Figurative:} ``Trying to fix the relationship with his brother, he \textit{spat blood} but learned the hard way...'' $\rightarrow$ \texttt{\{"idiom\_text": "ירק דם", "label": "figurative"\}}
+\end{itemize}
+
+\paragraph{Instance prompt:} Each test sentence is provided as: \texttt{Sentence: [Hebrew text]}
+
+\paragraph{Output parsing:} JSON responses are parsed using regex to extract \texttt{idiom\_text} and \texttt{label}. The extracted span is string-matched against the sentence tokens and converted to BIO format for evaluation using the same exact-match span F1 metric as fine-tuned models.
+
+\section{Hyperparameter Details}
+\label{sec:appendix_hpo}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+\textbf{Parameter} & \textbf{CLS} & \textbf{SPAN} \\
+\midrule
+Learning rate & 2e-5 & 3e-5 \\
+Batch size & 16 & 16 \\
+Max epochs & 10 & 10 \\
+Early stopping & 3 epochs & 3 epochs \\
+Warmup ratio & 0.1 & 0.1 \\
+Weight decay & 0.01 & 0.01 \\
+Max seq length & 128 & 128 \\
+CRF layer & No & Yes \\
+\bottomrule
+\end{tabular}
+\caption{Final hyperparameters for CLS and SPAN tasks.}
+\label{tab:hyperparams}
+\end{table}
+
+\paragraph{HPO search space:} Learning rate $\{5\text{e-}6, 1\text{e-}5, 2\text{e-}5, 3\text{e-}5, 5\text{e-}5\}$, batch size $\{8, 16, 32\}$, epochs $\{3, 5, 8\}$, warmup ratio $\{0.0, 0.1, 0.2\}$, weight decay $\{0.0, 0.01, 0.05\}$, gradient accumulation $\{1, 2, 4\}$. 15 trials per model-task using TPE sampling.
+
+\section{Interpretability Examples}
+\label{sec:appendix_interpretability}
+
+Figure~\ref{fig:interp_boundary} shows representative integrated gradients (IG) and attention heatmaps for unseen PARTIAL\_END errors, illustrating that idiom-focused attention can remain high despite boundary truncation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{interpretability_partial_end_neodictabert.png}\par\medskip
+\includegraphics[width=\linewidth]{interpretability_partial_end_xlmr.png}
+\caption{Representative IG+attention heatmaps for unseen PARTIAL\_END errors: NeoDictaBERT (top) and XLM-RoBERTa (bottom).}
+\label{fig:interp_boundary}
+\end{figure}
+
+\section{Per-Idiom SPAN Performance (Unseen)}
+\label{sec:appendix_per_idiom}
+
+Table~\ref{tab:per_idiom_unseen} reports mean SPAN F1 for each unseen idiom, averaged across all models and seeds.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{l c}
+\toprule
+\textbf{Unseen idiom (Hebrew)} & \textbf{Mean SPAN F1} \\
+\midrule
+\foreignlanguage{hebrew}{רץ אחרי הזנב של עצמו} & 0.023 \\
+\foreignlanguage{hebrew}{נשאר מאחור} & 0.490 \\
+\foreignlanguage{hebrew}{חצה קו אדום} & 0.646 \\
+\foreignlanguage{hebrew}{שבר שתיקה} & 0.919 \\
+\foreignlanguage{hebrew}{חתך פינה} & 0.945 \\
+\foreignlanguage{hebrew}{איבד את הראש} & 0.991 \\
+\bottomrule
+\end{tabular}
+\caption{Per-idiom SPAN F1 on the unseen test set (mean across models and seeds).}
+\label{tab:per_idiom_unseen}
+\end{table}
+
+\section{Unseen Idiom Selection}
+\label{sec:appendix_idioms}
+
+To evaluate zero-shot generalization, we held out 6 idioms (480 sentences) entirely from training and validation. These idioms were selected to maximize diversity across four dimensions:
+
+\begin{itemize}
+    \item \textbf{Length diversity:} 2--5 tokens, testing span identification across varying idiom lengths
+    \item \textbf{Semantic diversity:} Body-part, spatial, action, and boundary/threshold metaphors
+    \item \textbf{Frequency range:} Common to medium-frequency idioms in Hebrew
+    \item \textbf{Structural variety:} Different syntactic patterns (verb-noun, verb-preposition-noun, complex clauses)
+\end{itemize}
+
+Table~\ref{tab:unseen_idioms} lists each held-out idiom with its token count and specific selection rationale.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{@{}p{2.2cm}cp{3.8cm}@{}}
+\toprule
+\textbf{Idiom (Hebrew)} & \textbf{Tokens} & \textbf{Selection Rationale} \\
+\midrule
+\foreignlanguage{hebrew}{חתך פינה} (cut corner) & 2 & Common idiom with clear literal/figurative distinction; tests basic transfer \\
+\foreignlanguage{hebrew}{חצה קו אדום} (crossed red line) & 3 & Boundary/threshold metaphor; different semantic category from training idioms \\
+\foreignlanguage{hebrew}{נשאר מאחור} (stayed behind) & 2 & Spatial metaphor; tests metaphorical spatial reasoning \\
+\foreignlanguage{hebrew}{שבר שתיקה} (broke silence) & 2 & Very frequent idiom in Hebrew; tests common ``break'' metaphor pattern \\
+\foreignlanguage{hebrew}{איבד את הראש} (lost head) & 3 & Body-part idiom; similar to training idioms but different expression \\
+\foreignlanguage{hebrew}{רץ אחרי הזנב של עצמו} (chased own tail) & 5 & Longest idiom (5 tokens); tests multi-token span identification ability \\
+\bottomrule
+\end{tabular}
+\caption{The 6 held-out idioms for zero-shot generalization testing, selected to maximize diversity across length, semantic category, and syntactic structure.}
+\label{tab:unseen_idioms}
+\end{table}
+
+\end{document}

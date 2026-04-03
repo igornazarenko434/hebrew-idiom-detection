@@ -1,0 +1,6 @@
+model,task,max_f1_by_epoch3,epochs_logged
+bert-base-multilingual-cased,span,0.9919261932373047,3
+neodictabert,cls,0.962469756603241,3
+neodictabert,span,,1
+xlm-roberta-base,cls,0.9046958982944489,3
+xlm-roberta-base,span,0.9907833933830261,3

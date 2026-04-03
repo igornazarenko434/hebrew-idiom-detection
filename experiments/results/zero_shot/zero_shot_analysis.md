@@ -1,14 +1,14 @@
 # Mission 3.4: Zero-Shot Results Analysis
 
-**Generated:** 2025-12-06 13:11
+**Generated:** 2026-01-03 12:58
 
 ## 1. Executive Summary
 
-This analysis covers the zero-shot evaluation of 5 models across two datasets (Seen 'test' and Unseen 'unseen_idiom_test').
+This analysis covers the zero-shot evaluation of 6 models across two datasets (Seen 'test' and Unseen 'unseen_idiom_test').
 
 - **Best Model (Task 1):** bert-base-multilingual-cased (F1: 0.5453)
 - **Hebrew vs Multilingual:**
-  - Avg Hebrew Model F1: 0.4239
+  - Avg Hebrew Model F1: 0.4160
   - Avg Multilingual Model F1: 0.4396
 - **Task 2 Performance:** All models achieved ~0.0 F1 for the untrained span detection, establishing a valid lower bound.
 
@@ -19,11 +19,13 @@ This analysis covers the zero-shot evaluation of 5 models across two datasets (S
 | bert-base-multilingual-cased | test | Multilingual | 0.5023 | 0.5022 | 0.0393 |
 | alephbert-base | test | Hebrew | 0.4838 | 0.4703 | 0.0177 |
 | alephbertgimmel-base | test | Hebrew | 0.4653 | 0.4583 | 0.0382 |
+| neodictabert | test | Hebrew | 0.5093 | 0.3853 | 0.0261 |
 | xlm-roberta-base | test | Multilingual | 0.5046 | 0.3514 | 0.0155 |
 | dictabert | test | Hebrew | 0.4954 | 0.3392 | 0.0180 |
 | bert-base-multilingual-cased | unseen_idiom_test | Multilingual | 0.5458 | 0.5453 | 0.0000 |
 | alephbert-base | unseen_idiom_test | Hebrew | 0.5229 | 0.4980 | 0.0000 |
 | alephbertgimmel-base | unseen_idiom_test | Hebrew | 0.4625 | 0.4545 | 0.0000 |
+| neodictabert | unseen_idiom_test | Hebrew | 0.5208 | 0.3992 | 0.0000 |
 | xlm-roberta-base | unseen_idiom_test | Multilingual | 0.5104 | 0.3595 | 0.0000 |
 | dictabert | unseen_idiom_test | Hebrew | 0.4771 | 0.3230 | 0.0000 |
 

@@ -1,0 +1,92 @@
+\select@language {english}
+\select@language {english}
+\contentsline {chapter}{Abstract}{1}{}%
+\contentsline {chapter}{\numberline {1}Introduction}{4}{}%
+\contentsline {paragraph}{Contributions.}{4}{}%
+\contentsline {chapter}{\numberline {2}Related Work}{6}{}%
+\contentsline {paragraph}{Idiom identification datasets and methods.}{6}{}%
+\contentsline {paragraph}{Recent approaches: LLMs and cross-lingual transfer.}{6}{}%
+\contentsline {paragraph}{Cognitive models of idiom processing.}{7}{}%
+\contentsline {paragraph}{Compositional generalization in neural networks.}{7}{}%
+\contentsline {paragraph}{Sequence labeling for boundaries.}{8}{}%
+\contentsline {paragraph}{Hebrew NLP resources.}{8}{}%
+\contentsline {chapter}{\numberline {3}Dataset: Hebrew-Idioms-4800}{9}{}%
+\contentsline {section}{\numberline {\@@number {3.1}}Data Collection}{9}{}%
+\contentsline {section}{\numberline {\@@number {3.2}}Annotation}{9}{}%
+\contentsline {section}{\numberline {\@@number {3.3}}Statistics}{9}{}%
+\contentsline {section}{\numberline {\@@number {3.4}}Data Splits}{10}{}%
+\contentsline {paragraph}{Unseen idiom selection.}{10}{}%
+\contentsline {section}{\numberline {\@@number {3.5}}Preprocessing and Validation}{11}{}%
+\contentsline {section}{\numberline {\@@number {3.6}}Annotation Format}{11}{}%
+\contentsline {paragraph}{Example.}{11}{}%
+\contentsline {chapter}{\numberline {4}Method}{12}{}%
+\contentsline {section}{\numberline {\@@number {4.1}}Tasks}{12}{}%
+\contentsline {paragraph}{Departure from standard idiom identification.}{12}{}%
+\contentsline {paragraph}{Task 1: Idiom usage classification (CLS).}{12}{}%
+\contentsline {paragraph}{Task 2: Token-level idiom identification (SPAN).}{13}{}%
+\contentsline {paragraph}{Character-level spans.}{13}{}%
+\contentsline {section}{\numberline {\@@number {4.2}}Models}{13}{}%
+\contentsline {section}{\numberline {\@@number {4.3}}Training}{13}{}%
+\contentsline {paragraph}{Hyperparameter optimization.}{14}{}%
+\contentsline {paragraph}{Hardware.}{14}{}%
+\contentsline {section}{\numberline {\@@number {4.4}}LLM Prompting Baselines}{14}{}%
+\contentsline {paragraph}{Prompting methodology.}{14}{}%
+\contentsline {chapter}{\numberline {5}Experimental Setup}{15}{}%
+\contentsline {section}{\numberline {\@@number {5.1}}Evaluation Protocol}{15}{}%
+\contentsline {section}{\numberline {\@@number {5.2}}Metrics}{15}{}%
+\contentsline {paragraph}{CLS: Macro F1 (primary).}{15}{}%
+\contentsline {paragraph}{SPAN: Entity-level exact-match F1 (primary).}{15}{}%
+\contentsline {paragraph}{Prompting evaluation.}{16}{}%
+\contentsline {section}{\numberline {\@@number {5.3}}Statistical Testing}{16}{}%
+\contentsline {section}{\numberline {\@@number {5.4}}Error Taxonomy}{16}{}%
+\contentsline {section}{\numberline {\@@number {5.5}}Baselines}{17}{}%
+\contentsline {paragraph}{Floor: Zero-shot encoder baselines.}{17}{}%
+\contentsline {paragraph}{Oracle: Heuristic string matching.}{17}{}%
+\contentsline {paragraph}{Alternative paradigm: LLM prompting.}{18}{}%
+\contentsline {chapter}{\numberline {6}Results}{19}{}%
+\contentsline {section}{\numberline {\@@number {6.1}}Main Results}{19}{}%
+\contentsline {section}{\numberline {\@@number {6.2}}mBERT Anomaly Analysis}{20}{}%
+\contentsline {section}{\numberline {\@@number {6.3}}Error Distribution}{21}{}%
+\contentsline {section}{\numberline {\@@number {6.4}}Boundary Directionality Bias}{22}{}%
+\contentsline {section}{\numberline {\@@number {6.5}}Length Effects}{22}{}%
+\contentsline {section}{\numberline {\@@number {6.6}}Cross-Task Consistency}{22}{}%
+\contentsline {section}{\numberline {\@@number {6.7}}Confidence Calibration}{23}{}%
+\contentsline {section}{\numberline {\@@number {6.8}}Attention Analysis}{23}{}%
+\contentsline {section}{\numberline {\@@number {6.9}}Prompting Baselines}{23}{}%
+\contentsline {paragraph}{Key finding: Reversed generalization pattern.}{23}{}%
+\contentsline {paragraph}{Error pattern reversal.}{24}{}%
+\contentsline {paragraph}{Classification bias and evaluation reliability.}{24}{}%
+\contentsline {chapter}{\numberline {7}Discussion}{26}{}%
+\contentsline {paragraph}{Theoretical implications.}{26}{}%
+\contentsline {paragraph}{Attention does not explain boundary errors.}{26}{}%
+\contentsline {paragraph}{Length amplifies boundary failures.}{27}{}%
+\contentsline {paragraph}{Prompting reveals distinct failure modes and superior generalization.}{27}{}%
+\contentsline {paragraph}{Four hypotheses for end-boundary bias.}{28}{}%
+\contentsline {chapter}{\numberline {8}Limitations}{29}{}%
+\contentsline {paragraph}{Statistical power.}{29}{}%
+\contentsline {paragraph}{Cross-lingual scope.}{29}{}%
+\contentsline {paragraph}{Model scale.}{29}{}%
+\contentsline {paragraph}{Ablation coverage.}{29}{}%
+\contentsline {paragraph}{Idiom coverage and split robustness.}{29}{}%
+\contentsline {paragraph}{Label distribution.}{30}{}%
+\contentsline {paragraph}{Untested hypotheses.}{30}{}%
+\contentsline {paragraph}{Diagnostic coverage.}{30}{}%
+\contentsline {paragraph}{Prompting protocol.}{30}{}%
+\contentsline {chapter}{\numberline {9}Ethics and Broader Impact}{31}{}%
+\contentsline {paragraph}{Data collection.}{31}{}%
+\contentsline {paragraph}{Annotator involvement.}{31}{}%
+\contentsline {paragraph}{Potential risks.}{31}{}%
+\contentsline {paragraph}{Dataset release.}{31}{}%
+\contentsline {chapter}{\numberline {10}Conclusion}{32}{}%
+\contentsline {chapter}{\numberline {\if@rl \Hebrewnumeral {1}\else A\fi }Extended Statistical Tests}{34}{}%
+\contentsline {chapter}{\numberline {\if@rl \Hebrewnumeral {2}\else B\fi }Qualitative Error Examples}{35}{}%
+\contentsline {chapter}{\numberline {\if@rl \Hebrewnumeral {3}\else C\fi }Prompting Templates}{36}{}%
+\contentsline {paragraph}{Instruction prompt (both conditions):}{36}{}%
+\contentsline {paragraph}{Few-shot exemplars ($k=3$):}{36}{}%
+\contentsline {paragraph}{Instance prompt:}{37}{}%
+\contentsline {paragraph}{Output parsing:}{37}{}%
+\contentsline {chapter}{\numberline {\if@rl \Hebrewnumeral {4}\else D\fi }Hyperparameter Details}{38}{}%
+\contentsline {paragraph}{HPO search space:}{39}{}%
+\contentsline {chapter}{\numberline {\if@rl \Hebrewnumeral {5}\else E\fi }Interpretability Examples}{40}{}%
+\contentsline {chapter}{\numberline {\if@rl \Hebrewnumeral {6}\else F\fi }Per-Idiom SPAN Performance (Unseen)}{41}{}%
+\contentsline {chapter}{\numberline {\if@rl \Hebrewnumeral {7}\else G\fi }Unseen Idiom Selection}{42}{}%

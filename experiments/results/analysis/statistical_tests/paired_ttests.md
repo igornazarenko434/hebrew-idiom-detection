@@ -1,44 +1,62 @@
-# Statistical Significance Summary
-**Generated:** 2025-12-31 14:42:20
+# Statistical Significance Testing (Best Model Comparisons)
 
-## Scope
-- Tasks: cls, span
-- Splits: seen_test, unseen_test
-- Seeds: 42, 123, 456
+Comparing best model vs. all others with Bonferroni correction and Cohen's d.
 
-## CLS - Seen Test
-| model_best   | model_other                  |   best_mean_f1 |   other_mean_f1 |   t_statistic |   p_value |   cohens_d |   bonferroni_alpha | significant_0.05   | significant_bonferroni   |
-|:-------------|:-----------------------------|---------------:|----------------:|--------------:|----------:|-----------:|-------------------:|:-------------------|:-------------------------|
-| dictabert    | alephbert-base               |         0.9483 |          0.9421 |        0.8362 |    0.4910 |     0.4828 |             0.0125 | False              | False                    |
-| dictabert    | alephbertgimmel-base         |         0.9483 |          0.9468 |        0.3571 |    0.7551 |     0.2062 |             0.0125 | False              | False                    |
-| dictabert    | bert-base-multilingual-cased |         0.9483 |          0.8758 |       23.6128 |    0.0018 |    13.6329 |             0.0125 | True               | True                     |
-| dictabert    | xlm-roberta-base             |         0.9483 |          0.9174 |        4.5863 |    0.0444 |     2.6479 |             0.0125 | True               | False                    |
+**Note:** This report shows only best-model comparisons. See `paired_ttests_complete.md` for ALL pairwise comparisons.
 
-## CLS - Unseen Test
-| model_best           | model_other                  |   best_mean_f1 |   other_mean_f1 |   t_statistic |   p_value |   cohens_d |   bonferroni_alpha | significant_0.05   | significant_bonferroni   |
-|:---------------------|:-----------------------------|---------------:|----------------:|--------------:|----------:|-----------:|-------------------:|:-------------------|:-------------------------|
-| alephbertgimmel-base | alephbert-base               |         0.9138 |          0.9062 |        2.0432 |    0.1778 |     1.1796 |             0.0125 | False              | False                    |
-| alephbertgimmel-base | bert-base-multilingual-cased |         0.9138 |          0.9014 |        2.5639 |    0.1244 |     1.4803 |             0.0125 | False              | False                    |
-| alephbertgimmel-base | dictabert                    |         0.9138 |          0.9108 |        0.3012 |    0.7917 |     0.1739 |             0.0125 | False              | False                    |
-| alephbertgimmel-base | xlm-roberta-base             |         0.9138 |          0.8986 |        3.0145 |    0.0947 |     1.7404 |             0.0125 | False              | False                    |
+## Task: CLS
 
-## SPAN - Seen Test
-| model_best     | model_other                  |   best_mean_f1 |   other_mean_f1 |   t_statistic |   p_value |   cohens_d |   bonferroni_alpha | significant_0.05   | significant_bonferroni   |
-|:---------------|:-----------------------------|---------------:|----------------:|--------------:|----------:|-----------:|-------------------:|:-------------------|:-------------------------|
-| alephbert-base | alephbertgimmel-base         |         0.9965 |          0.9912 |        3.8795 |    0.0605 |     2.2398 |             0.0125 | False              | False                    |
-| alephbert-base | bert-base-multilingual-cased |         0.9965 |          0.9931 |        2.5924 |    0.1221 |     1.4967 |             0.0125 | False              | False                    |
-| alephbert-base | dictabert                    |         0.9965 |          0.9912 |        5.2941 |    0.0339 |     3.0565 |             0.0125 | True               | False                    |
-| alephbert-base | xlm-roberta-base             |         0.9965 |          0.9927 |        2.3014 |    0.1480 |     1.3287 |             0.0125 | False              | False                    |
+### Seen Test
+**Best Model:** neodictabert
 
-## SPAN - Unseen Test
-| model_best           | model_other                  |   best_mean_f1 |   other_mean_f1 |   t_statistic |   p_value |   cohens_d |   bonferroni_alpha | significant_0.05   | significant_bonferroni   |
-|:---------------------|:-----------------------------|---------------:|----------------:|--------------:|----------:|-----------:|-------------------:|:-------------------|:-------------------------|
-| alephbertgimmel-base | alephbert-base               |         0.7559 |          0.7248 |        1.1970 |    0.3540 |     0.6911 |             0.0125 | False              | False                    |
-| alephbertgimmel-base | bert-base-multilingual-cased |         0.7559 |          0.5799 |        8.8957 |    0.0124 |     5.1360 |             0.0125 | True               | True                     |
-| alephbertgimmel-base | dictabert                    |         0.7559 |          0.7258 |        0.6782 |    0.5676 |     0.3915 |             0.0125 | False              | False                    |
-| alephbertgimmel-base | xlm-roberta-base             |         0.7559 |          0.6318 |        2.4937 |    0.1301 |     1.4397 |             0.0125 | False              | False                    |
+**Bonferroni α:** 0.010000
 
-## Interpretation Notes
-- Paired t-test compares matched seeds.
-- Cohen’s d reports effect size (paired).
-- Bonferroni alpha is applied per task/split comparison set.
+| Comparison | t-stat | p-value | Bonferroni | Cohen's d | Significant |
+|------------|--------|---------|------------|-----------|-------------|
+| neodictabert vs alephbert-base | 5.279 | 0.0341 | 0.0100 | 3.048 | ❌ NO |
+| neodictabert vs alephbertgimmel-base | 1.454 | 0.2831 | 0.0100 | 0.840 | ❌ NO |
+| neodictabert vs bert-base-multilingual-cased | 6.998 | 0.0198 | 0.0100 | 4.040 | ❌ NO |
+| neodictabert vs dictabert | 2.183 | 0.1607 | 0.0100 | 1.260 | ❌ NO |
+| neodictabert vs xlm-roberta-base | 11.732 | 0.0072 | 0.0100 | 6.774 | ✅ YES |
+
+### Unseen Test
+**Best Model:** neodictabert
+
+**Bonferroni α:** 0.010000
+
+| Comparison | t-stat | p-value | Bonferroni | Cohen's d | Significant |
+|------------|--------|---------|------------|-----------|-------------|
+| neodictabert vs alephbert-base | 5.463 | 0.0319 | 0.0100 | 3.154 | ❌ NO |
+| neodictabert vs alephbertgimmel-base | 2.014 | 0.1817 | 0.0100 | 1.163 | ❌ NO |
+| neodictabert vs bert-base-multilingual-cased | 5.806 | 0.0284 | 0.0100 | 3.352 | ❌ NO |
+| neodictabert vs dictabert | 0.426 | 0.7113 | 0.0100 | 0.246 | ❌ NO |
+| neodictabert vs xlm-roberta-base | 13.585 | 0.0054 | 0.0100 | 7.843 | ✅ YES |
+
+## Task: SPAN
+
+### Seen Test
+**Best Model:** neodictabert
+
+**Bonferroni α:** 0.010000
+
+| Comparison | t-stat | p-value | Bonferroni | Cohen's d | Significant |
+|------------|--------|---------|------------|-----------|-------------|
+| neodictabert vs alephbert-base | 1.148 | 0.3697 | 0.0100 | 0.663 | ❌ NO |
+| neodictabert vs alephbertgimmel-base | 5.191 | 0.0352 | 0.0100 | 2.997 | ❌ NO |
+| neodictabert vs bert-base-multilingual-cased | 1.382 | 0.3010 | 0.0100 | 0.798 | ❌ NO |
+| neodictabert vs dictabert | 1.724 | 0.2269 | 0.0100 | 0.995 | ❌ NO |
+| neodictabert vs xlm-roberta-base | 3.020 | 0.0944 | 0.0100 | 1.743 | ❌ NO |
+
+### Unseen Test
+**Best Model:** dictabert
+
+**Bonferroni α:** 0.010000
+
+| Comparison | t-stat | p-value | Bonferroni | Cohen's d | Significant |
+|------------|--------|---------|------------|-----------|-------------|
+| dictabert vs alephbert-base | 3.112 | 0.0896 | 0.0100 | 1.797 | ❌ NO |
+| dictabert vs alephbertgimmel-base | 0.613 | 0.6024 | 0.0100 | 0.354 | ❌ NO |
+| dictabert vs bert-base-multilingual-cased | 4.851 | 0.0400 | 0.0100 | 2.801 | ❌ NO |
+| dictabert vs neodictabert | 6.647 | 0.0219 | 0.0100 | 3.838 | ❌ NO |
+| dictabert vs xlm-roberta-base | 3.208 | 0.0850 | 0.0100 | 1.852 | ❌ NO |
+

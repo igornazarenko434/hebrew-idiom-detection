@@ -2,26 +2,28 @@
 ## Statistical Significance - Seen Test Set
 
 ### Task: CLS (Seen)
-**Best Model:** dictabert (Mean F1: 0.9483)
-**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+**Best Model:** neodictabert (Mean F1: 0.9583)
+**Bonferroni-corrected α:** 0.0100 (5 comparisons)
 
 | Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
 |------------|--------|---------|------------|-----------|-------------|--------------|
-| dictabert vs alephbertgimmel-base | 0.357 | 0.7551 | 0.0125 | 0.208 | Small | ❌ NO |
-| dictabert vs alephbert-base | 0.836 | 0.4910 | 0.0125 | 0.797 | Medium | ❌ NO |
-| dictabert vs xlm-roberta-base | 4.586 | 0.0444 | 0.0125 | 3.030 | Large | ⚠️ YES* |
-| dictabert vs bert-base-multilingual-cased | 23.613 | 0.0018 | 0.0125 | 13.554 | Large | ✅ YES** |
+| neodictabert vs dictabert | 2.183 | 0.1607 | 0.0100 | 1.958 | Large | ❌ NO |
+| neodictabert vs alephbertgimmel-base | 1.454 | 0.2831 | 0.0100 | 1.527 | Large | ❌ NO |
+| neodictabert vs alephbert-base | 5.279 | 0.0341 | 0.0100 | 3.279 | Large | ⚠️ YES* |
+| neodictabert vs xlm-roberta-base | 11.732 | 0.0072 | 0.0100 | 3.568 | Large | ✅ YES** |
+| neodictabert vs bert-base-multilingual-cased | 6.998 | 0.0198 | 0.0100 | 7.547 | Large | ⚠️ YES* |
 
 ### Task: SPAN (Seen)
-**Best Model:** alephbert-base (Mean F1: 0.9965)
-**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+**Best Model:** neodictabert (Mean F1: 0.9965)
+**Bonferroni-corrected α:** 0.0100 (5 comparisons)
 
 | Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
 |------------|--------|---------|------------|-----------|-------------|--------------|
-| alephbert-base vs bert-base-multilingual-cased | 2.592 | 0.1221 | 0.0125 | 2.122 | Large | ❌ NO |
-| alephbert-base vs xlm-roberta-base | 2.301 | 0.1480 | 0.0125 | 2.046 | Large | ❌ NO |
-| alephbert-base vs alephbertgimmel-base | 3.880 | 0.0605 | 0.0125 | 4.317 | Large | ❌ NO |
-| alephbert-base vs dictabert | 5.294 | 0.0339 | 0.0125 | 5.725 | Large | ⚠️ YES* |
+| neodictabert vs bert-base-multilingual-cased | 1.382 | 0.3010 | 0.0100 | 1.018 | Large | ❌ NO |
+| neodictabert vs dictabert | 1.724 | 0.2269 | 0.0100 | 1.410 | Large | ❌ NO |
+| neodictabert vs alephbert-base | 1.148 | 0.3697 | 0.0100 | 1.215 | Large | ❌ NO |
+| neodictabert vs xlm-roberta-base | 3.020 | 0.0944 | 0.0100 | 2.066 | Large | ❌ NO |
+| neodictabert vs alephbertgimmel-base | 5.191 | 0.0352 | 0.0100 | 5.994 | Large | ⚠️ YES* |
 
 **Legend:**
 - ✅ YES**: Significant after Bonferroni correction (conservative)
@@ -31,26 +33,28 @@
 ## Statistical Significance - Unseen Test Set
 
 ### Task: CLS (Unseen)
-**Best Model:** alephbertgimmel-base (Mean F1: 0.9138)
-**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+**Best Model:** neodictabert (Mean F1: 0.9235)
+**Bonferroni-corrected α:** 0.0100 (5 comparisons)
 
 | Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
 |------------|--------|---------|------------|-----------|-------------|--------------|
-| alephbertgimmel-base vs dictabert | 0.301 | 0.7917 | 0.0125 | 0.291 | Small | ❌ NO |
-| alephbertgimmel-base vs alephbert-base | 2.043 | 0.1778 | 0.0125 | 0.885 | Large | ❌ NO |
-| alephbertgimmel-base vs bert-base-multilingual-cased | 2.564 | 0.1244 | 0.0125 | 2.564 | Large | ❌ NO |
-| alephbertgimmel-base vs xlm-roberta-base | 3.015 | 0.0947 | 0.0125 | 2.156 | Large | ❌ NO |
+| neodictabert vs dictabert | 0.426 | 0.7113 | 0.0100 | 0.340 | Small | ❌ NO |
+| neodictabert vs alephbert-base | 5.463 | 0.0319 | 0.0100 | 2.614 | Large | ⚠️ YES* |
+| neodictabert vs alephbertgimmel-base | 2.014 | 0.1817 | 0.0100 | 1.823 | Large | ❌ NO |
+| neodictabert vs xlm-roberta-base | 13.585 | 0.0054 | 0.0100 | 3.775 | Large | ✅ YES** |
+| neodictabert vs bert-base-multilingual-cased | 5.806 | 0.0284 | 0.0100 | 3.538 | Large | ⚠️ YES* |
 
 ### Task: SPAN (Unseen)
-**Best Model:** alephbertgimmel-base (Mean F1: 0.7559)
-**Bonferroni-corrected α:** 0.0125 (4 comparisons)
+**Best Model:** dictabert (Mean F1: 0.7610)
+**Bonferroni-corrected α:** 0.0100 (5 comparisons)
 
 | Comparison | T-Stat | P-Value | Bonferroni | Cohen's d | Effect Size | Significant? |
 |------------|--------|---------|------------|-----------|-------------|--------------|
-| alephbertgimmel-base vs dictabert | 0.678 | 0.5676 | 0.0125 | 0.469 | Small | ❌ NO |
-| alephbertgimmel-base vs alephbert-base | 1.197 | 0.3540 | 0.0125 | 1.289 | Large | ❌ NO |
-| alephbertgimmel-base vs xlm-roberta-base | 2.494 | 0.1301 | 0.0125 | 2.127 | Large | ❌ NO |
-| alephbertgimmel-base vs bert-base-multilingual-cased | 8.896 | 0.0124 | 0.0125 | 5.537 | Large | ✅ YES** |
+| dictabert vs alephbertgimmel-base | 0.613 | 0.6024 | 0.0100 | 0.392 | Small | ❌ NO |
+| dictabert vs alephbert-base | 3.112 | 0.0896 | 0.0100 | 2.503 | Large | ❌ NO |
+| dictabert vs neodictabert | 6.647 | 0.0219 | 0.0100 | 1.658 | Large | ⚠️ YES* |
+| dictabert vs xlm-roberta-base | 3.208 | 0.0850 | 0.0100 | 3.424 | Large | ❌ NO |
+| dictabert vs bert-base-multilingual-cased | 4.851 | 0.0400 | 0.0100 | 2.624 | Large | ⚠️ YES* |
 
 **Legend:**
 - ✅ YES**: Significant after Bonferroni correction (conservative)

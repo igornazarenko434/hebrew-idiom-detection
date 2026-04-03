@@ -605,8 +605,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -624,7 +624,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PERFECT"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "2_lit_12",
@@ -3553,13 +3553,13 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "I-IDIOM",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -3580,7 +3580,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_lit_2",
@@ -3640,14 +3640,14 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_lit_3",
@@ -3686,7 +3686,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -3707,8 +3707,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_4",
@@ -3744,20 +3744,20 @@
       "O",
       "O",
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
-      "O",
-      "B-IDIOM",
-      "I-IDIOM",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "O",
       "O",
       "O",
@@ -3765,7 +3765,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_lit_5",
@@ -3805,7 +3805,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -3829,8 +3829,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_6",
@@ -3872,7 +3872,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -3898,8 +3898,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_7",
@@ -3924,13 +3924,13 @@
       "B-IDIOM",
       "I-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_8",
@@ -3962,14 +3962,14 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_9",
@@ -4055,13 +4055,13 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_11",
@@ -4084,13 +4084,13 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_12",
@@ -4121,15 +4121,15 @@
       "B-IDIOM",
       "I-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_13",
@@ -4152,13 +4152,13 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_14",
@@ -4201,7 +4201,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4222,8 +4222,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_15",
@@ -4272,6 +4272,21 @@
       "O",
       "O",
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "B-IDIOM",
       "I-IDIOM",
       "I-IDIOM",
@@ -4280,25 +4295,10 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_lit_16",
@@ -4354,7 +4354,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4368,8 +4368,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_17",
@@ -4396,11 +4396,11 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_18",
@@ -4419,13 +4419,13 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_19",
@@ -4463,7 +4463,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4487,8 +4487,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_20",
@@ -4508,14 +4508,14 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_21",
@@ -4553,10 +4553,10 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4577,8 +4577,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_22",
@@ -4616,9 +4616,9 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4639,7 +4639,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "PARTIAL_START"
   },
   {
     "id": "19_lit_23",
@@ -4659,14 +4659,14 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_24",
@@ -4739,6 +4739,10 @@
       "O",
       "O",
       "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4746,12 +4750,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4768,7 +4768,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "19_lit_26",
@@ -4791,7 +4791,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4800,8 +4800,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_27",
@@ -4833,12 +4833,12 @@
     ],
     "predicted_tags": [
       "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -4856,7 +4856,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "19_lit_28",
@@ -4895,7 +4895,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4918,8 +4918,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_29",
@@ -4940,9 +4940,9 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -4951,8 +4951,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_30",
@@ -4991,7 +4991,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5016,8 +5016,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_31",
@@ -5039,7 +5039,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5047,8 +5047,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_32",
@@ -5082,13 +5082,13 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5105,7 +5105,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "19_lit_33",
@@ -5142,13 +5142,13 @@
       "O",
       "O",
       "B-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "B-IDIOM",
       "I-IDIOM",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5166,7 +5166,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "19_lit_34",
@@ -5191,7 +5191,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5202,8 +5202,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_35",
@@ -5226,11 +5226,11 @@
       "B-IDIOM",
       "I-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_36",
@@ -5267,25 +5267,25 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_lit_37",
@@ -5313,12 +5313,12 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_38",
@@ -5380,13 +5380,13 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_lit_40",
@@ -5425,7 +5425,7 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "I-IDIOM",
       "I-IDIOM",
       "O",
@@ -5453,7 +5453,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_fig_1",
@@ -5594,17 +5594,17 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "I-IDIOM",
       "O",
       "O",
@@ -5624,7 +5624,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_4",
@@ -5800,7 +5800,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5824,8 +5824,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_7",
@@ -5869,7 +5869,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5893,8 +5893,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_8",
@@ -5934,7 +5934,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -5958,8 +5958,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_9",
@@ -5991,9 +5991,9 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6001,8 +6001,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_10",
@@ -6027,7 +6027,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6036,8 +6036,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_11",
@@ -6085,7 +6085,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6130,14 +6130,14 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_13",
@@ -6157,12 +6157,12 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_14",
@@ -6187,9 +6187,9 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6200,8 +6200,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_15",
@@ -6238,7 +6238,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6261,8 +6261,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_16",
@@ -6282,14 +6282,14 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_17",
@@ -6313,7 +6313,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6323,8 +6323,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_18",
@@ -6344,9 +6344,9 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6354,8 +6354,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_19",
@@ -6395,7 +6395,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6421,8 +6421,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_20",
@@ -6464,7 +6464,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6492,8 +6492,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_21",
@@ -6537,7 +6537,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6567,8 +6567,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_22",
@@ -6611,7 +6611,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6636,8 +6636,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_23",
@@ -6689,7 +6689,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6707,8 +6707,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_24",
@@ -6757,20 +6757,20 @@
       "O",
       "O",
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6781,7 +6781,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_fig_25",
@@ -6814,7 +6814,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6823,8 +6823,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_26",
@@ -6863,7 +6863,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6888,8 +6888,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_27",
@@ -6910,15 +6910,15 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_28",
@@ -6939,15 +6939,15 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_29",
@@ -6969,7 +6969,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -6977,8 +6977,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_30",
@@ -6998,14 +6998,14 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_31",
@@ -7031,7 +7031,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -7041,8 +7041,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_32",
@@ -7076,7 +7076,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -7086,8 +7086,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_33",
@@ -7124,13 +7124,13 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
       "O",
+      "I-IDIOM",
+      "I-IDIOM",
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MISS"
   },
   {
     "id": "19_fig_34",
@@ -7184,7 +7184,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -7238,8 +7238,8 @@
     ],
     "predicted_tags": [
       "O",
+      "B-IDIOM",
       "I-IDIOM",
-      "O",
       "O",
       "O",
       "O",
@@ -7266,7 +7266,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "19_fig_36",
@@ -7295,11 +7295,11 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_37",
@@ -7323,14 +7323,14 @@
       "O",
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "19_fig_38",
@@ -7355,11 +7355,11 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_39",
@@ -7413,7 +7413,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -7435,8 +7435,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "19_fig_40",
@@ -7473,6 +7473,8 @@
       "O"
     ],
     "predicted_tags": [
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -7487,9 +7489,7 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -7503,7 +7503,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "20_lit_1",
@@ -7586,7 +7586,7 @@
       "B-IDIOM",
       "I-IDIOM",
       "O",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -7594,7 +7594,7 @@
       "O",
       "O"
     ],
-    "is_correct": false,
+    "is_correct": true,
     "error_category": "PERFECT"
   },
   {
@@ -7637,12 +7637,12 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "B-IDIOM",
+      "B-IDIOM",
+      "I-IDIOM",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -7658,7 +7658,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "20_lit_4",
@@ -7694,8 +7694,8 @@
       "O",
       "O",
       "B-IDIOM",
-      "B-IDIOM",
       "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -7716,8 +7716,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_5",
@@ -8004,10 +8004,10 @@
       "O",
       "O",
       "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -8023,8 +8023,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "SHIFT"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_10",
@@ -8123,14 +8123,14 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "EXTEND_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_12",
@@ -8249,15 +8249,15 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_15",
@@ -8299,8 +8299,8 @@
       "O",
       "O",
       "B-IDIOM",
-      "B-IDIOM",
       "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -8327,8 +8327,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_16",
@@ -8582,15 +8582,15 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "EXTEND_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_22",
@@ -9096,14 +9096,14 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "EXTEND_START"
   },
   {
     "id": "20_lit_33",
@@ -9144,15 +9144,15 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "I-IDIOM",
       "O",
       "O",
@@ -9172,7 +9172,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_34",
@@ -9198,7 +9198,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -9210,8 +9210,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_35",
@@ -9245,7 +9245,7 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -9265,8 +9265,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_36",
@@ -9383,7 +9383,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -9405,8 +9405,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_lit_38",
@@ -9546,9 +9546,9 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -9574,7 +9574,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "20_fig_2",
@@ -9690,8 +9690,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "B-IDIOM",
       "I-IDIOM",
       "O",
@@ -9711,8 +9711,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "20_fig_4",
@@ -10717,7 +10717,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -10739,8 +10739,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_fig_22",
@@ -11266,15 +11266,15 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_fig_34",
@@ -11505,15 +11505,15 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "20_fig_39",
@@ -11646,7 +11646,7 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
+      "B-IDIOM",
       "B-IDIOM",
       "I-IDIOM",
       "O",
@@ -11669,8 +11669,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_lit_2",
@@ -11701,14 +11701,6 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
       "O",
@@ -11716,10 +11708,18 @@
       "O",
       "O",
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_3",
@@ -11811,6 +11811,10 @@
       "O",
       "O",
       "O",
+      "B-IDIOM",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -11828,14 +11832,10 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_lit_5",
@@ -11927,9 +11927,9 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -11951,7 +11951,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_7",
@@ -12044,8 +12044,8 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -12066,8 +12066,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_lit_9",
@@ -12109,18 +12109,18 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_lit_10",
@@ -12153,13 +12153,13 @@
     ],
     "predicted_tags": [
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -12176,8 +12176,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_11",
@@ -12356,8 +12356,8 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
-      "O",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -12417,17 +12417,17 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_lit_19",
@@ -12595,8 +12595,8 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -12609,8 +12609,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_lit_24",
@@ -12632,18 +12632,18 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
+      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_25",
@@ -12665,18 +12665,18 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
+      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_26",
@@ -12855,15 +12855,15 @@
       "O",
       "O",
       "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -12872,8 +12872,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_lit_31",
@@ -12974,11 +12974,11 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -12994,8 +12994,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_35",
@@ -13029,8 +13029,8 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -13054,7 +13054,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_36",
@@ -13156,20 +13156,20 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
+      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_lit_39",
@@ -13247,7 +13247,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -13256,8 +13256,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "EXTEND_END"
   },
   {
     "id": "33_fig_1",
@@ -13301,8 +13301,8 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -13314,7 +13314,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_fig_2",
@@ -13345,18 +13345,18 @@
     "predicted_tags": [
       "O",
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "B-IDIOM",
-      "I-IDIOM",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -13364,8 +13364,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_fig_3",
@@ -13402,15 +13402,15 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "EXTEND_END"
   },
   {
     "id": "33_fig_4",
@@ -13450,7 +13450,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -13460,8 +13460,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "PARTIAL_END"
   },
   {
     "id": "33_fig_5",
@@ -13496,8 +13496,8 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -13507,8 +13507,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MISS"
   },
   {
     "id": "33_fig_6",
@@ -13752,8 +13752,8 @@
     ],
     "predicted_tags": [
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -13777,7 +13777,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_fig_13",
@@ -13847,7 +13847,7 @@
       "B-IDIOM",
       "I-IDIOM",
       "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -13866,8 +13866,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_fig_15",
@@ -13904,7 +13904,7 @@
       "O",
       "O",
       "O",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -13964,7 +13964,7 @@
       "O",
       "O",
       "O",
-      "I-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -14135,8 +14135,8 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -14158,7 +14158,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_fig_22",
@@ -14216,12 +14216,12 @@
       "O",
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_fig_23",
@@ -14307,6 +14307,16 @@
     ],
     "predicted_tags": [
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "B-IDIOM",
       "I-IDIOM",
       "O",
@@ -14314,20 +14324,10 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_fig_25",
@@ -14552,7 +14552,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -14573,8 +14573,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_fig_32",
@@ -14608,12 +14608,12 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
+      "I-IDIOM",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -14626,8 +14626,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_fig_33",
@@ -14700,16 +14700,16 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MISS"
   },
   {
     "id": "33_fig_35",
@@ -14835,18 +14835,6 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
       "O",
@@ -14857,10 +14845,22 @@
       "O",
       "O",
       "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "33_fig_38",
@@ -14889,9 +14889,9 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "B-IDIOM",
       "I-IDIOM",
@@ -14904,8 +14904,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "33_fig_39",
@@ -14935,21 +14935,21 @@
       "O"
     ],
     "predicted_tags": [
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "B-IDIOM",
       "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -14957,8 +14957,8 @@
       "O",
       "O"
     ],
-    "is_correct": true,
-    "error_category": "PERFECT"
+    "is_correct": false,
+    "error_category": "MISS"
   },
   {
     "id": "33_fig_40",
@@ -15699,8 +15699,8 @@
       "O",
       "O",
       "O",
-      "O",
       "B-IDIOM",
+      "I-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -15724,7 +15724,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_BOTH"
+    "error_category": "PARTIAL_END"
   },
   {
     "id": "49_lit_12",
@@ -16420,7 +16420,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "B-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -16444,7 +16444,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_lit_28",
@@ -16720,7 +16720,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "B-IDIOM",
+      "I-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -16731,7 +16731,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "PARTIAL_END"
   },
   {
     "id": "49_lit_35",
@@ -17378,7 +17378,7 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -17394,7 +17394,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "PARTIAL_BOTH"
   },
   {
     "id": "49_fig_8",
@@ -17440,8 +17440,8 @@
       "O",
       "O",
       "O",
+      "O",
       "B-IDIOM",
-      "I-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -17463,7 +17463,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "PARTIAL_BOTH"
   },
   {
     "id": "49_fig_9",
@@ -17570,7 +17570,8 @@
       "O",
       "O",
       "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -17587,13 +17588,12 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_fig_11",
@@ -17622,13 +17622,13 @@
       "O",
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "B-IDIOM",
       "I-IDIOM",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_fig_12",
@@ -17826,8 +17826,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "B-IDIOM",
@@ -18077,7 +18077,7 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "B-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -18103,7 +18103,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_fig_21",
@@ -18240,11 +18240,11 @@
       "O",
       "O",
       "O",
-      "O",
+      "B-IDIOM",
       "I-IDIOM"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "49_fig_24",
@@ -18307,7 +18307,7 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "B-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -18322,7 +18322,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_fig_26",
@@ -18534,7 +18534,7 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "B-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -18559,7 +18559,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_fig_31",
@@ -18767,13 +18767,13 @@
       "O",
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "B-IDIOM",
       "I-IDIOM",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_fig_37",
@@ -18795,18 +18795,18 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "49_fig_38",
@@ -18861,7 +18861,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "I-IDIOM",
+      "B-IDIOM",
       "I-IDIOM",
       "O",
       "O",
@@ -18879,7 +18879,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "49_fig_39",
@@ -19020,8 +19020,8 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -19037,8 +19037,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_2",
@@ -19072,8 +19072,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -19090,8 +19090,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_3",
@@ -19130,13 +19130,13 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "55_lit_4",
@@ -19177,9 +19177,9 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -19191,7 +19191,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "55_lit_5",
@@ -19227,8 +19227,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -19247,8 +19247,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_6",
@@ -19441,12 +19441,12 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_10",
@@ -19462,14 +19462,14 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "55_lit_11",
@@ -19732,11 +19732,11 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_18",
@@ -19779,11 +19779,11 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_19",
@@ -19817,6 +19817,8 @@
     ],
     "predicted_tags": [
       "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -19825,14 +19827,12 @@
       "O",
       "O",
       "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -19842,7 +19842,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "55_lit_20",
@@ -19892,8 +19892,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -19904,8 +19904,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_21",
@@ -20007,8 +20007,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -20019,8 +20019,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_24",
@@ -20054,16 +20054,16 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_25",
@@ -20154,7 +20154,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -20164,8 +20164,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_27",
@@ -20208,7 +20208,7 @@
       "O",
       "B-IDIOM",
       "I-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -20219,8 +20219,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_28",
@@ -20340,13 +20340,13 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_32",
@@ -20384,13 +20384,13 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_34",
@@ -20407,13 +20407,13 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
       "I-IDIOM",
-      "O"
+      "I-IDIOM",
+      "I-IDIOM"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "EXTEND_END"
   },
   {
     "id": "55_lit_35",
@@ -20463,13 +20463,13 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_lit_37",
@@ -20591,13 +20591,13 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_1",
@@ -20707,11 +20707,11 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_3",
@@ -20745,10 +20745,10 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -20770,7 +20770,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "55_fig_4",
@@ -20812,34 +20812,34 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_5",
@@ -20933,8 +20933,8 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -20958,8 +20958,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_7",
@@ -21057,8 +21057,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -21081,7 +21081,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "55_fig_9",
@@ -21119,8 +21119,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -21143,8 +21143,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_10",
@@ -21170,7 +21170,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -21178,8 +21178,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_11",
@@ -21232,7 +21232,7 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
+      "O",
       "O",
       "O",
       "O",
@@ -21246,7 +21246,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "error_category": "WRONG_SPAN"
   },
   {
     "id": "55_fig_12",
@@ -21296,8 +21296,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -21323,7 +21323,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "55_fig_13",
@@ -21494,7 +21494,7 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -21502,8 +21502,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_17",
@@ -21584,18 +21584,18 @@
     ],
     "predicted_tags": [
       "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
+      "I-IDIOM",
       "O",
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "55_fig_19",
@@ -21614,15 +21614,15 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
+      "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "WRONG_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_20",
@@ -21686,15 +21686,15 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_22",
@@ -21778,10 +21778,10 @@
     "predicted_tags": [
       "O",
       "O",
-      "O",
-      "O",
       "B-IDIOM",
       "I-IDIOM",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -21991,7 +21991,7 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -22001,8 +22001,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_28",
@@ -22031,7 +22031,7 @@
       "O",
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -22040,8 +22040,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_29",
@@ -22093,10 +22093,10 @@
       "O",
       "O",
       "O",
-      "B-IDIOM",
-      "I-IDIOM",
-      "I-IDIOM",
-      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "O",
       "O",
       "O",
       "O",
@@ -22105,8 +22105,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MULTI_SPAN"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_30",
@@ -22189,8 +22189,8 @@
     ],
     "predicted_tags": [
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -22200,8 +22200,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_33",
@@ -22280,15 +22280,15 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
-      "O",
+      "I-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_36",
@@ -22350,8 +22350,8 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -22359,8 +22359,8 @@
       "O",
       "O"
     ],
-    "is_correct": false,
-    "error_category": "MISS"
+    "is_correct": true,
+    "error_category": "PERFECT"
   },
   {
     "id": "55_fig_38",
@@ -22437,6 +22437,11 @@
       "O",
       "O",
       "O",
+      "B-IDIOM",
+      "O",
+      "O",
+      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -22446,12 +22451,7 @@
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
@@ -22464,7 +22464,7 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "MISS"
+    "error_category": "MULTI_SPAN"
   },
   {
     "id": "55_fig_40",
@@ -22497,20 +22497,20 @@
     "predicted_tags": [
       "O",
       "B-IDIOM",
+      "I-IDIOM",
+      "O",
+      "O",
+      "O",
+      "B-IDIOM",
       "O",
       "O",
       "O",
       "O",
       "O",
       "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
-      "O",
+      "B-IDIOM",
+      "B-IDIOM",
+      "I-IDIOM",
       "O",
       "O",
       "O",
@@ -22519,6 +22519,6 @@
       "O"
     ],
     "is_correct": false,
-    "error_category": "PARTIAL_END"
+    "error_category": "MULTI_SPAN"
   }
 ]

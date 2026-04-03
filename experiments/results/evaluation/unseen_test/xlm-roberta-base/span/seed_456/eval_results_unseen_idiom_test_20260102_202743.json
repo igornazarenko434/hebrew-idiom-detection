@@ -1,0 +1,37 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/xlm-roberta-base/span/seed_456",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "span",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 6.031919479370117,
+    "model_preparation_time": 0.0025,
+    "precision": 0.6711711711711712,
+    "recall": 0.6208333333333333,
+    "f1": 0.645021645021645,
+    "accuracy": 0.9563855701194757,
+    "runtime": 2.2323,
+    "samples_per_second": 215.022,
+    "steps_per_second": 13.439
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 2e-05,
+    "batch_size": 8,
+    "num_epochs": 8,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.05,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 2,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": true
+  }
+}

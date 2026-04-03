@@ -1,0 +1,41 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/neodictabert/cls/seed_456",
+  "dataset": "data/splits/test.csv",
+  "task": "cls",
+  "num_samples": 432,
+  "metrics": {
+    "loss": 0.17677143216133118,
+    "model_preparation_time": 0.0023,
+    "accuracy": 0.9513888888888888,
+    "f1": 0.9513886284112891,
+    "precision": 0.951398563926696,
+    "recall": 0.9513888888888888,
+    "confusion_matrix_tn": 205.0,
+    "confusion_matrix_fp": 11.0,
+    "confusion_matrix_fn": 10.0,
+    "confusion_matrix_tp": 206.0,
+    "runtime": 1.2353,
+    "samples_per_second": 349.709,
+    "steps_per_second": 21.857
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 2e-05,
+    "batch_size": 8,
+    "num_epochs": 8,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.05,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 2,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": null
+  }
+}

@@ -1,0 +1,17 @@
+split,model,category,count,percent
+seen_test,neodictabert,both_correct,419,96.99074074074075
+seen_test,neodictabert,cls_only,1,0.23148148148148148
+seen_test,neodictabert,span_only,11,2.5462962962962963
+seen_test,neodictabert,both_wrong,1,0.23148148148148148
+seen_test,xlm-roberta-base,both_correct,396,91.66666666666667
+seen_test,xlm-roberta-base,cls_only,4,0.9259259259259259
+seen_test,xlm-roberta-base,span_only,32,7.407407407407407
+seen_test,xlm-roberta-base,both_wrong,0,0.0
+unseen_test,neodictabert,both_correct,234,48.75
+unseen_test,neodictabert,cls_only,211,43.958333333333336
+unseen_test,neodictabert,span_only,28,5.833333333333333
+unseen_test,neodictabert,both_wrong,7,1.4583333333333333
+unseen_test,xlm-roberta-base,both_correct,271,56.458333333333336
+unseen_test,xlm-roberta-base,cls_only,167,34.791666666666664
+unseen_test,xlm-roberta-base,span_only,26,5.416666666666667
+unseen_test,xlm-roberta-base,both_wrong,16,3.3333333333333335

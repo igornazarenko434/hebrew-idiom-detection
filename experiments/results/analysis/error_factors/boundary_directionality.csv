@@ -1,0 +1,17 @@
+model,split,category,count
+bert-base-multilingual-cased,seen_test,PARTIAL_START,0
+bert-base-multilingual-cased,seen_test,PARTIAL_END,0
+dictabert,seen_test,PARTIAL_START,0
+dictabert,seen_test,PARTIAL_END,0
+neodictabert,seen_test,PARTIAL_START,0
+neodictabert,seen_test,PARTIAL_END,0
+xlm-roberta-base,seen_test,PARTIAL_START,0
+xlm-roberta-base,seen_test,PARTIAL_END,0
+bert-base-multilingual-cased,unseen_test,PARTIAL_START,1
+bert-base-multilingual-cased,unseen_test,PARTIAL_END,72
+dictabert,unseen_test,PARTIAL_START,0
+dictabert,unseen_test,PARTIAL_END,56
+neodictabert,unseen_test,PARTIAL_START,0
+neodictabert,unseen_test,PARTIAL_END,111
+xlm-roberta-base,unseen_test,PARTIAL_START,0
+xlm-roberta-base,unseen_test,PARTIAL_END,114

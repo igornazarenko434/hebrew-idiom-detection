@@ -2,15 +2,17 @@
 
 |                                          |   Seen |   Unseen |   gap_absolute |   gap_percent |
 |:-----------------------------------------|-------:|---------:|---------------:|--------------:|
-| ('alephbertgimmel-base', 'cls')          | 0.9468 |   0.9138 |         0.0330 |        3.4831 |
-| ('dictabert', 'cls')                     | 0.9483 |   0.9108 |         0.0375 |        3.9527 |
-| ('alephbert-base', 'cls')                | 0.9421 |   0.9062 |         0.0360 |        3.8168 |
-| ('bert-base-multilingual-cased', 'cls')  | 0.8758 |   0.9014 |        -0.0256 |       -2.9259 |
-| ('xlm-roberta-base', 'cls')              | 0.9174 |   0.8986 |         0.0188 |        2.0495 |
-| ('alephbertgimmel-base', 'span')         | 0.9912 |   0.7559 |         0.2353 |       23.7379 |
-| ('dictabert', 'span')                    | 0.9912 |   0.7258 |         0.2654 |       26.7722 |
-| ('alephbert-base', 'span')               | 0.9965 |   0.7248 |         0.2717 |       27.2661 |
-| ('xlm-roberta-base', 'span')             | 0.9927 |   0.6318 |         0.3609 |       36.3551 |
-| ('bert-base-multilingual-cased', 'span') | 0.9931 |   0.5799 |         0.4132 |       41.6041 |
+| ('neodictabert', 'cls')                  | 0.9583 |   0.9235 |         0.0349 |        3.6394 |
+| ('dictabert', 'cls')                     | 0.9413 |   0.9221 |         0.0191 |        2.0322 |
+| ('alephbert-base', 'cls')                | 0.9298 |   0.9097 |         0.0201 |        2.1599 |
+| ('alephbertgimmel-base', 'cls')          | 0.9398 |   0.9075 |         0.0323 |        3.4333 |
+| ('xlm-roberta-base', 'cls')              | 0.9119 |   0.9069 |         0.0051 |        0.5551 |
+| ('bert-base-multilingual-cased', 'cls')  | 0.8880 |   0.9035 |        -0.0154 |       -1.7366 |
+| ('dictabert', 'span')                    | 0.9942 |   0.7610 |         0.2332 |       23.4601 |
+| ('alephbertgimmel-base', 'span')         | 0.9896 |   0.7470 |         0.2426 |       24.5187 |
+| ('alephbert-base', 'span')               | 0.9938 |   0.6677 |         0.3261 |       32.8155 |
+| ('neodictabert', 'span')                 | 0.9965 |   0.6612 |         0.3353 |       33.6471 |
+| ('xlm-roberta-base', 'span')             | 0.9935 |   0.6148 |         0.3786 |       38.1107 |
+| ('bert-base-multilingual-cased', 'span') | 0.9946 |   0.5882 |         0.4064 |       40.8621 |
 
 **Note:** 'Gap' is the performance drop. Lower gap means better robustness.

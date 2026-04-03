@@ -1,0 +1,41 @@
+{
+  "model_checkpoint": "experiments/results/full_fine-tuning/bert-base-multilingual-cased/cls/seed_456",
+  "dataset": "data/splits/unseen_idiom_test.csv",
+  "task": "cls",
+  "num_samples": 480,
+  "metrics": {
+    "loss": 0.28832924365997314,
+    "model_preparation_time": 0.0024,
+    "accuracy": 0.9104166666666667,
+    "f1": 0.9103976106029494,
+    "precision": 0.9107661031085472,
+    "recall": 0.9104166666666667,
+    "confusion_matrix_tn": 222.0,
+    "confusion_matrix_fp": 18.0,
+    "confusion_matrix_fn": 25.0,
+    "confusion_matrix_tp": 215.0,
+    "runtime": 0.7101,
+    "samples_per_second": 675.921,
+    "steps_per_second": 42.245
+  },
+  "eval_config": {
+    "batch_size": 16,
+    "max_length": 128,
+    "device": "cuda"
+  },
+  "training_config": {
+    "learning_rate": 5e-05,
+    "batch_size": 32,
+    "num_epochs": 8,
+    "warmup_ratio": 0.0,
+    "weight_decay": 0.01,
+    "seed": 456,
+    "max_length": 128,
+    "label_smoothing": 0.1,
+    "lr_scheduler_type": "cosine",
+    "gradient_accumulation_steps": 2,
+    "fp16": true,
+    "bf16": false,
+    "use_crf": null
+  }
+}
